@@ -1,3 +1,7 @@
-Dit is een test. 
-Maar werkt dit echt ook wel.
-Jaaaa
+# Welcome to my project
+
+Groepsleden:
+
+- Bram De Coninck
+- Brent Schets
+- Lennert Bontinck
