@@ -7,7 +7,7 @@ namespace LekkerLokaal.Models.Domain
 {
     public class Categorie
     {
-        public int CategorieId { get; }
+        public int CategorieId { get; private set; }
         public string Naam
         {
             get

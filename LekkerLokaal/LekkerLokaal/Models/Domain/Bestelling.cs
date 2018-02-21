@@ -12,7 +12,7 @@ namespace LekkerLokaal.Models.Domain
         public ICollection<BestelLijn> BestelLijnen { get; }
         public decimal BestellingTotaal => BestelLijnen.Sum(b => b.Totaal);
 
-        public Bestelling()
+        protected Bestelling()
         {
             BestelLijnen = new HashSet<BestelLijn>();
             BestelDatum = DateTime.Today;
@@ -33,5 +33,8 @@ namespace LekkerLokaal.Models.Domain
                 });
             }
         }
+
+        public bool HeeftBesteld(Bon bon) => BestelLijnen.Any(b => b.Bon.Equals(bon));
+
     }
 }

@@ -12,5 +12,47 @@ namespace LekkerLokaal.Models.Domain
         public int AantalBonnen => _lijnen.Count;
         public bool IsLeeg => AantalBonnen == 0;
         public decimal TotaleWaarde => _lijnen.Sum(l => l.Bon.Prijs * l.Aantal);
+
+        public void VoegLijnToe(Bon bon, int aantal)
+        {
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId);
+            if (lijn == null)
+                _lijnen.Add(new WinkelwagenLijn() { Bon = bon, Aantal = aantal });
+            else
+                lijn.Aantal += aantal;
+        }
+
+        public void VerwijderLijn(Bon bon)
+        {
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId);
+            if (lijn != null)
+                _lijnen.Remove(lijn);
+        }
+
+        public void VerhoogAantal(int bonId)
+        {
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId);
+            if (lijn != null)
+                lijn.Aantal++;
+        }
+
+        public void VerlaagAantal(int bonId)
+        {
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId);
+            if (lijn != null)
+                lijn.Aantal--;
+            if (lijn.Aantal <= 0)
+                _lijnen.Remove(lijn);
+        }
+
+        public void MaakLeeg()
+        {
+            _lijnen.Clear();
+        }
+
+        private WinkelwagenLijn zoekWinkelwagenLijn(int bonId)
+        {
+            return _lijnen.SingleOrDefault(l => l.Bon.BonId == bonId);
+        }
     }
 }

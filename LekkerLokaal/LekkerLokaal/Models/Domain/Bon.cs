@@ -7,7 +7,7 @@ namespace LekkerLokaal.Models.Domain
 {
     public class Bon
     {
-        public int BonId { get; set; }
+        public int BonId { get; private set; }
         public string Naam
         {
             get
@@ -23,7 +23,15 @@ namespace LekkerLokaal.Models.Domain
                 Naam = value;
             }
         }
-        public decimal Prijs { get; set; }
+        public decimal Prijs {
+            get { return Prijs; }
+            set
+            {
+                if (value < 1 || value > 3000)
+                    throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
+                Prijs = value;
+            }
+        }
         public string Beschrijving { get; set; }
         public int AantalBesteld { get; set; }
         public string Afbeelding { get; set; }
