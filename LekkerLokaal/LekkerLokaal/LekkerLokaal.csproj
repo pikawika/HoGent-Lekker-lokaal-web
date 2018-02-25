@@ -5,6 +5,11 @@
     <UserSecretsId>aspnet-LekkerLokaal-7E2FAF54-277B-4ABB-A72A-265C9275510E</UserSecretsId>
   </PropertyGroup>
 
+  <ItemGroup>
+    <Compile Remove="Data\Mappers\KlantConfiguration.cs" />
+    <Compile Remove="Models\Domain\Persoon.cs" />
+  </ItemGroup>
+
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />

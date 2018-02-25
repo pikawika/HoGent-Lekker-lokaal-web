@@ -5,20 +5,29 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Gebruiker : Persoon, Geregistreerd
+    public class Klant :  Geregistreerd
     {
-        public ICollection<Bestelling> Bestellingen { get; set; }
-        public string Wachtwoord { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Afbeelding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public int KlantId { get; private set; }
+        public string Voornaam { get; set; }
+        public string Familienaam { get; set; }
+        public Geslacht Geslacht { get; set; }
+        public string Emailadres { get; set; }
 
-        protected Gebruiker()
+        public ICollection<Bestelling> Bestellingen { get; set; }
+        public string Wachtwoord { get; set; }
+        public string Afbeelding { get; set; }
+
+        protected Klant()
         {
             Bestellingen = new List<Bestelling>();
         }
 
-        public Gebruiker(string voornaam, string familienaam, Geslacht geslacht, string emailadres) : base(voornaam, familienaam, geslacht, emailadres)
+        public Klant(string voornaam, string familienaam, Geslacht geslacht, string emailadres)
         {
-            
+            Voornaam = voornaam;
+            Familienaam = familienaam;
+            Geslacht = geslacht;
+            Emailadres = emailadres;
         }
 
         public void PlaatsBestelling(Winkelwagen winkelwagen)
