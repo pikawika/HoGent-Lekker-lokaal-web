@@ -41,23 +41,24 @@ namespace LekkerLokaal.Data
                 };
                 _dbContext.Categorieen.AddRange(categories);
 
-                Bon bon01 = new Bon("Restaurant lekker", 50, "3 sterren resaurant in het centrum van Aalst.", 0, "string01", eten_drinken);
-                Bon bon02 = new Bon("Dessertbar chez Bontinck", 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 0, "string02", eten_drinken);
-                Bon bon03 = new Bon("Bierspecialist Schets", 20, "Meer dan 70 Belgische bieren in een gezellige kroeg.", 0, "string03", eten_drinken);
-                Bon bon04 = new Bon("De Coninck's cocktail", 15, "Een VIP cocktailbar met live optredens van lokale muzikanten.", 0, "string04", eten_drinken);
+                Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 0, @"images\bon\1\thumb.jpg", eten_drinken);
+                Bon bon02 = new Bon("Dessertbar chez Bontinck", 1, 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 0, @"images\bon\2\thumb.jpg", eten_drinken);
+                Bon bon03 = new Bon("Bierspecialist Schets", 1, 20, "Meer dan 70 Belgische bieren in een gezellige kroeg.", 0, @"images\bon\3\thumb.jpg", eten_drinken);
+                Bon bon04 = new Bon("De Coninck's cocktail", 1, 15, "Een VIP cocktailbar met live optredens van lokale muzikanten.", 0, @"images\bon\4\thumb.jpg", eten_drinken);
 
-                Bon bon05 = new Bon("Wijnproeverij BraLenBre", 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 0, "string05", eten_drinken);
-                Bon bon06 = new Bon("Veggiebar 't Sandwichke", 30, "Het bewijs dat vegetarisch eten lekker kan zijn.", 0, "string06", eten_drinken);
-                Bon bon07 = new Bon("Fastfood McDonalds", 5, "De keten met keuzes voor iedereen.", 0, "string07", eten_drinken);
-                Bon bon08 = new Bon("Restaurant SOS Piet", 150, "5 sterren restaurant met de enige echte SOS Piet als kok.", 0, "string08", eten_drinken);
+                Bon bon05 = new Bon("Wijnproeverij BraLenBre", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 0, @"images\bon\5\thumb.jpg", eten_drinken);
+                Bon bon06 = new Bon("Veggiebar 't Sandwichke", 1, 30, "Het bewijs dat vegetarisch eten lekker kan zijn.", 0, @"images\bon\6\thumb.jpg", eten_drinken);
+                Bon bon07 = new Bon("Fastfood McDonalds", 1, 5, "De keten met keuzes voor iedereen.", 0, @"images\bon\7\thumb.jpg", eten_drinken);
+                Bon bon08 = new Bon("Restaurant SOS Piet", 1, 150, "5 sterren restaurant met de enige echte SOS Piet als kok.", 0, @"images\bon\8\thumb.jpg", eten_drinken);
 
-                Bon bon09 = new Bon("Generieke cadeaubon", 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 0, "string09", generiek);
-                Bon bon10 = new Bon("Fitness Basic-Fit", 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, "string10", fitness);
-                Bon bon11 = new Bon("Nachtwandeling Aalst at night", 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 0, "string11", uitstappen);
+                Bon bon09 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 0, @"images\bon\9\thumb.jpg", generiek);
+                Bon bon10 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness);
+                Bon bon11 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 0, @"images\bon\11\thumb.jpg", uitstappen);
+                Bon bon12 = new Bon("Bloemencenter Brenk", 1, 35, "Stel zelf uw setje bloemen samen met deze bon.", 0, @"images\bon\12\thumb.jpg", huis_tuin);
 
                 var bonnen = new List<Bon>
                 {
-                    bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11
+                    bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11, bon12
                 };
 
                 _dbContext.Bonnen.AddRange(bonnen);

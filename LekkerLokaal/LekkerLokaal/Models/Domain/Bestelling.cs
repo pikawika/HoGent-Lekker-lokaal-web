@@ -28,7 +28,8 @@ namespace LekkerLokaal.Models.Domain
                 BestelLijnen.Add(new BestelLijn
                 {
                     Bon = lijn.Bon,
-                    Prijs = lijn.Bon.Prijs,
+                    //to be implemented
+                    Prijs = lijn.Bon.MinPrijs,
                     Aantal = lijn.Aantal
                 });
             }

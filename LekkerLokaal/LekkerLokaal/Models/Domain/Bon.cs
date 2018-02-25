@@ -26,15 +26,28 @@ namespace LekkerLokaal.Models.Domain
             }
         }
 
-        private decimal _prijs;
+        private decimal _minprijs;
 
-        public decimal Prijs {
-            get { return _prijs; }
+        public decimal MinPrijs {
+            get { return _minprijs; }
             set
             {
                 if (value < 1 || value > 3000)
                     throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
-                _prijs = value;
+                _minprijs = value;
+            }
+        }
+
+        private decimal _maxprijs;
+
+        public decimal MaxPrijs
+        {
+            get { return _maxprijs; }
+            set
+            {
+                if (value < 1 || value > 3000)
+                    throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
+                _maxprijs = value;
             }
         }
         public string Beschrijving { get; set; }
@@ -56,10 +69,11 @@ namespace LekkerLokaal.Models.Domain
 
         protected Bon() { }
 
-        public Bon(string naam, decimal prijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie) : this()
         {
             Naam = naam;
-            Prijs = prijs;
+            MaxPrijs = maxprijs;
+            MinPrijs = minprijs;
             Beschrijving = beschrijving;
             AantalBesteld = aantalBesteld;
             Afbeelding = afbeelding;

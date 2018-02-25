@@ -9,6 +9,7 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using System.Security.Claims;
+using LekkerLokaal.Data.Repositories;
 
 namespace LekkerLokaal
 {
@@ -32,6 +33,7 @@ namespace LekkerLokaal
                 .AddDefaultTokenProviders();
 
             services.AddScoped<LekkerLokaalDataInitializer>();
+            services.AddScoped<IBonRepository, BonRepository>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -63,7 +65,7 @@ namespace LekkerLokaal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }

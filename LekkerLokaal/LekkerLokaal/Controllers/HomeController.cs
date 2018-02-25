@@ -5,14 +5,22 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LekkerLokaal.Models;
+using LekkerLokaal.Models.Domain;
 
 namespace LekkerLokaal.Controllers
 {
     public class HomeController : Controller
     {
+        private readonly IBonRepository _bonRepository;
+        public HomeController(IBonRepository bonRepository)
+        {
+            _bonRepository = bonRepository;
+        }
+
         public IActionResult Index()
         {
-            return View();
+            ViewData["Title"] = "Home";
+            return View(_bonRepository.GetAll().ToList());
         }
 
         public IActionResult About()

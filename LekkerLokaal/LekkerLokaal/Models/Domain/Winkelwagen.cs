@@ -11,7 +11,8 @@ namespace LekkerLokaal.Models.Domain
         public IEnumerable<WinkelwagenLijn> WinkelwagenLijnen => _lijnen.AsEnumerable();
         public int AantalBonnen => _lijnen.Count;
         public bool IsLeeg => AantalBonnen == 0;
-        public decimal TotaleWaarde => _lijnen.Sum(l => l.Bon.Prijs * l.Aantal);
+        //tobe implemented
+        public decimal TotaleWaarde => _lijnen.Sum(l => l.Bon.MaxPrijs * l.Aantal);
 
         public void VoegLijnToe(Bon bon, int aantal)
         {

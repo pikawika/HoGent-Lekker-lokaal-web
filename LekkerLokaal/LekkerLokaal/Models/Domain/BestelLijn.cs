@@ -8,7 +8,7 @@ namespace LekkerLokaal.Models.Domain
     public class BestelLijn : WinkelwagenLijn
     {
         public int BestellingId { get; private set; }
-        public int ProductId { get; private set; }
+        public int BonId { get; private set; }
         public decimal Prijs { get; set; }
     }
 }

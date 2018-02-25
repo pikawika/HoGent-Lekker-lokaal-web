@@ -9,9 +9,9 @@ namespace LekkerLokaal.Data.Mappers
         public void Configure(EntityTypeBuilder<BestelLijn> builder)
         {
             builder.ToTable("BestelLijn");
-            builder.HasKey(t => new { t.BestellingId, t.ProductId });
+            builder.HasKey(t => new { t.BestellingId, t.BonId });
 
-            builder.HasOne(t => t.Bon).WithMany().IsRequired().HasForeignKey(t => t.ProductId).OnDelete(DeleteBehavior.Restrict);
+            builder.HasOne(t => t.Bon).WithMany().IsRequired().HasForeignKey(t => t.BonId).OnDelete(DeleteBehavior.Restrict);
         }
     }
 }
