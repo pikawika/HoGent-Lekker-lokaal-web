@@ -1,4 +1,8 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Hosting;
@@ -7,8 +11,6 @@ using Microsoft.Extensions.DependencyInjection;
 using LekkerLokaal.Data;
 using LekkerLokaal.Models;
 using LekkerLokaal.Services;
-using LekkerLokaal.Models.Domain;
-using System.Security.Claims;
 
 namespace LekkerLokaal
 {
@@ -31,8 +33,6 @@ namespace LekkerLokaal
                 .AddEntityFrameworkStores<ApplicationDbContext>()
                 .AddDefaultTokenProviders();
 
-            services.AddScoped<LekkerLokaalDataInitializer>();
-
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
 
@@ -40,7 +40,7 @@ namespace LekkerLokaal
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, LekkerLokaalDataInitializer datainit)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -63,7 +63,6 @@ namespace LekkerLokaal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            datainit.InitializeData().Wait();
         }
     }
 }

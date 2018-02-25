@@ -15,9 +15,10 @@ namespace LekkerLokaal.Models.Domain
         public string Gemeente { get; set; }
         public string Beschrijving { get; set; }
         public string BTW_Nummer { get; set; }
+        public Persoon Contactpersoon { get; set; }
         public Bon Cadeaubon { get; set; }
-        public string Wachtwoord { get; set; }
-        public string Afbeelding { get; set; }
+        public string Wachtwoord { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+        public string Afbeelding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
 
         protected Handelaar()
         {
@@ -35,6 +36,11 @@ namespace LekkerLokaal.Models.Domain
             BTW_Nummer = btw_nummer;
             Wachtwoord = wachtwoord;
             Afbeelding = afbeelding;
+        }
+
+        public void VoegContactpersoonToe(Persoon persoon)
+        {
+            Contactpersoon = persoon;
         }
 
         public void VoegBonToe(Bon bon)

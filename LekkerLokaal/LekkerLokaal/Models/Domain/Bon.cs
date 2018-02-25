@@ -8,13 +8,11 @@ namespace LekkerLokaal.Models.Domain
     public class Bon
     {
         public int BonId { get; private set; }
-
-        private string _naam;
         public string Naam
         {
             get
             {
-                return _naam;
+                return Naam;
             }
             set
             {
@@ -22,35 +20,30 @@ namespace LekkerLokaal.Models.Domain
                     throw new ArgumentException("Een bon heeft een naam nodig");
                 if (value.Length > 30)
                     throw new ArgumentException("De naam van een bon mag maximaal 30 karakters lang zijn");
-                _naam = value;
+                Naam = value;
             }
         }
-
-        private decimal _prijs;
-
         public decimal Prijs {
-            get { return _prijs; }
+            get { return Prijs; }
             set
             {
                 if (value < 1 || value > 3000)
                     throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
-                _prijs = value;
+                Prijs = value;
             }
         }
         public string Beschrijving { get; set; }
         public int AantalBesteld { get; set; }
         public string Afbeelding { get; set; }
-
-        public Categorie _categorie;
         public Categorie Categorie
         {
             get
             {
-                return _categorie;
+                return Categorie;
             }
             set
             {
-                _categorie = value ?? throw new ArgumentException("Categorie is verplicht");
+                Categorie = value ?? throw new ArgumentException("Categorie is verplicht");
             }
         }
 
