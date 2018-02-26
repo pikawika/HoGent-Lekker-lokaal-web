@@ -1,4 +1,4 @@
-@charset "utf-8";
+﻿@charset "utf-8";
 
 /*
 ––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
@@ -125,7 +125,7 @@ a {
 
 a:hover,
 a:focus {
-    color: #26cc71;
+    color: #55abff;
     text-decoration: none;
 }
 
@@ -2668,7 +2668,7 @@ label {
 }
 
 .color-h-green:hover {
-    color: #2ed87b !important;
+    color: #314555 !important;
 }
 
 .color-h-blue:hover {
@@ -4271,8 +4271,8 @@ fieldset[disabled] .btn {
 .btn:active,
 .btn.active {
     color: #fff;
-    background-color: #25c76f;
-    border-color: #25c76f;
+    background-color: #55abff;
+    border-color: #55abff;
 }
 
 .btn.btn-link:hover,
@@ -4282,7 +4282,7 @@ fieldset[disabled] .btn {
 .btn.btn-link:active,
 .btn.btn-link.active {
     background-color: transparent !important;
-    color: #25c76f;
+    color: #55abff;
 }
 
 .btn.btn-o:hover,
@@ -4291,7 +4291,7 @@ fieldset[disabled] .btn {
 .btn.btn-o.focus,
 .btn.btn-o:active,
 .btn.btn-o.active {
-    border-color: #25c76f;
+    border-color: #55abff;
 }
 
 

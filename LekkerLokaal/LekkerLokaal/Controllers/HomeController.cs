@@ -12,9 +12,13 @@ namespace LekkerLokaal.Controllers
     public class HomeController : Controller
     {
         private readonly IBonRepository _bonRepository;
-        public HomeController(IBonRepository bonRepository)
+        private readonly ICategorieRepository _categorieRepository;
+        private readonly IHandelaarRepository _handelaarRepository;
+        public HomeController(IBonRepository bonRepository, ICategorieRepository categorieRepository, IHandelaarRepository handelaarRepository)
         {
             _bonRepository = bonRepository;
+            _categorieRepository = categorieRepository;
+            _handelaarRepository = handelaarRepository;
         }
 
         public IActionResult Index()

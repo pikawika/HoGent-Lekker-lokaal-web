@@ -34,6 +34,8 @@ namespace LekkerLokaal
 
             services.AddScoped<LekkerLokaalDataInitializer>();
             services.AddScoped<IBonRepository, BonRepository>();
+            services.AddScoped<ICategorieRepository, CategorieRepository>();
+            services.AddScoped<IHandelaarRepository, HandelaarRepository>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
