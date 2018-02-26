@@ -8,11 +8,11 @@ namespace LekkerLokaal.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Bestelling> Bestellingen { get; set; }
-        public DbSet<Bon> Bonnen { get; set; }
-        public DbSet<Categorie> Categorieen { get; set; }
-        public DbSet<Klant> Klanten { get; set; }
-        public DbSet<Handelaar> Handelaars { get; set; }
+        public DbSet<Bestelling> Bestelling { get; set; }
+        public DbSet<Bon> Bon { get; set; }
+        public DbSet<Categorie> Categorie { get; set; }
+        public DbSet<Klant> Klant { get; set; }
+        public DbSet<Handelaar> Handelaar { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {

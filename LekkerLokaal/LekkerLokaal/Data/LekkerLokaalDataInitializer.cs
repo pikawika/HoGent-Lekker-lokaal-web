@@ -39,7 +39,7 @@ namespace LekkerLokaal.Data
                 {
                     eten_drinken, events, beauty, fitness, interieur, kledij, shopping, uitstappen, huis_tuin, generiek
                 };
-                _dbContext.Categorieen.AddRange(categories);
+                _dbContext.Categorie.AddRange(categories);
 
                 Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 0, @"images\bon\1\thumb.jpg", eten_drinken);
                 Bon bon02 = new Bon("Dessertbar chez Bontinck", 1, 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 0, @"images\bon\2\thumb.jpg", eten_drinken);
@@ -61,7 +61,7 @@ namespace LekkerLokaal.Data
                     bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11, bon12
                 };
 
-                _dbContext.Bonnen.AddRange(bonnen);
+                _dbContext.Bon.AddRange(bonnen);
 
                 Klant user01 = new Klant("Brent", "Schets", Geslacht.Man, "brent@schets.com");
                 Klant user02 = new Klant("Bram", "De Coninck", Geslacht.Man, "bram@deconinck.com");
@@ -72,7 +72,7 @@ namespace LekkerLokaal.Data
                     user01, user02, user03
                 };
 
-                _dbContext.Klanten.AddRange(gebruikers);
+                _dbContext.Klant.AddRange(gebruikers);
 
                 Handelaar handelaar = new Handelaar("Wijnproverij BraLenBre", "bralenbre@gmail.com", "Lange Zoutstraat", 9300, "Aalst", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
                     , "BE 999 999 999", "@Test01", "string101");
@@ -82,7 +82,7 @@ namespace LekkerLokaal.Data
                     handelaar
                 };
 
-                _dbContext.Handelaars.AddRange(handelaars);
+                _dbContext.Handelaar.AddRange(handelaars);
 
                 await CreateUser("admin@sportsstore.be", "admin@sportsstore.be", "P@ssword1!", "Admin");
                 _dbContext.SaveChanges();
