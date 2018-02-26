@@ -8,5 +8,7 @@ namespace LekkerLokaal.Models.Domain
     public interface IHandelaarRepository
     {
         IEnumerable<Handelaar> GetAll();
+
+        Handelaar GetByBonId(int bonId);
     }
 }

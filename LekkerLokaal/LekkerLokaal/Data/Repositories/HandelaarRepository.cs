@@ -20,5 +20,10 @@ namespace LekkerLokaal.Data.Repositories
         {
             return _handelaars.AsNoTracking().ToList();
         }
+
+        public Handelaar GetByBonId(int bonId)
+        {
+            return _handelaars.FirstOrDefault(h => h.Cadeaubon.BonId.Equals(bonId));
+        }
     }
 }
