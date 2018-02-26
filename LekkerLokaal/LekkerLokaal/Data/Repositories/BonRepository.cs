@@ -14,7 +14,7 @@ namespace LekkerLokaal.Data.Repositories
         public BonRepository(ApplicationDbContext context)
         {
             _context = context;
-            _bonnen = context.Bonnen;
+            _bonnen = context.Bon;
         }
         public IEnumerable<Bon> GetAll()
         {

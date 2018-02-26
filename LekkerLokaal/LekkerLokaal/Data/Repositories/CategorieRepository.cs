@@ -15,7 +15,7 @@ namespace LekkerLokaal.Data.Repositories
         public CategorieRepository(ApplicationDbContext context)
         {
             _context = context;
-            _categorieen = context.Categorieen;
+            _categorieen = context.Categorie;
         }
 
         public IEnumerable<Categorie> GetAll()
