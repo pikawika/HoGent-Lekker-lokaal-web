@@ -73,7 +73,11 @@ namespace LekkerLokaal.Data
                 };
 
 <<<<<<< HEAD
+<<<<<<< HEAD
                 _dbContext.Persoon.AddRange(personen);
+=======
+                _dbContext.Klant.AddRange(gebruikers);
+>>>>>>> da95159384280d3a4363e7317c6f00f9b90b9167
 =======
                 _dbContext.Klant.AddRange(gebruikers);
 >>>>>>> da95159384280d3a4363e7317c6f00f9b90b9167
