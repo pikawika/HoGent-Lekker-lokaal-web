@@ -74,15 +74,8 @@ namespace LekkerLokaal.Data
                     user01, user02, user03
                 };
 
-<<<<<<< HEAD
-<<<<<<< HEAD
                 _dbContext.Persoon.AddRange(personen);
-=======
-                _dbContext.Klant.AddRange(gebruikers);
->>>>>>> da95159384280d3a4363e7317c6f00f9b90b9167
-=======
-                _dbContext.Klant.AddRange(gebruikers);
->>>>>>> da95159384280d3a4363e7317c6f00f9b90b9167
+
 
                 Handelaar handelaar = new Handelaar("Wijnproverij BraLenBre", "bralenbre@gmail.com", "Lange Zoutstraat", 9300, "Aalst", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
                     , "BE 999 999 999", "@Test01", "string101");

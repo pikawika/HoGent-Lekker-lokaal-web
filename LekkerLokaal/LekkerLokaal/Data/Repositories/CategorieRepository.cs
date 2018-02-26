@@ -26,7 +26,7 @@ namespace LekkerLokaal.Data.Repositories
         public Dictionary<Categorie, int> GetTop9WithAmount()
         {
             var map = new Dictionary<Categorie, int>();
-            var categorieen = _context.Categorieen.Include(c => c.Bonnen).OrderByDescending(c => c.Bonnen.Count).Take(9);
+            var categorieen = _context.Categorie.Include(c => c.Bonnen).OrderByDescending(c => c.Bonnen.Count).Take(9);
 
             foreach (Categorie cat in categorieen)
             {
