@@ -14,7 +14,7 @@ namespace LekkerLokaal.Data.Repositories
         public HandelaarRepository(ApplicationDbContext context)
         {
             _context = context;
-            _handelaars = context.Handelaars;
+            _handelaars = context.Handelaar;
         }
         public IEnumerable<Handelaar> GetAll()
         {

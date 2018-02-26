@@ -18,6 +18,7 @@ namespace LekkerLokaal.Models.Domain
         public Bon Cadeaubon { get; set; }
         public string Wachtwoord { get; set; }
         public string Afbeelding { get; set; }
+        public Persoon Contactpersoon { get; set; }
 
         protected Handelaar()
         {
