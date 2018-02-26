@@ -8,5 +8,7 @@ namespace LekkerLokaal.Models.Domain
     public interface ICategorieRepository
     {
         IEnumerable<Categorie> GetAll();
+
+        Dictionary<Categorie, int> GetTop9WithAmount();
     }
 }

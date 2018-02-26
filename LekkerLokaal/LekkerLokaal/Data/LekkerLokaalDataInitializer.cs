@@ -24,16 +24,16 @@ namespace LekkerLokaal.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                Categorie eten_drinken = new Categorie("Eten & drinken");
-                Categorie events = new Categorie("Events");
-                Categorie beauty = new Categorie("Beauty");
-                Categorie fitness = new Categorie("Fitness");
-                Categorie interieur = new Categorie("Interieur");
-                Categorie kledij = new Categorie("Kledij");
-                Categorie shopping = new Categorie("Shopping");
-                Categorie uitstappen = new Categorie("Uitstappen");
-                Categorie huis_tuin = new Categorie("Huis & Tuin");
-                Categorie generiek = new Categorie("Generiek");
+                Categorie eten_drinken = new Categorie("Eten & drinken", "fa-cutlery");
+                Categorie events = new Categorie("Events", "fa-calendar");
+                Categorie beauty = new Categorie("Beauty", "fa-female");
+                Categorie fitness = new Categorie("Fitness", "fa-bolt");
+                Categorie interieur = new Categorie("Interieur", "fa-image");
+                Categorie kledij = new Categorie("Kledij", "fa-umbrella");
+                Categorie shopping = new Categorie("Shopping", "fa-shopping-cart");
+                Categorie uitstappen = new Categorie("Uitstappen", "fa-plane");
+                Categorie huis_tuin = new Categorie("Huis & Tuin", "fa-home");
+                Categorie generiek = new Categorie("Generiek", "fa-gift");
 
                 var categories = new List<Categorie>
                 {
@@ -41,6 +41,7 @@ namespace LekkerLokaal.Data
                 };
                 _dbContext.Categorieen.AddRange(categories);
 
+                
                 Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 0, @"images\bon\1\thumb.jpg", eten_drinken);
                 Bon bon02 = new Bon("Dessertbar chez Bontinck", 1, 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 0, @"images\bon\2\thumb.jpg", eten_drinken);
                 Bon bon03 = new Bon("Bierspecialist Schets", 1, 20, "Meer dan 70 Belgische bieren in een gezellige kroeg.", 0, @"images\bon\3\thumb.jpg", eten_drinken);
@@ -56,9 +57,10 @@ namespace LekkerLokaal.Data
                 Bon bon11 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 0, @"images\bon\11\thumb.jpg", uitstappen);
                 Bon bon12 = new Bon("Bloemencenter Brenk", 1, 35, "Stel zelf uw setje bloemen samen met deze bon.", 0, @"images\bon\12\thumb.jpg", huis_tuin);
 
+
                 var bonnen = new List<Bon>
                 {
-                    bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11, bon12
+                   bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11, bon12
                 };
 
                 _dbContext.Bonnen.AddRange(bonnen);

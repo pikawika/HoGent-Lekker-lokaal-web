@@ -105,18 +105,12 @@
                                 <li>
                                     <a href="coupons_grid.html">Categorieën</a>
                                     <ul>
-                                        <li>
-                                            <a href="coupons_grid.html">Verjaardag</a>
-                                        </li>
-                                        <li>
-                                            <a href="coupons_grid_sidebar.html">Nieuwjaar</a>
-                                        </li>
-                                        <li>
-                                            <a href="coupons_list.html">Feestdagen</a>
-                                        </li>
-                                        <li>
-                                            <a href="coupons_list.html">Valentijn</a>
-                                        </li>
+                                        @foreach (var categorie in ViewBag.AlleCategorien)
+                                        {
+                                            <li>
+                                                <a href="#"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
+                                            </li>
+                                        }
                                     </ul>
                                 </li>
                                 <li>

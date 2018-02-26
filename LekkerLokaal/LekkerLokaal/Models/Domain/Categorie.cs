@@ -11,6 +11,8 @@ namespace LekkerLokaal.Models.Domain
 
         private string _naam;
 
+        public string Icon { get; set; }
+
         public string Naam
         {
             get
@@ -32,9 +34,11 @@ namespace LekkerLokaal.Models.Domain
             Bonnen = new HashSet<Bon>();
         }
 
-        public Categorie(string name) : this()
+        public Categorie(string name, String icon) : this()
         {
             Naam = name;
+            Icon = icon;
+
         }
     }
 }
