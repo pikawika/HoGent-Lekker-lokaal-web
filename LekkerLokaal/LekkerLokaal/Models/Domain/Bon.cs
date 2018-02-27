@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Bon
+    public class Bon : Adresgegevens
     {
         public int BonId { get; private set; }
 
@@ -53,7 +53,6 @@ namespace LekkerLokaal.Models.Domain
         public string Beschrijving { get; set; }
         public int AantalBesteld { get; set; }
         public string Afbeelding { get; set; }
-        public string Gemeente { get; set; }
         public Handelaar Handelaar { get; set; }
 
         public Categorie _categorie;
@@ -69,9 +68,14 @@ namespace LekkerLokaal.Models.Domain
             }
         }
 
+        public string Straat { get; set; }
+        public string Huisnummer { get; set; }
+        public int Postcode { get; set; }
+        public string Gemeente { get; set; }
+
         protected Bon() { }
 
-        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string gemeente, Handelaar handelaar) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar) : this()
         {
             Naam = naam;
             MaxPrijs = maxprijs;
@@ -80,6 +84,9 @@ namespace LekkerLokaal.Models.Domain
             AantalBesteld = aantalBesteld;
             Afbeelding = afbeelding;
             Categorie = categorie;
+            Straat = straat;
+            Huisnummer = huisnummer;
+            Postcode = postcode;
             Gemeente = gemeente;
             Handelaar = handelaar;
         }
