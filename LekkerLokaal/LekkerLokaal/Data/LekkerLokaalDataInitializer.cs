@@ -42,39 +42,110 @@ namespace LekkerLokaal.Data
                 };
                 _dbContext.Categorie.AddRange(categories);
 
+                Handelaar BraLenBre = new Handelaar("Wijnproeverij BraLenBre", "bralenbre@gmail.com", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
+                    , "BE 999 999 999", "@Test01", "string101", "Lange Zoutstraat", "13" , 9300, "Aalst");
 
-                Handelaar BraLenBre = new Handelaar("Wijnproverij BraLenBre", "bralenbre@gmail.com", "Lange Zoutstraat", 9300, "Aalst", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
-                    , "BE 999 999 999", "@Test01", "string101");
+                Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar04 = new Handelaar("De Coninck's", "coninck@gmail.com", "De lekkerste cocktails zijn hier te vinden. Alleen hier te vinden tegen een goed prijs!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar05 = new Handelaar("Wijnproeverij BraLenBre", "bralenbre@gmail.com", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
+                    , "BE 999 999 999", "@Test01", "string101", "Lange Zoutstraat", "13", 9300, "Aalst");
+                Handelaar Handelaar06 = new Handelaar("'t Sandwichke", "sandwich@gmail.com", "Voor al uw vegatarische noden kan u bij ons terecht.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar07 = new Handelaar("McDonalds", "mc@gmail.com", "Voor een snelle hap moet u bij ons zijn!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar08 = new Handelaar("SOS Piet", "sospiet@gmail.com", "Het echte restaurant van SOS Piet. Altijd de beste maatlijd voor een gezonde prijs!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar09 = new Handelaar("CoBoSh", "cobosh@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                
+                Handelaar Handelaar11 = new Handelaar("Fitness Basic-Fit", "basicfit@gmail.com", "Bekenste fitness van België met vestigingen over het hele land.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar21 = new Handelaar("Aalst", "aalst@gmail.com", "De recreatiedienst van Aalst staat in voor tal van speciale activiteiten.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar22 = new Handelaar("Walibi", "walibi@gmail.com", "Een pretpark voor klein en groot.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar23 = new Handelaar("NMBS", "trein@gmail.com", "De spoorwegdienst van België. Staakt liever dan te werken.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar24 = new Handelaar("Disneyland Paris", "parijs@gmail.com", "Een van de grootste pretparken in Frankrijk.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar25 = new Handelaar("Hamme", "hamme@gmail.com", "Stad Hamme", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar26 = new Handelaar("Breemdonk", "breemdonk@gmail.com", "Gemeente Breemdonk", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar31 = new Handelaar("Brenk", "brenk@gmail.com", "Stel zelf uw setje bloemen samen met deze bon.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar32 = new Handelaar("De Mol", "molleken@gmail.com", "Heb je grond nodig voor in een pot", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar33 = new Handelaar("Schelfhout", "schelfhout@gmail.com", "Schelfhout, waar moet je andes zijn!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar34 = new Handelaar("Liesje", "lies@gmail.com", "Lies, verkoopt ook wel een madelief", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar35 = new Handelaar("Funa Lima", "funa_lima@gmail.com", "Vissen, fonteinen, dieraccesoire...", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar36 = new Handelaar("Blub", "blub@gmail.com", "Blub, de winkel voor vis enthousiasten", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar37 = new Handelaar("GBontinck", "grasb@gmail.com", "Jaren ervaring in het snoeien van alle gazons", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar38 = new Handelaar("Aveve", "aveve@gmail.com", "Bij de boerenbond vind je altijd wat je zoekt", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar39 = new Handelaar("Groener Gras", "groengras@gmail.com", "Gazon voorzieningen voor iedereen die een groen gazon wil!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                
+                Handelaar Handelaar41 = new Handelaar("Pukkelpop", "ppk@gmail.com", "Tickets of coupons voor pukkelpok.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar42 = new Handelaar("Bierfeesten", "bierfeesten@gmail.com", "De veste feesten in Lokeren: De Lokerse Bierfeesten!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar43 = new Handelaar("Gentse Feesten", "feesten-gent@gmail.com", "Het grootste feest in Gent!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar44 = new Handelaar("Gameforce", "games@gmail.com", "Grootste game beurs in België. Nu ook kortingsbonnen verkrijgbaar!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar45 = new Handelaar("Garage Ferrari", "ferfer@gmail.com", "Beste cadeau voor een Ferrari liefhebber!", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar46 = new Handelaar("Facts", "facts@gmail.com", "Een van de grootste cosplay beurzen van België.", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar51 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar52 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar53 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar61 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar62 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar63 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar64 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar65 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar66 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar67 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar68 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar69 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar71 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar72 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar73 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar74 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar75 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar76 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar77 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar78 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar81 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar82 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar83 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar84 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar85 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar86 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar87 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar88 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+                Handelaar Handelaar89 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
+
+                Handelaar Handelaar91 = new Handelaar("Generiek", "generiek@gmail.com", "generiek", "BE 999 999 999", "@Test01", "string101", "straat", "huisnummer", 9260, "Schellebelle");
 
                 var handelaars = new List<Handelaar>
                 {
-                    BraLenBre
+                    BraLenBre, Handelaar01, Handelaar02, Handelaar03, Handelaar04, Handelaar05, Handelaar06, Handelaar07, Handelaar08, Handelaar09, Handelaar11, Handelaar21, Handelaar22, Handelaar23, Handelaar24, Handelaar25, Handelaar26, Handelaar31, Handelaar32, Handelaar33, Handelaar34, Handelaar35, Handelaar36, Handelaar37, Handelaar38, Handelaar39, Handelaar41, Handelaar42, Handelaar43, Handelaar44, Handelaar45, Handelaar46, Handelaar51, Handelaar52, Handelaar53, Handelaar61, Handelaar62, Handelaar63, Handelaar64, Handelaar65, Handelaar66, Handelaar67, Handelaar68, Handelaar69, Handelaar71, Handelaar72, Handelaar73, Handelaar74, Handelaar75, Handelaar76, Handelaar77, Handelaar78, Handelaar81, Handelaar82, Handelaar83, Handelaar84, Handelaar85, Handelaar86, Handelaar87, Handelaar88, Handelaar89, Handelaar91
                 };
 
                 _dbContext.Handelaar.AddRange(handelaars);
 
 
-                Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 17, @"images\bon\1\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon02 = new Bon("Dessertbar chez Bontinck", 1, 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 242, @"images\bon\2\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon03 = new Bon("Bierspecialist Schets", 1, 20, "Meer dan 70 Belgische bieren in een gezellige kroeg.", 42, @"images\bon\3\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon04 = new Bon("De Coninck's cocktail", 1, 15, "Een VIP cocktailbar met live optredens van lokale muzikanten.", 24, @"images\bon\4\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon05 = new Bon("Wijnproeverij BraLenBre", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 41, @"images\bon\5\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon06 = new Bon("Veggiebar 't Sandwichke", 1, 30, "Het bewijs dat vegetarisch eten lekker kan zijn.", 45, @"images\bon\6\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon07 = new Bon("Fastfood McDonalds", 1, 5, "De keten met keuzes voor iedereen.", 246, @"images\bon\7\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon08 = new Bon("Restaurant SOS Piet", 1, 150, "5 sterren restaurant met de enige echte SOS Piet als kok.", 21, @"images\bon\8\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon09 = new Bon("Wijnproeverij CoBoSh", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 47, @"images\bon\9\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon10 = new Bon("Wijnproeverij CoBoSh", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 22, @"images\bon\10\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
+                Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 17, @"images\bon\1\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar01);
+                Bon bon02 = new Bon("Dessertbar chez Bontinck", 1, 30, "Met passie gemaakte dessertjes in het mooie Schellebelle.", 242, @"images\bon\2\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar02);
+                Bon bon03 = new Bon("Bierspecialist Schets", 1, 20, "Meer dan 70 Belgische bieren in een gezellige kroeg.", 42, @"images\bon\3\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar03);
+                Bon bon04 = new Bon("De Coninck's cocktail", 1, 15, "Een VIP cocktailbar met live optredens van lokale muzikanten.", 24, @"images\bon\4\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar04);
+                Bon bon05 = new Bon("Wijnproeverij BraLenBre", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 41, @"images\bon\5\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar05);
+                Bon bon06 = new Bon("Veggiebar 't Sandwichke", 1, 30, "Het bewijs dat vegetarisch eten lekker kan zijn.", 45, @"images\bon\6\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar06);
+                Bon bon07 = new Bon("Fastfood McDonalds", 1, 5, "De keten met keuzes voor iedereen.", 246, @"images\bon\7\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar07);
+                Bon bon08 = new Bon("Restaurant SOS Piet", 1, 150, "5 sterren restaurant met de enige echte SOS Piet als kok.", 21, @"images\bon\8\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar08);
+                Bon bon09 = new Bon("Wijnproeverij CoBoSh", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 47, @"images\bon\9\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar09);
+                Bon bon10 = new Bon("Wijnproeverij CoBoSh", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 22, @"images\bon\10\thumb.jpg", eten_drinken, "straat", "huisnummer", 9260, "Schellebelle", Handelaar09);
 
 
-                Bon bon11 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 83, @"images\bon\11\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon12 = new Bon("Fitness Basic-Fit Aalst", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\12\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon13 = new Bon("Fitness Basic-Fit Gent", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 8, @"images\bon\13\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon14 = new Bon("Fitness Basic-Fit Brussel", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 53, @"images\bon\14\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon15 = new Bon("Fitness Basic-Fit Brugge", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 53, @"images\bon\15\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon16 = new Bon("Fitness Basic-Fit Sint-Truiden", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 72, @"images\bon\16\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon17 = new Bon("Fitness Basic-Fit ", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 65, @"images\bon\17\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon18 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 22, @"images\bon\18\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
-                Bon bon19 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\19thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
+                Bon bon11 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 83, @"images\bon\11\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon12 = new Bon("Fitness Basic-Fit Aalst", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\12\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon13 = new Bon("Fitness Basic-Fit Gent", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 8, @"images\bon\13\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon14 = new Bon("Fitness Basic-Fit Brussel", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 53, @"images\bon\14\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon15 = new Bon("Fitness Basic-Fit Brugge", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 53, @"images\bon\15\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon16 = new Bon("Fitness Basic-Fit Sint-Truiden", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 72, @"images\bon\16\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon17 = new Bon("Fitness Basic-Fit ", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 65, @"images\bon\17\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon18 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 22, @"images\bon\18\thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
+                Bon bon19 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\19thumb.jpg", fitness, "straat", "huisnummer", 9260, "Schellebelle", Handelaar11);
 
 
                 Bon bon21 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 63, @"images\bon\11\thumb.jpg", uitstappen, "straat", "huisnummer", 9260, "Schellebelle", BraLenBre);
