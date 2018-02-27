@@ -9,6 +9,7 @@ namespace LekkerLokaal.Models.Domain
     {
         public Bon Bon { get; set; }
         public int Aantal { get; set; }
-        public decimal Totaal => Bon.Prijs * Aantal;
+        //error
+        public decimal Totaal => Bon.MaxPrijs * Aantal;
     }
 }

@@ -8,11 +8,13 @@ namespace LekkerLokaal.Models.Domain
     public class Bon
     {
         public int BonId { get; private set; }
+
+        private string _naam;
         public string Naam
         {
             get
             {
-                return Naam;
+                return _naam;
             }
             set
             {
@@ -20,39 +22,58 @@ namespace LekkerLokaal.Models.Domain
                     throw new ArgumentException("Een bon heeft een naam nodig");
                 if (value.Length > 30)
                     throw new ArgumentException("De naam van een bon mag maximaal 30 karakters lang zijn");
-                Naam = value;
+                _naam = value;
             }
         }
-        public decimal Prijs {
-            get { return Prijs; }
+
+        private decimal _minprijs;
+
+        public decimal MinPrijs {
+            get { return _minprijs; }
             set
             {
                 if (value < 1 || value > 3000)
                     throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
-                Prijs = value;
+                _minprijs = value;
+            }
+        }
+
+        private decimal _maxprijs;
+
+        public decimal MaxPrijs
+        {
+            get { return _maxprijs; }
+            set
+            {
+                if (value < 1 || value > 3000)
+                    throw new ArgumentException("De prijs van een bon moet tussen € 1 en € 3000 liggen");
+                _maxprijs = value;
             }
         }
         public string Beschrijving { get; set; }
         public int AantalBesteld { get; set; }
         public string Afbeelding { get; set; }
+
+        public Categorie _categorie;
         public Categorie Categorie
         {
             get
             {
-                return Categorie;
+                return _categorie;
             }
             set
             {
-                Categorie = value ?? throw new ArgumentException("Categorie is verplicht");
+                _categorie = value ?? throw new ArgumentException("Categorie is verplicht");
             }
         }
 
         protected Bon() { }
 
-        public Bon(string naam, decimal prijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie) : this()
         {
             Naam = naam;
-            Prijs = prijs;
+            MaxPrijs = maxprijs;
+            MinPrijs = minprijs;
             Beschrijving = beschrijving;
             AantalBesteld = aantalBesteld;
             Afbeelding = afbeelding;

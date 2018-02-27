@@ -13,7 +13,10 @@ namespace LekkerLokaal.Models.Domain
         public Geslacht Geslacht { get; set; }
         public string Emailadres { get; set; }
 
-        protected Persoon() { }
+        protected Persoon()
+        {
+
+        }
 
         public Persoon(string voornaam, string familienaam, Geslacht geslacht, string emailadres)
         {
@@ -22,5 +25,6 @@ namespace LekkerLokaal.Models.Domain
             Geslacht = geslacht;
             Emailadres = emailadres;
         }
+
     }
 }
