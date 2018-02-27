@@ -147,7 +147,7 @@ namespace LekkerLokaal.Data
                 Bon bon16 = new Bon("Fitness Basic-Fit Sint-Truiden", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 72, @"images\bon\16\thumb.jpg", fitness, "Luikersteenweg ", "40", 3800, "Sint-Truiden", Handelaar11);
                 Bon bon17 = new Bon("Fitness Basic-Fit Wetteren", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 65, @"images\bon\17\thumb.jpg", fitness, "Cooppallaan ", "40", 9230, "Wetteren", Handelaar11);
                 Bon bon18 = new Bon("Fitness Basic-Fit Wichelen", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 22, @"images\bon\18\thumb.jpg", fitness, "Paepestraat", "178", 9260, "Wichelen", Handelaar11);
-                Bon bon19 = new Bon("Fitness Basic-Fit Lede", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\19thumb.jpg", fitness, "Kasteeldreef", "15", 9340, "Lede", Handelaar11);
+                Bon bon19 = new Bon("Fitness Basic-Fit Lede", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 75, @"images\bon\19\thumb.jpg", fitness, "Kasteeldreef", "15", 9340, "Lede", Handelaar11);
 
 
                 Bon bon21 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 63, @"images\bon\11\thumb.jpg", uitstappen, "Arbeidstraat", "14", 9300, "Aalst", Handelaar01);
