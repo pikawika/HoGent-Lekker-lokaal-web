@@ -15,7 +15,7 @@ namespace LekkerLokaal.Models.Domain
         public string Gemeente { get; set; }
         public string Beschrijving { get; set; }
         public string BTW_Nummer { get; set; }
-        public Bon Cadeaubon { get; set; }
+        public ICollection<Bon> Cadeaubonnen { get; }
         public string Wachtwoord { get; set; }
         public string Afbeelding { get; set; }
         public Persoon Contactpersoon { get; set; }
@@ -36,11 +36,12 @@ namespace LekkerLokaal.Models.Domain
             BTW_Nummer = btw_nummer;
             Wachtwoord = wachtwoord;
             Afbeelding = afbeelding;
+            Cadeaubonnen = new HashSet<Bon>();
         }
 
         public void VoegBonToe(Bon bon)
         {
-            Cadeaubon = bon;
+            Cadeaubonnen.Add(bon);
         }
 
         public void MeldAan()

@@ -51,11 +51,54 @@ namespace LekkerLokaal.Data
                 Bon bon06 = new Bon("Veggiebar 't Sandwichke", 1, 30, "Het bewijs dat vegetarisch eten lekker kan zijn.", 0, @"images\bon\6\thumb.jpg", eten_drinken);
                 Bon bon07 = new Bon("Fastfood McDonalds", 1, 5, "De keten met keuzes voor iedereen.", 0, @"images\bon\7\thumb.jpg", eten_drinken);
                 Bon bon08 = new Bon("Restaurant SOS Piet", 1, 150, "5 sterren restaurant met de enige echte SOS Piet als kok.", 0, @"images\bon\8\thumb.jpg", eten_drinken);
+                Bon bon09 = new Bon("Wijnproeverij CoBoSh", 1, 75, "Keuze uit verschillende wijnen vergezeld met een hapje.", 0, @"images\bon\5\thumb.jpg", eten_drinken);
 
-                Bon bon09 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 0, @"images\bon\9\thumb.jpg", generiek);
+                
                 Bon bon10 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness);
-                Bon bon11 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 0, @"images\bon\11\thumb.jpg", uitstappen);
-                Bon bon12 = new Bon("Bloemencenter Brenk", 1, 35, "Stel zelf uw setje bloemen samen met deze bon.", 0, @"images\bon\12\thumb.jpg", huis_tuin);
+                Bon bon11 = new Bon("Fitness Basic-Fit Aalst", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon12 = new Bon("Fitness Basic-Fit Gent", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon13 = new Bon("Fitness Basic-Fit Brussel", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon14 = new Bon("Fitness Basic-Fit Brugge", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon15 = new Bon("Fitness Basic-Fit Sint-Truiden", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon16 = new Bon("Fitness Basic-Fit ", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon17 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon18 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+                Bon bon19 = new Bon("Fitness Basic-Fit", 1, 30, "Bekenste fitness van België met vestigingen over het hele land.", 0, @"images\bon\10\thumb.jpg", fitness); ;
+
+                Bon bon20 = new Bon("Nachtwandeling Aalst at night", 1, 10, "Geniet van de sterrenhemel in de mooie streken van Aalst (met gids).", 0, @"images\bon\11\thumb.jpg", uitstappen);
+                Bon bon21;
+                Bon bon22;
+                Bon bon23;
+                Bon bon24;
+                Bon bon25;
+                Bon bon26;
+                Bon bon27;
+                Bon bon28;
+                Bon bon29;
+
+                Bon bon30 = new Bon("Bloemencenter Brenk", 1, 35, "Stel zelf uw setje bloemen samen met deze bon.", 0, @"images\bon\12\thumb.jpg", huis_tuin);
+                Bon bon31;
+                Bon bon32;
+                Bon bon33;
+                Bon bon34;
+                Bon bon35;
+                Bon bon36;
+                Bon bon37;
+                Bon bon38;
+                Bon bon39;
+
+                Bon bon40;
+                Bon bon41;
+                Bon bon42;
+                Bon bon43;
+                Bon bon44;
+                Bon bon45;
+                Bon bon46;
+                Bon bon47;
+                Bon bon48;
+                Bon bon49;
+
+                Bon bon99 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 0, @"images\bon\9\thumb.jpg", generiek);
 
 
                 var bonnen = new List<Bon>
