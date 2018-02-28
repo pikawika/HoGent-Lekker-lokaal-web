@@ -28,6 +28,12 @@
     overflow: hidden;
 }
 
+.slide-regio-lekkerlokaal {
+    color : white !important;
+    cursor: pointer;
+}
+
+
 /* ––––––––––––––––––––––––––––––––––––––––––––– */
 .lnr {
     font-weight: bold;

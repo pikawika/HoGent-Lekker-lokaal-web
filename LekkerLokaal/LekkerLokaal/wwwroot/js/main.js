@@ -228,7 +228,7 @@
      Carousel slider initiation
     -------------------------------------*/
     var owl_carousel = function() {
-        $('.owl-slider').each(function () {
+        $('.owl-slider-LekkerLokaal-Regio').each(function () {
             var carousel = $(this),
                 autoplay_hover_pause = carousel.data('autoplay-hover-pause'),
                 loop = carousel.data('loop'),
@@ -300,7 +300,12 @@
                     }
                 }
             });
-
+            $(".volgende-slide-regio").click(function () {
+                $(".owl-slider-LekkerLokaal-Regio").trigger('next.owl.carousel');
+            })
+            $(".vorige-slide-regio").click(function () {
+                $(".owl-slider-LekkerLokaal-Regio").trigger('prev.owl.carousel');
+            })
         });
     };
 
