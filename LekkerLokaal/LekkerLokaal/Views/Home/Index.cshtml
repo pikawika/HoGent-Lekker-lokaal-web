@@ -30,7 +30,7 @@
                             @foreach (var bon in ViewBag.Top3Bonnen)
                             {
                                 <div class="deal-single panel item">
-                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.Afbeelding">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.Afbeelding.Replace("\\","\\\\")">
                                         <div class="deal-about p-20 pos-a bottom-0 left-0">
                                             <div class="rating mb-10">
                                                 <span class="rating-stars" data-rating="5">
