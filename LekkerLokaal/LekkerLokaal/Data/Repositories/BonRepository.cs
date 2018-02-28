@@ -18,7 +18,12 @@ namespace LekkerLokaal.Data.Repositories
         }
         public IEnumerable<Bon> GetAll()
         {
-            return _bonnen.AsNoTracking().ToList();
+            return _bonnen.OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
+        }
+
+        public IEnumerable<Bon> GetTop3()
+        {
+            return _bonnen.OrderByDescending(b => b.AantalBesteld).Take(3).AsNoTracking().ToList();
         }
     }
 }
