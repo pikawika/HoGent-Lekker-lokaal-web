@@ -21,6 +21,12 @@
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
 
+.slick-lekker-lokaal {
+    margin-bottom: 14px;
+    margin-right: 7px;
+    margin-left: 7px;
+}
+
 .height-70px {
     display: block;
     width: 100%;
@@ -28,8 +34,12 @@
     overflow: hidden;
 }
 
-.slide-regio-lekkerlokaal {
-    color : white !important;
+.slide-navigation-lekkerlokaal {
+    float:right;
+}
+
+.slide-navigation-lekkerlokaal > a{
+    color: white !important;
     cursor: pointer;
 }
 

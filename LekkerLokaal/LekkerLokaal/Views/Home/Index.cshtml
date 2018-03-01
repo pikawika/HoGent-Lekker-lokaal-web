@@ -25,7 +25,7 @@
                         </aside>
                     </div>
                     <div class="col-xs-12 col-md-8 col-lg-9">
-                        <div class="header-deals-slider owl-slider" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
+                        <div class="header-deals-slider owl-slider owl-slider-index-header" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
 
                             @foreach (var bon in ViewBag.Top3Bonnen)
                             {
@@ -112,59 +112,66 @@
 
             <section class="section latest-deals-area ptb-30">
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
-                    <h3 style="color: white" class="section-title font-18">Meest verkochte cadeaubonnen</h3>
+                    <h3 style="color: white" class="section-title font-18">
+                        Meest verkochte cadeaubonnen
+                        <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                    </h3>
                 </header>
 
 
-                <div class="row row-masnory row-tb-20">
+                <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
                     @foreach (var bon in ViewBag.AlleBonnen)
                     {
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="coupon-item">
-                                <div class="coupon-single panel t-center">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="text-center p-20">
-                                                <img class="store-logo" src="@bon.Afbeelding" alt="">
-                                            </div>
-                                            <!-- end media -->
-                                        </div>
-                                        <!-- end col -->
-                                        <div class="col-xs-12">
-                                            <div class="panel-body">
-                                                <ul class="deal-meta list-inline mb-10">
-                                                    <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>@bon.Gemeente</li>
-                                                    <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
-                                                </ul>
+                        <div>
+                            <div>
+                                <div class="slick-lekker-lokaal">
+                                    <div class="col-xs-12">
+                                        <div class="coupon-item">
+                                            <div class="coupon-single panel t-center">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="text-center p-20">
+                                                            <img class="store-logo" src="@bon.Afbeelding" alt="">
+                                                        </div>
+                                                        <!-- end media -->
+                                                    </div>
+                                                    <!-- end col -->
+                                                    <div class="col-xs-12">
+                                                        <div class="panel-body">
+                                                            <ul class="deal-meta list-inline mb-10">
+                                                                <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>@bon.Gemeente</li>
+                                                                <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                                            </ul>
 
-                                                <div class="height-70px">
-                                                    <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
-                                                </div>
-                                                <div class="height-70px">
-                                                    <h5 class="deal-title mb-10">
-                                                        <a href="#">@bon.Beschrijving</a>
-                                                    </h5>
-                                                </div>
-                                                <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                <div class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                                </div>
+                                                            <div class="height-70px">
+                                                                <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
+                                                            </div>
+                                                            <div class="height-70px">
+                                                                <h5 class="deal-title mb-10">
+                                                                    <a href="#">@bon.Beschrijving</a>
+                                                                </h5>
+                                                            </div>
+                                                            <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                            <div class="showcode">
+                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                            </div>
 
-                                                <div style="margin-top: 10px" class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                            <div style="margin-top: 10px" class="showcode">
+                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end col -->
                                                 </div>
+                                                <!-- end row -->
                                             </div>
                                         </div>
-                                        <!-- end col -->
                                     </div>
-                                    <!-- end row -->
                                 </div>
                             </div>
                         </div>
                     }
-
-
                 </div>
             </section>
 
@@ -173,7 +180,7 @@
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
                     <h3 style="color: white" class="section-title font-18">
                         Populair in uw regio - location not implemented yet
-                        <a class="vorige-slide-regio slide-regio-lekkerlokaal"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-regio slide-regio-lekkerlokaal">volgende <i class="fa fa-arrow-circle-right"></i></a>
+                        <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-regio"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-regio">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                     </h3>
                 </header>
 
