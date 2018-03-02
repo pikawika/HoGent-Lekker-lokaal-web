@@ -108,11 +108,11 @@
                                     <a href="coupons_grid.html">Categorieën</a>
                                     <ul>
                                         @*@foreach (var categorie in ViewBag.AlleCategorien)
-                                        {
-                                            <li>
-                                                <a href="#"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
-                                            </li>
-                                        }*@
+                                            {
+                                                <li>
+                                                    <a href="#"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
+                                                </li>
+                                            }*@
                                     </ul>
                                 </li>
                                 <li>
@@ -168,6 +168,7 @@
         </header>
 
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
+
         @RenderBody()
     </div>
     <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
@@ -219,3 +220,7 @@
     <script type="text/javascript" src="/js/main.js"></script>
 </body>
 </html>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+}

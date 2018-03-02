@@ -11,10 +11,12 @@ namespace LekkerLokaal.Models.AccountViewModels
 
         [Required]
         [Display(Name = "Familienaam")]
+        [DataType(DataType.Text)]
         public string Familienaam { get; set; }
 
         [Required]
         [Display(Name = "Voornaam")]
+        [DataType(DataType.Text)]
         public string Voornaam { get; set; }
 
         [Required]
