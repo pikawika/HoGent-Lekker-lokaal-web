@@ -107,12 +107,12 @@
                                 <li>
                                     <a href="coupons_grid.html">Categorieën</a>
                                     <ul>
-                                        @*@foreach (var categorie in ViewBag.AlleCategorien)
+                                        @foreach (var categorie in ViewBag.AlleCategorien)
                                             {
                                                 <li>
                                                     <a href="#"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
                                                 </li>
-                                            }*@
+                                            }
                                     </ul>
                                 </li>
                                 <li>
@@ -146,10 +146,11 @@
                                     <a href="coupons_grid.html">Account</a>
                                     <ul>
                                         <li>
-                                            <a href="coupons_list.html">Log-in</a>
+                                            <a href="coupons_list.html">Meld aan</a>
                                         </li>
                                         <li>
-                                            <a href="coupons_grid.html">registreer</a>
+                                            @*<a href="coupons_grid.html">Registreer</a>*@
+                                            <a asp-controller="Account" asp-action="Register">Registreer</a>
                                         </li>
                                     </ul>
                                 </li>

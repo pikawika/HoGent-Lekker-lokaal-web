@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
+using LekkerLokaal.Models.Domain;
 
 namespace LekkerLokaal.Controllers
 {
@@ -24,17 +25,20 @@ namespace LekkerLokaal.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICategorieRepository _categorieRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ICategorieRepository categorieRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _categorieRepository = categorieRepository;
         }
 
         [TempData]
@@ -48,6 +52,7 @@ namespace LekkerLokaal.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -209,6 +214,7 @@ namespace LekkerLokaal.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
