@@ -8,6 +8,15 @@ namespace LekkerLokaal.Models.AccountViewModels
 {
     public class RegisterViewModel
     {
+
+        [Required]
+        [Display(Name = "Familienaam")]
+        public string Familienaam { get; set; }
+
+        [Required]
+        [Display(Name = "Voornaam")]
+        public string Voornaam { get; set; }
+
         [Required]
         [EmailAddress]
         [Display(Name = "Email")]
