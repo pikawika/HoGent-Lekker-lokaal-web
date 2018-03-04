@@ -1,0 +1,128 @@
+﻿@model RegisterHandelaarViewModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
+<main id="mainContent" class="main-content">
+    <div class="page-container ptb-60">
+        <div class="container">
+            <section class="sign-area panel p-40">
+                <h3 class="sign-title">Aanvraagformulier registratie nieuwe handelaar</h3>
+                <div class="row row-rl-0">
+                    <div class="col-sm-6 col-md-7 col-left">
+                        <form class="p-40" asp-route-returnUrl="@ViewData["Register"]" method="post">
+                            <div class="form-group">
+                                <label asp-for="NaamHandelszaak" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Naam handelszaak" asp-for="NaamHandelszaak">
+                                <span asp-validation-for="NaamHandelszaak" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="NaamContactpersoon" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Naam contactpersoon" asp-for="NaamContactpersoon">
+                                <span asp-validation-for="NaamContactpersoon" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="Email" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="E-mailadres" asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <label asp-for="Straat" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Straat" asp-for="Straat">
+                                <span asp-validation-for="Straat" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label asp-for="Huisnummer" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Nummer" asp-for="Huisnummer">
+                                <span asp-validation-for="Huisnummer" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-3">
+                                <label asp-for="Postcode" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Postcode" asp-for="Postcode">
+                                <span asp-validation-for="Postcode" class="text-danger"></span>
+                            </div>
+                            <div class="form-group col-sm-9">
+                                <label asp-for="Plaatsnaam" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Plaatsnaam" asp-for="Plaatsnaam">
+                                <span asp-validation-for="Plaatsnaam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label asp-for="BTWNummer" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="BTW Nummer$" asp-for="BTWNummer">
+                                <span asp-validation-for="BTWNummer" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="">Categorie waarin uw bedrijf het best past</label>
+                                <select class="form-control input-lg search-select">
+                                    <option>Kies een categorie</option>
+                                    <option>Naam</option>
+                                    <option>Ligging</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label class="">korte omschrijving van uw bedrijf</label>
+                                <input type="password" class="form-control input-lg" placeholder="korte omschrijving" required>
+                            </div>
+                            <div class="form-group">
+                                <label class="">Logo van uw bedrijf</label>
+                                <button type="submit" class="btn btn-block btn-lg" style="width: 250px; background-color: darkgrey">Upload</button>
+                            </div>
+
+                            <div class="custom-checkbox mb-20">
+                                <input type="checkbox" id="agree_terms" required>
+                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="terms_conditions.html" class="color-green">Gebruikersovereenkomsten</a>.</label>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-lg">Registratie aanvragen</button>
+                        </form>
+                        <span class="or">Of</span>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-right">
+                        <ul class="contact-list mb-40" style="margin: 20px">
+                            <li>
+                                <span class="icon lnr lnr-map-marker"></span>
+                                <h5>Adres</h5>
+                                <p class="color-mid">Arbeidstraat 14, 9300 Aalst</p>
+                            </li>
+                            <li>
+                                <span class="icon lnr lnr-envelope"></span>
+                                <h5>E-mailadrres</h5>
+                                <p class="color-mid">Info@lekkerlokaal.be</p>
+                            </li>
+                            <li>
+                                <span class="icon lnr lnr-phone-handset"></span>
+                                <h5>Telefoonnummer</h5>
+                                <p class="color-mid">+32 491 23 45 14</p>
+                            </li>
+                            <li>
+                                <span class="icon lnr lnr-database"></span>
+                                <h5>BTW nummer</h5>
+                                <p class="color-mid">BE 0833.582.168</p>
+                            </li>
+                        </ul>
+                        <ul class="social-icons social-icons--colored list-inline" style="margin: 15px">
+                            <li class="social-icons__item">
+                                <a href="#"><i class="fa fa-facebook"></i></a>
+                            </li>
+                            <li class="social-icons__item">
+                                <a href="#"><i class="fa fa-twitter"></i></a>
+                            </li>
+                            <li class="social-icons__item">
+                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                            </li>
+                            <li class="social-icons__item">
+                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                            </li>
+                            <li class="social-icons__item">
+                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </div>
+
+
+</main>
+<!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
