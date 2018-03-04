@@ -40,91 +40,91 @@ namespace LekkerLokaal.Data
                 {
                     eten_drinken, events, beauty, fitness, interieur, kledij, multimedia, uitstappen, huis_tuin, generiek
                 };
-                _dbContext.Categorie.AddRange(categories);
+                _dbContext.Categorieen.AddRange(categories);
                 
 
-                Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE 458 110 637", "password", @"images\handelaar\1\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE 476 452 406", "password", @"images\handelaar\2\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE 260 147 662", "password", @"images\handelaar\3\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar04 = new Handelaar("De Coninck's", "coninck@gmail.com", "De lekkerste cocktails zijn hier te vinden. Alleen hier te vinden tegen een goed prijs!", "BE 568 718 486", "password", @"images\handelaar\4\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE 458 110 637", @"images\handelaar\1\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE 476 452 406", @"images\handelaar\2\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE 260 147 662", @"images\handelaar\3\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar04 = new Handelaar("De Coninck's", "coninck@gmail.com", "De lekkerste cocktails zijn hier te vinden. Alleen hier te vinden tegen een goed prijs!", "BE 568 718 486", @"images\handelaar\4\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
                 Handelaar Handelaar05 = new Handelaar("Wijnproeverij Handelaar01", "Handelaar01@gmail.com", "Met deze bon kan je bij wijnproeverij Handelaar01 genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
-                    , "BE 305 678 557", "password", @"images\handelaar\5\thumb.jpg", "Lange Zoutstraat", "13", 9300, "Aalst");
-                Handelaar Handelaar06 = new Handelaar("'t Sandwichke", "sandwich@gmail.com", "Voor al uw vegatarische noden kan u bij ons terecht.", "BE 360 874 067", "password", @"images\handelaar\6\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar07 = new Handelaar("McDonalds", "mc@gmail.com", "Voor een snelle hap moet u bij ons zijn!", "BE 686 045 577", "password", @"images\handelaar\7\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar08 = new Handelaar("SOS Piet", "sospiet@gmail.com", "Het echte restaurant van SOS Piet. Altijd de beste maatlijd voor een gezonde prijs!", "BE 035 212 186", "password", @"images\handelaar\8\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar09 = new Handelaar("CoBoSh", "cobosh@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 327", "password", @"images\handelaar\9\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                    , "BE 305 678 557", @"images\handelaar\5\thumb.jpg", "Lange Zoutstraat", "13", 9300, "Aalst");
+                Handelaar Handelaar06 = new Handelaar("'t Sandwichke", "sandwich@gmail.com", "Voor al uw vegatarische noden kan u bij ons terecht.", "BE 360 874 067", @"images\handelaar\6\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar07 = new Handelaar("McDonalds", "mc@gmail.com", "Voor een snelle hap moet u bij ons zijn!", "BE 686 045 577", @"images\handelaar\7\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar08 = new Handelaar("SOS Piet", "sospiet@gmail.com", "Het echte restaurant van SOS Piet. Altijd de beste maatlijd voor een gezonde prijs!", "BE 035 212 186", @"images\handelaar\8\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar09 = new Handelaar("CoBoSh", "cobosh@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 327", @"images\handelaar\9\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
                 
 
-                Handelaar Handelaar11 = new Handelaar("Fitness Basic-Fit", "basicfit@gmail.com", "Bekenste fitness van België met vestigingen over het hele land.", "BE 652 760 204", "password", @"images\handelaar\10\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar11 = new Handelaar("Fitness Basic-Fit", "basicfit@gmail.com", "Bekenste fitness van België met vestigingen over het hele land.", "BE 652 760 204", @"images\handelaar\10\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar21 = new Handelaar("Aalst", "aalst@gmail.com", "De recreatiedienst van Aalst staat in voor tal van speciale activiteiten.", "BE 656 564 542", "password", @"images\handelaar\11\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar22 = new Handelaar("Walibi", "walibi@gmail.com", "Een pretpark voor klein en groot.", "BE 557 481 167", "password", @"images\handelaar\12\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar23 = new Handelaar("NMBS", "trein@gmail.com", "De spoorwegdienst van België. Staakt liever dan te werken.", "BE 815 755 657", "password", @"images\handelaar\13\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar24 = new Handelaar("Disneyland Paris", "parijs@gmail.com", "Een van de grootste pretparken in Frankrijk.", "BE 802 726 432", "password", @"images\handelaar\14\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar25 = new Handelaar("Hamme", "hamme@gmail.com", "Stad Hamme", "BE 263 282 287", "password", @"images\handelaar\15\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar26 = new Handelaar("Breemdonk", "breemdonk@gmail.com", "Gemeente Breemdonk", "BE 703 431 007", "password", @"images\handelaar\16\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar21 = new Handelaar("Aalst", "aalst@gmail.com", "De recreatiedienst van Aalst staat in voor tal van speciale activiteiten.", "BE 656 564 542", @"images\handelaar\11\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar22 = new Handelaar("Walibi", "walibi@gmail.com", "Een pretpark voor klein en groot.", "BE 557 481 167", @"images\handelaar\12\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar23 = new Handelaar("NMBS", "trein@gmail.com", "De spoorwegdienst van België. Staakt liever dan te werken.", "BE 815 755 657", @"images\handelaar\13\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar24 = new Handelaar("Disneyland Paris", "parijs@gmail.com", "Een van de grootste pretparken in Frankrijk.", "BE 802 726 432", @"images\handelaar\14\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar25 = new Handelaar("Hamme", "hamme@gmail.com", "Stad Hamme", "BE 263 282 287", @"images\handelaar\15\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar26 = new Handelaar("Breemdonk", "breemdonk@gmail.com", "Gemeente Breemdonk", "BE 703 431 007", @"images\handelaar\16\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar31 = new Handelaar("Brenk", "brenk@gmail.com", "Stel zelf uw setje bloemen samen met deze bon.", "BE 680 614 508", "password", @"images\handelaar\17\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar32 = new Handelaar("De Mol", "molleken@gmail.com", "Heb je grond nodig voor in een pot", "BE 415 655 144", "password", @"images\handelaar\18\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar33 = new Handelaar("Schelfhout", "schelfhout@gmail.com", "Schelfhout, waar moet je andes zijn!", "BE 376 468 351", "password", @"images\handelaar\19\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar34 = new Handelaar("Liesje", "lies@gmail.com", "Lies, verkoopt ook wel een madelief", "BE 368 526 450", "password", @"images\handelaar\20\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar35 = new Handelaar("Funa Lima", "funa_lima@gmail.com", "Vissen, fonteinen, dieraccesoire...", "BE 146 730 153", "password", @"images\handelaar\21\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar36 = new Handelaar("Blub", "blub@gmail.com", "Blub, de winkel voor vis enthousiasten", "BE 227 103 604", "password", @"images\handelaar\22\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar37 = new Handelaar("GBontinck", "grasb@gmail.com", "Jaren ervaring in het snoeien van alle gazons", "BE 250 653 443", "password", @"images\handelaar\23\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar38 = new Handelaar("Aveve", "aveve@gmail.com", "Bij de boerenbond vind je altijd wat je zoekt", "BE 262 005 555", "password", @"images\handelaar\24\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar39 = new Handelaar("Groener Gras", "groengras@gmail.com", "Gazon voorzieningen voor iedereen die een groen gazon wil!", "BE 773 202 200", "password", @"images\handelaar\25\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar31 = new Handelaar("Brenk", "brenk@gmail.com", "Stel zelf uw setje bloemen samen met deze bon.", "BE 680 614 508", @"images\handelaar\17\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar32 = new Handelaar("De Mol", "molleken@gmail.com", "Heb je grond nodig voor in een pot", "BE 415 655 144", @"images\handelaar\18\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar33 = new Handelaar("Schelfhout", "schelfhout@gmail.com", "Schelfhout, waar moet je andes zijn!", "BE 376 468 351", @"images\handelaar\19\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar34 = new Handelaar("Liesje", "lies@gmail.com", "Lies, verkoopt ook wel een madelief", "BE 368 526 450", @"images\handelaar\20\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar35 = new Handelaar("Funa Lima", "funa_lima@gmail.com", "Vissen, fonteinen, dieraccesoire...", "BE 146 730 153", @"images\handelaar\21\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar36 = new Handelaar("Blub", "blub@gmail.com", "Blub, de winkel voor vis enthousiasten", "BE 227 103 604", @"images\handelaar\22\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar37 = new Handelaar("GBontinck", "grasb@gmail.com", "Jaren ervaring in het snoeien van alle gazons", "BE 250 653 443", @"images\handelaar\23\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar38 = new Handelaar("Aveve", "aveve@gmail.com", "Bij de boerenbond vind je altijd wat je zoekt", "BE 262 005 555", @"images\handelaar\24\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar39 = new Handelaar("Groener Gras", "groengras@gmail.com", "Gazon voorzieningen voor iedereen die een groen gazon wil!", "BE 773 202 200", @"images\handelaar\25\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar41 = new Handelaar("Pukkelpop", "ppk@gmail.com", "Tickets of coupons voor pukkelpok.", "BE 146 815 077", "password", @"images\handelaar\26\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar42 = new Handelaar("Bierfeesten", "bierfeesten@gmail.com", "De veste feesten in Lokeren: De Lokerse Bierfeesten!", "BE 146 815 077", "password", @"images\handelaar\26\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar43 = new Handelaar("Gentse Feesten", "feesten-gent@gmail.com", "Het grootste feest in Gent!", "BE 241 543 268", "password", @"images\handelaar\28\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar44 = new Handelaar("Gameforce", "games@gmail.com", "Grootste game beurs in België. Nu ook kortingsbonnen verkrijgbaar!", "BE 027 033 486", "password", @"images\handelaar\29\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar45 = new Handelaar("Garage Ferrari", "ferfer@gmail.com", "Beste cadeau voor een Ferrari liefhebber!", "BE 022 334 837", "password", @"images\handelaar\30\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar46 = new Handelaar("Facts", "facts@gmail.com", "Een van de grootste cosplay beurzen van België.", "BE 721 088 160", "password", @"images\handelaar\31\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar41 = new Handelaar("Pukkelpop", "ppk@gmail.com", "Tickets of coupons voor pukkelpok.", "BE 146 815 077", @"images\handelaar\26\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar42 = new Handelaar("Bierfeesten", "bierfeesten@gmail.com", "De veste feesten in Lokeren: De Lokerse Bierfeesten!", "BE 146 815 077", @"images\handelaar\26\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar43 = new Handelaar("Gentse Feesten", "feesten-gent@gmail.com", "Het grootste feest in Gent!", "BE 241 543 268", @"images\handelaar\28\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar44 = new Handelaar("Gameforce", "games@gmail.com", "Grootste game beurs in België. Nu ook kortingsbonnen verkrijgbaar!", "BE 027 033 486", @"images\handelaar\29\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar45 = new Handelaar("Garage Ferrari", "ferfer@gmail.com", "Beste cadeau voor een Ferrari liefhebber!", "BE 022 334 837", @"images\handelaar\30\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar46 = new Handelaar("Facts", "facts@gmail.com", "Een van de grootste cosplay beurzen van België.", "BE 721 088 160", @"images\handelaar\31\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar51 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 736 764 083", "password", @"images\handelaar\32\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar52 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 705 084 728", "password", @"images\handelaar\33\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar53 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 780 260 577", "password", @"images\handelaar\34\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar51 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 736 764 083", @"images\handelaar\32\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar52 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 705 084 728", @"images\handelaar\33\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar53 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 780 260 577", @"images\handelaar\34\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar61 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 047 046 168", "password", @"images\handelaar\35\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar62 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 442 622 757", "password", @"images\handelaar\36\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar63 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 578 162 528", "password", @"images\handelaar\37\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar64 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 365 006 747", "password", @"images\handelaar\38\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar65 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 063 225 184", "password", @"images\handelaar\39\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar66 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 206 664 777", "password", @"images\handelaar\40\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar67 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 140 378 850", "password", @"images\handelaar\41\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar68 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 466 753 428", "password", @"images\handelaar\42\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar69 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 171 663 118", "password", @"images\handelaar\43\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar61 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 047 046 168", @"images\handelaar\35\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar62 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 442 622 757", @"images\handelaar\36\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar63 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 578 162 528", @"images\handelaar\37\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar64 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 365 006 747", @"images\handelaar\38\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar65 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 063 225 184", @"images\handelaar\39\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar66 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 206 664 777", @"images\handelaar\40\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar67 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 140 378 850", @"images\handelaar\41\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar68 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 466 753 428", @"images\handelaar\42\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar69 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 171 663 118", @"images\handelaar\43\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar71 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 081 135 314", "password", @"images\handelaar\44\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar72 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 266 553 200", "password", @"images\handelaar\45\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar73 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 446 384 070", "password", @"images\handelaar\46\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar74 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 313 402 666", "password", @"images\handelaar\47\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar75 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 402 156 543", "password", @"images\handelaar\48\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar76 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 521 001 106", "password", @"images\handelaar\49\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar77 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 521 001 103", "password", @"images\handelaar\49\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar78 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 214 232 134", "password", @"images\handelaar\50\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar71 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 081 135 314", @"images\handelaar\44\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar72 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 266 553 200", @"images\handelaar\45\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar73 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 446 384 070", @"images\handelaar\46\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar74 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 313 402 666", @"images\handelaar\47\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar75 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 402 156 543", @"images\handelaar\48\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar76 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 521 001 106", @"images\handelaar\49\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar77 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 521 001 103", @"images\handelaar\49\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar78 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 214 232 134", @"images\handelaar\50\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar81 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 588 137 284", "password", @"images\handelaar\51\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar82 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 812 573 731", "password", @"images\handelaar\52\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar83 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 253 500 301", "password", @"images\handelaar\53\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar84 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 561 032 078", "password", @"images\handelaar\54\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar85 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 786 056 478", "password", @"images\handelaar\55\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar86 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 075 881 157", "password", @"images\handelaar\56\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar87 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 068 276 242", "password", @"images\handelaar\57\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar88 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 116 728 241", "password", @"images\handelaar\58\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
-                Handelaar Handelaar89 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 774 855 608", "password", @"images\handelaar\59\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar81 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 588 137 284", @"images\handelaar\51\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar82 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 812 573 731", @"images\handelaar\52\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar83 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 253 500 301", @"images\handelaar\53\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar84 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 561 032 078", @"images\handelaar\54\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar85 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 786 056 478", @"images\handelaar\55\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar86 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 075 881 157", @"images\handelaar\56\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar87 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 068 276 242", @"images\handelaar\57\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar88 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 116 728 241", @"images\handelaar\58\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar89 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 774 855 608", @"images\handelaar\59\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
 
-                Handelaar Handelaar91 = new Handelaar("Generiek", "generiek@gmail.com", "generiek", "BE 774 123 518", "password", @"images\handelaar\59\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar91 = new Handelaar("Generiek", "generiek@gmail.com", "generiek", "BE 774 123 518", @"images\handelaar\59\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
-                Handelaar Handelaar10 = new Handelaar("ChaCha", "chacha@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 847", "password", @"images\handelaar\60\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
+                Handelaar Handelaar10 = new Handelaar("ChaCha", "chacha@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 847", @"images\handelaar\60\thumb.jpg", "straat", "huisnummer", 0101, "STAD");
 
                 var handelaars = new List<Handelaar>
                 {
                     Handelaar01, Handelaar02, Handelaar03, Handelaar04, Handelaar05, Handelaar06, Handelaar07, Handelaar08, Handelaar09, Handelaar10, Handelaar11, Handelaar21, Handelaar22, Handelaar23, Handelaar24, Handelaar25, Handelaar26, Handelaar31, Handelaar32, Handelaar33, Handelaar34, Handelaar35, Handelaar36, Handelaar37, Handelaar38, Handelaar39, Handelaar41, Handelaar42, Handelaar43, Handelaar44, Handelaar45, Handelaar46, Handelaar51, Handelaar52, Handelaar53, Handelaar61, Handelaar62, Handelaar63, Handelaar64, Handelaar65, Handelaar66, Handelaar67, Handelaar68, Handelaar69, Handelaar71, Handelaar72, Handelaar73, Handelaar74, Handelaar75, Handelaar76, Handelaar77, Handelaar78, Handelaar81, Handelaar82, Handelaar83, Handelaar84, Handelaar85, Handelaar86, Handelaar87, Handelaar88, Handelaar89, Handelaar91
                 };
 
-                _dbContext.Handelaar.AddRange(handelaars);
+                _dbContext.Handelaars.AddRange(handelaars);
 
 
                 Bon bon01 = new Bon("Restaurant lekker", 1, 50, "3 sterren resaurant in het centrum van Aalst.", 17, @"images\bon\1\thumb.jpg", eten_drinken, "Arbeidstraat", "14", 9300, "Aalst", Handelaar01);
@@ -218,20 +218,18 @@ namespace LekkerLokaal.Data
                    bon01, bon02, bon03, bon04, bon05, bon06, bon07, bon08, bon09, bon10, bon11, bon12, bon13, bon14, bon15, bon16, bon17, bon18, bon19, bon21, bon22, bon23, bon24, bon25, bon26, bon31, bon32, bon33, bon34, bon35, bon36, bon37, bon38, bon39, bon41, bon42, bon43, bon44, bon45, bon46, bon51, bon52, bon53, bon61, bon62, bon63, bon64, bon65, bon66, bon67, bon68, bon69, bon71, bon72, bon73, bon74, bon75, bon76, bon77, bon78, bon81, bon82, bon83, bon84, bon85, bon86, bon87, bon88, bon89, bon91
                 };
 
-                _dbContext.Bon.AddRange(bonnen);
+                _dbContext.Bonnen.AddRange(bonnen);
 
-                Persoon user01 = new Persoon("Brent", "Schets", Geslacht.Man, "brent@schets.com");
-                Persoon user02 = new Persoon("Bram", "De Coninck", Geslacht.Man, "bram@deconinck.com");
-                Persoon user03 = new Persoon("Lennert", "Bontinck", Geslacht.Man, "lennert@bontinck.com");
+                Gebruiker user01 = new Gebruiker { Voornaam = "Brent", Familienaam = "Schets", Geslacht = Geslacht.Man, Emailadres = "brent@schets.com" };
+                Gebruiker user02 = new Gebruiker { Voornaam = "Bram", Familienaam = "De Coninck", Geslacht = Geslacht.Man, Emailadres = "bram@bramdeconinck.com" };
+                Gebruiker user03 = new Gebruiker { Voornaam = "Lennert", Familienaam = "Bontinck", Geslacht = Geslacht.Man, Emailadres = "lennert@lennertbontinck.com" };
 
-                var personen = new List<Persoon>
+                var personen = new List<Gebruiker>
                 {
                     user01, user02, user03
                 };
 
-                _dbContext.Persoon.AddRange(personen);
-
-
+                _dbContext.Gebruikers.AddRange(personen);
 
                 await CreateUser("admin@sportsstore.be", "admin@sportsstore.be", "P@ssword1!", "Admin");
                 _dbContext.SaveChanges();

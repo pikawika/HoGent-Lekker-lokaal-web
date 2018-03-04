@@ -1,78 +1,75 @@
 ﻿@model RegisterViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registreer";
 }
 
-        <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
-        <main id="mainContent" class="main-content">
-            <div class="page-container ptb-60">
-                <div class="container">
-                    <section class="sign-area panel p-40">
-                        <h3 class="sign-title">Registreer <small>of <a href="signin.html" class="color-green">meld aan</a></small></h3>
-                        <div class="row row-rl-0">
-                            <div class="col-sm-6 col-md-7 col-left">
-                                <form class="p-40" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
-                                        <div class="form-group">
-                                            <label asp-for="Familienaam" class="sr-only"></label>
-                                            <input class="form-control input-lg" placeholder="Voornaam" asp-for="Familienaam">
-                                            <span asp-validation-for="Familienaam" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" asp-for="Voornaam"></label>
-                                            <input class="form-control input-lg" placeholder="Familienaam" asp-for="Voornaam">
-                                            <span asp-validation-for="Voornaam" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" asp-for="Email"></label>
-                                            <input class="form-control input-lg" placeholder="E-mailadres" asp-for="Email">
-                                            <span asp-validation-for="Email" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" asp-for="Password"></label>
-                                            <input class="form-control input-lg" placeholder="Wachtwoord" asp-for="Password">
-                                            <span asp-validation-for="Password" class="text-danger"></span>
-                                        </div>
-                                        <div class="form-group">
-                                            <label class="sr-only" asp-for="ConfirmPassword"></label>
-                                            <input class="form-control input-lg" placeholder="Bevestig wachtwoord" asp-for="ConfirmPassword">
-                                            <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
-                                        </div>
-                                        <div class="custom-checkbox mb-20">
-                                            <input type="checkbox" id="agree_terms" required>
-                                            <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="terms_conditions.html" class="color-green">Gebruikersovereenkomsten</a>.</label>
-                                        </div>
-                                        <button type="submit" class="btn btn-block btn-lg">Bevestig registratie</button>
-                                    </form>
-                                    <span class="or">Of</span>
-</div>
-                            <div class="col-sm-6 col-md-5 col-right">
-                                <div class="social-login p-40">
-                                    <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Registeer met Facebook</button>
-                                    </div>
-                                    <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Registeer met Twitter</button>
-                                    </div>
-                                    <div class="mb-20">
-                                        <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Registeer met Google</button>
-                                    </div>
-                                    <div class="custom-checkbox mb-20">
-                                        <input type="checkbox" id="remember_social" checked>
-                                        <label class="color-mid" for="remember_social">Blijf aangemeld op deze computer.</label>
-                                    </div>
-                                    <div class="text-center color-mid">
-                                        Heb je al een account? <a href="signin.html" class="color-green">Meld aan</a>
-                                    </div>
-                                </div>
+<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
+<main id="mainContent" class="main-content">
+    <div class="page-container ptb-60">
+        <div class="container">
+            <section class="sign-area panel p-40">
+                <h3 class="sign-title">Registreer <small>of <a href="signin.html" class="color-green">meld aan</a></small></h3>
+                <div class="row row-rl-0">
+                    <div class="col-sm-6 col-md-7 col-left">
+                        <form class="p-40" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                            <div class="form-group">
+                                <label asp-for="Voornaam" class="sr-only"></label>
+                                <input class="form-control input-lg" placeholder="Voornaam" asp-for="Voornaam">
+                                <span asp-validation-for="Voornaam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="Familienaam"></label>
+                                <input class="form-control input-lg" placeholder="Familienaam" asp-for="Familienaam">
+                                <span asp-validation-for="Familienaam" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="Email"></label>
+                                <input class="form-control input-lg" placeholder="E-mailadres" asp-for="Email">
+                                <span asp-validation-for="Email" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="Password"></label>
+                                <input class="form-control input-lg" placeholder="Wachtwoord" asp-for="Password">
+                                <span asp-validation-for="Password" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
+                                <label class="sr-only" asp-for="ConfirmPassword"></label>
+                                <input class="form-control input-lg" placeholder="Bevestig wachtwoord" asp-for="ConfirmPassword">
+                                <span asp-validation-for="ConfirmPassword" class="text-danger"></span>
+                            </div>
+                            <div class="custom-checkbox mb-20">
+                                <input type="checkbox" id="agree_terms" required>
+                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="terms_conditions.html" class="color-green">Gebruikersovereenkomsten</a>.</label>
+                            </div>
+                            <button type="submit" class="btn btn-block btn-lg">Bevestig registratie</button>
+                        </form>
+                        <span class="or">Of</span>
+                    </div>
+                    <div class="col-sm-6 col-md-5 col-right">
+                        <div class="social-login p-40">
+                            <div class="mb-20">
+                                <button class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Registeer met Facebook</button>
+                            </div>
+                            <div class="mb-20">
+                                <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Registeer met Twitter</button>
+                            </div>
+                            <div class="mb-20">
+                                <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Registeer met Google</button>
+                            </div>
+                            <div class="custom-checkbox mb-20">
+                                <input type="checkbox" id="remember_social" checked>
+                                <label class="color-mid" for="remember_social">Blijf aangemeld op deze computer.</label>
+                            </div>
+                            <div class="text-center color-mid">
+                                Heb je al een account? <a href="signin.html" class="color-green">Meld aan</a>
                             </div>
                         </div>
-                    </section>
+                    </div>
                 </div>
-            </div>
+            </section>
+        </div>
+    </div>
 
 
-        </main>
-        <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->
-
-
-
+</main>
+<!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->

@@ -26,19 +26,22 @@ namespace LekkerLokaal.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly ICategorieRepository _categorieRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
             ILogger<AccountController> logger,
-            ICategorieRepository categorieRepository)
+            ICategorieRepository categorieRepository,
+            IGebruikerRepository gebruikerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _categorieRepository = categorieRepository;
+            _gebruikerRepository = gebruikerRepository;
         }
 
         [TempData]
@@ -62,6 +65,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -224,12 +228,21 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Familienaam = model.Familienaam };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var gebruiker = new Gebruiker
+                    {
+                        Voornaam = model.Voornaam,
+                        Familienaam = model.Familienaam,
+                        Emailadres = model.Email
+                    };
+                    _gebruikerRepository.Add(gebruiker);
+                    _gebruikerRepository.SaveChanges();
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
