@@ -236,7 +236,7 @@ namespace LekkerLokaal.Controllers
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Familienaam = model.Familienaam };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -244,7 +244,8 @@ namespace LekkerLokaal.Controllers
                     {
                         Voornaam = model.Voornaam,
                         Familienaam = model.Familienaam,
-                        Emailadres = model.Email
+                        Emailadres = model.Email,
+                        Geslacht = model.Geslacht
                     };
                     _gebruikerRepository.Add(gebruiker);
                     _gebruikerRepository.SaveChanges();
@@ -264,7 +265,6 @@ namespace LekkerLokaal.Controllers
             return View(model);
         }
 
-
         [HttpGet]
         [AllowAnonymous]
         public IActionResult RegisterHandelaar(string returnUrl = null)
@@ -275,36 +275,36 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-    //    [HttpPost]
-    //    [AllowAnonymous]
-    //    [ValidateAntiForgeryToken]
-    //    public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
-    //    {
-    //        ViewData["ReturnUrl"] = returnUrl;
-    //        if (ModelState.IsValid)
-    //        {
-    //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-    //            var result = await _userManager.CreateAsync(user, model.Password);
-    //            if (result.Succeeded)
-    //            {
-    //                _logger.LogInformation("User created a new account with password.");
+        //    [HttpPost]
+        //    [AllowAnonymous]
+        //    [ValidateAntiForgeryToken]
+        //    public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
+        //    {
+        //        ViewData["ReturnUrl"] = returnUrl;
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        //            var result = await _userManager.CreateAsync(user, model.Password);
+        //            if (result.Succeeded)
+        //            {
+        //                _logger.LogInformation("User created a new account with password.");
 
-    //                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-    //                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-    //                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+        //                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        //                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+        //                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-    //                await _signInManager.SignInAsync(user, isPersistent: false);
-    //                _logger.LogInformation("User created a new account with password.");
-    //                return RedirectToLocal(returnUrl);
-    //            }
-    //            AddErrors(result);
-    //        }
-    //        If we got this far, something failed, redisplay form
-    //                return View(model);
-    //    }
-    //}
+        //                await _signInManager.SignInAsync(user, isPersistent: false);
+        //                _logger.LogInformation("User created a new account with password.");
+        //                return RedirectToLocal(returnUrl);
+        //            }
+        //            AddErrors(result);
+        //        }
+        //        If we got this far, something failed, redisplay form
+        //                return View(model);
+        //    }
+        //}
 
-    [HttpPost]
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Logout()
         {

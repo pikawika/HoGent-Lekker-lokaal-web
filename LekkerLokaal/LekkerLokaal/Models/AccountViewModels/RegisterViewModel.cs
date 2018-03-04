@@ -26,10 +26,10 @@ namespace LekkerLokaal.Models.AccountViewModels
 
         [Required(ErrorMessage = "{0} is verplicht.")]
         [Display(Name = "Geslacht")]
-        public Geslacht geslacht { get; set; }
+        public Geslacht Geslacht { get; set; }
 
         [Required(ErrorMessage = "{0} is verplicht.")]
-        [StringLength(100, ErrorMessage = "Het wachtwoord moet minstens {2} en mag maximaal {1} karakters lang zijn.", MinimumLength = 6)]
+        [StringLength(100, ErrorMessage = "Het wachtwoord moet tussen {2} en {1} karakters lang zijn.", MinimumLength = 6)]
         [DataType(DataType.Password)]
         [Display(Name = "Wachtwoord")]
         public string Password { get; set; }
