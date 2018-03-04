@@ -219,6 +219,11 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            List<Geslacht> geslacht = new List<Geslacht>();
+            geslacht.Add(Geslacht.Man);
+            geslacht.Add(Geslacht.Vrouw);
+            geslacht.Add(Geslacht.Anders);
+            ViewData["Geslacht"] = new SelectList(geslacht);
             return View();
         }
 
@@ -266,6 +271,7 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["Handelaar"] = returnUrl;
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll());
             return View();
         }
 

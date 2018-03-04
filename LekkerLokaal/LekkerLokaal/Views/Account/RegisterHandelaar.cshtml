@@ -53,12 +53,11 @@
                                 <span asp-validation-for="BTWNummer" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="">Categorie waarin uw bedrijf het best past</label>
-                                <select class="form-control input-lg search-select">
-                                    <option>Kies een categorie</option>
-                                    <option>Naam</option>
-                                    <option>Ligging</option>
+                                <label class="sr-only" asp-for="Categorie"></label>
+                                <select class="form-control input-lg search-select" asp-for="Categorie" asp-items="@(ViewData["categorie"] as SelectList)">
+                                    <option value="">Selecteer categorie</option>
                                 </select>
+                                <span asp-validation-for="Categorie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="">korte omschrijving van uw bedrijf</label>

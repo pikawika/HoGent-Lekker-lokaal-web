@@ -28,6 +28,13 @@
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group">
+                                <label class="sr-only" asp-for="geslacht"></label>
+                                <select class="form-control input-lg search-select" asp-for="geslacht" asp-items="@(ViewData["Geslacht"] as SelectList)">
+                                    <option value="">Selecteer geslacht</option>
+                                </select>
+                                <span asp-validation-for="geslacht" class="text-danger"></span>
+                            </div>
+                            <div class="form-group">
                                 <label class="sr-only" asp-for="Password"></label>
                                 <input class="form-control input-lg" placeholder="Wachtwoord" asp-for="Password">
                                 <span asp-validation-for="Password" class="text-danger"></span>
