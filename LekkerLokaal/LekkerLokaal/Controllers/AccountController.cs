@@ -283,8 +283,6 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        
-
         //    [HttpPost]
         //    [AllowAnonymous]
         //    [ValidateAntiForgeryToken]
