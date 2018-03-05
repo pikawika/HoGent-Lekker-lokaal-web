@@ -110,6 +110,7 @@ namespace LekkerLokaal.Controllers
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
 
             return View(model);
         }
@@ -164,6 +165,7 @@ namespace LekkerLokaal.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
 
             return View();
         }
@@ -219,12 +221,17 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["ReturnUrl"] = returnUrl;
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["Geslacht"] = Geslachten();
+            return View();
+        }
+
+        private SelectList Geslachten()
+        {
             List<Geslacht> geslacht = new List<Geslacht>();
             geslacht.Add(Geslacht.Man);
             geslacht.Add(Geslacht.Vrouw);
             geslacht.Add(Geslacht.Anders);
-            ViewData["Geslacht"] = new SelectList(geslacht);
-            return View();
+            return new SelectList(geslacht);
         }
 
         [HttpPost]
@@ -245,7 +252,7 @@ namespace LekkerLokaal.Controllers
                         Voornaam = model.Voornaam,
                         Familienaam = model.Familienaam,
                         Emailadres = model.Email,
-                        Geslacht = model.Geslacht
+                        Geslacht = model.Geslacht ?? Geslacht.Anders
                     };
                     _gebruikerRepository.Add(gebruiker);
                     _gebruikerRepository.SaveChanges();
@@ -262,18 +269,19 @@ namespace LekkerLokaal.Controllers
                 AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
+            ViewData["Geslacht"] = Geslachten();
             return View(model);
         }
 
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult RegisterHandelaar(string returnUrl = null)
-        {
-            ViewData["Handelaar"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll());
-            return View();
-        }
+        //[HttpGet]
+        //[AllowAnonymous]
+        //public IActionResult RegisterHandelaar(string returnUrl = null)
+        //{
+        //    ViewData["Handelaar"] = returnUrl;
+        //    ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+        //    ViewData["categorie"] = new SelectList(_categorieRepository.GetAll());
+        //    return View();
+        //}
 
         //    [HttpPost]
         //    [AllowAnonymous]
@@ -319,6 +327,7 @@ namespace LekkerLokaal.Controllers
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account", new { returnUrl });
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
@@ -328,6 +337,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
@@ -389,6 +399,7 @@ namespace LekkerLokaal.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View(nameof(ExternalLogin), model);
         }
 
@@ -506,7 +517,10 @@ namespace LekkerLokaal.Controllers
         {
             foreach (var error in result.Errors)
             {
-                ModelState.AddModelError(string.Empty, error.Description);
+                if (error.Description.StartsWith("User name") && error.Description.EndsWith("is already taken."))
+                    ModelState.AddModelError(string.Empty, "Het door u gekozen e-mailadres is reeds in gebruik. Gelieve een ander e-mailadres op te geven.");
+                else
+                    ModelState.AddModelError(string.Empty, error.Description);
             }
         }
 
@@ -521,7 +535,6 @@ namespace LekkerLokaal.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
         }
-
         #endregion
     }
 }

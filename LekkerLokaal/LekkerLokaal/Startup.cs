@@ -15,9 +15,29 @@ namespace LekkerLokaal
 {
     public class Startup
     {
+        //Aangepast om met secrets om te kunnen gaan
         public Startup(IConfiguration configuration)
         {
-            Configuration = configuration;
+            var builder = new ConfigurationBuilder();
+            builder.AddUserSecrets<Startup>();
+            Configuration = builder.Build();
+            //Configuration = configuration;
+            foreach (var item in configuration.AsEnumerable())
+            {
+                Configuration[item.Key] = item.Value;
+            }
+        }
+
+        public Startup(IHostingEnvironment env)
+        {
+            var builder = new ConfigurationBuilder();
+
+            if (env.IsDevelopment())
+            {
+                builder.AddUserSecrets<Startup>();
+            }
+
+            Configuration = builder.Build();
         }
 
         public IConfiguration Configuration { get; }
@@ -39,6 +59,24 @@ namespace LekkerLokaal
             })
             .AddEntityFrameworkStores<ApplicationDbContext>()
             .AddDefaultTokenProviders();
+
+            services.AddAuthentication().AddFacebook(facebookOptions =>
+            {
+                facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
+                facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+            });
+
+            services.AddAuthentication().AddTwitter(twitterOptions =>
+            {
+                twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
+                twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+            });
+
+            services.AddAuthentication().AddGoogle(googleOptions =>
+            {
+                googleOptions.ClientId = Configuration["Authentication:Google:ClientId"];
+                googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
+            });
 
             services.AddScoped<LekkerLokaalDataInitializer>();
             services.AddScoped<IBonRepository, BonRepository>();

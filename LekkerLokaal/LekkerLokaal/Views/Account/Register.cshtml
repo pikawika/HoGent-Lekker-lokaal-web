@@ -1,4 +1,10 @@
-﻿@model RegisterViewModel
+﻿@using System.Collections.Generic
+@using System.Linq
+@using Microsoft.AspNetCore.Http
+@using Microsoft.AspNetCore.Http.Authentication
+@model RegisterViewModel
+@inject SignInManager<ApplicationUser> SignInManager
+
 @{
     ViewData["Title"] = "Registreer";
 }
@@ -8,10 +14,11 @@
     <div class="page-container ptb-60">
         <div class="container">
             <section class="sign-area panel p-40">
-                <h3 class="sign-title">Registreer <small>of <a href="signin.html" class="color-green">meld aan</a></small></h3>
+                <h3 class="sign-title">Registreer <small>of <a asp-controller="Account" asp-action="Login" class="color-green">meld aan</a></small></h3>
                 <div class="row row-rl-0">
                     <div class="col-sm-6 col-md-7 col-left">
                         <form class="p-40" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
+                            <div asp-validation-summary="All" class="text-danger"></div>
                             <div class="form-group">
                                 <label asp-for="Voornaam" class="sr-only"></label>
                                 <input class="form-control input-lg" placeholder="Voornaam" asp-for="Voornaam">
@@ -54,21 +61,23 @@
                     </div>
                     <div class="col-sm-6 col-md-5 col-right">
                         <div class="social-login p-40">
-                            <div class="mb-20">
-                                <button class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Registeer met Facebook</button>
-                            </div>
-                            <div class="mb-20">
-                                <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Registeer met Twitter</button>
-                            </div>
-                            <div class="mb-20">
-                                <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Registeer met Google</button>
-                            </div>
+                            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                                <div class="mb-20">
+                                    <button type="submit" class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Meld aan met Facebook</button>
+                                </div>
+                                <div class="mb-20">
+                                    <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Meld aan met Twitter</button>
+                                </div>
+                                <div class="mb-20">
+                                    <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Meld aan met Google+</button>
+                                </div>
+                            </form>
                             <div class="custom-checkbox mb-20">
                                 <input type="checkbox" id="remember_social" checked>
                                 <label class="color-mid" for="remember_social">Blijf aangemeld op deze computer.</label>
                             </div>
                             <div class="text-center color-mid">
-                                Heb je al een account? <a href="signin.html" class="color-green">Meld aan</a>
+                                Heb je al een account? <a asp-controller="Account" asp-action="Login" class="color-green">Meld aan</a>
                             </div>
                         </div>
                     </div>
