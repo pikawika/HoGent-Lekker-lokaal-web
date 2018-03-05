@@ -55,13 +55,13 @@
                             <div class="form-group">
                                 <label class="sr-only" asp-for="Categorie"></label>
                                 <select class="form-control input-lg search-select" asp-for="Categorie" asp-items="@(ViewData["categorie"] as SelectList)">
-                                    <option value="">Selecteer categorie</option>
+                                    <option value="">--- Selecteer categorie --</option>
                                 </select>
                                 <span asp-validation-for="Categorie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only">korte omschrijving van uw bedrijf</label>
-                                <input type="password" class="form-control input-lg" placeholder="korte omschrijving" required>
+                                <input type="password" class="form-control input-lg" placeholder="Korte omschrijving" required>
                             </div>
                             <div class="form-group">
                                 <label class="">Logo van uw bedrijf</label>
@@ -77,7 +77,7 @@
                         <span class="or">Of</span>
                     </div>
                     <div class="col-sm-6 col-md-5 col-right">
-                        <p class="color-mid">Indien het niet mogelijk is om het aanvraagformulier te verzenden, stuur een email of brief met deze gegevens naar volgend adres:</p>
+                        <p class="text-center color-mid">Indien het niet mogelijk is om het aanvraagformulier te verzenden, stuur een e-mail of brief met uw gegevens naar volgend adres:</p>
                         <ul class="contact-list mb-40" style="margin: 20px">
                             <li>
                                 <span class="icon lnr lnr-map-marker"></span>
