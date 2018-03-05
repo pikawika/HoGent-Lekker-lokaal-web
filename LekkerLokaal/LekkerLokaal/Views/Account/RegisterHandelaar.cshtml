@@ -49,7 +49,7 @@
                             </div>
                             <div class="form-group">
                                 <label asp-for="BTWNummer" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="BTW Nummer$" asp-for="BTWNummer">
+                                <input class="form-control input-lg" placeholder="BTW Nummer" asp-for="BTWNummer">
                                 <span asp-validation-for="BTWNummer" class="text-danger"></span>
                             </div>
                             <div class="form-group">
@@ -60,7 +60,7 @@
                                 <span asp-validation-for="Categorie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="">korte omschrijving van uw bedrijf</label>
+                                <label class="sr-only">korte omschrijving van uw bedrijf</label>
                                 <input type="password" class="form-control input-lg" placeholder="korte omschrijving" required>
                             </div>
                             <div class="form-group">
@@ -70,13 +70,14 @@
 
                             <div class="custom-checkbox mb-20">
                                 <input type="checkbox" id="agree_terms" required>
-                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="terms_conditions.html" class="color-green">Gebruikersovereenkomsten</a>.</label>
+                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="terms_conditions.html" class="color-green">Handelaarsovereenkomsten</a>.</label>
                             </div>
                             <button type="submit" class="btn btn-block btn-lg">Registratie aanvragen</button>
                         </form>
                         <span class="or">Of</span>
                     </div>
                     <div class="col-sm-6 col-md-5 col-right">
+                        <p class="color-mid">Indien het niet mogelijk is om het aanvraagformulier te verzenden, stuur een email of brief met deze gegevens naar volgend adres:</p>
                         <ul class="contact-list mb-40" style="margin: 20px">
                             <li>
                                 <span class="icon lnr lnr-map-marker"></span>
@@ -97,23 +98,6 @@
                                 <span class="icon lnr lnr-database"></span>
                                 <h5>BTW nummer</h5>
                                 <p class="color-mid">BE 0833.582.168</p>
-                            </li>
-                        </ul>
-                        <ul class="social-icons social-icons--colored list-inline" style="margin: 15px">
-                            <li class="social-icons__item">
-                                <a href="#"><i class="fa fa-facebook"></i></a>
-                            </li>
-                            <li class="social-icons__item">
-                                <a href="#"><i class="fa fa-twitter"></i></a>
-                            </li>
-                            <li class="social-icons__item">
-                                <a href="#"><i class="fa fa-linkedin"></i></a>
-                            </li>
-                            <li class="social-icons__item">
-                                <a href="#"><i class="fa fa-google-plus"></i></a>
-                            </li>
-                            <li class="social-icons__item">
-                                <a href="#"><i class="fa fa-pinterest"></i></a>
                             </li>
                         </ul>
                     </div>

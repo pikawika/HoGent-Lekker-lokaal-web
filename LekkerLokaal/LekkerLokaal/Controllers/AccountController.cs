@@ -273,15 +273,17 @@ namespace LekkerLokaal.Controllers
             return View(model);
         }
 
-        //[HttpGet]
-        //[AllowAnonymous]
-        //public IActionResult RegisterHandelaar(string returnUrl = null)
-        //{
-        //    ViewData["Handelaar"] = returnUrl;
-        //    ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-        //    ViewData["categorie"] = new SelectList(_categorieRepository.GetAll());
-        //    return View();
-        //}
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult RegisterHandelaar(string returnUrl = null)
+        {
+            ViewData["Handelaar"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            return View();
+        }
+
+        
 
         //    [HttpPost]
         //    [AllowAnonymous]
