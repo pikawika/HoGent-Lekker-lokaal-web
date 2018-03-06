@@ -42,6 +42,7 @@ namespace LekkerLokaal.Data
                 };
                 _dbContext.Categorieen.AddRange(categories);
 
+
                 Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE 458 110 637", @"images\handelaar\1\thumb.jpg", "Arbeidstraat", "14", 9300, "Aalst");
                 Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE 476 452 406", @"images\handelaar\2\thumb.jpg", "Paepestraat", "178", 9260, "Wichelen");
                 Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE 260 147 662", @"images\handelaar\3\thumb.jpg", "Ravensteinstraat", "50", 1000, "Brussel");
@@ -205,7 +206,6 @@ namespace LekkerLokaal.Data
                 Bon bon87 = new Bon("De Conincks Screen Repair", 38, 536, "Een ongelukje is rap gebeurd", 75, @"images\bon\87\thumb.jpg", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar87);
                 Bon bon88 = new Bon("Medion Custom", 40, 316, "Medion laptop op maat gemaakt", 24, @"images\bon\88\thumb.jpg", multimedia, "Sint-Pietersnieuwstraat", "124", 9000, "Gent", Handelaar88);
                 Bon bon89 = new Bon("Dell Dinosaur", 27, 311, "MS Dos specialist", 30, @"images\bon\89\thumb.jpg", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar89);
-
 
 
                 Bon bon91 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 457, @"images\bon\9\thumb.jpg", generiek, "Arbeidstraat", "14", 9300, "Aalst", Handelaar91);
