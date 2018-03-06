@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
+using LekkerLokaal.Models.Domain;
 
 namespace LekkerLokaal.Controllers
 {
@@ -24,17 +25,23 @@ namespace LekkerLokaal.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
+        private readonly ICategorieRepository _categorieRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
             SignInManager<ApplicationUser> signInManager,
             IEmailSender emailSender,
-            ILogger<AccountController> logger)
+            ILogger<AccountController> logger,
+            ICategorieRepository categorieRepository,
+            IGebruikerRepository gebruikerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
+            _categorieRepository = categorieRepository;
+            _gebruikerRepository = gebruikerRepository;
         }
 
         [TempData]
@@ -48,6 +55,7 @@ namespace LekkerLokaal.Controllers
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -57,6 +65,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -209,6 +218,12 @@ namespace LekkerLokaal.Controllers
         public IActionResult Register(string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            List<Geslacht> geslacht = new List<Geslacht>();
+            geslacht.Add(Geslacht.Man);
+            geslacht.Add(Geslacht.Vrouw);
+            geslacht.Add(Geslacht.Anders);
+            ViewData["Geslacht"] = new SelectList(geslacht);
             return View();
         }
 
@@ -218,12 +233,22 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
             ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    var gebruiker = new Gebruiker
+                    {
+                        Voornaam = model.Voornaam,
+                        Familienaam = model.Familienaam,
+                        Emailadres = model.Email,
+                        Geslacht = model.Geslacht
+                    };
+                    _gebruikerRepository.Add(gebruiker);
+                    _gebruikerRepository.SaveChanges();
                     _logger.LogInformation("User created a new account with password.");
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
@@ -236,10 +261,48 @@ namespace LekkerLokaal.Controllers
                 }
                 AddErrors(result);
             }
-
             // If we got this far, something failed, redisplay form
             return View(model);
         }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult RegisterHandelaar(string returnUrl = null)
+        {
+            ViewData["Handelaar"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll());
+            return View();
+        }
+
+        //    [HttpPost]
+        //    [AllowAnonymous]
+        //    [ValidateAntiForgeryToken]
+        //    public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
+        //    {
+        //        ViewData["ReturnUrl"] = returnUrl;
+        //        if (ModelState.IsValid)
+        //        {
+        //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+        //            var result = await _userManager.CreateAsync(user, model.Password);
+        //            if (result.Succeeded)
+        //            {
+        //                _logger.LogInformation("User created a new account with password.");
+
+        //                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+        //                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
+        //                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+
+        //                await _signInManager.SignInAsync(user, isPersistent: false);
+        //                _logger.LogInformation("User created a new account with password.");
+        //                return RedirectToLocal(returnUrl);
+        //            }
+        //            AddErrors(result);
+        //        }
+        //        If we got this far, something failed, redisplay form
+        //                return View(model);
+        //    }
+        //}
 
         [HttpPost]
         [ValidateAntiForgeryToken]

@@ -8,13 +8,11 @@ namespace LekkerLokaal.Data
 {
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
-        public DbSet<Bestelling> Bestelling { get; set; }
-        public DbSet<Bon> Bon { get; set; }
-        public DbSet<Categorie> Categorie { get; set; }
-
-        public DbSet<Persoon> Persoon { get; set; }
-
-        public DbSet<Handelaar> Handelaar { get; set; }
+        public DbSet<Bestelling> Bestellingen { get; set; }
+        public DbSet<Bon> Bonnen { get; set; }
+        public DbSet<Categorie> Categorieen { get; set; }
+        public DbSet<Gebruiker> Gebruikers { get; set; }
+        public DbSet<Handelaar> Handelaars { get; set; }
 
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
@@ -24,10 +22,8 @@ namespace LekkerLokaal.Data
         {
             base.OnModelCreating(builder);
             builder.ApplyConfiguration(new BestelLijnConfiguration());
-            builder.ApplyConfiguration(new PersoonConfiguration());
             builder.Ignore<Winkelwagen>();
             builder.Ignore<WinkelwagenLijn>();
-            builder.Ignore<Geregistreerd>();
         }
     }
 }

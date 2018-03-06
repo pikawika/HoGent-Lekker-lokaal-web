@@ -5,19 +5,17 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Gebruiker : Persoon, Geregistreerd
+    public class Gebruiker
     {
+        public int GebruikerId { get; private set; }
+        public string Voornaam { get; set; }
+        public string Familienaam { get; set; }
+        public Geslacht Geslacht { get; set; }
+        public string Emailadres { get; set; }
         public ICollection<Bestelling> Bestellingen { get; set; }
-        public string Wachtwoord { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public string Afbeelding { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
-        public bool IsAdmin { get; private set; }
+        public string Afbeelding { get; set; }
 
-        protected Gebruiker()
-        {
-
-        }
-
-        public Gebruiker(string voornaam, string familienaam, Geslacht geslacht, string emailadres) : base(voornaam, familienaam, geslacht, emailadres)
+        public Gebruiker()
         {
             Bestellingen = new List<Bestelling>();
         }

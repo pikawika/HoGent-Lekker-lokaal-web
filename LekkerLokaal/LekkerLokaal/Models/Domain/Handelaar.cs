@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Handelaar : Geregistreerd, Adresgegevens
+    public class Handelaar : Adresgegevens
     {
         public int HandelaarId { get; private set; }
         public string Naam { get; set; }
@@ -13,9 +13,8 @@ namespace LekkerLokaal.Models.Domain
         public string Beschrijving { get; set; }
         public string BTW_Nummer { get; set; }
         public ICollection<Bon> Cadeaubonnen { get; }
-        public string Wachtwoord { get; set; }
         public string Afbeelding { get; set; }
-        public Persoon Contactpersoon { get; set; }
+        public Gebruiker Contactpersoon { get; set; }
         public string Straat { get; set; }
         public string Huisnummer { get; set; }
         public int Postcode { get; set; }
@@ -26,13 +25,12 @@ namespace LekkerLokaal.Models.Domain
 
         }
 
-        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string wachtwoord, string afbeelding, string straat, string huisnummer, int postcode, string gemeente)
+        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente)
         {
             Naam = naam;
             Emailadres = emailadres;
             Beschrijving = beschrijving;
             BTW_Nummer = btw_nummer;
-            Wachtwoord = wachtwoord;
             Afbeelding = afbeelding;
             Straat = straat;
             Huisnummer = huisnummer;
