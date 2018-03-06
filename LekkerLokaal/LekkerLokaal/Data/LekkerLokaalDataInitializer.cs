@@ -208,8 +208,6 @@ namespace LekkerLokaal.Data
                 Bon bon89 = new Bon("Dell Dinosaur", 27, 311, "MS Dos specialist", 30, @"images\bon\89\thumb.jpg", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar89);
 
 
-
-
                 Bon bon91 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 457, @"images\bon\9\thumb.jpg", generiek, "Arbeidstraat", "14", 9300, "Aalst", Handelaar91);
                 var bonnen = new List<Bon>
                 {
