@@ -26,10 +26,10 @@ namespace LekkerLokaal.Data.Repositories
             return _bonnen.OrderByDescending(b => b.AantalBesteld).Take(3).AsNoTracking().ToList();
         }
 
-        //public IEnumerable<Bon> GetAlles(string zoekKey)
-        //{
-        //    IEnumerable<Bon> _alles;
-        //}
+        public IEnumerable<Bon> GetAlles(string zoekKey)
+        {
+            return _bonnen;
+        }
 
         public IEnumerable<Bon> GetByCategorie(string zoekKey)
         {
