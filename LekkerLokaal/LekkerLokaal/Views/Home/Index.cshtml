@@ -15,7 +15,7 @@
                                 @foreach (var categorie in ViewBag.Top9CategorieMetAantal)
                                 {
                                     <li>
-                                        <a href="#"><i class="fa @categorie.Key.Icon"></i>@categorie.Key.Naam<span>@categorie.Value</span></a>
+                                        <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Key.Naam"><i class="fa @categorie.Key.Icon"></i>@categorie.Key.Naam<span>@categorie.Value</span></a>
                                     </li>
                                 }
                                 <li class="all-cat">

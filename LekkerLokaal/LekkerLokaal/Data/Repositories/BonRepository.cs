@@ -18,7 +18,7 @@ namespace LekkerLokaal.Data.Repositories
         }
         public IEnumerable<Bon> GetAll()
         {
-            return _bonnen.OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
+            return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
         }
 
         public IEnumerable<Bon> GetTop3()
@@ -28,22 +28,25 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<Bon> GetAlles(string zoekKey)
         {
-            return _bonnen;
+            return GetByCategorie(zoekKey).Concat(GetByLigging(zoekKey).Concat(GetByNaam(zoekKey))).Distinct().ToList();
         }
 
         public IEnumerable<Bon> GetByCategorie(string zoekKey)
         {
-            return GetAll().Where(b => b.Categorie.Naam.Equals(zoekKey, StringComparison.OrdinalIgnoreCase)).ToList();
+            string _zoekKey = zoekKey.ToLower();
+            return GetAll().Where(b => b.Categorie.Naam.ToLower().Contains(_zoekKey)).ToList();
         }
 
         public IEnumerable<Bon> GetByLigging(string zoekKey)
         {
-            return GetAll().Where(b => b.Gemeente.Equals(zoekKey, StringComparison.OrdinalIgnoreCase)).ToList();
+            string _zoekKey = zoekKey.ToLower();
+            return GetAll().Where(b => b.Gemeente.ToLower().Contains(_zoekKey)).ToList();
         }
 
         public IEnumerable<Bon> GetByNaam(string zoekKey)
         {
-            return GetAll().Where(b => b.Categorie.Naam.IndexOf(zoekKey, StringComparison.OrdinalIgnoreCase) >= 0).ToList();
+            string _zoekKey = zoekKey.ToLower();
+            return GetAll().Where(b => b.Naam.ToLower().Contains(_zoekKey)).ToList();
         }
     }
 }

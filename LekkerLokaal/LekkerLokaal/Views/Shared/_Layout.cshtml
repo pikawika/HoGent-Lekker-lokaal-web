@@ -1,7 +1,4 @@
-﻿@using LekkerLokaal.Models.HomeViewModels
-@model ZoekenViewModel;
-
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -44,9 +41,6 @@
                 <div class="container">
                     <div class="row row-rl-0 row-tb-20 row-md-cell">
                         <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-                            @*<a href="#" class="logo">
-                <img src="/images/logo.png" alt="" width="150">
-            </a>*@
                             <a asp-controller="Home" asp-action="Index" class="logo">
                                 <img src="/images/logo.png" alt="" width="150">
                             </a>
@@ -56,16 +50,16 @@
                                 <div class="col-sm-8">
                                     <form class="search-form" method="post">
                                         <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in..." asp-for="ZoekKey">
+                                            <input type="text" name="ZoekKey" id="ZoekKey" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in...">
                                             <div class="input-group-btn">
                                                 <div class="input-group">
-                                                    <select class="form-control input-lg search-select" asp-for="ZoekSoort">
+                                                    <select name="ZoekSoort" id="ZoekSoort" class="form-control input-lg search-select">
                                                         <option value="Alles">Alles</option>
                                                         <option value="Naam">Naam</option>
                                                         <option value="Ligging">Ligging</option>
                                                     </select>
                                                     <div class="input-group-btn">
-                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
+                                                        <button asp-controller="Home" asp-action="Zoeken" type="submit" class="btn btn-lg btn-search btn-block">
                                                             <i class="fa fa-search font-16"></i>
                                                         </button>
                                                     </div>
@@ -113,7 +107,7 @@
                                         @foreach (var categorie in ViewBag.AlleCategorien)
                                         {
                                             <li>
-                                                <a href="#"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
+                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Naam"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
                                             </li>
                                         }
                                     </ul>

@@ -113,6 +113,9 @@ namespace LekkerLokaal
                 routes.MapRoute(
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
+                routes.MapRoute(
+                    name: "zoeken",
+                    template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}");
             });
             //datainit.InitializeData().Wait();
         }

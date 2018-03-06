@@ -57,42 +57,58 @@ namespace LekkerLokaal.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-
-        [HttpGet]
-        [AllowAnonymous]
-        public IActionResult Zoeken()
+        public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null)
         {
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-
-            ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
-            return View();
-        }
-
-        [HttpPost]
-        [AllowAnonymous]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Zoeken(ZoekenViewModel model)
-        {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-
-            ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
-            switch (model.ZoekSoort)
+            if (ZoekSoort != null && ZoekKey != null)
             {
-                //case "Alles":
-                //    ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(zoekKey);
-                //    break;
-                case "Ligging":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(model.ZoekKey);
-                    break;
-                case "Naam":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(model.ZoekKey);
-                    break;
-                case "Categorie":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(model.ZoekKey);
-                    break;
+                switch (ZoekSoort)
+                {
+                    case "Alles":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey);
+                        break;
+                    case "Ligging":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey);
+                        break;
+                    case "Naam":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey);
+                        break;
+                    case "Categorie":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey);
+                        break;
+                    default:
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
+                        break;
+                }
+                ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
             }
+            else
+            {
+                ZoekSoort = HttpContext.Request.Form["ZoekSoort"];
+                ZoekKey = HttpContext.Request.Form["ZoekKey"];
 
-            return View("~/Views/Home/Zoeken.cshtml");
+                switch (ZoekSoort)
+                {
+                    case "Alles":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey);
+                        break;
+                    case "Ligging":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey);
+                        break;
+                    case "Naam":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey);
+                        break;
+                    case "Categorie":
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey);
+                        break;
+                    default:
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
+                        break;
+                }
+
+                ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
+            }
+            return View();
         }
     }
 }
