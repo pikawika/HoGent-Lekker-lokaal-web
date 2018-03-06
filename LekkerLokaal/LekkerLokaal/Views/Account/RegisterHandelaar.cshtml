@@ -64,11 +64,11 @@
                                 <input type="password" class="form-control input-lg" placeholder="Korte omschrijving" required>
                             </div>
                             <div class="form-group">
-                                <label class="">Logo van uw bedrijf</label>
-                                <label class="btn btn-block btn-lg" id="logoHandelaar">
-                                    <input type="file" accept="{.jpg,.png}" name="logUpload" id="fileUpload"/>
+                                <label class="btn btn-default" id="fileselection">
+                                    <a id="fileselectionTekst">Selecteer een logo.</a><input type="file" accept=".jpg" name="fileToUpload" id="fileToUpload" style="display: none;">
                                 </label>
-                                @*<button type="file" class="btn btn-block btn-lg" style="width: 250px; background-color: darkgrey">Upload</button>*@
+
+
                             </div>
 
                             <div class="custom-checkbox mb-20">
@@ -79,6 +79,11 @@
                         </form>
                         <span class="or">Of</span>
                     </div>
+                    <script>
+                        $("#fileToUpload").change(function () {
+                            document.getElementById('fileselectionTekst').innerHTML = 'U heeft een bestand geselecteerd.';
+                        });
+                    </script>
                     <div class="col-sm-6 col-md-5 col-right">
                         <p class="text-center color-mid">Indien het niet mogelijk is om het aanvraagformulier te verzenden, stuur een e-mail of brief met uw gegevens naar volgend adres:</p>
                         <ul class="contact-list mb-40" style="margin: 20px">
