@@ -25,96 +25,38 @@
                         </aside>
                     </div>
                     <div class="col-xs-12 col-md-8 col-lg-9">
-                        <div class="header-deals-slider owl-slider" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
+                        <div class="header-deals-slider owl-slider owl-slider-index-header" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
+
+                            @foreach (var bon in ViewBag.Top3Bonnen)
+                            {
+                                <div class="deal-single panel item">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.Afbeelding.Replace("\\","\\\\")">
+                                        <div class="deal-about p-20 pos-a bottom-0 left-0">
+                                            <div class="rating mb-10">
+                                                <span class="rating-stars" data-rating="5">
+                                                    <i class="fa fa-star-o star-active"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                    <i class="fa fa-star-o"></i>
+                                                </span>
+                                                <span class="rating-reviews color-light">
+                                                    ( <span class="rating-count">@bon.AantalBesteld</span> keer verkocht)
+                                                </span>
+                                            </div>
+                                            <h3 class="deal-title mb-10">
+                                                <a href="deal_single.html" class="color-light color-h-lighter">@bon.Naam</a>
+                                            </h3>
+                                            <h8 class="deal-title mb-10">
+                                                <a href="deal_single.html" class="color-light color-h-lighter">Bekijk details</a>
+                                            </h8>
 
 
-                            <div class="deal-single panel item">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="/images/bon/1/thumb.jpg">
-                                    <div class="label-discount top-10 right-10">-30%</div>
-                                    <ul class="deal-actions top-10 left-10">
-                                        <li class="like-deal">
-                                            <span>
-                                                <i class="fa fa-heart"></i>
-                                            </span>
-                                        </li>
-                                        <li class="share-btn">
-                                            <div class="share-tooltip fade">
-                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                            </div>
-                                            <span><i class="fa fa-share-alt"></i></span>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-camera"></i>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                    <div class="deal-about p-20 pos-a bottom-0 left-0">
-                                        <div class="rating mb-10">
-                                            <span class="rating-stars" data-rating="5">
-                                                <i class="fa fa-star-o star-active"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </span>
-                                            <span class="rating-reviews color-light">
-                                                ( <span class="rating-count">164</span> Google-Reviews)
-                                            </span>
                                         </div>
-                                        <h3 class="deal-title mb-10 ">
-                                            <a href="deal_single.html" class="color-light color-h-lighter">Restaurant Lekker te Aalst</a>
-                                        </h3>
-                                    </div>
-                                </figure>
-                            </div>
-                            
-                            <div class="deal-single panel item">
-                                <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="/images/bon/1/thumb.jpg">
-                                    <div class="label-discount top-10 right-10">-30%</div>
-                                    <ul class="deal-actions top-10 left-10">
-                                        <li class="like-deal">
-                                            <span>
-                                                <i class="fa fa-heart"></i>
-                                            </span>
-                                        </li>
-                                        <li class="share-btn">
-                                            <div class="share-tooltip fade">
-                                                <a target="_blank" href="#"><i class="fa fa-facebook"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-twitter"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-google-plus"></i></a>
-                                                <a target="_blank" href="#"><i class="fa fa-pinterest"></i></a>
-                                            </div>
-                                            <span><i class="fa fa-share-alt"></i></span>
-                                        </li>
-                                        <li>
-                                            <span>
-                                                <i class="fa fa-camera"></i>
-                                            </span>
-                                        </li>
-                                    </ul>
-                                    <div class="deal-about p-20 pos-a bottom-0 left-0">
-                                        <div class="rating mb-10">
-                                            <span class="rating-stars" data-rating="5">
-                                                <i class="fa fa-star-o star-active"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                                <i class="fa fa-star-o"></i>
-                                            </span>
-                                            <span class="rating-reviews color-light">
-                                                ( <span class="rating-count">164</span> Google-Reviews)
-                                            </span>
-                                        </div>
-                                        <h3 class="deal-title mb-10 ">
-                                            <a href="deal_single.html" class="color-light color-h-lighter">Restaurant Lekker te Aalst</a>
-                                        </h3>
-                                    </div>
-                                </figure>
-                            </div>
+                                    </figure>
+                                </div>
+                            }
+
 
                         </div>
                     </div>
@@ -170,290 +112,128 @@
 
             <section class="section latest-deals-area ptb-30">
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
-                    <h3 style="color: white" class="section-title font-18">HOT</h3>
+                    <h3 style="color: white" class="section-title font-18">
+                        Meest verkochte cadeaubonnen
+                        <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                    </h3>
                 </header>
 
 
-                <div class="row row-masnory row-tb-20">
+                <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
                     @foreach (var bon in ViewBag.AlleBonnen)
                     {
-                        <div class="col-sm-6 col-lg-4">
-                            <div class="coupon-item">
-                                <div class="coupon-single panel t-center">
-                                    <div class="row">
-                                        <div class="col-xs-12">
-                                            <div class="text-center p-20">
-                                                <img class="store-logo" src=" @bon.Afbeelding" alt="">
+                        <div>
+                            <div>
+                                <div class="slick-lekker-lokaal">
+                                    <div class="col-xs-12">
+                                        <div class="coupon-item">
+                                            <div class="coupon-single panel t-center">
+                                                <div class="row">
+                                                    <div class="col-xs-12">
+                                                        <div class="text-center p-20">
+                                                            <img class="store-logo" src="@bon.Afbeelding" alt="">
+                                                        </div>
+                                                        <!-- end media -->
+                                                    </div>
+                                                    <!-- end col -->
+                                                    <div class="col-xs-12">
+                                                        <div class="panel-body">
+                                                            <ul class="deal-meta list-inline mb-10">
+                                                                <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>@bon.Gemeente</li>
+                                                                <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                                            </ul>
+
+                                                            <div class="height-70px">
+                                                                <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
+                                                            </div>
+                                                            <div class="height-70px">
+                                                                <h5 class="deal-title mb-10">
+                                                                    <a href="#">@bon.Beschrijving</a>
+                                                                </h5>
+                                                            </div>
+                                                            <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                            <div class="showcode">
+                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                            </div>
+
+                                                            <div style="margin-top: 10px" class="showcode">
+                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <!-- end col -->
+                                                </div>
+                                                <!-- end row -->
                                             </div>
-                                            <!-- end media -->
                                         </div>
-                                        <!-- end col -->
-                                        <div class="col-xs-12">
-                                            <div class="panel-body">
-
-                                                <ul class="deal-meta list-inline mb-10">
-                                                    <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>implement locatie</li>
-                                                    <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>implement besteld</li>
-                                                </ul>
-
-                                                <div class="height-70px">
-                                                    <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
-                                                </div>
-                                                <div class="height-70px">
-                                                    <h5 class="deal-title mb-10">
-                                                        <a href="#">@bon.Beschrijving</a>
-                                                    </h5>
-                                                </div>
-                                                <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                <div class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                                </div>
-
-                                                <div style="margin-top: 10px" class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- end col -->
                                     </div>
-                                    <!-- end row -->
                                 </div>
                             </div>
                         </div>
                     }
-
-
                 </div>
             </section>
 
 
             <section class="section latest-coupons-area ptb-30">
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
-                    <h3 style="color: white" class="section-title font-18">Populair in uw regio</h3>
+                    <h3 style="color: white" class="section-title font-18">
+                        Populair in uw regio - location not implemented yet
+                        <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-regio"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-regio">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                    </h3>
                 </header>
 
-                <div class="latest-coupons-slider owl-slider" data-autoplay-hover-pause="true" data-loop="true" data-autoplay="false" data-smart-speed="1000" data-autoplay-timeout="10000" data-margin="30" data-nav-speed="false" data-items="1" data-xxs-items="1" data-xs-items="2" data-sm-items="2" data-md-items="3" data-lg-items="4">
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>748x besteld</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">Generieke <br> Cadeaubon</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;50</p>
-                                        <div class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
+                <div class="latest-coupons-slider owl-slider owl-slider-LekkerLokaal-Regio" data-autoplay-hover-pause="true" data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="3000" data-margin="30" data-nav-speed="false" data-items="1" data-xxs-items="1" data-xs-items="2" data-sm-items="2" data-md-items="3" data-lg-items="3">
 
-                                        <div style="margin-top: 10px" class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
+                    @foreach (var bon in ViewBag.AlleBonnen)
+                    {
+                        <div class="coupon-item">
+                            <div class="coupon-single panel t-center">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="text-center p-20">
+                                            <img class="store-logo" src="@bon.Afbeelding" alt="">
+                                        </div>
+                                        <!-- end media -->
+                                    </div>
+                                    <!-- end col -->
+                                    <div class="col-xs-12">
+                                        <div class="panel-body">
+                                            <ul class="deal-meta list-inline mb-10">
+                                                <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>@bon.Gemeente</li>
+                                                <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                            </ul>
+
+                                            <div class="height-70px">
+                                                <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
+                                            </div>
+                                            <div class="height-70px">
+                                                <h5 class="deal-title mb-10">
+                                                    <a href="#">@bon.Beschrijving</a>
+                                                </h5>
+                                            </div>
+                                            <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                            <div class="showcode">
+                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                            </div>
+
+                                            <div style="margin-top: 10px" class="showcode">
+                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                            </div>
                                         </div>
                                     </div>
+                                    <!-- end col -->
                                 </div>
-                                <!-- end col -->
+                                <!-- end row -->
                             </div>
-                            <!-- end row -->
                         </div>
-                    </div>
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
+                    }
 
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>België</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>87x besteld</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">Fitness <br> Basic-Fit</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">Bekenste fitness van België met vestigingen over het hele land</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;30</p>
-                                        <div class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
 
-                                        <div style="margin-top: 10px" class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                    </div>
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
 
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>98x besteld</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">Restaurant <br> Lekker</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">3 sterren restaurant in het centrum van Aalst <br>  &zwnj;</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;50</p>
-                                        <div class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
 
-                                        <div style="margin-top: 10px" class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                    </div>
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
 
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>58x besteld</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">Nachtwandeling <br> Aalst at night</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">Geniet van de sterrenhemel in de mooie streken van Aalst (met gids)</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;10</p>
-                                        <div class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-
-                                        <div style="margin-top: 10px" class="showcode">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                    </div>
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="ribbon-wrapper is-hidden-xs-down">
-                                <div class="ribbon">Featured</div>
-                            </div>
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
-
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-muted"><i class="ico fa fa-tag mr-5"></i>Coupon</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>86 Used</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">10% OFF</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">10% off $399+ refurbished laptops</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 20/02/2018</p>
-                                        <div class="showcode" data-toggle-class="coupon-showen" data-toggle-event="click">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_05">Show Code</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                    </div>
-                    <div class="coupon-item">
-                        <div class="coupon-single panel t-center">
-                            <div class="row">
-                                <div class="col-xs-12">
-                                    <div class="text-center p-20">
-                                        <img class="store-logo" src="/images/bon/1/thumb.jpg" alt="">
-                                    </div>
-                                    <!-- end media -->
-                                </div>
-                                <!-- end col -->
-
-                                <div class="col-xs-12">
-                                    <div class="panel-body">
-                                        <ul class="deal-meta list-inline mb-10">
-                                            <li class="color-green"><i class="ico lnr lnr-smile mr-5"></i>Verifed</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>24 Used</li>
-                                        </ul>
-                                        <h4 class="color-green mb-10 t-uppercase">25% OFF</h4>
-                                        <h5 class="deal-title mb-10">
-                                            <a href="#">There is no place like home 25% off</a>
-                                        </h5>
-                                        <p class="mb-15 color-muted mb-20 font-12"><i class="lnr lnr-clock mr-10"></i>Expires On 14/01/2018</p>
-                                        <div class="showcode" data-toggle-class="coupon-showen" data-toggle-event="click">
-                                            <button class="show-code btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_06">Show Coupon</button>
-                                            <div class="coupon-hide">X455-17GT-OL58</div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- end col -->
-                            </div>
-                            <!-- end row -->
-                        </div>
-                    </div>
                 </div>
             </section>
             <section class="section subscribe-area ptb-40 t-center">
