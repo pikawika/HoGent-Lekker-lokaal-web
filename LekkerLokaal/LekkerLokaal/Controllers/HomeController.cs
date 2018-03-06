@@ -54,5 +54,13 @@ namespace LekkerLokaal.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public IActionResult Zoeken(string zoekKey, string zoekField)
+        {
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+                
+            ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
+            return View();
+        }
     }
 }

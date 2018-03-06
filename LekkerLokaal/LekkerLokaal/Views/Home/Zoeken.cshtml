@@ -1,0 +1,119 @@
+﻿@{
+
+}
+
+
+<main id="mainContent" class="main-content">
+    <div class="page-container ptb-60">
+        <div class="container">
+
+
+            <div class="section coupons-area coupons-area-grid">
+
+                <section class="section latest-deals-area ptb-30">
+                    <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
+                        <h3 style="color: white" class="section-title font-18">
+                            Zoekopdracht voor: IMPLEMENT
+                            <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                        </h3>
+                    </header>
+
+
+                    <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
+
+                        @foreach (var bon in ViewBag.GefilterdeBonnen)
+                        {
+                            <div>
+                                <div>
+                                    <div class="slick-lekker-lokaal">
+                                        <div class="col-xs-12">
+                                            <div class="coupon-item">
+                                                <div class="coupon-single panel t-center">
+                                                    <div class="row">
+                                                        <div class="col-xs-12">
+                                                            <div class="text-center p-20">
+                                                                <img class="store-logo" src="~/@bon.Afbeelding" alt="">
+                                                            </div>
+                                                            <!-- end media -->
+                                                        </div>
+                                                        <!-- end col -->
+                                                        <div class="col-xs-12">
+                                                            <div class="panel-body">
+                                                                <ul class="deal-meta list-inline mb-10">
+                                                                    <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>@bon.Gemeente</li>
+                                                                    <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                                                </ul>
+
+                                                                <div class="height-70px">
+                                                                    <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
+                                                                </div>
+                                                                <div class="height-70px">
+                                                                    <h5 class="deal-title mb-10">
+                                                                        <a href="#">@bon.Beschrijving</a>
+                                                                    </h5>
+                                                                </div>
+                                                                <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                                <div class="showcode">
+                                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                                </div>
+
+                                                                <div style="margin-top: 10px" class="showcode">
+                                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <!-- end col -->
+                                                    </div>
+                                                    <!-- end row -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </section>
+
+                <!-- Page Pagination -->
+                <div class="page-pagination text-center mt-30 p-10 panel">
+                    <nav>
+                        <!-- Page Pagination -->
+                        <ul class="page-pagination">
+                            <li>
+                                <a class="page-numbers previous" href="#">Previous</a>
+                            </li>
+                            <li>
+                                <a href="#" class="page-numbers">1</a>
+                            </li>
+                            <li>
+                                <span class="page-numbers current">2</span>
+                            </li>
+                            <li>
+                                <a href="#" class="page-numbers">3</a>
+                            </li>
+                            <li>
+                                <a href="#" class="page-numbers">4</a>
+                            </li>
+                            <li>
+                                <span class="page-numbers dots">...</span>
+                            </li>
+                            <li>
+                                <a href="#" class="page-numbers">20</a>
+                            </li>
+                            <li>
+                                <a href="#" class="page-numbers next">Next</a>
+                            </li>
+                        </ul>
+                        <!-- End Page Pagination -->
+                    </nav>
+                </div>
+                <!-- End Page Pagination -->
+            </div>
+            <!-- End Coupons Area -->
+
+        </div>
+    </div>
+
+
+</main>
