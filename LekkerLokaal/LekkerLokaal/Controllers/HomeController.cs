@@ -58,8 +58,24 @@ namespace LekkerLokaal.Controllers
         public IActionResult Zoeken(string zoekKey, string zoekField)
         {
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-                
             ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
+
+            switch (zoekField)
+            {
+                //case "Alles":
+                //    ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(zoekKey);
+                //    break;
+                case "Ligging":
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(zoekKey);
+                    break;
+                case "Naam":
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(zoekKey);
+                    break;
+                case "Categorie":
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(zoekKey);
+                    break;
+            }
+
             return View();
         }
     }
