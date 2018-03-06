@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.Domain;
+using Microsoft.AspNetCore.Authorization;
+using LekkerLokaal.Models.HomeViewModels;
 
 namespace LekkerLokaal.Controllers
 {
@@ -55,26 +57,33 @@ namespace LekkerLokaal.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Zoeken(string zoekKey, string zoekField)
+        [HttpPost]
+        public IActionResult Zoeken(ZoekenViewModel model, string returnUrl = null)
         {
+            ViewData["ReturnUrl"] = returnUrl;
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-            ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
 
-            switch (zoekField)
+            if (ModelState.IsValid)
             {
-                //case "Alles":
-                //    ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(zoekKey);
-                //    break;
-                case "Ligging":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(zoekKey);
-                    break;
-                case "Naam":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(zoekKey);
-                    break;
-                case "Categorie":
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(zoekKey);
-                    break;
+                return View();
             }
+
+            //ViewBag.GefilterdeBonnen = _bonRepository.GetAll().ToList();
+            //switch (zoekField)
+            //{
+            //    //case "Alles":
+            //    //    ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(zoekKey);
+            //    //    break;
+            //    case "Ligging":
+            //        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(zoekKey);
+            //        break;
+            //    case "Naam":
+            //        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(zoekKey);
+            //        break;
+            //    case "Categorie":
+            //        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(zoekKey);
+            //        break;
+            //}
 
             return View();
         }

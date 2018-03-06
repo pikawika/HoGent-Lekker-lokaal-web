@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using LekkerLokaal.Models.HomeViewModels
+@model ZoekenViewModel;
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -42,8 +45,8 @@
                     <div class="row row-rl-0 row-tb-20 row-md-cell">
                         <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
                             @*<a href="#" class="logo">
-                                    <img src="/images/logo.png" alt="" width="150">
-                                </a>*@
+                <img src="/images/logo.png" alt="" width="150">
+            </a>*@
                             <a asp-controller="Home" asp-action="Index" class="logo">
                                 <img src="/images/logo.png" alt="" width="150">
                             </a>
@@ -51,18 +54,18 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form">
+                                    <form class="search-form" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
                                         <div class="input-group">
-                                            <input type="text" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in..." required="required">
+                                            <input type="text" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in..." asp-for="ZoekKey">
                                             <div class="input-group-btn">
                                                 <div class="input-group">
-                                                    <select class="form-control input-lg search-select">
-                                                        <option>Alles</option>
-                                                        <option>Naam</option>
-                                                        <option>Ligging</option>
+                                                    <select class="form-control input-lg search-select" asp-for="ZoekSoort">
+                                                        <option value="Alles">Alles</option>
+                                                        <option value="Naam">Naam</option>
+                                                        <option value="Ligging">Ligging</option>
                                                     </select>
                                                     <div class="input-group-btn">
-                                                        <button asp-controller="Home" asp-action="Zoeken" type="submit" class="btn btn-lg btn-search btn-block">
+                                                        <button type="submit" class="btn btn-lg btn-search btn-block">
                                                             <i class="fa fa-search font-16"></i>
                                                         </button>
                                                     </div>
