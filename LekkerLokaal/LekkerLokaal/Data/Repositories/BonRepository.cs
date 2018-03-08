@@ -28,10 +28,31 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<Bon> GetAlles(string zoekKey)
         {
-            string _zoekKey = zoekKey.ToLower();
-            return GetAll().Where(b => b.Categorie.Naam.ToLower().Contains(_zoekKey)
-                                    || b.Gemeente.ToLower().Contains(_zoekKey)
-                                    || b.Naam.ToLower().Contains(_zoekKey)).ToList();
+            if (zoekKey.Trim().Length != 0)
+            {
+                string[] _woorden = zoekKey.ToLower().Split(' ');
+                int _aantalWoorden = _woorden.Length;
+
+                //beste algoritme eerst kijken of any naam match uit list, dan any ligging match uit list, dan any cat match uit list en als list dan leeg is toon je hem
+                return GetAll().Where(b =>
+                                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden 
+                                    || b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden 
+                                    || b.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden)).ToList();
+
+                //een algoritme maar brak
+                //return GetAll().Where(b => 
+                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden || b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden || b.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden) ||
+                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
+                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
+                //                    (b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
+                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any())
+                //                    ).ToList();
+            }
+            else
+            {
+                return GetAll().ToList();
+            }
+            
         }
 
         public IEnumerable<Bon> GetByCategorie(string zoekKey)
