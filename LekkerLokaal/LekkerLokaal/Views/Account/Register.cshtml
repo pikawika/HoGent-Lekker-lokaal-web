@@ -61,7 +61,7 @@
                     </div>
                     <div class="col-sm-6 col-md-5 col-right">
                         <div class="social-login p-40">
-                            <form asp-action="ExternalLogin" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
+                            <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@null" method="get">
                                 <div class="mb-20">
                                     <button type="submit" class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Meld aan met Facebook</button>
                                 </div>

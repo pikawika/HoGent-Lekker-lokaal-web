@@ -41,14 +41,14 @@ namespace LekkerLokaal.Controllers
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
-
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
-
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
