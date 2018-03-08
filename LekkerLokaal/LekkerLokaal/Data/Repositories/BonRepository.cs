@@ -40,10 +40,39 @@ namespace LekkerLokaal.Data.Repositories
                     int _aantalMatchenWoord = 0;
                     foreach (String woord in _woorden)
                     {
-                        if (b.Categorie.Naam.ToLower().Split(' ').Contains(woord) || b.Gemeente.ToLower().Split(' ').Contains(woord) || b.Naam.ToLower().Split(' ').Contains(woord))
+                        bool matchFound = false;
+                        foreach (String woordToMatch in b.Categorie.Naam.ToLower().Split(' '))
                         {
-                            _aantalMatchenWoord++;
+                            if (woordToMatch.Contains(woord))
+                            {
+                                matchFound = true;
+                                _aantalMatchenWoord++;
+                            }
                         }
+                        if (matchFound == false)
+                        {
+                            foreach (String woordToMatch in b.Gemeente.ToLower().Split(' '))
+                            {
+                                if (woordToMatch.Contains(woord))
+                                {
+                                    matchFound = true;
+                                    _aantalMatchenWoord++;
+                                }
+                            }
+                        }
+                        if (matchFound == false)
+                        {
+                            foreach (String woordToMatch in b.Naam.ToLower().Split(' '))
+                            {
+                                if (woordToMatch.Contains(woord))
+                                {
+                                    matchFound = true;
+                                    _aantalMatchenWoord++;
+                                }
+                            }
+                        }
+                        
+                        
                     }
                     if (_aantalMatchenWoord == _aantalWoorden)
                     {
