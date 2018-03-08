@@ -28,7 +28,10 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<Bon> GetAlles(string zoekKey)
         {
-            return GetByCategorie(zoekKey).Concat(GetByLigging(zoekKey).Concat(GetByNaam(zoekKey))).Distinct().ToList();
+            string _zoekKey = zoekKey.ToLower();
+            return GetAll().Where(b => b.Categorie.Naam.ToLower().Contains(_zoekKey)
+                                    || b.Gemeente.ToLower().Contains(_zoekKey)
+                                    || b.Naam.ToLower().Contains(_zoekKey)).ToList();
         }
 
         public IEnumerable<Bon> GetByCategorie(string zoekKey)
