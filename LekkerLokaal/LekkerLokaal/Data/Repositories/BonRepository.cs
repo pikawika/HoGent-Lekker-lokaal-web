@@ -32,21 +32,26 @@ namespace LekkerLokaal.Data.Repositories
             {
                 string[] _woorden = zoekKey.ToLower().Split(' ');
                 int _aantalWoorden = _woorden.Length;
+                List<Bon> _advancedSearch = new List<Bon>();
 
-                //beste algoritme eerst kijken of any naam match uit list, dan any ligging match uit list, dan any cat match uit list en als list dan leeg is toon je hem
-                return GetAll().Where(b =>
-                                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden 
-                                    || b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden 
-                                    || b.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden)).ToList();
 
-                //een algoritme maar brak
-                //return GetAll().Where(b => 
-                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden || b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden || b.Naam.ToLower().Split(' ').Intersect(_woorden).Count() == _aantalWoorden) ||
-                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
-                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
-                //                    (b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any() && b.Naam.ToLower().Split(' ').Intersect(_woorden).Any()) ||
-                //                    (b.Categorie.Naam.ToLower().Split(' ').Intersect(_woorden).Any() && b.Gemeente.ToLower().Split(' ').Intersect(_woorden).Any())
-                //                    ).ToList();
+                foreach (Bon b in GetAll())
+                {
+                    int _aantalMatchenWoord = 0;
+                    foreach (String woord in _woorden)
+                    {
+                        if (b.Categorie.Naam.ToLower().Split(' ').Contains(woord) || b.Gemeente.ToLower().Split(' ').Contains(woord) || b.Naam.ToLower().Split(' ').Contains(woord))
+                        {
+                            _aantalMatchenWoord++;
+                        }
+                    }
+                    if (_aantalMatchenWoord == _aantalWoorden)
+                    {
+                        _advancedSearch.Add(b);
+                    }
+                }
+
+                return _advancedSearch.ToList();
             }
             else
             {
