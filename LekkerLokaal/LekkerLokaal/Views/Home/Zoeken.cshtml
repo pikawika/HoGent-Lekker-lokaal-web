@@ -18,13 +18,10 @@
                         </h3>
                     </header>
 
-
                     <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
                         @foreach (var bon in ViewBag.GefilterdeBonnen)
                         {
-                            <div>
-                                <div>
                                     <div class="slick-lekker-lokaal">
                                         <div class="col-xs-12">
                                             <div class="coupon-item">
@@ -69,46 +66,16 @@
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </div>
                         }
                     </div>
                 </section>
 
-                <!-- Page Pagination -->
-                <div class="page-pagination text-center mt-30 p-10 panel">
-                    <nav>
-                        <!-- Page Pagination -->
-                        <ul class="page-pagination">
-                            <li>
-                                <a class="page-numbers previous" href="#">Previous</a>
-                            </li>
-                            <li>
-                                <a href="#" class="page-numbers">1</a>
-                            </li>
-                            <li>
-                                <span class="page-numbers current">2</span>
-                            </li>
-                            <li>
-                                <a href="#" class="page-numbers">3</a>
-                            </li>
-                            <li>
-                                <a href="#" class="page-numbers">4</a>
-                            </li>
-                            <li>
-                                <span class="page-numbers dots">...</span>
-                            </li>
-                            <li>
-                                <a href="#" class="page-numbers">20</a>
-                            </li>
-                            <li>
-                                <a href="#" class="page-numbers next">Next</a>
-                            </li>
-                        </ul>
-                        <!-- End Page Pagination -->
-                    </nav>
-                </div>
-                <!-- End Page Pagination -->
+                <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
+                    <h3 style="color: white" class="section-title font-18">
+                        Zoekopdracht voor: @ViewBag.ZoekOpdracht
+                        <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                    </h3>
+                </header>
             </div>
             <!-- End Coupons Area -->
 
