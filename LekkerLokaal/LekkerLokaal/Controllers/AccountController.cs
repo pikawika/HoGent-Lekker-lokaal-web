@@ -14,6 +14,7 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -509,6 +510,41 @@ namespace LekkerLokaal.Controllers
         public IActionResult AccessDenied()
         {
             return View();
+        }
+
+        public async Task<IActionResult> OnPostAsync()
+        {
+            if (!ModelState.IsValid)
+            {
+                return View();
+            }
+            var mailbody = $@"Hallo website owner,
+
+                This is a new contact request from your website:
+
+
+                Cheers,
+                The websites contact form";
+
+            SendMail(mailbody);
+
+            return RedirectToPage("Index");
+        }
+
+        private void SendMail(string mailbody)
+        {
+            using (var message = new MailMessage(Contact.Email, "my@domain.com"))
+            {
+                message.To.Add(new MailAddress("lekkerlokaalst@gmail.com"));
+                //message.From = new MailAddress(Contact.Email);
+                message.Subject = "New E-Mail from my website";
+                message.Body = mailbody;
+
+                using (var smtpClient = new SmtpClient("smtp.sendgrid.net"))
+                {
+                    smtpClient.Send(message);
+                }
+            }
         }
 
         #region Helpers

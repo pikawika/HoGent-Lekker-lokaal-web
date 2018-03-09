@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -52,5 +53,12 @@ namespace LekkerLokaal.Models.AccountViewModels
         [Required(ErrorMessage = "{0} is verplicht.")]
         [Display(Name = "categorie")]
         public string Categorie { get; set; }
+
+        [BindProperty]
+        public RegisterHandelaarViewModel Contact { get; set; }
+
+        
+
     }
+    
 }
