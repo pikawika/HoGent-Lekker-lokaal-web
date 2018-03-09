@@ -14,7 +14,8 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
-using System.Net.Mail;
+using MimeKit;
+using MailKit.Net.Smtp;
 
 namespace LekkerLokaal.Controllers
 {
@@ -284,34 +285,47 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        //    [HttpPost]
-        //    [AllowAnonymous]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
-        //    {
-        //        ViewData["ReturnUrl"] = returnUrl;
-        //        if (ModelState.IsValid)
-        //        {
-        //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        //            var result = await _userManager.CreateAsync(user, model.Password);
-        //            if (result.Succeeded)
-        //            {
-        //                _logger.LogInformation("User created a new account with password.");
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            if (ModelState.IsValid)
+            {
+                var message = new MimeMessage();
+                message.From.Add(new MailboxAddress("Lekker Lokaal", "lekkerlokaalst@gmail.com"));
+                message.To.Add(new MailboxAddress("naren", "bramwarsx@gmail.com"));
+                message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
+                message.Body = new TextPart("plain")
+                {
+                    //Text = "Dit is een test."
+                    Text = String.Format("Naam handelszaak: {0}\n" +
+                                        "Naam contactpersoon: {1}\n" +
+                                        "E-mailadres: {2}\n" +
+                                        "Straat: {3}\n" +
+                                        "Huisnummer: {4}\n" +
+                                        "Postcode: {5}\n" +
+                                        "Gemeente: {6}\n" +
+                                        "BTW Nummer: {7}\n" +
+                                        "Categorie: {8}\n" ,
+                                        model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie)
+                };
+                using (var client = new SmtpClient())
+                {
+                    client.Connect("smtp.gmail.com", 587, false);
+                    client.Authenticate("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                    client.Send(message);
 
-        //                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        //                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-        //                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
-
-        //                await _signInManager.SignInAsync(user, isPersistent: false);
-        //                _logger.LogInformation("User created a new account with password.");
-        //                return RedirectToLocal(returnUrl);
-        //            }
-        //            AddErrors(result);
-        //        }
-        //        If we got this far, something failed, redisplay form
-        //                return View(model);
-        //    }
-        //}
+                    client.Disconnect(true);
+                }
+                return RedirectToLocal(returnUrl);
+            }
+            // If we got this far, something failed, redisplay form
+            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            return View(model);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -510,41 +524,6 @@ namespace LekkerLokaal.Controllers
         public IActionResult AccessDenied()
         {
             return View();
-        }
-
-        public async Task<IActionResult> OnPostAsync()
-        {
-            if (!ModelState.IsValid)
-            {
-                return View();
-            }
-            var mailbody = $@"Hallo website owner,
-
-                This is a new contact request from your website:
-
-
-                Cheers,
-                The websites contact form";
-
-            SendMail(mailbody);
-
-            return RedirectToPage("Index");
-        }
-
-        private void SendMail(string mailbody)
-        {
-            using (var message = new MailMessage(Contact.Email, "my@domain.com"))
-            {
-                message.To.Add(new MailAddress("lekkerlokaalst@gmail.com"));
-                //message.From = new MailAddress(Contact.Email);
-                message.Subject = "New E-Mail from my website";
-                message.Body = mailbody;
-
-                using (var smtpClient = new SmtpClient("smtp.sendgrid.net"))
-                {
-                    smtpClient.Send(message);
-                }
-            }
         }
 
         #region Helpers
