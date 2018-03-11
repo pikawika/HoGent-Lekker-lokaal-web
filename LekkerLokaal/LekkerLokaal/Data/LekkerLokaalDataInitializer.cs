@@ -24,7 +24,7 @@ namespace LekkerLokaal.Data
             _dbContext.Database.EnsureDeleted();
             if (_dbContext.Database.EnsureCreated())
             {
-                Categorie eten_drinken = new Categorie("Eten & drinken", "fa-cutlery");
+                Categorie eten_drinken = new Categorie("Eten & drinken", "fa-utensils");
                 Categorie fitness = new Categorie("Fitness", "fa-bolt");
                 Categorie uitstappen = new Categorie("Uitstappen", "fa-plane");
                 Categorie huis_tuin = new Categorie("Huis & Tuin", "fa-home");
