@@ -15,7 +15,9 @@ using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using MimeKit;
-using MailKit.Net.Smtp;
+//using MailKit.Net.Smtp;
+using System.IO;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -294,14 +296,15 @@ namespace LekkerLokaal.Controllers
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
-                var message = new MimeMessage();
-                message.From.Add(new MailboxAddress("Lekker Lokaal", "lekkerlokaalst@gmail.com"));
-                message.To.Add(new MailboxAddress("naren", "bramwarsx@gmail.com"));
+
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add("brent_schets@hotmail.be");
                 message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
-                message.Body = new TextPart("plain")
-                {
+                message.Body = 
+                
                     //Text = "Dit is een test."
-                    Text = String.Format("Naam handelszaak: {0}\n" +
+                    String.Format("Naam handelszaak: {0}\n" +
                                         "Naam contactpersoon: {1}\n" +
                                         "E-mailadres: {2}\n" +
                                         "Straat: {3}\n" +
@@ -309,17 +312,21 @@ namespace LekkerLokaal.Controllers
                                         "Postcode: {5}\n" +
                                         "Gemeente: {6}\n" +
                                         "BTW Nummer: {7}\n" +
-                                        "Categorie: {8}\n" ,
-                                        model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie)
-                };
-                using (var client = new SmtpClient())
-                {
-                    client.Connect("smtp.gmail.com", 587, false);
-                    client.Authenticate("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                    client.Send(message);
+                                        "Categorie: {8}\n" +
+                                        "Beschrijving: {9}\n",
+                                        model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving)
+                ;
 
-                    client.Disconnect(true);
-                }
+                System.Net.Mail.Attachment attachment;
+                attachment = new System.Net.Mail.Attachment("C:\\Users\\brent\\Pictures\\background-overwatch-top.jpg");
+                message.Attachments.Add(attachment);
+
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(message);
                 return RedirectToLocal(returnUrl);
             }
             // If we got this far, something failed, redisplay form

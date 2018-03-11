@@ -60,11 +60,12 @@
                                 <span asp-validation-for="Categorie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="sr-only">korte omschrijving van uw bedrijf</label>
-                                <input type="password" class="form-control input-lg" placeholder="Korte omschrijving" required>
+                                <label class="sr-only" asp-for="Beschrijving">korte omschrijving van uw bedrijf</label>
+                                <input asp-for="Beschrijving" class="form-control input-lg" placeholder="Korte omschrijving" required>
+                                <span asp-validation-for="Beschrijving" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="btn btn-default" id="fileselection">
+                                <label class="btn btn-default" id="fileselection" >
                                     <a id="fileselectionTekst">Selecteer een logo.</a><input type="file" accept=".jpg" name="fileToUpload" id="fileToUpload" style="display: none;">
                                 </label>
 
