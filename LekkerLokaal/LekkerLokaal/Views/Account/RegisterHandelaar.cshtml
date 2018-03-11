@@ -11,7 +11,7 @@
                 <h3 class="sign-title">Aanvraagformulier registratie nieuwe handelaar</h3>
                 <div class="row row-rl-0">
                     <div class="col-sm-6 col-md-7 col-left">
-                        <form class="p-40" asp-route-returnUrl="@ViewData["Register"]" method="post">
+                        <form class="p-40" asp-route-returnUrl="@ViewData["Register"]" enctype="multipart/form-data" method="post">
                             <div class="form-group">
                                 <label asp-for="NaamHandelszaak" class="sr-only"></label>
                                 <input class="form-control input-lg" placeholder="Naam handelszaak" asp-for="NaamHandelszaak">
@@ -65,11 +65,9 @@
                                 <span asp-validation-for="Beschrijving" class="text-danger"></span>
                             </div>
                             <div class="form-group">
-                                <label class="btn btn-default" id="fileselection" >
-                                    <a id="fileselectionTekst">Selecteer een logo.</a><input type="file" accept=".jpg" name="fileToUpload" id="fileToUpload" style="display: none;">
+                                <label class="btn btn-default" id="fileselection">
+                                    <a id="fileselectionTekst">Selecteer een logo.</a><input asp-for="Logo" accept=".jpg" id="fileToUpload" style="display: none;">
                                 </label>
-
-
                             </div>
 
                             <div class="custom-checkbox mb-20">

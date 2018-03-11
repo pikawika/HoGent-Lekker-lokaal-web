@@ -299,10 +299,10 @@ namespace LekkerLokaal.Controllers
 
                 MailMessage message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add("brent_schets@hotmail.be");
+                message.To.Add("lennertbontinck@live.be");
                 message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
-                message.Body = 
-                
+                message.Body =
+
                     //Text = "Dit is een test."
                     String.Format("Naam handelszaak: {0}\n" +
                                         "Naam contactpersoon: {1}\n" +
@@ -317,16 +317,23 @@ namespace LekkerLokaal.Controllers
                                         model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving)
                 ;
 
-                System.Net.Mail.Attachment attachment;
-                attachment = new System.Net.Mail.Attachment("C:\\Users\\brent\\Pictures\\background-overwatch-top.jpg");
-                message.Attachments.Add(attachment);
+                var filePath = @"wwwroot/images/temp/logo.jpg";
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Logo.CopyToAsync(fileStream);
+                fileStream.Close();
 
+                System.Net.Mail.Attachment attachment;
+                attachment = new System.Net.Mail.Attachment(@"wwwroot/images/temp/logo.jpg");
+                attachment.Name = "logo.jpg";
+                message.Attachments.Add(attachment);
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(message);
+                attachment.Dispose();
+                System.IO.File.Delete(@"wwwroot/images/temp/logo.jpg");
                 return RedirectToLocal(returnUrl);
             }
             // If we got this far, something failed, redisplay form

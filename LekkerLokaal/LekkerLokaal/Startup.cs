@@ -115,7 +115,7 @@ namespace LekkerLokaal
                     name: "default",
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }
