@@ -4,6 +4,7 @@ using System.Linq;
 using LekkerLokaal.Models.Domain;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
+using System.Text;
 
 namespace LekkerLokaal.Data.Repositories
 {
@@ -40,10 +41,17 @@ namespace LekkerLokaal.Data.Repositories
                     int _aantalMatchenWoord = 0;
                     foreach (String woord in _woorden)
                     {
+                        String woordfilter = woord.Replace("-", "");
+                        woordfilter = woordfilter.Replace("_", "");
+                        woordfilter = VerwijderAccenten(woordfilter);
+
                         bool matchFound = false;
                         foreach (String woordToMatch in b.Categorie.Naam.ToLower().Split(' '))
                         {
-                            if (woordToMatch.Contains(woord))
+                            String woordfilterMatch = woordToMatch.Replace("-", "");
+                            woordfilterMatch = woordfilterMatch.Replace("_", "");
+                            woordfilterMatch = VerwijderAccenten(woordfilterMatch);
+                            if (woordfilterMatch.Contains(woordfilter))
                             {
                                 matchFound = true;
                                 _aantalMatchenWoord++;
@@ -53,7 +61,10 @@ namespace LekkerLokaal.Data.Repositories
                         {
                             foreach (String woordToMatch in b.Gemeente.ToLower().Split(' '))
                             {
-                                if (woordToMatch.Contains(woord))
+                                String woordfilterMatch = woordToMatch.Replace("-", "");
+                                woordfilterMatch = woordfilterMatch.Replace("_", "");
+                                woordfilterMatch = VerwijderAccenten(woordfilterMatch);
+                                if (woordfilterMatch.Contains(woordfilter))
                                 {
                                     matchFound = true;
                                     _aantalMatchenWoord++;
@@ -64,7 +75,10 @@ namespace LekkerLokaal.Data.Repositories
                         {
                             foreach (String woordToMatch in b.Naam.ToLower().Split(' '))
                             {
-                                if (woordToMatch.Contains(woord))
+                                String woordfilterMatch = woordToMatch.Replace("-", "");
+                                woordfilterMatch = woordfilterMatch.Replace("_", "");
+                                woordfilterMatch = VerwijderAccenten(woordfilterMatch);
+                                if (woordfilterMatch.Contains(woordfilter))
                                 {
                                     matchFound = true;
                                     _aantalMatchenWoord++;
@@ -105,6 +119,22 @@ namespace LekkerLokaal.Data.Repositories
         {
             string _zoekKey = zoekKey.ToLower();
             return GetAll().Where(b => b.Naam.ToLower().Contains(_zoekKey)).ToList();
+        }
+
+        public string VerwijderAccenten(string input)
+        {
+            string stFormD = input.Normalize(NormalizationForm.FormD);
+            int len = stFormD.Length;
+            StringBuilder sb = new StringBuilder();
+            for (int i = 0; i < len; i++)
+            {
+                System.Globalization.UnicodeCategory uc = System.Globalization.CharUnicodeInfo.GetUnicodeCategory(stFormD[i]);
+                if (uc != System.Globalization.UnicodeCategory.NonSpacingMark)
+                {
+                    sb.Append(stFormD[i]);
+                }
+            }
+            return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
     }
 }
