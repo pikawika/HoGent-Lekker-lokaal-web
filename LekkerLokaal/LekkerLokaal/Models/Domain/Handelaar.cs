@@ -14,7 +14,6 @@ namespace LekkerLokaal.Models.Domain
         public string BTW_Nummer { get; set; }
         public ICollection<Bon> Cadeaubonnen { get; }
         public string Afbeelding { get; set; }
-        public Gebruiker Contactpersoon { get; set; }
         public string Straat { get; set; }
         public string Huisnummer { get; set; }
         public int Postcode { get; set; }

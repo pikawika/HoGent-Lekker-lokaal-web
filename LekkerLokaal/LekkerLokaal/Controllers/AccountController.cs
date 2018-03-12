@@ -299,22 +299,21 @@ namespace LekkerLokaal.Controllers
 
                 MailMessage message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add("lennertbontinck@live.be");
+                message.To.Add("lekkerlokaalst@gmail.com");
                 message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
                 message.Body =
 
                     //Text = "Dit is een test."
                     String.Format("Naam handelszaak: {0}\n" +
-                                        "Naam contactpersoon: {1}\n" +
-                                        "E-mailadres: {2}\n" +
-                                        "Straat: {3}\n" +
-                                        "Huisnummer: {4}\n" +
-                                        "Postcode: {5}\n" +
-                                        "Gemeente: {6}\n" +
-                                        "BTW Nummer: {7}\n" +
-                                        "Categorie: {8}\n" +
-                                        "Beschrijving: {9}\n",
-                                        model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving)
+                                        "E-mailadres: {1}\n" +
+                                        "Straat: {2}\n" +
+                                        "Huisnummer: {3}\n" +
+                                        "Postcode: {4}\n" +
+                                        "Gemeente: {5}\n" +
+                                        "BTW Nummer: {6}\n" +
+                                        "Categorie: {7}\n" +
+                                        "Beschrijving: {8}\n",
+                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving)
                 ;
 
                 var filePath = @"wwwroot/images/temp/logo.jpg";

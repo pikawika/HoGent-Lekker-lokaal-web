@@ -17,11 +17,6 @@ namespace LekkerLokaal.Models.AccountViewModels
         public string NaamHandelszaak { get; set; }
 
         [Required]
-        [Display(Name = "Naam Contactpersoon")]
-        [DataType(DataType.Text)]
-        public string NaamContactpersoon { get; set; }
-
-        [Required]
         [EmailAddress]
         [Display(Name = "Email")]
         public string Email { get; set; }
