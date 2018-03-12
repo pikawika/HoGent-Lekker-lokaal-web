@@ -1,22 +1,4 @@
 
-/*
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-  FRIDAY - Coupons, Deals, Discounts and Promo Codes Template
-–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-
-    - File           : main.js
-    - Desc           : Template - JavaScript
-    - Version        : 1.1
-    - Date           : 2017-03-01
-    - Author         : CODASTROID
-    - Author URI     : https://themeforest.net/user/codastroid
-
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-*/
-
-
-
-
 (function ($) {
 
     "use strict";
@@ -389,40 +371,41 @@
 
     $('.lekkerLokaal-driexdrierow').slick({
         infinite: false,
-        dots: true,
         arrows: false,
-        mobileFirst: 1,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        rows: 1,
+        slidesToShow: 3,
+        slidesToScroll: 3,
+        rows: 3,
+        dots: true,
         responsive: [
             {
                 breakpoint: 1200,
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    rows: 3
+                    rows: 3,
                 }
             },
             {
-                breakpoint: 720,
+                breakpoint: 800,
                 settings: {
                     slidesToShow: 2,
+                    rows: 2,
                     slidesToScroll: 2,
-                    rows: 2
+                    dots: true
                 }
             },
             {
-                breakpoint: 1,
+                breakpoint: 550,
                 settings: {
                     slidesToShow: 1,
-                    slidesToScroll: 1,
                     rows: 1,
+                    slidesToScroll: 1,
                     dots: false
                 }
-            }
-        ]
+            }]
     });
+
+   
 
     $(".volgende-slide-index-grid").click(function () {
         $(".lekkerLokaal-driexdrierow").slick("slickNext");
