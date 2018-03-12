@@ -25,8 +25,6 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Index()
         {
-            ViewData["Title"] = "Home";
-
             ViewBag.AlleBonnen = _bonRepository.GetAll().ToList();
             ViewBag.Top3Bonnen = _bonRepository.GetTop3().ToList();
 
@@ -40,14 +38,6 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult About()
         {
-            ViewData["Message"] = "Your application description page.";
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-            return View();
-        }
-
-        public IActionResult Contact()
-        {
-            ViewData["Message"] = "Your contact page.";
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }

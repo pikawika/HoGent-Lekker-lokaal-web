@@ -1,6 +1,7 @@
 ﻿@model RegisterHandelaarViewModel
 @{
-    ViewData["Title"] = "Register";
+    ViewData["Title"] = "Registreer handelaar";
+    ViewData["Navbar"] = "Handelaar";
 }
 
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
@@ -9,18 +10,13 @@
         <div class="container">
             <section class="sign-area panel p-40">
                 <h3 class="sign-title">Aanvraagformulier registratie nieuwe handelaar</h3>
-                <div class="row row-rl-0">
+                <div class="row">
                     <div class="col-sm-6 col-md-7 col-left">
                         <form class="p-40" asp-route-returnUrl="@ViewData["Register"]" enctype="multipart/form-data" method="post">
                             <div class="form-group">
                                 <label asp-for="NaamHandelszaak" class="sr-only"></label>
                                 <input class="form-control input-lg" placeholder="Naam handelszaak" asp-for="NaamHandelszaak">
                                 <span asp-validation-for="NaamHandelszaak" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="NaamContactpersoon" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Naam contactpersoon" asp-for="NaamContactpersoon">
-                                <span asp-validation-for="NaamContactpersoon" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email" class="sr-only"></label>
@@ -66,7 +62,7 @@
                             </div>
                             <div class="form-group">
                                 <label class="btn btn-default" id="fileselection">
-                                    <a class="force-whiteColor" id="fileselectionTekst">Selecteer een logo.</a><input asp-for="Logo" accept=".jpg" id="fileToUpload" style="display: none;">
+                                    <a class="force-whiteColor" id="fileselectionTekst">Selecteer een logo</a><input asp-for="Logo" accept=".jpg" id="fileToUpload" style="display: none;">
                                 </label>
                             </div>
 
@@ -80,30 +76,30 @@
                     </div>
                     <script>
                         $("#fileToUpload").change(function () {
-                            document.getElementById('fileselectionTekst').innerHTML = 'U heeft een bestand geselecteerd.';
+                            document.getElementById('fileselectionTekst').innerHTML = 'U heeft een bestand geselecteerd';
                         });
                     </script>
-                    <div class="col-sm-6 col-md-5 col-right">
-                        <ul class="contact-list mb-40" style="margin: 20px">
+                    <div class="col-sm-6 col-md-5 col-right contact-area pl-40 pt-10">
+                        <ul class="contact-list mb-40">
                             <li>
-                                <i class="fas fa-map-marker-alt blue-box-foricon"></i>
+                                <span class="icon lnr lnr-map-marker"></span>
                                 <h5>Adres</h5>
-                                <p class="color-mid">Arbeidstraat 14, 9300 Aalst</p>
+                                <a href="http://maps.google.com/?q=1200 Hogeschool Gent - campus Aalst, Arbeidstraat 14, 9300 Aalst" target="_blank" class="color-mid">Arbeidstraat 14, 9300 Aalst</a>
                             </li>
                             <li>
-                                <i class="fas fa-at blue-box-foricon"></i>
+                                <span class="icon lnr lnr-envelope"></span>
                                 <h5>E-mailadrres</h5>
-                                <p class="color-mid">Info@lekkerlokaal.be</p>
+                                <a href="mailto:info@lekkerlokaal.be" class="color-mid">Info@lekkerlokaal.be</a>
                             </li>
                             <li>
-                                <i class="fas fa-phone blue-box-foricon"></i>
+                                <span class="icon lnr lnr-phone-handset"></span>
                                 <h5>Telefoonnummer</h5>
-                                <p class="color-mid">+32 491 23 45 14</p>
+                                <a href="tel:+32491234514" class="color-mid">+32 491 23 45 14</a>
                             </li>
                             <li>
-                                <i class="fas fa-briefcase blue-box-foricon"></i>
+                                <span class="icon lnr lnr-database"></span>
                                 <h5>BTW nummer</h5>
-                                <p class="color-mid">BE 0833.582.168</p>
+                                <a class="color-mid">BE 0833.582.168</a>
                             </li>
                         </ul>
                     </div>
