@@ -99,11 +99,11 @@
                         </div>
                         <div id="header-navbar" class="nav-collapse">
                             <ul class="nav-menu">
-                                <li class="active">
+                                <li class="Home-List-Item">
                                     <a asp-controller="Home" asp-action="Index">Home</a>
                                 </li>
-                                <li>
-                                    <a href="coupons_grid.html">Categorieën</a>
+                                <li class="Categorieen-List-Item">
+                                    <a href="#">Categorieën</a>
                                     <ul>
                                         @foreach (var categorie in ViewBag.AlleCategorien)
                                         {
@@ -113,7 +113,7 @@
                                         }
                                     </ul>
                                 </li>
-                                <li>
+                                <li class="BestSellers-List-Item">
                                     <a href="#">Best sellers</a>
                                     <ul>
                                         <li>
@@ -133,15 +133,14 @@
                                         </li>
                                     </ul>
                                 </li>
-
-                                <li>
+                                <li class="Aanbiedingen-List-Item">
                                     <a href="#">Aanbiedingen</a>
                                 </li>
-                                <li>
+                                <li class="Over-List-Item">
                                     <a asp-controller="Home" asp-action="About">Over ons</a>
                                 </li>
-                                <li>
-                                    <a href="coupons_grid.html">Account</a>
+                                <li class="Account-List-Item">
+                                    <a href="#">Account</a>
                                     <ul>
                                         <li>
                                             <a asp-controller="Account" asp-action="Login">Meld aan</a>
@@ -151,19 +150,39 @@
                                         </li>
                                     </ul>
                                 </li>
-
-
                             </ul>
                         </div>
-                        <div class="nav-menu nav-menu-fixed">
-                            <a asp-controller="Account" asp-action="RegisterHandelaar" style="background-color: transparent !important">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item">
+                            <a asp-controller="Account" asp-action="RegisterHandelaar">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                         </div>
                     </nav>
                 </div>
             </div>
             <!-- End Header Menu -->
-
         </header>
+
+        @switch (ViewData["Navbar"])
+        {
+            case "Home":
+                <script>$(".Home-List-Item").addClass("active");</script>
+                break;
+            case "Zoeken":
+                <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
+                break;
+            case "Over":
+                <script>$(".Over-List-Item").addClass("active");</script>
+                break;
+            case "Account":
+                <script>
+                    $(".Account-List-Item").addClass("active");</script>
+                break;
+            case "Handelaar":
+                <script>$(".Handelaar-List-Item").addClass("active");</script>
+                break;
+            default:
+                <script>$(".Home-List-Item").addClass("active");</script>
+                break;
+        }
 
         <!-- –––––––––––––––[ HEADER ]––––––––––––––– -->
         @RenderBody()
