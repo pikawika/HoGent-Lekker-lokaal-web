@@ -5480,14 +5480,6 @@ select.input-sm {
     }
 }
 
-.page-wrapper {
-    position: relative;
-    width: 100%;
-    min-height: 100vh;
-    overflow: hidden;
-    background: #e9ebee;
-}
-
 .boxed-layout {
     background-color: #eee;
 }
