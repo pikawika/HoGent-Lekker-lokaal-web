@@ -14,7 +14,7 @@
     <div class="page-container ptb-60">
         <div class="container">
             <section class="sign-area panel p-40">
-                <h3 class="sign-title">Registreer <small>of <a asp-controller="Account" asp-action="Login" class="color-green">meld aan</a></small></h3>
+                <h3 class="sign-title">Registreer <small>of <a asp-controller="Account" asp-action="Login" class="color-blue">Meld Aan</a></small></h3>
                 <div class="row row-rl-0">
                     <div class="col-sm-6 col-md-7 col-left">
                         <form class="p-40" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="post">
@@ -53,7 +53,7 @@
                             </div>
                             <div class="custom-checkbox mb-20">
                                 <input type="checkbox" id="agree_terms" required>
-                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="~/downloads/Gebruikersovereenkomsten_-_Lekker_Lokaal.pdf" download class="color-green">Gebruikersovereenkomsten</a>.</label>
+                                <label class="color-mid" for="agree_terms">Ik ga akkoord met de <a href="~/downloads/Gebruikersovereenkomsten_-_Lekker_Lokaal.pdf" download class="color-blue">Gebruikersovereenkomsten</a>.</label>
                             </div>
                             <button type="submit" class="btn btn-block btn-lg">Bevestig registratie</button>
                         </form>
@@ -63,17 +63,17 @@
                         <div class="social-login p-40">
                             <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@null" method="get">
                                 <div class="mb-20">
-                                    <button type="submit" class="btn btn-lg btn-block btn-social btn-facebook"><i class="fa fa-facebook-square"></i>Meld aan met Facebook</button>
+                                    <button type="submit" class="btn btn-lg btn-block btn-social btn-facebook"><i class="fab fa-facebook-square font-18"></i> Meld aan met Facebook</button>
                                 </div>
                                 <div class="mb-20">
-                                    <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fa fa-twitter"></i>Meld aan met Twitter</button>
+                                    <button class="btn btn-lg btn-block btn-social btn-twitter"><i class="fab fa-twitter font-18"></i> Meld aan met Twitter</button>
                                 </div>
                                 <div class="mb-20">
-                                    <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fa fa-google-plus"></i>Meld aan met Google+</button>
+                                    <button class="btn btn-lg btn-block btn-social btn-google-plus"><i class="fab fa-google-plus font-18"></i> Meld aan met Google+</button>
                                 </div>
                             </form>
                             <div class="text-center color-mid">
-                                Heb je al een account? <a asp-controller="Account" asp-action="Login" class="color-green">Meld aan</a>
+                                Heb je al een account? <a asp-controller="Account" asp-action="Login" class="color-blue">Meld aan</a>
                             </div>
                         </div>
                     </div>

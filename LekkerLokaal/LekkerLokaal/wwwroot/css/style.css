@@ -20,6 +20,13 @@
 
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.force-whiteColor {
+    color: white !important;
+}
+
+.no-padding {
+    padding: 0 0 0 0;
+}
 
 .slick-lekker-lokaal {
     margin-bottom: 14px;
@@ -41,6 +48,18 @@
 .slide-navigation-lekkerlokaal > a{
     color: white !important;
     cursor: pointer;
+}
+
+.blue-box-foricon {
+    border-radius: 6px;
+    color: white;
+    font-size: 18px;
+    background: #1E90FF;
+    text-align: center;
+    padding-top:11px;
+    width: 40px;
+    height: 40px;
+    margin-bottom: 10px;
 }
 
 

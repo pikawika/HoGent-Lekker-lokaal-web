@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -52,5 +54,16 @@ namespace LekkerLokaal.Models.AccountViewModels
         [Required(ErrorMessage = "{0} is verplicht.")]
         [Display(Name = "categorie")]
         public string Categorie { get; set; }
+
+        [Required(ErrorMessage = "{0} is verplicht.")]
+        [DataType(DataType.Text)]
+        [Display(Name = "Korte beschrijving")]
+        public string Beschrijving { get; set; }
+
+        [Required]
+        [DataType(DataType.Upload)]
+        [Display(Name = "Logo")]
+        public IFormFile Logo { set; get; }
     }
+    
 }

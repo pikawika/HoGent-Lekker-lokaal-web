@@ -14,6 +14,10 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
+using MimeKit;
+//using MailKit.Net.Smtp;
+using System.IO;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -283,34 +287,59 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        //    [HttpPost]
-        //    [AllowAnonymous]
-        //    [ValidateAntiForgeryToken]
-        //    public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
-        //    {
-        //        ViewData["ReturnUrl"] = returnUrl;
-        //        if (ModelState.IsValid)
-        //        {
-        //            var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
-        //            var result = await _userManager.CreateAsync(user, model.Password);
-        //            if (result.Succeeded)
-        //            {
-        //                _logger.LogInformation("User created a new account with password.");
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
+        {
+            ViewData["ReturnUrl"] = returnUrl;
+            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            if (ModelState.IsValid)
+            {
 
-        //                var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-        //                var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
-        //                await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add("lennertbontinck@live.be");
+                message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
+                message.Body =
 
-        //                await _signInManager.SignInAsync(user, isPersistent: false);
-        //                _logger.LogInformation("User created a new account with password.");
-        //                return RedirectToLocal(returnUrl);
-        //            }
-        //            AddErrors(result);
-        //        }
-        //        If we got this far, something failed, redisplay form
-        //                return View(model);
-        //    }
-        //}
+                    //Text = "Dit is een test."
+                    String.Format("Naam handelszaak: {0}\n" +
+                                        "Naam contactpersoon: {1}\n" +
+                                        "E-mailadres: {2}\n" +
+                                        "Straat: {3}\n" +
+                                        "Huisnummer: {4}\n" +
+                                        "Postcode: {5}\n" +
+                                        "Gemeente: {6}\n" +
+                                        "BTW Nummer: {7}\n" +
+                                        "Categorie: {8}\n" +
+                                        "Beschrijving: {9}\n",
+                                        model.NaamHandelszaak, model.NaamContactpersoon, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving)
+                ;
+
+                var filePath = @"wwwroot/images/temp/logo.jpg";
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Logo.CopyToAsync(fileStream);
+                fileStream.Close();
+
+                System.Net.Mail.Attachment attachment;
+                attachment = new System.Net.Mail.Attachment(@"wwwroot/images/temp/logo.jpg");
+                attachment.Name = "logo.jpg";
+                message.Attachments.Add(attachment);
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(message);
+                attachment.Dispose();
+                System.IO.File.Delete(@"wwwroot/images/temp/logo.jpg");
+                return RedirectToLocal(returnUrl);
+            }
+            // If we got this far, something failed, redisplay form
+            ViewData["categorie"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            return View(model);
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
