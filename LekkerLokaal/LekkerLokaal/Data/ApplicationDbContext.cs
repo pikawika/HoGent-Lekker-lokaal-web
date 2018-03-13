@@ -24,7 +24,6 @@ namespace LekkerLokaal.Data
             builder.ApplyConfiguration(new BestelLijnConfiguration());
             builder.Ignore<Winkelwagen>();
             builder.Ignore<WinkelwagenLijn>();
-            builder.Ignore<Adresgegevens>();
         }
     }
 }

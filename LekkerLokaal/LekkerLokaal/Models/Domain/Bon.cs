@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Bon : Adresgegevens
+    public class Bon
     {
         public int BonId { get; private set; }
 
@@ -67,20 +67,15 @@ namespace LekkerLokaal.Models.Domain
                 _categorie = value ?? throw new ArgumentException("Categorie is verplicht");
             }
         }
-
-
-        public Adresgegevens Adres { get; set; }
-
         public string Straat { get; set; }
         public string Huisnummer { get; set; }
         public int Postcode { get; set; }
         public string Gemeente { get; set; }
-        public int Aanbieding { get; set; }
-
+        public Aanbieding Aanbieding { get; set; }
 
         protected Bon() { }
 
-        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar, int aanbieding) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar, Aanbieding aanbieding) : this()
         {
             Naam = naam;
             MaxPrijs = maxprijs;
@@ -89,10 +84,10 @@ namespace LekkerLokaal.Models.Domain
             AantalBesteld = aantalBesteld;
             Afbeelding = afbeelding;
             Categorie = categorie;
-            Adres.Straat = straat;
-            Adres.Huisnummer = huisnummer;
-            Adres.Postcode = postcode;
-            Adres.Gemeente = gemeente;
+            Straat = straat;
+            Huisnummer = huisnummer;
+            Postcode = postcode;
+            Gemeente = gemeente;
             Handelaar = handelaar;
             Aanbieding = aanbieding;
         }
