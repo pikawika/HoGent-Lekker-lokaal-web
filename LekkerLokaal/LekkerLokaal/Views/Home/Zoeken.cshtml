@@ -1,11 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Zoeken: " + ViewBag.ZoekOpdracht;
-    ViewData["Navbar"] = "Zoeken";
+    if (ViewData["Navbar"] == null || (string)ViewData["Navbar"] == "")
+    {
+        ViewData["Navbar"] = "Zoeken";
+    }
 }
 
 
 <main id="mainContent" class="main-content">
-    <div class="page-container ptb-60">
+    <div class="page-container ptb-15">
         <div class="container">
 
 
@@ -15,7 +18,7 @@
                     <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
                         <h3 style="color: white" class="section-title font-18">
                             Zoekopdracht voor: @ViewBag.ZoekOpdracht
-                            <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
+                            <element class="slide-navigation-lekkerlokaal slide-navigation-lekkerlokaal-hideOnOneSlide"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                         </h3>
                     </header>
 
@@ -23,56 +26,56 @@
 
                         @foreach (var bon in ViewBag.GefilterdeBonnen)
                         {
-                                    <div class="slick-lekker-lokaal">
-                                        <div class="col-xs-12">
-                                            <div class="coupon-item">
-                                                <div class="coupon-single panel t-center">
-                                                    <div class="row">
-                                                        <div class="col-xs-12">
-                                                            <div class="text-center p-20">
-                                                                <img class="store-logo" src="~/@bon.Afbeelding" alt="">
-                                                            </div>
-                                                            <!-- end media -->
-                                                        </div>
-                                                        <!-- end col -->
-                                                        <div class="col-xs-12">
-                                                            <div class="panel-body">
-                                                                <ul class="deal-meta list-inline mb-10">
-                                                                    <li class="color-muted"><i class="ico fab fa-periscope mr-5"></i>@bon.Gemeente</li>
-                                                                    <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
-                                                                </ul>
-
-                                                                <div class="height-70px">
-                                                                    <h4 class="color-blue mb-10 t-uppercase">@bon.Naam</h4>
-                                                                </div>
-                                                                <div class="height-70px">
-                                                                    <h5 class="deal-title mb-10">
-                                                                        <a href="#">@bon.Beschrijving</a>
-                                                                    </h5>
-                                                                </div>
-                                                                <p class="color-muted font-12"><i class="fa @bon.Categorie.Icon"></i> @bon.Categorie.Naam</p>
-                                                                <p class="color-muted font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                                <div class="showcode">
-                                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                                                </div>
-
-                                                                <div style="margin-top: 10px" class="showcode">
-                                                                    <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <!-- end col -->
+                            <div class="slick-lekker-lokaal">
+                                <div class="col-xs-12">
+                                    <div class="coupon-item">
+                                        <div class="coupon-single panel t-center">
+                                            <div class="row">
+                                                <div class="col-xs-12">
+                                                    <div class="text-center p-20">
+                                                        <img class="store-logo" src="~/@bon.Afbeelding" alt="">
                                                     </div>
-                                                    <!-- end row -->
+                                                    <!-- end media -->
                                                 </div>
+                                                <!-- end col -->
+                                                <div class="col-xs-12">
+                                                    <div class="panel-body">
+                                                        <ul class="deal-meta list-inline mb-10">
+                                                            <li class="color-muted"><i class="ico fab fa-periscope mr-5"></i>@bon.Gemeente</li>
+                                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                                        </ul>
+
+                                                        <div class="height-70px">
+                                                            <h4 class="color-blue mb-10 t-uppercase">@bon.Naam</h4>
+                                                        </div>
+                                                        <div class="height-70px">
+                                                            <h5 class="deal-title mb-10">
+                                                                <a href="#">@bon.Beschrijving</a>
+                                                            </h5>
+                                                        </div>
+                                                        <p class="color-muted font-12"><i class="fa @bon.Categorie.Icon"></i> @bon.Categorie.Naam</p>
+                                                        <p class="color-muted font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                        <div class="showcode">
+                                                            <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                        </div>
+
+                                                        <div style="margin-top: 10px" class="showcode">
+                                                            <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- end col -->
                                             </div>
+                                            <!-- end row -->
                                         </div>
                                     </div>
+                                </div>
+                            </div>
                         }
                     </div>
                 </section>
 
-                <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
+                <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30 slide-navigation-lekkerlokaal-hideOnOneSlide">
                     <h3 style="color: white" class="section-title font-18">
                         Zoekopdracht voor: @ViewBag.ZoekOpdracht
                         <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>

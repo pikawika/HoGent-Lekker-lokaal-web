@@ -23,7 +23,7 @@
     <link rel="stylesheet" type="text/css" href="/vendors/slick/slick-theme.css" />
 </head>
 <body id="body" class="wide-layout preloader-active">
-    <script src="/js/jquery-1.12.3.min.js"></script>
+    <script src="~/js/jquery-1.12.3.min.js"></script>
     <div id="preloader" class="preloader">
         <div class="loader-cube">
             <div class="loader-cube__item1 loader-cube__item"></div>
@@ -69,12 +69,27 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <div class="float-right">
+                                            <a onclick="ChangeGeavanceerdZoeken()" data-toggle="collapse" id="GeavenceerdZoekenExpander" data-target="#advancedSearch">geavanceerd zoeken <i class="fas fa-arrow-down"></i></a>
+                                        </div>
+                                        <div id="advancedSearch" class="collapse mt-15">
+                                            <select name="Categorie" id="Categorie" class="input-sm">
+                                                <option value="*">Categorie</option>
+                                                @foreach (var categorie in ViewBag.AlleCategorien)
+                                                {
+                                                    <option value="@categorie.Naam">@categorie.Naam</option>
+
+
+                                                }
+                                            </select>
+                                            <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
+                                        </div>
                                     </form>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
                                         <a href="cart.html">
-                                            <span class="icon lnr lnr-cart"></span>
+                                            <span class="icon lnr lnr-cart font-40"></span>
                                             <div>
                                                 <!-- implement : uit cookie/session laden hoeveel dingen in winkelmandje -->
                                                 <span class="cart-number">0</span>
@@ -122,16 +137,16 @@
                                             <a href="#">Meest verkocht</a>
                                         </li>
                                         <li>
-                                            <a href="#">Tot &euro; 25</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="25">Tot &euro; 25</a>
                                         </li>
                                         <li>
-                                            <a href="#">Tot &euro; 50</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="50">Tot &euro; 50</a>
                                         </li>
                                         <li>
-                                            <a href="#">Tot &euro; 75</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="75">Tot &euro; 75</a>
                                         </li>
                                         <li>
-                                            <a href="#">Tot &euro; 100</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="100">Tot &euro; 100</a>
                                         </li>
                                     </ul>
                                 </li>
@@ -181,6 +196,9 @@
             case "Handelaar":
                 <script>$(".Handelaar-List-Item").addClass("active");</script>
                 break;
+            case "BestSellers":
+                <script>$(".BestSellers-List-Item").addClass("active");</script>
+                break;
             default:
                 <script>$(".Home-List-Item").addClass("active");</script>
                 break;
@@ -226,14 +244,25 @@
     <div id="backTop" class="back-top is-hidden-sm-down">
         <i class="fa fa-angle-up" aria-hidden="true"></i>
     </div>
+    <script>
+                        function ChangeGeavanceerdZoeken() {
+                            if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
+                                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
+                            }
+                            else {
+                                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
+                            }
+                        }
 
+    </script>
     <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
-    <script type="text/javascript" src="/js/bootstrap.min.js"></script>
-    <script src="/vendors/modernizr/modernizr-2.6.2.min.js"></script>
-    <script type="text/javascript" src="/vendors/owl-carousel/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="/vendors/flexslider/jquery.flexslider-min.js"></script>
-    <script type="text/javascript" src="/vendors/countdown/jquery.countdown.js"></script>
-    <script type="text/javascript" src="/js/main.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/vendors/modernizr/modernizr-2.6.2.min.js"></script>
+    <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/js/main.js"></script>
+
 
 </body>
 </html>

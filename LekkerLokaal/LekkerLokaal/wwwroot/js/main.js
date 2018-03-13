@@ -1,6 +1,83 @@
 
 (function ($) {
 
+    /*-------------------------------------
+     Slick voor grid van lekker lokaal
+    -------------------------------------*/
+    $(".lekkerLokaal-driexdrierow").on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+        var SlidesResterend = nextSlide - (slick.slideCount - slick.options.slidesToShow);
+        SlickSliderPagesCheckToHideButton(currentSlide, nextSlide, SlidesResterend);
+    })
+
+    $('.lekkerLokaal-driexdrierow').slick({
+        infinite: false,
+        arrows: false,
+        slidesToShow: 3,
+        lazyLoad: 1,
+        slidesToScroll: 3,
+        rows: 3,
+        dots: true,
+        responsive: [
+            {
+                breakpoint: 1200,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 3,
+                    rows: 3,
+                }
+            },
+            {
+                breakpoint: 800,
+                settings: {
+                    slidesToShow: 2,
+                    rows: 2,
+                    slidesToScroll: 2,
+                    dots: true
+                }
+            },
+            {
+                breakpoint: 550,
+                settings: {
+                    slidesToShow: 1,
+                    rows: 1,
+                    slidesToScroll: 1,
+                    dots: false
+                }
+            }]
+    });
+
+    var currentSlideAfterInitSlick = $('.lekkerLokaal-driexdrierow').slick('slickCurrentSlide');
+    var SlidesResterendAfterInitSlick = currentSlideAfterInitSlick - ($(".lekkerLokaal-driexdrierow").slick("getSlick").slideCount - $(".lekkerLokaal-driexdrierow").slick("getSlick").options.slidesToShow);
+    if (SlidesResterendAfterInitSlick >= 0) {
+        SlickHideElementsWhenOneSlide();
+    }
+    SlickSliderPagesCheckToHideButton(currentSlideAfterInitSlick, currentSlideAfterInitSlick, SlidesResterendAfterInitSlick);
+
+    $(".volgende-slide-index-grid").click(function () {
+        $(".lekkerLokaal-driexdrierow").slick("slickNext");
+    })
+    $(".vorige-slide-index-grid").click(function () {
+        $(".lekkerLokaal-driexdrierow").slick("slickPrev");
+    })
+
+    function SlickSliderPagesCheckToHideButton(currentSlide, nextSlide, SlidesResterend) {
+        if (nextSlide <= 0) {
+            $(".vorige-slide-index-grid").addClass("Not-Clickable");
+        } else {
+            $(".vorige-slide-index-grid").removeClass("Not-Clickable");
+        }
+
+        if (SlidesResterend >= 0) {
+            $(".volgende-slide-index-grid").addClass("Not-Clickable");
+        } else {
+            $(".volgende-slide-index-grid").removeClass("Not-Clickable");
+        }
+    }
+
+    function SlickHideElementsWhenOneSlide() {
+        $(".slide-navigation-lekkerlokaal-hideOnOneSlide").addClass("hidden");
+    }   
+
     "use strict";
 
     $.fn.hasAttr = function (attr) {
@@ -363,56 +440,6 @@
             })
         });
     };
-
-    /*-------------------------------------
-     Slick voor grid van lekker lokaal
-    -------------------------------------*/
-
-
-    $('.lekkerLokaal-driexdrierow').slick({
-        infinite: false,
-        arrows: false,
-        slidesToShow: 3,
-        slidesToScroll: 3,
-        rows: 3,
-        dots: true,
-        responsive: [
-            {
-                breakpoint: 1200,
-                settings: {
-                    slidesToShow: 3,
-                    slidesToScroll: 3,
-                    rows: 3,
-                }
-            },
-            {
-                breakpoint: 800,
-                settings: {
-                    slidesToShow: 2,
-                    rows: 2,
-                    slidesToScroll: 2,
-                    dots: true
-                }
-            },
-            {
-                breakpoint: 550,
-                settings: {
-                    slidesToShow: 1,
-                    rows: 1,
-                    slidesToScroll: 1,
-                    dots: false
-                }
-            }]
-    });
-
-   
-
-    $(".volgende-slide-index-grid").click(function () {
-        $(".lekkerLokaal-driexdrierow").slick("slickNext");
-    })
-    $(".vorige-slide-index-grid").click(function () {
-        $(".lekkerLokaal-driexdrierow").slick("slickPrev");
-    })
 
     /*-------------------------------------
      Flexslider

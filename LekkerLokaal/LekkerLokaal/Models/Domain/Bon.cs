@@ -68,11 +68,19 @@ namespace LekkerLokaal.Models.Domain
             }
         }
 
+
         public Adresgegevens Adres { get; set; }
+
+        public string Straat { get; set; }
+        public string Huisnummer { get; set; }
+        public int Postcode { get; set; }
+        public string Gemeente { get; set; }
+        public int Aanbieding { get; set; }
+
 
         protected Bon() { }
 
-        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar, int aanbieding) : this()
         {
             Naam = naam;
             MaxPrijs = maxprijs;
@@ -86,6 +94,7 @@ namespace LekkerLokaal.Models.Domain
             Adres.Postcode = postcode;
             Adres.Gemeente = gemeente;
             Handelaar = handelaar;
+            Aanbieding = aanbieding;
         }
     }
 }
