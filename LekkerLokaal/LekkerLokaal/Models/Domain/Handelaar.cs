@@ -14,8 +14,10 @@ namespace LekkerLokaal.Models.Domain
         public string BTW_Nummer { get; set; }
         public ICollection<Bon> Cadeaubonnen { get; }
         public string Afbeelding { get; set; }
-
-        public Adresgegevens Adres { get; set; }
+        public string Straat { get; set; }
+        public string Huisnummer { get; set; }
+        public int Postcode { get; set; }
+        public string Gemeente { get; set; }
 
         protected Handelaar()
         {
@@ -29,10 +31,10 @@ namespace LekkerLokaal.Models.Domain
             Beschrijving = beschrijving;
             BTW_Nummer = btw_nummer;
             Afbeelding = afbeelding;
-            Adres.Straat = straat;
-            Adres.Huisnummer = huisnummer;
-            Adres.Postcode = postcode;
-            Adres.Gemeente = gemeente;
+            Straat = straat;
+            Huisnummer = huisnummer;
+            Postcode = postcode;
+            Gemeente = gemeente;
             Cadeaubonnen = new HashSet<Bon>();
         }
 
