@@ -75,11 +75,9 @@
                                         <div id="advancedSearch" class="collapse mt-15">
                                             <select name="Categorie" id="Categorie" class="input-sm">
                                                 <option value="*">Categorie</option>
-                                                @foreach (var categorie in ViewBag.AlleCategorien)
+                                                @foreach (Categorie categorie in (IEnumerable<Categorie>) ViewData["AlleCategorien"])
                                                 {
                                                     <option value="@categorie.Naam">@categorie.Naam</option>
-
-
                                                 }
                                             </select>
                                             <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
