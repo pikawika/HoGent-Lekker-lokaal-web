@@ -80,11 +80,6 @@
 
                                                 }
                                             </select>
-                                            <select name="Ligging" id="Ligging" class="input-sm">
-                                                <option value="*">Ligging</option>
-                                                <option value="Naam">Naam</option>
-                                                <option value="Ligging">Ligging</option>
-                                            </select>
                                             <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
                                         </div>
                                     </form>
@@ -140,16 +135,16 @@
                                             <a href="#">Meest verkocht</a>
                                         </li>
                                         <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Prijs" asp-route-ZoekKey="25">Tot &euro; 25</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="25">Tot &euro; 25</a>
                                         </li>
                                         <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Prijs" asp-route-ZoekKey="50">Tot &euro; 50</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="50">Tot &euro; 50</a>
                                         </li>
                                         <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Prijs" asp-route-ZoekKey="75">Tot &euro; 75</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="75">Tot &euro; 75</a>
                                         </li>
                                         <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Prijs" asp-route-ZoekKey="100">Tot &euro; 100</a>
+                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="100">Tot &euro; 100</a>
                                         </li>
                                     </ul>
                                 </li>

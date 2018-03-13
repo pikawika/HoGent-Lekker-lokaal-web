@@ -20,13 +20,13 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<Categorie> GetAll()
         {
-            return _categorieen.AsNoTracking().ToList();
+            return _categorieen.OrderBy(c => c.Naam).AsNoTracking().ToList();
         }
 
         public Dictionary<Categorie, int> GetTop9WithAmount()
         {
             var map = new Dictionary<Categorie, int>();
-            var categorieen = _categorieen.Include(c => c.Bonnen).OrderByDescending(c => c.Bonnen.Count).Take(9);
+            var categorieen = _categorieen.Include(c => c.Bonnen).OrderByDescending(c => c.Bonnen.Count).ThenBy(c => c.Naam).Take(9);
 
             foreach (Categorie cat in categorieen)
             {
