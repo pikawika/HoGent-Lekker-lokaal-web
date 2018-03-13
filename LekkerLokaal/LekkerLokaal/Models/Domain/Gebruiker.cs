@@ -24,25 +24,5 @@ namespace LekkerLokaal.Models.Domain
         {
             Bestellingen.Add(new Bestelling(winkelwagen));
         }
-
-        public void MeldAan()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MeldAf()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void VeranderEmailadres()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void VeranderWachtwoord()
-        {
-            throw new NotImplementedException();
-        }
     }
 }

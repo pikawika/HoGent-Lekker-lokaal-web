@@ -15,7 +15,6 @@ using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using MimeKit;
-//using MailKit.Net.Smtp;
 using System.IO;
 using System.Net.Mail;
 

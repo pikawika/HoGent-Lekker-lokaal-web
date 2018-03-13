@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public class Handelaar : Adresgegevens
+    public class Handelaar
     {
         public int HandelaarId { get; private set; }
         public string Naam { get; set; }
@@ -14,10 +14,8 @@ namespace LekkerLokaal.Models.Domain
         public string BTW_Nummer { get; set; }
         public ICollection<Bon> Cadeaubonnen { get; }
         public string Afbeelding { get; set; }
-        public string Straat { get; set; }
-        public string Huisnummer { get; set; }
-        public int Postcode { get; set; }
-        public string Gemeente { get; set; }
+
+        public Adresgegevens Adres { get; set; }
 
         protected Handelaar()
         {
@@ -31,36 +29,16 @@ namespace LekkerLokaal.Models.Domain
             Beschrijving = beschrijving;
             BTW_Nummer = btw_nummer;
             Afbeelding = afbeelding;
-            Straat = straat;
-            Huisnummer = huisnummer;
-            Postcode = postcode;
-            Gemeente = gemeente;
+            Adres.Straat = straat;
+            Adres.Huisnummer = huisnummer;
+            Adres.Postcode = postcode;
+            Adres.Gemeente = gemeente;
             Cadeaubonnen = new HashSet<Bon>();
         }
 
         public void VoegBonToe(Bon bon)
         {
             Cadeaubonnen.Add(bon);
-        }
-
-        public void MeldAan()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void MeldAf()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void VeranderEmailadres()
-        {
-            throw new NotImplementedException();
-        }
-
-        public void VeranderWachtwoord()
-        {
-            throw new NotImplementedException();
         }
     }
 }
