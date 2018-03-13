@@ -45,13 +45,16 @@
                 }
             }]
     });
+    
 
-    var currentSlideAfterInitSlick = $('.lekkerLokaal-driexdrierow').slick('slickCurrentSlide');
-    var SlidesResterendAfterInitSlick = currentSlideAfterInitSlick - ($(".lekkerLokaal-driexdrierow").slick("getSlick").slideCount - $(".lekkerLokaal-driexdrierow").slick("getSlick").options.slidesToShow);
-    if (SlidesResterendAfterInitSlick >= 0) {
-        SlickHideElementsWhenOneSlide();
+    if (typeof $(".lekkerLokaal-driexdrierow").slick("getSlick").options != "undefined") {
+        var currentSlideAfterInitSlick = $('.lekkerLokaal-driexdrierow').slick('slickCurrentSlide');
+        var SlidesResterendAfterInitSlick = currentSlideAfterInitSlick - ($(".lekkerLokaal-driexdrierow").slick("getSlick").slideCount - $(".lekkerLokaal-driexdrierow").slick("getSlick").options.slidesToShow);
+        if (SlidesResterendAfterInitSlick >= 0) {
+            SlickHideElementsWhenOneSlide();
+        }
+        SlickSliderPagesCheckToHideButton(currentSlideAfterInitSlick, currentSlideAfterInitSlick, SlidesResterendAfterInitSlick);
     }
-    SlickSliderPagesCheckToHideButton(currentSlideAfterInitSlick, currentSlideAfterInitSlick, SlidesResterendAfterInitSlick);
 
     $(".volgende-slide-index-grid").click(function () {
         $(".lekkerLokaal-driexdrierow").slick("slickNext");
