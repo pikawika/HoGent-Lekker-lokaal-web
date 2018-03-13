@@ -121,7 +121,7 @@ namespace LekkerLokaal
                     name: "zoeken",
                     template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}");
             });
-            //datainit.InitializeData().Wait();
+            datainit.InitializeData().Wait();
         }
     }
 }
