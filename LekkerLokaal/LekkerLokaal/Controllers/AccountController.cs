@@ -230,11 +230,12 @@ namespace LekkerLokaal.Controllers
 
         private SelectList Geslachten()
         {
-            List<Geslacht> geslacht = new List<Geslacht>();
-            geslacht.Add(Geslacht.Man);
-            geslacht.Add(Geslacht.Vrouw);
-            geslacht.Add(Geslacht.Anders);
-            return new SelectList(geslacht);
+            List<Geslacht> geslachten = new List<Geslacht>();
+            foreach (Geslacht geslacht in Enum.GetValues(typeof(Geslacht)))
+            {
+                geslachten.Add(geslacht);
+            }
+            return new SelectList(geslachten);
         }
 
         [HttpPost]
