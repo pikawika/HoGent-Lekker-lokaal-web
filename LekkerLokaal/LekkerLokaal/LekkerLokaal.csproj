@@ -6,8 +6,20 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\vendors\NewFolder\**" />
+    <Content Remove="wwwroot\vendors\NewFolder\**" />
+    <EmbeddedResource Remove="wwwroot\vendors\NewFolder\**" />
+    <None Remove="wwwroot\vendors\NewFolder\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Compile Remove="Data\Mappers\KlantConfiguration.cs" />
     <Compile Remove="Data\Repositories\C.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Remove="wwwroot\vendors\PrettierSelect\css\easydropdown.flat.css" />
+    <Content Remove="wwwroot\vendors\PrettierSelect\css\easydropdown.metro.css" />
   </ItemGroup>
 
 

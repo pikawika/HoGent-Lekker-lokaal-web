@@ -26,7 +26,7 @@ namespace LekkerLokaal.Controllers
         public IActionResult Index()
         {
             ViewBag.AlleBonnen = _bonRepository.GetAll().ToList();
-            ViewBag.Top3Bonnen = _bonRepository.GetTop3().ToList();
+            ViewBag.Top3Bonnen = _bonRepository.GetTop3(_bonRepository.GetAll()).ToList();
 
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             ViewBag.Top9CategorieMetAantal = _categorieRepository.GetTop9WithAmount();
@@ -47,57 +47,77 @@ namespace LekkerLokaal.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
-        public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null)
+        public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null, string Categorie = null, string Ligging = null, string MaxStartPrijs = null )
         {
             ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-            if (ZoekSoort != null && ZoekKey != null)
+
+            if (!string.IsNullOrEmpty(ZoekKey))
             {
                 switch (ZoekSoort)
                 {
                     case "Alles":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey);
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Ligging":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey);
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Naam":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey);
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Categorie":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey);
+                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey, _bonRepository.GetAll());
                         break;
                     default:
                         ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
                         break;
                 }
                 ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
+
+                if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
+                {
+                    string input = Categorie;
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                }
+                if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
+                {
+                    string input = Ligging;
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                }
+                if (!string.IsNullOrEmpty(MaxStartPrijs))
+                {
+                    int input = int.Parse(MaxStartPrijs);
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
+                }
             }
             else
             {
-                ZoekSoort = HttpContext.Request.Form["ZoekSoort"];
-                ZoekKey = HttpContext.Request.Form["ZoekKey"];
+                ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
+                ViewBag.ZoekOpdracht = "Overzicht van alle bons";
 
-                switch (ZoekSoort)
+                if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
                 {
-                    case "Alles":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey);
-                        break;
-                    case "Ligging":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey);
-                        break;
-                    case "Naam":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey);
-                        break;
-                    case "Categorie":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey);
-                        break;
-                    default:
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
-                        break;
+                    string input = Categorie;
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                }
+                if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
+                {
+                    string input = Ligging;
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                }
+                if (!string.IsNullOrEmpty(MaxStartPrijs))
+                {
+                    int input = int.Parse(MaxStartPrijs);
+                    ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
                 }
 
-                ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
             }
+
             return View();
         }
     }

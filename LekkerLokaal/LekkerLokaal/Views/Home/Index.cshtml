@@ -124,50 +124,50 @@
 
                     @foreach (var bon in ViewBag.AlleBonnen)
                     {
-                                <div class="slick-lekker-lokaal">
-                                    <div class="col-xs-12">
-                                        <div class="coupon-item">
-                                            <div class="coupon-single panel t-center">
-                                                <div class="row">
-                                                    <div class="col-xs-12">
-                                                        <div class="text-center p-20">
-                                                            <img class="store-logo" src="~/@bon.Afbeelding" alt="">
-                                                        </div>
-                                                        <!-- end media -->
-                                                    </div>
-                                                    <!-- end col -->
-                                                    <div class="col-xs-12">
-                                                        <div class="panel-body">
-                                                            <ul class="deal-meta list-inline mb-10">
-                                                                <li class="color-muted"><i class="ico fab fa-periscope mr-5"></i>@bon.Gemeente</li>
-                                                                <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
-                                                            </ul>
-
-                                                            <div class="height-70px">
-                                                                <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
-                                                            </div>
-                                                            <div class="height-70px">
-                                                                <h5 class="deal-title mb-10">
-                                                                    <a href="#">@bon.Beschrijving</a>
-                                                                </h5>
-                                                            </div>
-                                                            <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                            <div class="showcode">
-                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
-                                                            </div>
-
-                                                            <div style="margin-top: 10px" class="showcode">
-                                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    <!-- end col -->
+                        <div class="slick-lekker-lokaal">
+                            <div class="col-xs-12">
+                                <div class="coupon-item">
+                                    <div class="coupon-single panel t-center">
+                                        <div class="row">
+                                            <div class="col-xs-12">
+                                                <div class="text-center p-20">
+                                                    <img class="store-logo" src="~/@bon.Afbeelding" alt="">
                                                 </div>
-                                                <!-- end row -->
+                                                <!-- end media -->
                                             </div>
+                                            <!-- end col -->
+                                            <div class="col-xs-12">
+                                                <div class="panel-body">
+                                                    <ul class="deal-meta list-inline mb-10">
+                                                        <li class="color-muted"><i class="ico fab fa-periscope mr-5"></i>@bon.Gemeente</li>
+                                                        <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@bon.AantalBesteld</li>
+                                                    </ul>
+
+                                                    <div class="height-70px">
+                                                        <h4 class="color-green mb-10 t-uppercase">@bon.Naam</h4>
+                                                    </div>
+                                                    <div class="height-70px">
+                                                        <h5 class="deal-title mb-10">
+                                                            <a href="#">@bon.Beschrijving</a>
+                                                        </h5>
+                                                    </div>
+                                                    <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                    <div class="showcode">
+                                                        <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                    </div>
+
+                                                    <div style="margin-top: 10px" class="showcode">
+                                                        <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <!-- end col -->
                                         </div>
+                                        <!-- end row -->
                                     </div>
                                 </div>
+                            </div>
+                        </div>
                     }
                 </div>
             </section>
