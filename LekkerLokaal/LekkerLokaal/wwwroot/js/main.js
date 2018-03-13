@@ -367,12 +367,16 @@
     /*-------------------------------------
      Slick voor grid van lekker lokaal
     -------------------------------------*/
-
+    $(".lekkerLokaal-driexdrierow").on('beforeChange', function (event, slick, currentSlide, nextSlide) {
+        var SlidesResterend = nextSlide - (slick.slideCount - slick.options.slidesToShow);
+        SlickSliderPagesCheckToHideButton(currentSlide, nextSlide, SlidesResterend);
+    })
 
     $('.lekkerLokaal-driexdrierow').slick({
         infinite: false,
         arrows: false,
         slidesToShow: 3,
+        lazyLoad: 1,
         slidesToScroll: 3,
         rows: 3,
         dots: true,
@@ -405,7 +409,9 @@
             }]
     });
 
-   
+    var currentSlideAfterInitSlick = $('.lekkerLokaal-driexdrierow').slick('slickCurrentSlide');
+    var SlidesResterendAfterInitSlick = currentSlideAfterInitSlick - $(".lekkerLokaal-driexdrierow").slick("getSlick").slideCount - $(".lekkerLokaal-driexdrierow").slick("getSlick").options.slidesToShow;
+    SlickSliderPagesCheckToHideButton(currentSlideAfterInitSlick, currentSlideAfterInitSlick, SlidesResterendAfterInitSlick)
 
     $(".volgende-slide-index-grid").click(function () {
         $(".lekkerLokaal-driexdrierow").slick("slickNext");
@@ -413,6 +419,20 @@
     $(".vorige-slide-index-grid").click(function () {
         $(".lekkerLokaal-driexdrierow").slick("slickPrev");
     })
+
+    function SlickSliderPagesCheckToHideButton(currentSlide, nextSlide, SlidesResterend) {
+        if (nextSlide <= 0) {
+            $(".vorige-slide-index-grid").addClass("Not-Clickable");
+        } else {
+            $(".vorige-slide-index-grid").removeClass("Not-Clickable");
+        }
+
+        if (SlidesResterend >= 0) {
+            $(".volgende-slide-index-grid").addClass("Not-Clickable");
+        } else {
+            $(".volgende-slide-index-grid").removeClass("Not-Clickable");
+        }
+    }
 
     /*-------------------------------------
      Flexslider

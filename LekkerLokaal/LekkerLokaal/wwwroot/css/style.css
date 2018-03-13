@@ -28,6 +28,10 @@
     padding: 0 0 0 0;
 }
 
+.floar-right {
+    float: right;
+}
+
 .slick-lekker-lokaal {
     margin-bottom: 14px;
     margin-right: 7px;
@@ -70,6 +74,10 @@
     background: #e9ebee;
 }
 
+.Not-Clickable{
+    opacity: 0.4;
+    cursor:not-allowed !important;
+}
 
 /* ––––––––––––––––––––––––––––––––––––––––––––– */
 .lnr {
@@ -786,7 +794,7 @@
 }
 
 .header-search .search-select {
-    width: 180px !important;
+    width: 100px !important;
     border-left: 0;
     border-radius: 0;
 }

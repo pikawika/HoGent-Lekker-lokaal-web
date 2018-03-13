@@ -1,11 +1,14 @@
 ﻿@{
     ViewData["Title"] = "Zoeken: " + ViewBag.ZoekOpdracht;
-    ViewData["Navbar"] = "Zoeken";
+    if (ViewData["Navbar"] == null || (string) ViewData["Navbar"] == "")
+    {
+        ViewData["Navbar"] = "Zoeken";
+    }
 }
 
 
 <main id="mainContent" class="main-content">
-    <div class="page-container ptb-60">
+    <div class="page-container ptb-15">
         <div class="container">
 
 

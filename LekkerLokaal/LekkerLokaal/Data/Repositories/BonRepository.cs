@@ -22,12 +22,12 @@ namespace LekkerLokaal.Data.Repositories
             return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
         }
 
-        public IEnumerable<Bon> GetTop3()
+        public IEnumerable<Bon> GetTop3(IEnumerable<Bon> inputlijst)
         {
-            return _bonnen.OrderByDescending(b => b.AantalBesteld).Take(3).AsNoTracking().ToList();
+            return inputlijst.OrderByDescending(b => b.AantalBesteld).Take(3).ToList();
         }
 
-        public IEnumerable<Bon> GetAlles(string zoekKey)
+        public IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             if (zoekKey.Trim().Length != 0)
             {
@@ -36,7 +36,7 @@ namespace LekkerLokaal.Data.Repositories
                 List<Bon> _advancedSearch = new List<Bon>();
 
 
-                foreach (Bon b in GetAll())
+                foreach (Bon b in inputlijst)
                 {
                     int _aantalMatchenWoord = 0;
                     foreach (String woord in _woorden)
@@ -103,22 +103,27 @@ namespace LekkerLokaal.Data.Repositories
             
         }
 
-        public IEnumerable<Bon> GetByCategorie(string zoekKey)
+        public IEnumerable<Bon> GetByCategorie(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             string _zoekKey = zoekKey.ToLower();
-            return GetAll().Where(b => b.Categorie.Naam.ToLower().Contains(_zoekKey)).ToList();
+            return inputlijst.Where(b => b.Categorie.Naam.ToLower().Contains(_zoekKey)).ToList();
         }
 
-        public IEnumerable<Bon> GetByLigging(string zoekKey)
+        public IEnumerable<Bon> GetByLigging(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             string _zoekKey = zoekKey.ToLower();
-            return GetAll().Where(b => b.Gemeente.ToLower().Contains(_zoekKey)).ToList();
+            return inputlijst.Where(b => b.Gemeente.ToLower().Contains(_zoekKey)).ToList();
         }
 
-        public IEnumerable<Bon> GetByNaam(string zoekKey)
+        public IEnumerable<Bon> GetByNaam(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             string _zoekKey = zoekKey.ToLower();
-            return GetAll().Where(b => b.Naam.ToLower().Contains(_zoekKey)).ToList();
+            return inputlijst.Where(b => b.Naam.ToLower().Contains(_zoekKey)).ToList();
+        }
+
+        public IEnumerable<Bon> GetByPrijs(int zoekKey, IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.Where(b => b.MinPrijs <= zoekKey).ToList();
         }
 
         public string VerwijderAccenten(string input)
