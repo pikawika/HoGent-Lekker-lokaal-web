@@ -320,11 +320,10 @@ namespace LekkerLokaal.Controllers
                 await model.Logo.CopyToAsync(fileStream);
                 fileStream.Close();
 
-                System.Net.Mail.Attachment attachment;
-                attachment = new System.Net.Mail.Attachment(@"wwwroot/images/temp/logo.jpg");
+                var attachment = new Attachment(@"wwwroot/images/temp/logo.jpg");
                 attachment.Name = "logo.jpg";
                 message.Attachments.Add(attachment);
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
                 SmtpServer.EnableSsl = true;
