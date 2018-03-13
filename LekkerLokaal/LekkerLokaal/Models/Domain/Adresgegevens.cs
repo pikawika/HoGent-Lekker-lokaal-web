@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public interface Adresgegevens
+    public class Adresgegevens
     {
-        string Straat { get; set; }
-        string Huisnummer { get; set; }
-        int Postcode { get; set; }
-        string Gemeente { get; set; }
+        public string Straat { get; set; }
+        public string Huisnummer { get; set; }
+        public int Postcode { get; set; }
+        public string Gemeente { get; set; }
     }
 }

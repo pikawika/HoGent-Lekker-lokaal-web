@@ -68,11 +68,15 @@ namespace LekkerLokaal.Models.Domain
             }
         }
 
+
+        public Adresgegevens Adres { get; set; }
+
         public string Straat { get; set; }
         public string Huisnummer { get; set; }
         public int Postcode { get; set; }
         public string Gemeente { get; set; }
         public int Aanbieding { get; set; }
+
 
         protected Bon() { }
 
@@ -85,10 +89,10 @@ namespace LekkerLokaal.Models.Domain
             AantalBesteld = aantalBesteld;
             Afbeelding = afbeelding;
             Categorie = categorie;
-            Straat = straat;
-            Huisnummer = huisnummer;
-            Postcode = postcode;
-            Gemeente = gemeente;
+            Adres.Straat = straat;
+            Adres.Huisnummer = huisnummer;
+            Adres.Postcode = postcode;
+            Adres.Gemeente = gemeente;
             Handelaar = handelaar;
             Aanbieding = aanbieding;
         }

@@ -15,7 +15,6 @@ using LekkerLokaal.Models.AccountViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using MimeKit;
-//using MailKit.Net.Smtp;
 using System.IO;
 using System.Net.Mail;
 
@@ -57,9 +56,8 @@ namespace LekkerLokaal.Controllers
         {
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -68,8 +66,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Login(LoginViewModel model, string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 // This doesn't count login failures towards account lockout
@@ -114,8 +112,7 @@ namespace LekkerLokaal.Controllers
 
             var model = new LoginWith2faViewModel { RememberMe = rememberMe };
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View(model);
         }
 
@@ -124,6 +121,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginWith2fa(LoginWith2faViewModel model, bool rememberMe, string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -169,8 +167,7 @@ namespace LekkerLokaal.Controllers
             }
 
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
-
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -179,6 +176,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LoginWithRecoveryCode(LoginWithRecoveryCodeViewModel model, string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -216,6 +214,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult Lockout()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -223,19 +222,20 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult Register(string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             ViewData["Geslacht"] = Geslachten();
             return View();
         }
 
         private SelectList Geslachten()
         {
-            List<Geslacht> geslacht = new List<Geslacht>();
-            geslacht.Add(Geslacht.Man);
-            geslacht.Add(Geslacht.Vrouw);
-            geslacht.Add(Geslacht.Anders);
-            return new SelectList(geslacht);
+            var geslachten = new List<Geslacht>();
+            foreach (Geslacht geslacht in Enum.GetValues(typeof(Geslacht)))
+            {
+                geslachten.Add(geslacht);
+            }
+            return new SelectList(geslachten);
         }
 
         [HttpPost]
@@ -243,8 +243,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Register(RegisterViewModel model, string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
@@ -281,8 +281,8 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult RegisterHandelaar(string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["Handelaar"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             ViewData["categorie"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
             return View();
         }
@@ -292,8 +292,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegisterHandelaar(RegisterHandelaarViewModel model, string returnUrl = null)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
 
@@ -321,11 +321,10 @@ namespace LekkerLokaal.Controllers
                 await model.Logo.CopyToAsync(fileStream);
                 fileStream.Close();
 
-                System.Net.Mail.Attachment attachment;
-                attachment = new System.Net.Mail.Attachment(@"wwwroot/images/temp/logo.jpg");
+                var attachment = new Attachment(@"wwwroot/images/temp/logo.jpg");
                 attachment.Name = "logo.jpg";
                 message.Attachments.Add(attachment);
-                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
                 SmtpServer.Port = 587;
                 SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
                 SmtpServer.EnableSsl = true;
@@ -355,7 +354,6 @@ namespace LekkerLokaal.Controllers
         public IActionResult ExternalLogin(string provider, string returnUrl = null)
         {
             // Request a redirect to the external login provider.
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             var redirectUrl = Url.Action(nameof(ExternalLoginCallback), "Account");
             var properties = _signInManager.ConfigureExternalAuthenticationProperties(provider, redirectUrl);
             return Challenge(properties, provider);
@@ -365,7 +363,6 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ExternalLoginCallback(string returnUrl = null, string remoteError = null)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (remoteError != null)
             {
                 ErrorMessage = $"Error from external provider: {remoteError}";
@@ -392,6 +389,7 @@ namespace LekkerLokaal.Controllers
             {
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
+                ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
                 ViewData["LoginProvider"] = info.LoginProvider;
                 var email = info.Principal.FindFirstValue(ClaimTypes.Email);
                 return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
@@ -425,9 +423,8 @@ namespace LekkerLokaal.Controllers
                 }
                 AddErrors(result);
             }
-
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             return View(nameof(ExternalLogin), model);
         }
 
@@ -435,7 +432,6 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
             if (userId == null || code == null)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
@@ -453,7 +449,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPassword()
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -462,7 +458,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ForgotPassword(ForgotPasswordViewModel model)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(model.Email);
@@ -489,7 +485,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult ForgotPasswordConfirmation()
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -497,7 +493,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult ResetPassword(string code = null)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (code == null)
             {
                 throw new ApplicationException("A code must be supplied for password reset.");
@@ -511,7 +507,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetPassword(ResetPasswordViewModel model)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -535,7 +531,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public IActionResult ResetPasswordConfirmation()
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
@@ -543,7 +539,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 

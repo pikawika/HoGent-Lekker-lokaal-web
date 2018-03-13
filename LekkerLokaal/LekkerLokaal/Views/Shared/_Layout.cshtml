@@ -1,4 +1,6 @@
-﻿<!DOCTYPE html>
+﻿@using LekkerLokaal.Models.Domain
+
+<!DOCTYPE html>
 <html>
 <head>
     <meta charset="utf-8">
@@ -120,7 +122,7 @@
                                 <li class="Categorieen-List-Item">
                                     <a href="#">Categorieën</a>
                                     <ul>
-                                        @foreach (var categorie in ViewBag.AlleCategorien)
+                                        @foreach (Categorie categorie in (IEnumerable<Categorie>) ViewData["AlleCategorien"])
                                         {
                                             <li>
                                                 <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Naam"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
