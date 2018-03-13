@@ -123,5 +123,10 @@ namespace LekkerLokaal.Controllers
 
             return View();
         }
+        public IActionResult Detail()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            return View();
+        }
     }
 }
