@@ -27,8 +27,11 @@ namespace LekkerLokaal.Controllers
         {
             ViewBag.AlleBonnen = _bonRepository.GetAll().ToList();
             ViewBag.Top3Bonnen = _bonRepository.GetTop3().ToList();
-
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleBonnen"] = _bonRepository.GetAll().ToList();
+            ViewData["Top3Bonnen"] = _bonRepository.GetTop3().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Top9CategorieMetAantal"] = _categorieRepository.GetTop9WithAmount();
+            ViewData["AlleHandelaars"] = _handelaarRepository.GetAll().ToList();
             ViewBag.Top9CategorieMetAantal = _categorieRepository.GetTop9WithAmount();
 
             ViewBag.AlleHandelaars = _handelaarRepository.GetAll().ToList();
@@ -38,18 +41,19 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult About()
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
         }
 
         public IActionResult Error()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
         public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null)
         {
-            ViewBag.AlleCategorien = _categorieRepository.GetAll().ToList();
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (ZoekSoort != null && ZoekKey != null)
             {
                 switch (ZoekSoort)
