@@ -124,11 +124,12 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        public IActionResult Detail(int BonId)
+        [HttpPost]
+        public IActionResult Detail(int id)
         {
-            ViewData["AangeklikteBon"] = _bonRepository.GetByBonId(BonId);
+            Bon aangeklikteBon = _bonRepository.GetByBonId(id);
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            return View();
+            return View(new DetailViewModel(aangeklikteBon));
         }
     }
 }

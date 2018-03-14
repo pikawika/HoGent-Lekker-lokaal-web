@@ -1,4 +1,6 @@
-﻿<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
+﻿@model LekkerLokaal.Models.HomeViewModels.DetailViewModel;
+
+<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
 <main id="mainContent" class="main-content">
     <!-- Page Container -->
     <div class="page-container ptb-60">
@@ -76,7 +78,7 @@
                                 <div class="widget single-deal-widget panel ptb-30 prl-20">
                                     <div class="widget-body text-center">
                                         <h2 class="mb-20 h3">
-                                            Wijnproeverij BraLenBre
+                                            @Model.Naam
                                         </h2>
                                         <ul class="deal-meta list-inline mb-10 color-mid">
                                             <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
