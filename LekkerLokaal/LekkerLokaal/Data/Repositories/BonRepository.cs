@@ -141,5 +141,10 @@ namespace LekkerLokaal.Data.Repositories
             }
             return (sb.ToString().Normalize(NormalizationForm.FormC));
         }
+
+        public Bon GetByBonId(int bonId)
+        {
+            return _bonnen.SingleOrDefault(b => b.BonId == bonId);
+        }
     }
 }
