@@ -10,6 +10,11 @@ namespace LekkerLokaal.Models.HomeViewModels
     {
 
         public string Naam { get; }
+        public decimal MinPrijs { get; }
+        public string Beschrijving { get; }
+        public int AantalBesteld { get; }
+        public List<string> getAfbeeldingenPathLijst { get; }
+
         public DetailViewModel()
         {
         }
@@ -17,8 +22,16 @@ namespace LekkerLokaal.Models.HomeViewModels
         public DetailViewModel(Bon bon)
         {
             Naam = bon.Naam;
-
+            MinPrijs = bon.MinPrijs;
+            Beschrijving = bon.Beschrijving;
+            AantalBesteld = bon.AantalBesteld;
+            getAfbeeldingenPathLijst = bon.getAfbeeldingenPathLijst();
+            
         }
+
+        
+
+
 
 
     }

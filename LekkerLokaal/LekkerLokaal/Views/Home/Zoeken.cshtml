@@ -1,4 +1,6 @@
-﻿@{
+﻿@using LekkerLokaal.Models.Domain
+
+@{
     ViewData["Title"] = "Zoeken: " + ViewBag.ZoekOpdracht;
     if (ViewData["Navbar"] == null || (string)ViewData["Navbar"] == "")
     {
@@ -24,7 +26,7 @@
 
                     <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
-                        @foreach (var bon in ViewBag.GefilterdeBonnen)
+                        @foreach (Bon bon in ViewBag.GefilterdeBonnen)
                         {
                             <div class="slick-lekker-lokaal">
                                 <div class="col-xs-12">
@@ -33,7 +35,7 @@
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <div class="text-center p-20">
-                                                        <img class="store-logo" src="~/@bon.Afbeelding" alt="">
+                                                        <img class="store-logo" src="~/@bon.GetThumbPath()" alt="">
                                                     </div>
                                                     <!-- end media -->
                                                 </div>

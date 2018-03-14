@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -90,6 +92,18 @@ namespace LekkerLokaal.Models.Domain
             Gemeente = gemeente;
             Handelaar = handelaar;
             Aanbieding = aanbieding;
+        }
+
+        
+        public String GetThumbPath()
+        {
+            string path = Afbeelding + "thumb.jpg";
+            return path;
+        }
+
+        public List<string> getAfbeeldingenPathLijst()
+        {
+            return Directory.GetFiles(@"wwwroot\" + Afbeelding + @"Afbeeldingen\", "*.JPG").Select(l => l.Replace(@"wwwroot\", "")).ToList();
         }
     }
 }

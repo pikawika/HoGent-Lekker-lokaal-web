@@ -144,7 +144,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public Bon GetByBonId(int bonId)
         {
-            return _bonnen.SingleOrDefault(b => b.BonId == bonId);
+            return _bonnen.Include(b => b.Categorie).SingleOrDefault(b => b.BonId == bonId);
         }
     }
 }

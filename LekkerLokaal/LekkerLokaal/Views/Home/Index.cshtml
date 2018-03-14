@@ -32,7 +32,7 @@
                             @foreach (Bon bon in (IEnumerable<Bon>)ViewData["Top3Bonnen"])
                             {
                                 <div class="deal-single panel item">
-                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.Afbeelding.Replace("\\","\\\\")">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.GetThumbPath().Replace("\\","\\\\")">
                                         <div class="deal-about p-20 pos-a bottom-0 left-0">
                                             <div class="rating mb-10">
                                                 <span class="rating-stars" data-rating="5">
@@ -129,7 +129,7 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="text-center p-20">
-                                                    <img class="store-logo" src="~/@bon.Afbeelding" alt="">
+                                                    <img class="store-logo" src="~/@bon.GetThumbPath()" alt="">
                                                 </div>
                                                 <!-- end media -->
                                             </div>
@@ -192,7 +192,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="text-center p-20">
-                                            <img class="store-logo" src="@bon.Afbeelding" alt="">
+                                            <img class="store-logo" src="@bon.GetThumbPath()" alt="">
                                         </div>
                                         <!-- end media -->
                                     </div>

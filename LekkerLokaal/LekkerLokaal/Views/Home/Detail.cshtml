@@ -1,5 +1,4 @@
 ﻿@model LekkerLokaal.Models.HomeViewModels.DetailViewModel;
-
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
 <main id="mainContent" class="main-content">
     <!-- Page Container -->
@@ -13,46 +12,24 @@
                                 <div class="deal-slider">
                                     <div id="product_slider" class="flexslider">
                                         <ul class="slides">
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_01.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_02.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_03.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_04.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_05.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/product_06.jpg">
-                                            </li>
+                                            @foreach (string path in Model.getAfbeeldingenPathLijst)
+                                            {
+
+                                                <li>
+                                                    <img src="~/@path">
+                                                </li>
+                                            }
                                         </ul>
                                     </div>
                                     <div id="product_slider_nav" class="flexslider flexslider-nav">
                                         <ul class="slides">
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_01.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_02.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_03.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_04.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_05.jpg">
-                                            </li>
-                                            <li>
-                                                <img alt="" src="assets/images/products/thumb_06.jpg">
-                                            </li>
+                                            @foreach (string path in Model.getAfbeeldingenPathLijst)
+                                            {
+
+                                                <li>
+                                                    <img src="~/@path">
+                                                </li>
+                                            }
                                         </ul>
                                     </div>
                                 </div>
@@ -61,8 +38,8 @@
                                     <div class="rating mb-10">
                                     </div>
 
-                                    <p class="mb-15">Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon wijn aangekocht worden.</p>
-                                    <p class="mb-15">Enkele van maar zeker niet de enige merken dat je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fuchs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillaman I Muri,...</p>
+                                    <p class="mb-15">@Model.Beschrijving</p>
+
                                 </div>
                             </div>
                         </div>
@@ -82,13 +59,13 @@
                                         </h2>
                                         <ul class="deal-meta list-inline mb-10 color-mid">
                                             <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
-                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>112x besteld</li>
+                                            <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@Model.AantalBesteld besteld</li>
                                         </ul>
                                         <p class="color-muted">
                                             Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon wijn aangekocht worden.
                                         </p>
                                         <div class="price mb-20">
-                                            <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro;75</h2>
+                                            <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro;@Model.MinPrijs</h2>
                                         </div>
                                         <div class="buy-now mb-40">
                                             <a href="#" target="_blank" class="btn btn-block btn-lg">
@@ -97,20 +74,20 @@
                                         </div>
 
                                         <ul class="list-inline social-icons social-icons--colored t-center">
-                                            <li class="social-icons__item">
-                                                <a href="#"><i class="fa fa-facebook"></i></a>
+                                            <li>
+                                                <a href="#"><i class="fab fa-facebook font-34"></i></a>
                                             </li>
-                                            <li class="social-icons__item">
-                                                <a href="#"><i class="fa fa-twitter"></i></a>
+                                            <li>
+                                                <a href="#"><i class="fab fa-twitter font-34"></i></a>
                                             </li>
-                                            <li class="social-icons__item">
-                                                <a href="#"><i class="fa fa-pinterest"></i></a>
+                                            <li>
+                                                <a href="#"><i class="fab fa-linkedin font-34"></i></a>
                                             </li>
-                                            <li class="social-icons__item">
-                                                <a href="#"><i class="fa fa-linkedin"></i></a>
+                                            <li>
+                                                <a href="#"><i class="fab fa-google-plus font-34"></i></a>
                                             </li>
-                                            <li class="social-icons__item">
-                                                <a href="#"><i class="fa fa-google-plus"></i></a>
+                                            <li>
+                                                <a href="#"><i class="fab fa-pinterest font-34"></i></a>
                                             </li>
                                         </ul>
                                     </div>
@@ -119,7 +96,7 @@
                             <div class="col-xs-12">
                                 <!-- Recent Posts -->
                                 <div class="widget about-seller-widget panel ptb-30 prl-20">
-                                    <h3 class="widget-title h-title">Over wijnproeverij BraLenBre</h3>
+                                    <h3 class="widget-title h-title text-center">Over @Model.Naam</h3>
                                     <div class="widget-body t-center">
                                         <figure class="mt-20 pb-10">
                                             <img src="assets/images/brands/store_logo.png" alt="">
