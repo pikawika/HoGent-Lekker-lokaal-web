@@ -1,7 +1,7 @@
 ﻿@using LekkerLokaal.Models.Domain
 
 @{
-    ViewData["Title"] = "Zoeken: " + ViewBag.ZoekOpdracht;
+    ViewData["Title"] = "Zoeken: " + ViewData["ZoekOpdracht"];
     if (ViewData["Navbar"] == null || (string)ViewData["Navbar"] == "")
     {
         ViewData["Navbar"] = "Zoeken";
@@ -19,7 +19,7 @@
                 <section class="section latest-deals-area ptb-30">
                     <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
                         <h3 style="color: white" class="section-title font-18">
-                            Zoekopdracht voor: @ViewBag.ZoekOpdracht
+                            Zoekopdracht voor: @ViewData["ZoekOpdracht"]
                             <element class="slide-navigation-lekkerlokaal slide-navigation-lekkerlokaal-hideOnOneSlide"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                         </h3>
                     </header>
@@ -80,7 +80,7 @@
 
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30 slide-navigation-lekkerlokaal-hideOnOneSlide">
                     <h3 style="color: white" class="section-title font-18">
-                        Zoekopdracht voor: @ViewBag.ZoekOpdracht
+                        Zoekopdracht voor: @ViewData["ZoekOpdracht"]
                         <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                     </h3>
                 </header>

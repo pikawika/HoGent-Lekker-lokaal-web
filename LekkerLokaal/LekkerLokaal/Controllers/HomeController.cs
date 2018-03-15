@@ -70,49 +70,49 @@ namespace LekkerLokaal.Controllers
                         ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
                         break;
                 }
-                ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
+                ViewData["ZoekOpdracht"] = ZoekKey + " in " + ZoekSoort;
 
                 if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
                 {
                     string input = Categorie;
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met categorie " + input;
                 }
                 if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
                 {
                     string input = Ligging;
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met ligging " + input;
                 }
                 if (!string.IsNullOrEmpty(MaxStartPrijs))
                 {
                     int input = int.Parse(MaxStartPrijs);
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs €" + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met maximum prijs €" + input;
                 }
             }
             else
             {
                 ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
-                ViewBag.ZoekOpdracht = "Overzicht van alle bons";
+                ViewData["ZoekOpdracht"] = "Overzicht van alle bons";
 
                 if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
                 {
                     string input = Categorie;
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met categorie " + input;
                 }
                 if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
                 {
                     string input = Ligging;
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met ligging " + input;
                 }
                 if (!string.IsNullOrEmpty(MaxStartPrijs))
                 {
                     int input = int.Parse(MaxStartPrijs);
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met maximum prijs " + input;
                 }
 
             }
