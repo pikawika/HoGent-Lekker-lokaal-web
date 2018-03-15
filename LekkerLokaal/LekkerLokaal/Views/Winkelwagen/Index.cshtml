@@ -34,15 +34,15 @@
                                             </div>
                                             <div class="media-body valign-middle">
                                                 <h6 class="title mb-15 t-uppercase">@($"{line.Bon}")</h6>
-                                                <div class="type font-12"><span class="t-uppercase">Soort : </span>Eten &amp; drinken</div>
+                                                <div class="type font-12"><span class="t-uppercase">Categorie: </span>@($"{line.Categorie}")</div>
                                             </div>
                                         </td>
-                                        <td>&euro; 50</td>
+                                        <td>@($"€ {line.Prijs:N2}")</td>
                                         <td>
-                                            <input class="quantity-label" type="number" value="2">
+                                            <input class="quantity-label" type="number" value="@($"{line.Aantal}")">
                                         </td>
                                         <td>
-                                            <div class="sub-total">&euro; 100</div>
+                                            <div class="sub-total">@($"€ {line.SubTotaal:N2}")</div>
                                         </td>
                                         <td>
                                             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">
@@ -75,7 +75,5 @@
             </div>
         </div>
     </div>
-
-
 </main>
 <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->

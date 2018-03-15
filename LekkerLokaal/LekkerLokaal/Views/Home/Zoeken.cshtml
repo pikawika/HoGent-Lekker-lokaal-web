@@ -62,9 +62,11 @@
                                                                 <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
                                                             </div>
                                                         </form>
-                                                        <div style="margin-top: 10px" class="showcode">
-                                                            <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                                        </div>
+                                                        <form asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId">
+                                                            <div style="margin-top: 10px" class="showcode">
+                                                                <button class="btn btn-sm btn-block" data-toggle="modal">In winkelmandje</button>
+                                                            </div>
+                                                        </form>
                                                     </div>
                                                 </div>
                                                 <!-- end col -->
