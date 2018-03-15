@@ -46,14 +46,12 @@
                                                     ( <span class="rating-count">@bon.AantalBesteld</span> keer verkocht)
                                                 </span>
                                             </div>
-                                            <form asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId">
-                                                <h3 class="deal-title mb-10">
-                                                    <button class="btntop3 color-light color-h-lighter">@bon.Naam</button>
-                                                </h3>
-                                                <h8 class="deal-title mb-10">
-                                                    <button class="btntop3 color-light color-h-lighter">Bekijk details</button>
-                                                </h8>
-                                            </form>
+                                            <h3 class="deal-title mb-10">
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btntop3 color-light color-h-lighter">@bon.Naam</a>
+                                            </h3>
+                                            <h8 class="deal-title mb-10">
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btntop3 color-light color-h-lighter">Bekijk details</a>
+                                            </h8>
                                         </div>
                                     </figure>
                                 </div>
@@ -149,21 +147,17 @@
                                                     </div>
                                                     <div class="height-70px">
                                                         <h5 class="deal-title mb-10">
-                                                            <a href="#">@bon.Beschrijving</a>
+                                                            <a>@bon.Beschrijving</a>
                                                         </h5>
                                                     </div>
-
                                                     <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                    <form asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId">
-                                                        <div class="showcode">
-                                                            <button class="btn btn-sm btn-block" data-toggle="modal">Bekijk details</button>
-                                                        </div>
-                                                    </form>
-                                                    <form asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId">
-                                                        <div style="margin-top: 10px" class="showcode">
-                                                            <button class="btn btn-sm btn-block" data-toggle="modal">In winkelmandje</button>
-                                                        </div>
-                                                    </form>
+                                                    <div class="showcode">
+                                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                    </div>
+                                                    <div style="margin-top: 10px" class="showcode">
+                                                        <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                    </div>
+
                                                 </div>
                                             </div>
                                             <!-- end col -->
@@ -212,20 +206,17 @@
                                             </div>
                                             <div class="height-70px">
                                                 <h5 class="deal-title mb-10">
-                                                    <a href="#">@bon.Beschrijving</a>
+                                                    <a>@bon.Beschrijving</a>
                                                 </h5>
                                             </div>
                                             <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                            <form asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId">
-                                                <div class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal">Bekijk details</button>
-                                                </div>
-                                            </form>
-                                            <form asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId">
-                                                <div style="margin-top: 10px" class="showcode">
-                                                    <button class="btn btn-sm btn-block" data-toggle="modal">In winkelmandje</button>
-                                                </div>
-                                            </form>
+                                            <div class="showcode">
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block" data-toggle="modal">Bekijk details</a>
+                                            </div>
+                                            <div style="margin-top: 10px" class="showcode">
+                                                <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block" data-toggle="modal">In winkelmandje</a>
+                                            </div>
+
                                         </div>
                                     </div>
                                     <!-- end col -->

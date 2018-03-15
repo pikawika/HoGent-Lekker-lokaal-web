@@ -1,4 +1,13 @@
 ﻿@model LekkerLokaal.Models.HomeViewModels.DetailViewModel;
+
+@{
+    ViewData["Title"] = @Model.Naam;
+    if (ViewData["Navbar"] == null || (string)ViewData["Navbar"] == "")
+    {
+        ViewData["Navbar"] = "Zoeken";
+    }
+}
+
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
 <main id="mainContent" class="main-content">
     <!-- Page Container -->

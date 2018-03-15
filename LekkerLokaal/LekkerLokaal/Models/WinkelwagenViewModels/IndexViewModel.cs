@@ -16,6 +16,8 @@ namespace LekkerLokaal.Models.CartViewModels
 
         public string Bon { get; }
 
+        public String GetThumbPath { get; }
+
         public string Categorie { get; }
 
         public decimal Prijs { get; }
@@ -30,6 +32,7 @@ namespace LekkerLokaal.Models.CartViewModels
             Categorie = winkelwagenLijn.Bon.Categorie.Naam;
             Prijs = winkelwagenLijn.Prijs;
             SubTotaal = winkelwagenLijn.Totaal;
+            GetThumbPath = winkelwagenLijn.Bon.GetThumbPath();
         }
     }
 
