@@ -47,11 +47,7 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null, string Categorie = null, string Ligging = null, string MaxStartPrijs = null )
         {
-
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            
-
-            
 
             if (!string.IsNullOrEmpty(ZoekKey))
 

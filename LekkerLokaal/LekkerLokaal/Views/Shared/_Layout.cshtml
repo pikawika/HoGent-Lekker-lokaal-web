@@ -75,7 +75,7 @@
                                         <div id="advancedSearch" class="collapse mt-15">
                                             <select name="Categorie" id="Categorie" class="input-sm">
                                                 <option value="*">Categorie</option>
-                                                @foreach (Categorie categorie in (IEnumerable<Categorie>) ViewData["AlleCategorien"])
+                                                @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
                                                 {
                                                     <option value="@categorie.Naam">@categorie.Naam</option>
                                                 }
@@ -86,7 +86,7 @@
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
-                                        <a href="cart.html">
+                                        <a asp-controller="Winkelwagen" asp-action="Index">
                                             <span class="icon lnr lnr-cart font-40"></span>
                                             <div>
                                                 <!-- implement : uit cookie/session laden hoeveel dingen in winkelmandje -->
@@ -120,7 +120,7 @@
                                 <li class="Categorieen-List-Item">
                                     <a href="#">Categorieën</a>
                                     <ul>
-                                        @foreach (Categorie categorie in (IEnumerable<Categorie>) ViewData["AlleCategorien"])
+                                        @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
                                         {
                                             <li>
                                                 <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Naam"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
@@ -243,14 +243,14 @@
         <i class="fa fa-angle-up" aria-hidden="true"></i>
     </div>
     <script>
-                        function ChangeGeavanceerdZoeken() {
-                            if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
-                                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
-                            }
-                            else {
-                                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
-                            }
-                        }
+        function ChangeGeavanceerdZoeken() {
+            if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
+                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
+            }
+            else {
+                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
+            }
+        }
 
     </script>
     <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>

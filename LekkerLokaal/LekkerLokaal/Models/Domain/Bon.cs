@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Bon
     {
         public int BonId { get; private set; }

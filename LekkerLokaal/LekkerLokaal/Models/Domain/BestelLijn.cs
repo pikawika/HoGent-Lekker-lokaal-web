@@ -9,6 +9,5 @@ namespace LekkerLokaal.Models.Domain
     {
         public int BestellingId { get; private set; }
         public int BonId { get; private set; }
-        public decimal Prijs { get; set; }
     }
 }

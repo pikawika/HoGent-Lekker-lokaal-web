@@ -1,45 +1,47 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Winkelwagen
     {
+        [JsonProperty]
         private readonly IList<WinkelwagenLijn> _lijnen = new List<WinkelwagenLijn>();
         public IEnumerable<WinkelwagenLijn> WinkelwagenLijnen => _lijnen.AsEnumerable();
-        public int AantalBonnen => _lijnen.Count;
-        public bool IsLeeg => AantalBonnen == 0;
-        //tobe implemented
-        public decimal TotaleWaarde => _lijnen.Sum(l => l.Bon.MaxPrijs * l.Aantal);
+        public int AantalVerschillendeBonnen => _lijnen.Count;
+        public bool IsLeeg => AantalVerschillendeBonnen == 0;
+        public decimal TotaleWaarde => _lijnen.Sum(l => l.Totaal);
 
-        public void VoegLijnToe(Bon bon, int aantal)
+        public void VoegLijnToe(Bon bon, int aantal, decimal prijs)
         {
-            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId);
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId, prijs);
             if (lijn == null)
-                _lijnen.Add(new WinkelwagenLijn() { Bon = bon, Aantal = aantal });
+                _lijnen.Add(new WinkelwagenLijn() { Bon = bon, Aantal = aantal, Prijs = prijs });
             else
                 lijn.Aantal += aantal;
         }
 
-        public void VerwijderLijn(Bon bon)
+        public void VerwijderLijn(Bon bon, decimal prijs)
         {
-            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId);
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bon.BonId, prijs);
             if (lijn != null)
                 _lijnen.Remove(lijn);
         }
 
-        public void VerhoogAantal(int bonId)
+        public void VerhoogAantal(int bonId, decimal prijs)
         {
-            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId);
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId, prijs);
             if (lijn != null)
                 lijn.Aantal++;
         }
 
-        public void VerlaagAantal(int bonId)
+        public void VerlaagAantal(int bonId, decimal prijs)
         {
-            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId);
+            WinkelwagenLijn lijn = zoekWinkelwagenLijn(bonId, prijs);
             if (lijn != null)
                 lijn.Aantal--;
             if (lijn.Aantal <= 0)
@@ -51,9 +53,9 @@ namespace LekkerLokaal.Models.Domain
             _lijnen.Clear();
         }
 
-        private WinkelwagenLijn zoekWinkelwagenLijn(int bonId)
+        private WinkelwagenLijn zoekWinkelwagenLijn(int bonId, decimal prijs)
         {
-            return _lijnen.SingleOrDefault(l => l.Bon.BonId == bonId);
+            return _lijnen.SingleOrDefault(l => (l.Bon.BonId == bonId) && (l.Prijs == prijs));
         }
     }
 }
