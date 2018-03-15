@@ -1,4 +1,10 @@
-﻿@using LekkerLokaal.Models.Domain
+﻿@using LekkerLokaal.Models.Domain;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+
+@{
+    Winkelwagen winkelwagen = Context.Session.GetString("winkelwagen") == null ? null : JsonConvert.DeserializeObject<Winkelwagen>(Context.Session.GetString("winkelwagen"));
+}
 
 <!DOCTYPE html>
 <html>
@@ -90,7 +96,14 @@
                                             <span class="icon lnr lnr-cart font-40"></span>
                                             <div>
                                                 <!-- implement : uit cookie/session laden hoeveel dingen in winkelmandje -->
-                                                <span class="cart-number">0</span>
+                                                @if (winkelwagen == null)
+                                                {
+                                                    <span class="cart-number">0</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-number">@winkelwagen.AantalBonnen</span>
+                                                }
                                             </div>
                                         </a>
                                     </div>

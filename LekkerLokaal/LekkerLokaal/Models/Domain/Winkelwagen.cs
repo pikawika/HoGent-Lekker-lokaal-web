@@ -12,8 +12,8 @@ namespace LekkerLokaal.Models.Domain
         [JsonProperty]
         private readonly IList<WinkelwagenLijn> _lijnen = new List<WinkelwagenLijn>();
         public IEnumerable<WinkelwagenLijn> WinkelwagenLijnen => _lijnen.AsEnumerable();
-        public int AantalVerschillendeBonnen => _lijnen.Count;
-        public bool IsLeeg => AantalVerschillendeBonnen == 0;
+        public int AantalBonnen => _lijnen.Sum(l => l.Aantal);
+        public bool IsLeeg => AantalBonnen == 0;
         public decimal TotaleWaarde => _lijnen.Sum(l => l.Totaal);
 
         public void VoegLijnToe(Bon bon, int aantal, decimal prijs)

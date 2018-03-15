@@ -33,23 +33,12 @@ namespace LekkerLokaal.Controllers
         [HttpPost]
         public IActionResult Add(int id, Winkelwagen winkelwagen)
         {
-            Console.WriteLine("Add geprobeerd");
-            Console.WriteLine(id);
             Bon bon = _bonRepository.GetByBonId(id);
             if (bon != null)
             {
-                Console.WriteLine(bon.Naam);
-                Console.WriteLine("Twerkt wel??");
                 decimal prijs = 50;
                 int aantal = 1;
                 winkelwagen.VoegLijnToe(bon, aantal, prijs);
-                Console.WriteLine("Bon " + bon.Naam + " werd toegevoegd aan uw winkelwagen.");
-                TempData["message"] = "Bon " + bon.Naam + " werd toegevoegd aan uw winkelwagen.";
-
-            } else
-            {
-                Console.WriteLine(bon.Naam);
-                Console.WriteLine("Twerkt ni ahn");
             }
             return RedirectToAction(nameof(Index), "Home");
         }
