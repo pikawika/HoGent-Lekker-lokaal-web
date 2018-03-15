@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LekkerLokaal.Filters;
+using LekkerLokaal.Models.CartViewModels;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -26,7 +27,7 @@ namespace LekkerLokaal.Controllers
             if (winkelwagen.IsLeeg)
                 return View("LegeWinkelwagen");
             ViewData["Totaal"] = winkelwagen.TotaleWaarde;
-            return View();
+            return View(winkelwagen.WinkelwagenLijnen.Select(w => new IndexViewModel(w)).ToList());
         }
 
         [HttpPost]

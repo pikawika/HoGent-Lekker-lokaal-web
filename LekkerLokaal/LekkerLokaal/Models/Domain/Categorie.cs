@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Categorie
     {
+        [JsonProperty]
         public int CategorieId { get; private set; }
 
         private string _naam;
