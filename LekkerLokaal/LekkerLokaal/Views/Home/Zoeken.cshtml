@@ -1,4 +1,5 @@
-﻿@using LekkerLokaal.Models.Domain
+﻿@using LekkerLokaal.Models.Domain;
+@model IEnumerable<LekkerLokaal.Models.HomeViewModels.ZoekViewModel>
 
 @{
     ViewData["Title"] = "Zoeken: " + ViewData["ZoekOpdracht"];
@@ -26,7 +27,7 @@
 
                     <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
-                        @foreach (Bon bon in ViewBag.GefilterdeBonnen)
+                        @foreach (var bon in Model)
                         {
                             <div class="slick-lekker-lokaal">
                                 <div class="col-xs-12">
@@ -35,7 +36,7 @@
                                             <div class="row">
                                                 <div class="col-xs-12">
                                                     <div class="text-center p-20">
-                                                        <img class="store-logo" src="~/@bon.GetThumbPath()" alt="">
+                                                        <img class="store-logo" src="~/@bon.GetThumbPath" alt="">
                                                     </div>
                                                     <!-- end media -->
                                                 </div>
@@ -55,7 +56,7 @@
                                                                 <a href="#">@bon.Beschrijving</a>
                                                             </h5>
                                                         </div>
-                                                        <p class="color-muted font-12"><i class="fa @bon.Categorie.Icon"></i> @bon.Categorie.Naam</p>
+                                                        <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
                                                         <p class="color-muted font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
                                                         <form asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId">
                                                             <div class="showcode">

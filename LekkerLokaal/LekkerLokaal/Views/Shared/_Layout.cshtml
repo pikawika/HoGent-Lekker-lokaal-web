@@ -62,7 +62,7 @@
                                                         <option value="Ligging">Ligging</option>
                                                     </select>
                                                     <div class="input-group-btn">
-                                                        <a onclick='Zoeken();' class="btn btn-lg btn-search btn-block">
+                                                        <a onclick='Zoeken();' id="zoekKnop" class="btn btn-lg btn-search btn-block">
                                                             <i class="fa fa-search font-16"></i>
                                                         </a>
                                                     </div>
@@ -268,6 +268,18 @@
             var MaxStartPrijs = document.getElementById("MaxStartPrijs").value;
             window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + "&ZoekKey=" + ZoekKey + "&Categorie=" + Categorie + "&MaxStartPrijs=" + MaxStartPrijs;
         }
+    </script>
+    <script>
+        $("#ZoekKey").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
+            }
+        });
+        $("#MaxStartPrijs").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
+            }
+        });
     </script>
 
 
