@@ -46,12 +46,14 @@
                                                     ( <span class="rating-count">@bon.AantalBesteld</span> keer verkocht)
                                                 </span>
                                             </div>
-                                            <h3 class="deal-title mb-10">
-                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="color-light color-h-lighter">@bon.Naam</a>
-                                            </h3>
-                                            <h8 class="deal-title mb-10">
-                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="color-light color-h-lighter">Bekijk details</a>
-                                            </h8>
+                                            <form asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId">
+                                                <h3 class="deal-title mb-10">
+                                                    <button class="btntop3 color-light color-h-lighter">@bon.Naam</button>
+                                                </h3>
+                                                <h8 class="deal-title mb-10">
+                                                    <button class="btntop3 color-light color-h-lighter">Bekijk details</button>
+                                                </h8>
+                                            </form>
                                         </div>
                                     </figure>
                                 </div>

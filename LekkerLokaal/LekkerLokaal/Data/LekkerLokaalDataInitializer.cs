@@ -193,7 +193,7 @@ namespace LekkerLokaal.Data
                 Bon bon57 = new Bon("Bram's Fashion", 23, 86, "Voor ieder wat wilds", 73, @"images\bon\57\", kledij, "Paepestraat", "178", 9260, "Wichelen", Handelaar75 ,Aanbieding.Geen);
                 Bon bon58 = new Bon("Bontinck's Panthers", 30, 453, "Pants from Bontinck are dreams for legs", 72, @"images\bon\58\", kledij, "Arbeidstraat", "14", 9300, "Aalst", Handelaar76 ,Aanbieding.Geen);
                 Bon bon59 = new Bon("Bre Bra", 29, 478, "Van A tot Z, u vindt het bij ons", 92, @"images\bon\59\", kledij, "Sint-Pietersnieuwstraat", "124", 9000, "Gent", Handelaar77 ,Aanbieding.Geen);
-                Bon bon60 = new Bon("Pikantje", 34, 402, "Erotische kledingwinkel", 9, @"images\bon\60\", kledij, "Arbeidstraat", "14", 9300, "Aalst", Handelaar78 , Aanbieding.Standaard);
+                Bon bon69 = new Bon("Pikantje", 34, 402, "Erotische kledingwinkel", 9, @"images\bon\69\", kledij, "Arbeidstraat", "14", 9300, "Aalst", Handelaar78 , Aanbieding.Standaard);
 
                 Bon bon61 = new Bon("Fnac Aalst", 3, 377, "De multimedia specialist in Europa", 54, @"images\bon\61\", multimedia, "Arbeidstraat", "14", 9300, "Aalst", Handelaar81 ,Aanbieding.Geen);
                 Bon bon62 = new Bon("Mediamarkt Dendermonde", 46, 433, "Electronica tegen een spot prijs", 45, @"images\bon\62\", multimedia, "Mechelsesteenweg", "138", 9200, "Dendermonde", Handelaar82 ,Aanbieding.Geen);
@@ -203,7 +203,7 @@ namespace LekkerLokaal.Data
                 Bon bon66 = new Bon("Lab9 Aalst", 7, 340, "Officiele Apple reseller", 64, @"images\bon\66\", multimedia, "Arbeidstraat", "14", 9300, "Aalst", Handelaar86 ,Aanbieding.Geen);
                 Bon bon67 = new Bon("De Conincks Screen Repair", 38, 536, "Een ongelukje is rap gebeurd", 75, @"images\bon\67\", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar87 ,Aanbieding.Geen);
                 Bon bon68 = new Bon("Medion Custom", 40, 316, "Medion laptop op maat gemaakt", 24, @"images\bon\68\", multimedia, "Sint-Pietersnieuwstraat", "124", 9000, "Gent", Handelaar88 ,Aanbieding.Geen);
-                Bon bon69 = new Bon("Dell Dinosaur", 27, 311, "MS Dos specialist", 30, @"images\bon\69\", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar89 ,Aanbieding.Geen);
+                Bon bon60 = new Bon("Dell Dinosaur", 27, 311, "MS Dos specialist", 30, @"images\bon\60\", multimedia, "Paepestraat", "178", 9260, "Wichelen", Handelaar89 ,Aanbieding.Geen);
 
 
                 Bon bon70 = new Bon("Generieke cadeaubon", 1, 50, "Niet zeker welke bon u juist wilt, dan is deze generieke bon iets voor u!", 457, @"images\bon\70\", generiek, "Arbeidstraat", "14", 9300, "Aalst", Handelaar91 ,Aanbieding.Speciaal);
