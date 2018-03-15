@@ -124,7 +124,7 @@ namespace LekkerLokaal
 
                 routes.MapRoute(
                     name: "zoeken",
-                    template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}/{Categorie?}/{Ligging?}/{MaxStartPrijs?}");
+                    template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}/{Categorie?}/{MaxStartPrijs?}");
             });
             datainit.InitializeData().Wait();
         }
