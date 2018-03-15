@@ -88,7 +88,7 @@ namespace LekkerLokaal.Controllers
                 {
                     int input = int.Parse(MaxStartPrijs);
                     ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
+                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs €" + input;
                 }
             }
             else
