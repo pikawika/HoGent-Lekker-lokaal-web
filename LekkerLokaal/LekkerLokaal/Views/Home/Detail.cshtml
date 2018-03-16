@@ -76,13 +76,11 @@
                                         <div class="price mb-20">
                                             <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro;@Model.MinPrijs</h2>
                                         </div>
-                                        <form asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@Model.BonId">
                                             <div class="buy-now mb-40">
-                                                <button class="btn btn-block btn-lg">
+                                                <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@Model.BonId" class="btn btn-block btn-lg">
                                                     <i class="fa fa-shopping-cart font-16 mr-10"></i> In winkelmandje
-                                                </button>
+                                                </a>
                                             </div>
-                                        </form>
                                         <ul class="list-inline social-icons social-icons--colored t-center">
                                             <li>
                                                 <a href="#"><i class="fab fa-facebook font-34"></i></a>
