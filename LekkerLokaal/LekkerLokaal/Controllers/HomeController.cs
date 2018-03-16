@@ -8,6 +8,7 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using LekkerLokaal.Models.HomeViewModels;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -122,12 +123,37 @@ namespace LekkerLokaal.Controllers
             return View(GefilterdeBonnen.Select(b => new ZoekViewModel(b)).ToList());
         }
 
-        
         public IActionResult Detail(int Id)
         {
             Bon aangeklikteBon = _bonRepository.GetByBonId(Id);
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View(new DetailViewModel(aangeklikteBon));
+        }
+
+        [HttpPost]
+        public IActionResult VerstuurEmail(VerstuurEmailViewModel model)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            if (ModelState.IsValid)
+            {
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add("lekkerlokaalst@gmail.com");
+                message.Subject = "Een nieuw bericht van het contactformulier";
+                message.Body = String.Format("Naam: {0}\n" +
+                                        "E-mailadres: {1}\n" +
+                                        "Onderwerp: {2}\n" +
+                                        "Bericht: {3}\n",
+                                        model.Naam, model.Email, model.Onderwerp, model.Bericht);
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                RedirectToAction(nameof(Index), "Home");
+            }
+            return View(nameof(About), model);
         }
     }
 }
