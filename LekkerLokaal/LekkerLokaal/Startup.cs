@@ -130,7 +130,7 @@ namespace LekkerLokaal
                     name: "detail",
                     template: "{controller=Home}/{action=Detail}/{Id?}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }

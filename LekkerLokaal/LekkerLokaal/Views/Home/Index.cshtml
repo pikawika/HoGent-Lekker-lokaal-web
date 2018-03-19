@@ -1,4 +1,7 @@
 ﻿@using LekkerLokaal.Models.Domain
+
+@model LekkerLokaal.Models.HomeViewModels.IndexViewModel
+
 @{
     ViewData["Title"] = "Home";
     ViewData["Navbar"] = "Home";
@@ -14,25 +17,25 @@
                     <div class="col-xs-12 col-md-4 col-lg-3">
                         <aside>
                             <ul class="nav-coupon-category panel">
-                                @foreach (KeyValuePair<Categorie, int> categorie in (Dictionary<Categorie, int>)ViewData["Top9CategorieMetAantal"])
+                                <li class="all-cat">
+                                    <a class="font-14">Populaire Categorieën</a>
+                                </li>
+                                @foreach (var categorie in Model.Top9CategorieMetAantal)
                                 {
                                     <li>
-                                        <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Key.Naam"><i class="fa @categorie.Key.Icon"></i>@categorie.Key.Naam<span>@categorie.Value</span></a>
+                                        <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.CategorieNaam"><i class="fa @categorie.Icon"></i>@categorie.CategorieNaam<span>@categorie.Aantal</span></a>
                                     </li>
                                 }
-                                <li class="all-cat">
-                                    <a class="font-14" href="#">Alle Categorieën</a>
-                                </li>
                             </ul>
                         </aside>
                     </div>
                     <div class="col-xs-12 col-md-8 col-lg-9">
                         <div class="header-deals-slider owl-slider owl-slider-index-header" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
 
-                            @foreach (Bon bon in (IEnumerable<Bon>)ViewData["Top3Bonnen"])
+                            @foreach (var bon in Model.Top3Bonnen)
                             {
                                 <div class="deal-single panel item">
-                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.GetThumbPath().Replace("\\","\\\\")">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.GetThumbPath.Replace("\\","\\\\")">
                                         <div class="deal-about p-20 pos-a bottom-0 left-0">
                                             <div class="rating mb-10">
                                                 <span class="rating-stars" data-rating="5">
@@ -120,7 +123,7 @@
 
                 <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
 
-                    @foreach (Bon bon in (IEnumerable<Bon>)ViewData["AlleBonnen"])
+                    @foreach (var bon in Model.AlleBonnen)
                     {
                         <div class="slick-lekker-lokaal">
                             <div class="col-xs-12">
@@ -129,7 +132,7 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="text-center p-20">
-                                                    <img class="store-logo" src="~/@bon.GetThumbPath()" alt="">
+                                                    <img class="store-logo" src="~/@bon.GetThumbPath" alt="">
                                                 </div>
                                                 <!-- end media -->
                                             </div>
@@ -182,14 +185,14 @@
 
                 <div class="latest-coupons-slider owl-slider owl-slider-LekkerLokaal-Regio" data-autoplay-hover-pause="true" data-loop="true" data-autoplay="true" data-smart-speed="1000" data-autoplay-timeout="3000" data-margin="30" data-nav-speed="false" data-items="1" data-xxs-items="1" data-xs-items="2" data-sm-items="2" data-md-items="3" data-lg-items="3">
 
-                    @foreach (Bon bon in (IEnumerable<Bon>)ViewData["AlleBonnen"])
+                    @foreach (var bon in Model.AlleBonnen)
                     {
                         <div class="coupon-item">
                             <div class="coupon-single panel t-center">
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="text-center p-20">
-                                            <img class="store-logo" src="@bon.GetThumbPath()" alt="">
+                                            <img class="store-logo" src="@bon.GetThumbPath" alt="">
                                         </div>
                                         <!-- end media -->
                                     </div>
