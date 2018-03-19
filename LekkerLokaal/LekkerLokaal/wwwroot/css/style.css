@@ -20,6 +20,15 @@
 
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.btntop3 {
+    background: none !important;
+    color: inherit;
+    border: none;
+    padding: 0 !important;
+    font: inherit;
+    cursor: pointer;
+}
+
 .force-whiteColor {
     color: white !important;
 }

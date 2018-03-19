@@ -14,7 +14,7 @@
                     <div class="col-xs-12 col-md-4 col-lg-3">
                         <aside>
                             <ul class="nav-coupon-category panel">
-                                @foreach (KeyValuePair<Categorie, int> categorie in (Dictionary<Categorie, int>) ViewData["Top9CategorieMetAantal"])
+                                @foreach (KeyValuePair<Categorie, int> categorie in (Dictionary<Categorie, int>)ViewData["Top9CategorieMetAantal"])
                                 {
                                     <li>
                                         <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Key.Naam"><i class="fa @categorie.Key.Icon"></i>@categorie.Key.Naam<span>@categorie.Value</span></a>
@@ -32,7 +32,7 @@
                             @foreach (Bon bon in (IEnumerable<Bon>)ViewData["Top3Bonnen"])
                             {
                                 <div class="deal-single panel item">
-                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.Afbeelding.Replace("\\","\\\\")">
+                                    <figure class="deal-thumbnail embed-responsive embed-responsive-16by9" data-bg-img="@bon.GetThumbPath().Replace("\\","\\\\")">
                                         <div class="deal-about p-20 pos-a bottom-0 left-0">
                                             <div class="rating mb-10">
                                                 <span class="rating-stars" data-rating="5">
@@ -47,18 +47,15 @@
                                                 </span>
                                             </div>
                                             <h3 class="deal-title mb-10">
-                                                <a href="deal_single.html" class="color-light color-h-lighter">@bon.Naam</a>
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btntop3 color-light color-h-lighter">@bon.Naam</a>
                                             </h3>
                                             <h8 class="deal-title mb-10">
-                                                <a href="deal_single.html" class="color-light color-h-lighter">Bekijk details</a>
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btntop3 color-light color-h-lighter">Bekijk details</a>
                                             </h8>
-
-
                                         </div>
                                     </figure>
                                 </div>
                             }
-
 
                         </div>
                     </div>
@@ -132,7 +129,7 @@
                                         <div class="row">
                                             <div class="col-xs-12">
                                                 <div class="text-center p-20">
-                                                    <img class="store-logo" src="~/@bon.Afbeelding" alt="">
+                                                    <img class="store-logo" src="~/@bon.GetThumbPath()" alt="">
                                                 </div>
                                                 <!-- end media -->
                                             </div>
@@ -150,18 +147,17 @@
                                                     </div>
                                                     <div class="height-70px">
                                                         <h5 class="deal-title mb-10">
-                                                            <a href="#">@bon.Beschrijving</a>
+                                                            <a>@bon.Beschrijving</a>
                                                         </h5>
                                                     </div>
-
                                                     <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
                                                     <div class="showcode">
-                                                        <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                    </div>
+                                                    <div style="margin-top: 10px" class="showcode">
+                                                        <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">In winkelmandje</a>
                                                     </div>
 
-                                                    <div style="margin-top: 10px" class="showcode">
-                                                        <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                                    </div>
                                                 </div>
                                             </div>
                                             <!-- end col -->
@@ -193,7 +189,7 @@
                                 <div class="row">
                                     <div class="col-xs-12">
                                         <div class="text-center p-20">
-                                            <img class="store-logo" src="@bon.Afbeelding" alt="">
+                                            <img class="store-logo" src="@bon.GetThumbPath()" alt="">
                                         </div>
                                         <!-- end media -->
                                     </div>
@@ -210,17 +206,17 @@
                                             </div>
                                             <div class="height-70px">
                                                 <h5 class="deal-title mb-10">
-                                                    <a href="#">@bon.Beschrijving</a>
+                                                    <a>@bon.Beschrijving</a>
                                                 </h5>
                                             </div>
                                             <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
                                             <div class="showcode">
-                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">Bekijk details</button>
+                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block" data-toggle="modal">Bekijk details</a>
+                                            </div>
+                                            <div style="margin-top: 10px" class="showcode">
+                                                <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block" data-toggle="modal">In winkelmandje</a>
                                             </div>
 
-                                            <div style="margin-top: 10px" class="showcode">
-                                                <button class="btn btn-sm btn-block" data-toggle="modal" data-target="#coupon_02">In winkelmandje</button>
-                                            </div>
                                         </div>
                                     </div>
                                     <!-- end col -->
