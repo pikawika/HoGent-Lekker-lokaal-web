@@ -17,15 +17,15 @@
                     <div class="col-xs-12 col-md-4 col-lg-3">
                         <aside>
                             <ul class="nav-coupon-category panel">
+                                <li class="all-cat">
+                                    <a class="font-14">Populaire Categorieën</a>
+                                </li>
                                 @foreach (var categorie in Model.Top9CategorieMetAantal)
                                 {
                                     <li>
                                         <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.CategorieNaam"><i class="fa @categorie.Icon"></i>@categorie.CategorieNaam<span>@categorie.Aantal</span></a>
                                     </li>
                                 }
-                                <li class="all-cat">
-                                    <a class="font-14" href="#">Alle Categorieën</a>
-                                </li>
                             </ul>
                         </aside>
                     </div>
