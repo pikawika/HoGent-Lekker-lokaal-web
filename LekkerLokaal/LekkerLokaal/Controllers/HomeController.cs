@@ -151,7 +151,7 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
 
-                RedirectToAction(nameof(Index), "Home");
+                return RedirectToAction("Index");
             }
             return View(nameof(About), model);
         }
