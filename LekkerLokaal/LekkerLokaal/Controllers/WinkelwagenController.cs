@@ -31,14 +31,12 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult Add(int id, Winkelwagen winkelwagen)
+        public IActionResult Add(int Id, decimal Prijs, int Aantal, Winkelwagen winkelwagen)
         {
-            Bon bon = _bonRepository.GetByBonId(id);
+            Bon bon = _bonRepository.GetByBonId(Id);
             if (bon != null)
             {
-                decimal prijs = 50;
-                int aantal = 1;
-                winkelwagen.VoegLijnToe(bon, aantal, prijs);
+                winkelwagen.VoegLijnToe(bon, Aantal, Prijs);
             }
             return RedirectToAction(nameof(Index), "Home");
         }
