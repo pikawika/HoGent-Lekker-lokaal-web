@@ -454,7 +454,8 @@
             animationLoop: false,
             slideshow: false,
             itemWidth: 150,
-            asNavFor: '#product_slider'
+            asNavFor: '#product_slider' 
+            
         });
 
         $('#product_slider').flexslider({

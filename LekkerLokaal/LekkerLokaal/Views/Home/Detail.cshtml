@@ -32,7 +32,7 @@
                                             {
 
                                                 <li>
-                                                    <img src="~/@path">
+                                                    <img class="p-2" src="~/@path">
                                                 </li>
                                             }
                                         </ul>
@@ -70,7 +70,7 @@
                                             @Model.HandelaarBeschrijving
                                         </p>
                                         <div class="price mb-20">
-                                            <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro;@Model.MinPrijs</h2>
+                                            <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro; @Model.MinPrijs</h2>
                                         </div>
                                         <div class="buy-now mb-40">
                                             <a href="#" target="_blank" class="btn btn-block btn-lg">
@@ -115,7 +115,7 @@
                 function (results, status) {
                     if (status == google.maps.GeocoderStatus.OK) {
                         var locatiecords = { lat: results[0].geometry.location.lat() + 0.0014, lng: (results[0].geometry.location.lng()) };
-                       
+
                         marker = new google.maps.Marker({
                             position: results[0].geometry.location,
                             map: map
