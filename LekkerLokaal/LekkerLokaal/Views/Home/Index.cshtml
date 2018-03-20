@@ -153,13 +153,22 @@
                                                             <a>@bon.Beschrijving</a>
                                                         </h5>
                                                     </div>
-                                                    <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                    <div class="showcode">
-                                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                    <div class="DynamicAddCartRegionCart hidden height-120px" id="@(bon.BonId.ToString() + "card")">
+                                                        <input type="text">
+                                                        <div style="margin-top: 10px" class="showcode">
+                                                            <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Bevestig</a>
+                                                        </div>
                                                     </div>
-                                                    <div style="margin-top: 10px" class="showcode">
-                                                        <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                    <div class="DynamicAddCartRegionDefault height-120px" id="@(bon.BonId.ToString() + "default")">
+                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                        <div class="showcode">
+                                                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                        </div>
+                                                        <div style="margin-top: 10px" class="showcode">
+                                                            <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                        </div>
                                                     </div>
+                                                    
 
                                                 </div>
                                             </div>
@@ -248,4 +257,13 @@
             </section>
         </div>
     </div>
+
+    <script>
+        function DynamicAddCartRegion(id) {
+            console.log(id + "default");
+            document.getElementById(id + "default").classList.toggle("hidden");
+            document.getElementById(id + "card").classList.toggle("hidden");
+        }
+    </script>
+
 </main>
