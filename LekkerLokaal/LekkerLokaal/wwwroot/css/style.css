@@ -5,6 +5,10 @@
 
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.PopupAddToCart-line {
+    height: 42px;
+}
+
 .coupon-single {
     position: relative;
 }
