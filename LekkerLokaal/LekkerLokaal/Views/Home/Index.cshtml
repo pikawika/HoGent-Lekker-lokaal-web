@@ -21,7 +21,7 @@
                                 @foreach (var categorie in Model.Top9CategorieMetAantal)
                                 {
                                     <li>
-                                        <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.CategorieNaam"><i class="fa @categorie.Icon"></i>@categorie.CategorieNaam<span>@categorie.Aantal</span></a>
+                                        <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.CategorieNaam" class="animatedCategorie"><i class="fa @categorie.Icon"></i>@categorie.CategorieNaam<span>@categorie.Aantal</span></a>
                                     </li>
                                 }
                             </ul>
