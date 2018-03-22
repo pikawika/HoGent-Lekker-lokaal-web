@@ -342,9 +342,8 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout(string returnUrl = null)
+        public async Task<IActionResult> Logout()
         {
-            ViewData["ReturnUrl"] = returnUrl;
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
             return RedirectToAction(nameof(HomeController.Index), "Home");

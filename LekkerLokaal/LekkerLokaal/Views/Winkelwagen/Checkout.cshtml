@@ -28,7 +28,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-4">
                         <div class="item panel prl-15 ptb-20">
                             <div class="row row-rl-5 row-xs-cell">
@@ -42,7 +41,6 @@
                             </div>
                         </div>
                     </div>
-
                     <div class="col-md-4">
                         <div class="item panel prl-15 ptb-20">
                             <div class="row row-rl-5 row-xs-cell">
@@ -56,8 +54,6 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
             <div class="row row-rl-10 row-tb-20">
@@ -67,9 +63,10 @@
                     @if (SignInManager.IsSignedIn(User))
                     {
                         <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                            <h2 class="h3 mb-20 h-title">Doorgaan</h2>
+                            <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
                             <div class="mb-30">
-                                <label class="color-mid">Doorgaan als @UserManager.GetUserName(User)?</label>
+                                <p>De bestelling zal worden uitgevoerd op naam van @UserManager.GetUserName(User).</p>
+                                <label class="color-mid">Bent u dit niet? <a asp-controller="Account" asp-action="Logout">Meld af</a>.</label>
                             </div>
                             <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
                             <a href="checkout_billing.html" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
@@ -78,28 +75,26 @@
                     else
                     {
                         <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                            <h2 class="h3 mb-20 h-title">Betaalmethode </h2>
+                            <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
                             <div class="custom-radio mb-10">
-                                <input type="radio" name="checkout_method" id="sign_in" value="0">
+                                <input type="radio" name="checkout_method" id="sign_in" value="0" checked="checked">
                                 <label class="color-mid" for="sign_in">Ga door als gast</label>
                             </div>
                             <div class="custom-radio mb-10">
                                 <input type="radio" name="checkout_method" id="sign_up" value="1">
-                                <label class="color-mid" for="sign_up">Maak een nieuw account</label>
+                                <label class="color-mid" for="sign_up">Maak een nieuw account aan</label>
                             </div>
                             <div class="custom-radio mb-20">
                                 <input type="radio" name="checkout_method" id="as_guest" value="2">
-                                <label class="color-mid" for="as_guest">Meld je aan</label>
+                                <label class="color-mid" for="as_guest">Meld aan met een bestaand account</label>
                             </div>
                             <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
                             <a href="checkout_billing.html" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
                         </section>
                     }
                     <!-- End Checkout Area -->
-
                 </div>
                 <div class="page-sidebar col-xs-12 col-sm-4 col-md-3">
-
                     <!-- Blog Sidebar -->
                     <aside class="sidebar blog-sidebar">
                         <div class="row row-tb-10">
