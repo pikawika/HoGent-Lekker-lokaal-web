@@ -31,11 +31,5 @@ namespace LekkerLokaal.Models.HomeViewModels
             getAfbeeldingenPathLijst = bon.getAfbeeldingenPathLijst();
             
         }
-
-        
-
-
-
-
     }
 }

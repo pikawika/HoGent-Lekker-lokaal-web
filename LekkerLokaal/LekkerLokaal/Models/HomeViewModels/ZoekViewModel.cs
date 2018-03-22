@@ -8,7 +8,6 @@ namespace LekkerLokaal.Models.HomeViewModels
 {
     public class ZoekViewModel
     {
-
         public string Naam { get; }
         public decimal MinPrijs { get; }
         public decimal MaxPrijs { get; }
@@ -37,6 +36,5 @@ namespace LekkerLokaal.Models.HomeViewModels
             CategorieIcon = bon.Categorie.Icon;
             CategorieNaam = bon.Categorie.Naam;
         }
-
     }
 }
