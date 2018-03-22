@@ -1,4 +1,10 @@
-﻿@using LekkerLokaal.Models.Domain
+﻿@using LekkerLokaal.Models.Domain;
+@using Microsoft.AspNetCore.Http;
+@using Newtonsoft.Json;
+
+@{
+    Winkelwagen winkelwagen = Context.Session.GetString("winkelwagen") == null ? null : JsonConvert.DeserializeObject<Winkelwagen>(Context.Session.GetString("winkelwagen"));
+}
 
 <!DOCTYPE html>
 <html>
@@ -51,7 +57,7 @@
                         <div class="header-search col-md-9">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
-                                    <form class="search-form" method="post">
+                                    <div class="search-form">
                                         <div class="input-group">
                                             <input type="text" name="ZoekKey" id="ZoekKey" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in...">
                                             <div class="input-group-btn">
@@ -62,9 +68,9 @@
                                                         <option value="Ligging">Ligging</option>
                                                     </select>
                                                     <div class="input-group-btn">
-                                                        <button asp-controller="Home" asp-action="Zoeken" type="submit" class="btn btn-lg btn-search btn-block">
+                                                        <a onclick='Zoeken();' id="zoekKnop" class="btn btn-lg btn-search btn-block">
                                                             <i class="fa fa-search font-16"></i>
-                                                        </button>
+                                                        </a>
                                                     </div>
                                                 </div>
                                             </div>
@@ -82,15 +88,22 @@
                                             </select>
                                             <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
                                         </div>
-                                    </form>
+                                    </div>
                                 </div>
                                 <div class="col-sm-4 t-xs-center t-md-right">
                                     <div class="header-cart">
-                                        <a href="cart.html">
+                                        <a asp-controller="Winkelwagen" asp-action="Index">
                                             <span class="icon lnr lnr-cart font-40"></span>
                                             <div>
                                                 <!-- implement : uit cookie/session laden hoeveel dingen in winkelmandje -->
-                                                <span class="cart-number">0</span>
+                                                @if (winkelwagen == null)
+                                                {
+                                                    <span class="cart-number">0</span>
+                                                }
+                                                else
+                                                {
+                                                    <span class="cart-number">@winkelwagen.AantalBonnen</span>
+                                                }
                                             </div>
                                         </a>
                                     </div>
@@ -260,6 +273,28 @@
     <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
     <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
     <script type="text/javascript" src="~/js/main.js"></script>
+    <script type='text/javascript'>
+        function Zoeken() {
+            var ZoekSoort = document.getElementById("ZoekSoort").value;
+            var ZoekKey = document.getElementById("ZoekKey").value;
+            var Categorie = document.getElementById("Categorie").value;
+            var MaxStartPrijs = document.getElementById("MaxStartPrijs").value;
+            window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + "&ZoekKey=" + ZoekKey + "&Categorie=" + Categorie + "&MaxStartPrijs=" + MaxStartPrijs;
+        }
+    </script>
+    <script>
+        $("#ZoekKey").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
+            }
+        });
+        $("#MaxStartPrijs").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
+            }
+        });
+    </script>
+
 </body>
 </html>
 

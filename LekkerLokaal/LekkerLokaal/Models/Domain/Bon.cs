@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.IO;
@@ -7,10 +8,11 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
+    [JsonObject(MemberSerialization.OptIn)]
     public class Bon
     {
+        [JsonProperty]
         public int BonId { get; private set; }
-
         private string _naam;
         public string Naam
         {
@@ -75,6 +77,7 @@ namespace LekkerLokaal.Models.Domain
         public string Gemeente { get; set; }
         public Aanbieding Aanbieding { get; set; }
 
+        [JsonConstructor]
         protected Bon() { }
 
         public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, int postcode, string gemeente, Handelaar handelaar, Aanbieding aanbieding) : this()

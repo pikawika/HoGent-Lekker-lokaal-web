@@ -8,6 +8,7 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Authorization;
 using LekkerLokaal.Models.HomeViewModels;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -25,12 +26,9 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Index()
         {
-            ViewData["AlleBonnen"] = _bonRepository.GetAll().ToList();
-            ViewData["Top3Bonnen"] = _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList();
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["Top9CategorieMetAantal"] = _categorieRepository.GetTop9WithAmount();
 
-            return View();
+            return View(new IndexViewModel(_bonRepository.GetAll().ToList(), _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
         }
 
         public IActionResult About()
@@ -47,11 +45,9 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Zoeken(string ZoekSoort = null, string ZoekKey = null, string Categorie = null, string Ligging = null, string MaxStartPrijs = null )
         {
-
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            
+            IEnumerable<Bon> GefilterdeBonnen;
 
-            
 
             if (!string.IsNullOrEmpty(ZoekKey))
 
@@ -59,77 +55,102 @@ namespace LekkerLokaal.Controllers
                 switch (ZoekSoort)
                 {
                     case "Alles":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Ligging":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Naam":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey, _bonRepository.GetAll());
                         break;
                     case "Categorie":
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey, _bonRepository.GetAll());
                         break;
                     default:
-                        ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
+                        GefilterdeBonnen = _bonRepository.GetAll();
                         break;
                 }
-                ViewBag.ZoekOpdracht = ZoekKey + " in " + ZoekSoort;
+                ViewData["ZoekOpdracht"] = ZoekKey + " in " + ZoekSoort;
 
                 if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
                 {
                     string input = Categorie;
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                    GefilterdeBonnen = _bonRepository.GetByCategorie(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met categorie " + input;
                 }
                 if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
                 {
                     string input = Ligging;
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                    GefilterdeBonnen = _bonRepository.GetByLigging(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met ligging " + input;
                 }
                 if (!string.IsNullOrEmpty(MaxStartPrijs))
                 {
                     int input = int.Parse(MaxStartPrijs);
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
+                    GefilterdeBonnen = _bonRepository.GetByPrijs(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met maximum prijs €" + input;
                 }
             }
             else
             {
-                ViewBag.GefilterdeBonnen = _bonRepository.GetAll();
-                ViewBag.ZoekOpdracht = "Overzicht van alle bons";
+                GefilterdeBonnen = _bonRepository.GetAll();
+                ViewData["ZoekOpdracht"] = "Overzicht van alle bons";
 
                 if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")
                 {
                     string input = Categorie;
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByCategorie(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met categorie " + input;
+                    GefilterdeBonnen = _bonRepository.GetByCategorie(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met categorie " + input;
                 }
                 if (!string.IsNullOrEmpty(Ligging) && Ligging != "*")
                 {
                     string input = Ligging;
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByLigging(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met ligging " + input;
+                    GefilterdeBonnen = _bonRepository.GetByLigging(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met ligging " + input;
                 }
                 if (!string.IsNullOrEmpty(MaxStartPrijs))
                 {
                     int input = int.Parse(MaxStartPrijs);
-                    ViewBag.GefilterdeBonnen = _bonRepository.GetByPrijs(input, ViewBag.GefilterdeBonnen);
-                    ViewBag.ZoekOpdracht = ViewBag.ZoekOpdracht + ", met maximum prijs " + input;
+                    GefilterdeBonnen = _bonRepository.GetByPrijs(input, GefilterdeBonnen);
+                    ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met maximum prijs " + input;
                 }
 
             }
 
-            return View();
+            return View(GefilterdeBonnen.Select(b => new ZoekViewModel(b)).ToList());
+        }
+
+        public IActionResult Detail(int Id)
+        {
+            Bon aangeklikteBon = _bonRepository.GetByBonId(Id);
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            return View(new DetailViewModel(aangeklikteBon));
         }
 
         [HttpPost]
-        public IActionResult Detail(int id)
+        public IActionResult VerstuurEmail(VerstuurEmailViewModel model)
         {
-            Bon aangeklikteBon = _bonRepository.GetByBonId(id);
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            return View(new DetailViewModel(aangeklikteBon));
+            if (ModelState.IsValid)
+            {
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add("lekkerlokaalst@gmail.com");
+                message.Subject = "Een nieuw bericht van het contactformulier";
+                message.Body = String.Format("Naam: {0}\n" +
+                                        "E-mailadres: {1}\n" +
+                                        "Onderwerp: {2}\n" +
+                                        "Bericht: {3}\n",
+                                        model.Naam, model.Email, model.Onderwerp, model.Bericht);
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                return RedirectToAction("Index");
+            }
+            return View(nameof(About), model);
         }
     }
 }

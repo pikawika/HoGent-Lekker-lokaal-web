@@ -1,7 +1,12 @@
 ﻿@model LekkerLokaal.Models.HomeViewModels.DetailViewModel;
 
 @{
-    ViewData["Title"] = "Detail";
+
+    ViewData["Title"] = @Model.Naam;
+    if (ViewData["Navbar"] == null || (string)ViewData["Navbar"] == "")
+    {
+        ViewData["Navbar"] = "Zoeken";
+    }
 }
 
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
@@ -72,11 +77,12 @@
                                         <div class="price mb-20">
                                             <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro; @Model.MinPrijs</h2>
                                         </div>
-                                        <div class="buy-now mb-40">
-                                            <a href="#" target="_blank" class="btn btn-block btn-lg">
-                                                <i class="fa fa-shopping-cart font-16 mr-10"></i> In winkelmandje
-                                            </a>
-                                        </div>
+
+                                            <div class="buy-now mb-40">
+                                                <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@Model.BonId" class="btn btn-block btn-lg">
+                                                    <i class="fa fa-shopping-cart font-16 mr-10"></i> In winkelmandje
+                                                </a>
+                                            </div>
                                     </div>
                                 </div>
                             </div>
@@ -139,6 +145,8 @@
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ0Qfa3jPba5djMOOwScpRT_EHqxDXHBc&callback=initMap">
     </script>
+
+
 </main>
 
 <!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->

@@ -10,6 +10,9 @@ using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using System.Security.Claims;
 using LekkerLokaal.Data.Repositories;
+using LekkerLokaal.Filters;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 namespace LekkerLokaal
 {
@@ -79,7 +82,9 @@ namespace LekkerLokaal
                 googleOptions.ClientSecret = Configuration["Authentication:Google:ClientSecret"];
             });
 
+            services.AddScoped<CartSessionFilter>();
             services.AddScoped<LekkerLokaalDataInitializer>();
+            services.AddSession();
             services.AddScoped<IBonRepository, BonRepository>();
             services.AddScoped<ICategorieRepository, CategorieRepository>();
             services.AddScoped<IHandelaarRepository, HandelaarRepository>();
@@ -108,20 +113,24 @@ namespace LekkerLokaal
             }
 
             app.UseStaticFiles();
-
+            app.UseSession();
             app.UseAuthentication();
 
             app.UseMvc(routes =>
             {
                 routes.MapRoute(
                     name: "default",
-                    template: "{controller=Home}/{action=Index}/{id?}");
+                    template: "{controller=Home}/{action=Index}");
 
                 routes.MapRoute(
                     name: "zoeken",
-                    template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}/{Categorie?}/{Ligging?}/{MaxStartPrijs?}");
+                    template: "{controller=Home}/{action=Zoeken}/{ZoekSoort}/{ZoekKey?}/{Categorie?}/{MaxStartPrijs?}");
+
+                routes.MapRoute(
+                    name: "detail",
+                    template: "{controller=Home}/{action=Detail}/{Id?}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }
