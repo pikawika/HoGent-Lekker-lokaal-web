@@ -57,21 +57,31 @@
                                                             </h5>
                                                         </div>
                                                         <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(bon.BonId.ToString() + "card")">
-                                                            <div class="PopupAddToCart-line">
-                                                                <label class="float-left">Prijs</label>
-                                                                <input id="@(bon.BonId.ToString() + "PrijsField")" class="float-right" type="text">
-                                                            </div>
-                                                            <div class="PopupAddToCart-line">
-                                                                <label class="float-left">Aantal</label>
-                                                                <input id="@(bon.BonId.ToString() + "AantalField")" class="float-right" type="text">
-                                                            </div>
+                                                            <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@bon.BonId);">
+                                                                <div class="PopupAddToCart-line">
+                                                                    <div class="col-xs-4 no-padding">
+                                                                        <label class="float-left ">Prijs:</label>
+                                                                    </div>
+                                                                    <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                                        <input id="@(bon.BonId.ToString() + "PrijsField")" class="form-control" type="number" step="0.01" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="PopupAddToCart-line">
+                                                                    <div class="col-xs-4 no-padding">
+                                                                        <label class="float-left">Aantal:</label>
+                                                                    </div>
+                                                                    <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                                        <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control" type="number" min="1" max="100" value="1">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-4 showcode no-padding">
+                                                                    <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
+                                                                </div>
+                                                                <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
+                                                                    <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" />
 
-                                                            <div class="col-xs-4 showcode no-padding">
-                                                                <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
-                                                            </div>
-                                                            <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
-                                                                <a onclick="VoegToeAanWinkelmand(@bon.BonId);" class="btn btn-sm btn-block">Bevestig</a>
-                                                            </div>
+                                                                </div>
+                                                            </form>
                                                         </div>
                                                         <div class="DynamicAddCartRegionDefault height-150px" id="@(bon.BonId.ToString() + "default")">
                                                             <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
@@ -120,7 +130,10 @@
             var id = id;
             var prijs = document.getElementById(id + "PrijsField").value;
             var aantal = document.getElementById(id + "AantalField").value;
+
             window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
+
+            return false;
         }
     </script>
 
