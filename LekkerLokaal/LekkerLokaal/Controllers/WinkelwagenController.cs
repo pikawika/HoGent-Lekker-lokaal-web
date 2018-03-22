@@ -23,9 +23,8 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Index(Winkelwagen winkelwagen)
         {
+            ViewData["Navbar"] = "None";
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            if (winkelwagen.IsLeeg)
-                return View("LegeWinkelwagen");
             ViewData["Totaal"] = winkelwagen.TotaleWaarde;
             return View(winkelwagen.WinkelwagenLijnen.Select(w => new IndexViewModel(w)).ToList());
         }
@@ -41,7 +40,7 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(Index), "Home");
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Remove(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             Bon bon = _bonRepository.GetByBonId(id);
@@ -50,14 +49,14 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Plus(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerhoogAantal(id, prijs);
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Min(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerlaagAantal(id, prijs);
