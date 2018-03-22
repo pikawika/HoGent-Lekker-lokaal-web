@@ -56,13 +56,32 @@
                                                                 <a>@bon.Beschrijving</a>
                                                             </h5>
                                                         </div>
-                                                        <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
-                                                        <p class="color-muted font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                        <div class="showcode">
-                                                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                        <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(bon.BonId.ToString() + "card")">
+                                                            <div class="PopupAddToCart-line">
+                                                                <label class="float-left">Prijs</label>
+                                                                <input id="@(bon.BonId.ToString() + "PrijsField")" class="float-right" type="text">
+                                                            </div>
+                                                            <div class="PopupAddToCart-line">
+                                                                <label class="float-left">Aantal</label>
+                                                                <input id="@(bon.BonId.ToString() + "AantalField")" class="float-right" type="text">
+                                                            </div>
+
+                                                            <div class="col-xs-4 showcode no-padding">
+                                                                <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
+                                                            </div>
+                                                            <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
+                                                                <a onclick="VoegToeAanWinkelmand(@bon.BonId);" class="btn btn-sm btn-block">Bevestig</a>
+                                                            </div>
                                                         </div>
-                                                        <div style="margin-top: 10px" class="showcode">
-                                                            <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                        <div class="DynamicAddCartRegionDefault height-150px" id="@(bon.BonId.ToString() + "default")">
+                                                            <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
+                                                            <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                            <div class="showcode">
+                                                                <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                            </div>
+                                                            <div style="margin-top: 10px" class="showcode">
+                                                                <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                            </div>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -76,7 +95,6 @@
                         }
                     </div>
                 </section>
-
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30 slide-navigation-lekkerlokaal-hideOnOneSlide">
                     <h3 style="color: white" class="section-title font-18">
                         Zoekopdracht voor: @ViewData["ZoekOpdracht"]
@@ -85,9 +103,25 @@
                 </header>
             </div>
             <!-- End Coupons Area -->
-
         </div>
     </div>
 
+    <script>
+        function DynamicAddCartRegion(id) {
+            $('#' + id + "default").slideToggle('slow', function () {
+                $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
+            });
+            $('#' + id + "card").slideToggle('slow', function () {
+                $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
+            });
+        }
+
+        function VoegToeAanWinkelmand(id) {
+            var id = id;
+            var prijs = document.getElementById(id + "PrijsField").value;
+            var aantal = document.getElementById(id + "AantalField").value;
+            window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
+        }
+    </script>
 
 </main>
