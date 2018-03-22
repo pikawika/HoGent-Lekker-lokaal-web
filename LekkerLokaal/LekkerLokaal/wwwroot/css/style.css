@@ -14,9 +14,11 @@
 }
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
-.p-2{
-    padding:2px;
+.thumb-detail {
+    padding: 2px 2px 2px 2px;
+    cursor: pointer;
 }
+
 .btntop3 {
     background: none !important;
     color: inherit;
