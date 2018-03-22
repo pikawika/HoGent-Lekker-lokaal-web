@@ -7,8 +7,6 @@
     ViewData["Navbar"] = "Home";
 }
 
-
-<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
 <main id="mainContent" class="main-content">
     <div class="page-container ptb-10">
         <div class="container">
@@ -31,7 +29,6 @@
                     </div>
                     <div class="col-xs-12 col-md-8 col-lg-9">
                         <div class="header-deals-slider owl-slider owl-slider-index-header" data-loop="true" data-autoplay="false" data-autoplay-timeout="10000" data-smart-speed="1000" data-nav-speed="false" data-nav="true" data-xxs-items="1" data-xxs-nav="true" data-xs-items="1" data-xs-nav="true" data-sm-items="1" data-sm-nav="true" data-md-items="1" data-md-nav="true" data-lg-items="1" data-lg-nav="true">
-
                             @foreach (var bon in Model.Top3Bonnen)
                             {
                                 <div class="deal-single panel item">
@@ -107,11 +104,8 @@
                             </div>
                         </div>
                     </div>
-
-
                 </div>
             </div>
-
             <section class="section latest-deals-area ptb-30">
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
                     <h3 style="color: white" class="section-title font-18">
@@ -119,10 +113,7 @@
                         <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                     </h3>
                 </header>
-
-
                 <div class="row row-masnory row-tb-20 lekkerLokaal-driexdrierow">
-
                     @foreach (var bon in Model.AlleBonnen)
                     {
                         <div class="slick-lekker-lokaal">
@@ -134,9 +125,7 @@
                                                 <div class="text-center p-20">
                                                     <img class="store-logo" src="~/@bon.GetThumbPath" alt="">
                                                 </div>
-                                                <!-- end media -->
                                             </div>
-                                            <!-- end col -->
                                             <div class="col-xs-12">
                                                 <div class="panel-body">
                                                     <ul class="deal-meta list-inline mb-10">
@@ -153,19 +142,46 @@
                                                             <a>@bon.Beschrijving</a>
                                                         </h5>
                                                     </div>
-                                                    <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
-                                                    <div class="showcode">
-                                                        <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                    <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(bon.BonId.ToString() + "card")">
+                                                        <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@bon.BonId);">
+                                                            <div class="PopupAddToCart-line">
+                                                                <div class="col-xs-4 no-padding">
+                                                                    <label class="float-left ">Prijs:</label>
+                                                                </div>
+                                                                <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                                    <input id="@(bon.BonId.ToString() + "PrijsField")" step="0.01" class="form-control" type="number" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
+                                                                </div>
+                                                            </div>
+                                                            <div class="PopupAddToCart-line">
+                                                                <div class="col-xs-4 no-padding">
+                                                                    <label class="float-left">Aantal:</label>
+                                                                </div>
+                                                                <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                                    <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control" type="number" min="1" max="100" value="1">
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-xs-4 showcode no-padding">
+                                                                <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
+                                                            </div>
+                                                            <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
+                                                                <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" />
+                                                                
+                                                            </div>
+                                                        </form>
                                                     </div>
-                                                    <div style="margin-top: 10px" class="showcode">
-                                                        <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                    <div class="DynamicAddCartRegionDefault height-150px" id="@(bon.BonId.ToString() + "default")">
+                                                        <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
+                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                        <div class="showcode">
+                                                            <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
+                                                        </div>
+                                                        <div style="margin-top: 10px" class="showcode">
+                                                            <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">In winkelmandje</a>
+                                                        </div>
                                                     </div>
-
                                                 </div>
                                             </div>
-                                            <!-- end col -->
                                         </div>
-                                        <!-- end row -->
                                     </div>
                                 </div>
                             </div>
@@ -194,9 +210,7 @@
                                         <div class="text-center p-20">
                                             <img class="store-logo" src="@bon.GetThumbPath" alt="">
                                         </div>
-                                        <!-- end media -->
                                     </div>
-                                    <!-- end col -->
                                     <div class="col-xs-12">
                                         <div class="panel-body">
                                             <ul class="deal-meta list-inline mb-10">
@@ -222,13 +236,10 @@
 
                                         </div>
                                     </div>
-                                    <!-- end col -->
                                 </div>
-                                <!-- end row -->
                             </div>
                         </div>
                     }
-
                 </div>
             </section>
             <section class="section subscribe-area ptb-40 t-center">
@@ -248,4 +259,26 @@
             </section>
         </div>
     </div>
+
+    <script>
+        function DynamicAddCartRegion(id) {
+            $('#' + id + "default").slideToggle('slow', function () {
+                $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
+            });
+            $('#' + id + "card").slideToggle('slow', function () {
+                $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
+            });
+        }
+
+        function VoegToeAanWinkelmand(id) {
+            var id = id;
+            var prijs = document.getElementById(id + "PrijsField").value;
+            var aantal = document.getElementById(id + "AantalField").value;
+            
+            window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
+
+            return false;
+        }
+    </script>
+
 </main>

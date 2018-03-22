@@ -1,29 +1,22 @@
 ﻿@charset "utf-8";
 
-/*
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-  FRIDAY - Coupons, Deals, Discounts and Promo Codes Template
-–––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
+/* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.PopupAddToCart-line {
+    height: 58px;
+}
 
-    - File           : style.css
-    - Desc           : Template - Stylesheet
-    - Version        : 1.1
-    - Date           : 2017-03-01
-    - Author         : CODASTROID
-    - Author URI     : https://themeforest.net/user/codastroid
+.coupon-single {
+    position: relative;
+}
 
-––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––––
-*/
-
-
-/* ––––––––––––––––––––––––––––––––––––––––––––– */
-
+.height-150px{
+    height: 150px;
+}
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
 .p-2{
     padding:2px;
 }
-
 .btntop3 {
     background: none !important;
     color: inherit;
@@ -1681,9 +1674,7 @@
 
 /* ––––––––––––––––––––––––––––––––––––––––––––– */
 
-.coupon-single {
-    position: relative;
-}
+
 
 .showcode {
     position: relative;

@@ -24,6 +24,5 @@ namespace LekkerLokaal.Models.HomeViewModels
             GetThumbPath = bon.GetThumbPath();
             BonId = bon.BonId;
         }
-
     }
 }

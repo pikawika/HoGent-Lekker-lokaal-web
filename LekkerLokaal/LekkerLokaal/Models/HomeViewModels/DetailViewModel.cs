@@ -40,11 +40,5 @@ namespace LekkerLokaal.Models.HomeViewModels
             HandelaarBeschrijving = bon.Handelaar.Beschrijving;
             FormatedAdress = bon.Postcode + " " + bon.Gemeente + ", " + bon.Straat + " " + bon.Huisnummer;
         }
-
-        
-
-
-
-
     }
 }

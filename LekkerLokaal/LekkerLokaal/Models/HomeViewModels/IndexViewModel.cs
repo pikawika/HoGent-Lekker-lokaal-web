@@ -23,6 +23,5 @@ namespace LekkerLokaal.Models.HomeViewModels
             Top3Bonnen = top3Bonnen.Select(b => new IndexTop3BonnenLijstModel(b)).ToList();
             Top9CategorieMetAantal = top9CategorieMetAantal.Select(b => new IndexCategorieMetAantalLijstModel(b)).ToList();
         }
-
     }
 }

@@ -16,7 +16,10 @@ namespace LekkerLokaal.Models.HomeViewModels
         public string Naam { get; }
         public string Beschrijving { get; }
         public decimal MinPrijs { get; }
+        public decimal MaxPrijs { get; }
         public int BonId { get; }
+        public string CategorieIcon { get; }
+        public string CategorieNaam { get; }
 
         public IndexAlleBonnenLijstModel()
         {
@@ -26,11 +29,14 @@ namespace LekkerLokaal.Models.HomeViewModels
         {
             Naam = bon.Naam;
             MinPrijs = bon.MinPrijs;
+            MaxPrijs = bon.MaxPrijs;
             Beschrijving = bon.Beschrijving;
             AantalBesteld = bon.AantalBesteld;
             GetThumbPath = bon.GetThumbPath();
             Gemeente = bon.Gemeente;
             BonId = bon.BonId;
+            CategorieIcon = bon.Categorie.Icon;
+            CategorieNaam = bon.Categorie.Naam;
         }
 
     }
