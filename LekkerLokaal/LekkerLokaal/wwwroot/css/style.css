@@ -1,6 +1,10 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.owl-item {
+    -webkit-transform: translate3d(0,0,0);
+}
+
 .PopupAddToCart-line {
     height: 58px;
 }
@@ -13,7 +17,6 @@
     height: 150px;
 }
 
-/* ––––––––––––––>>> Custom  <<<–––––––––––– */
 .thumb-detail {
     padding: 2px 2px 2px 2px;
     cursor: pointer;
