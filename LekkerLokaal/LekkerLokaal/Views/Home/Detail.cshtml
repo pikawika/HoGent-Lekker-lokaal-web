@@ -35,7 +35,7 @@
                                             {
 
                                                 <li>
-                                                    <img class="p-2" src="~/@path">
+                                                    <img class="thumb-detail" src="~/@path">
                                                 </li>
                                             }
                                         </ul>
@@ -51,8 +51,6 @@
                                 </div>
                             </div>
                         </div>
-
-
                     </div>
                 </div>
                 <div class="page-sidebar col-md-4 col-sm-5 col-xs-12">
@@ -65,21 +63,48 @@
                                             @Model.HandelaarNaam
                                         </h2>
                                         <ul class="deal-meta list-inline mb-10 color-mid">
-                                            <li class="color-muted"><i class="ico fa fa-map-marker mr-5"></i>Aalst</li>
+                                            <li class="color-muted"><i class="ico fab fa-periscope mr-5"></i>@Model.Gemeente</li>
                                             <li class="color-muted"><i class="ico lnr lnr-users mr-5"></i>@Model.AantalBesteld besteld</li>
                                         </ul>
                                         <p class="color-muted">
                                             @Model.HandelaarBeschrijving
                                         </p>
-                                        <div class="price mb-20">
-                                            <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf &euro; @Model.MinPrijs</h2>
-                                        </div>
+                                        <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(Model.BonId.ToString() + "card")">
+                                            <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@Model.BonId);">
+                                                <div class="PopupAddToCart-line">
+                                                    <div class="col-xs-4 no-padding">
+                                                        <label class="float-left ">Prijs:</label>
+                                                    </div>
+                                                    <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                        <input id="@(Model.BonId.ToString() + "PrijsField")" class="form-control" type="number" step="0.01" min="@(Model.MinPrijs.ToString().Replace(",","."))" max="@(Model.MaxPrijs.ToString().Replace(",","."))" value="@(Model.MinPrijs.ToString().Replace(",","."))">
+                                                    </div>
+                                                </div>
+                                                <div class="PopupAddToCart-line">
+                                                    <div class="col-xs-4 no-padding">
+                                                        <label class="float-left">Aantal:</label>
+                                                    </div>
+                                                    <div class="col-xs-offset-1 col-xs-7 no-padding">
+                                                        <input id="@(Model.BonId.ToString() + "AantalField")" class="form-control" type="number" min="1" max="100" value="1">
+                                                    </div>
+                                                </div>
+                                                <div class="col-xs-4 showcode no-padding">
+                                                    <a onclick="DynamicAddCartRegion(@Model.BonId);" class="btn btn-sm btn-block">Terug</a>
+                                                </div>
+                                                <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
+                                                    <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" />
 
-                                            <div class="buy-now mb-40">
-                                                <a asp-controller="Winkelwagen" asp-action="Add" asp-route-id="@Model.BonId" class="btn btn-block btn-lg">
-                                                    <i class="fa fa-shopping-cart font-16 mr-10"></i> In winkelmandje
-                                                </a>
+                                                </div>
+                                            </form>
+                                        </div>
+                                        <div class="DynamicAddCartRegionDefault height-150px" id="@(Model.BonId.ToString() + "default")">
+                                            <p class="color-muted font-12"><i class="fa @Model.CategorieIcon"></i> @Model.CategorieNaam</p>
+                                            <div class="price mb-20">
+                                                <h2 class="price"> <i class="fa fa-credit-card-alt"></i> Vanaf € @Model.MinPrijs</h2>
                                             </div>
+                                            <a onclick="DynamicAddCartRegion(@Model.BonId);" class="btn btn-block btn-lg">
+                                                <i class="fa fa-shopping-cart font-16 mr-10"></i> In winkelmandje
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -131,6 +156,28 @@
                 });
         }
     </script>
+
+    <script>
+        function DynamicAddCartRegion(id) {
+            $('#' + id + "default").slideToggle('slow', function () {
+                $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
+            });
+            $('#' + id + "card").slideToggle('slow', function () {
+                $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
+            });
+        }
+
+        function VoegToeAanWinkelmand(id) {
+            var id = id;
+            var prijs = document.getElementById(id + "PrijsField").value;
+            var aantal = document.getElementById(id + "AantalField").value;
+
+            window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
+
+            return false;
+        }
+    </script>
+
     <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBQ0Qfa3jPba5djMOOwScpRT_EHqxDXHBc&callback=initMap">
     </script>
