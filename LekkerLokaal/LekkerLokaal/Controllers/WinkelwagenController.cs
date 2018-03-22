@@ -38,7 +38,10 @@ namespace LekkerLokaal.Controllers
             {
                 winkelwagen.VoegLijnToe(bon, Aantal, Prijs);
             }
-            return RedirectToAction(nameof(Index), "Home");
+            //return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index));
+
+
         }
 
         [HttpPost]
@@ -62,6 +65,12 @@ namespace LekkerLokaal.Controllers
         {
             winkelwagen.VerlaagAantal(id, prijs);
             return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult Checkout()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            return View(nameof(Checkout));
         }
     }
 }
