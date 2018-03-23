@@ -70,6 +70,7 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["Totaal"] = winkelwagen.TotaleWaarde;
             ViewData["Aantal"] = winkelwagen.AantalBonnen;
+            ViewData["ReturnUrl"] = "/Winkelwagen/Checkout";
             return View(nameof(Checkout));
         }
     }

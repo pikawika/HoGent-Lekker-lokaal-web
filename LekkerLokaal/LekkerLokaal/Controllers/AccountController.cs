@@ -342,10 +342,12 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            if (Url.IsLocalUrl(returnUrl) && returnUrl != null)
+                return Redirect(returnUrl);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -543,6 +545,19 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View();
+        }
+
+        [HttpPost]
+        public IActionResult CheckoutMethode(int id, string returnUrl = null)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["ReturnUrl"] = returnUrl;
+            switch (id)
+            {
+                case 0:
+                    return View("")
+                    break;
+            }
         }
 
         #region Helpers
