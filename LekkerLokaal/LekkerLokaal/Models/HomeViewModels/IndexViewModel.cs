@@ -8,7 +8,7 @@ namespace LekkerLokaal.Models.HomeViewModels
 {
     public class IndexViewModel
     {
-        public IEnumerable<IndexAlleBonnenLijstModel> AlleBonnen { get; }
+        public IEnumerable<IndexTop30BonnenLijstModel> Top30Bonnen { get; }
 
         public IEnumerable<IndexTop3BonnenLijstModel> Top3Bonnen { get; }
 
@@ -17,9 +17,9 @@ namespace LekkerLokaal.Models.HomeViewModels
         public IndexViewModel()
         {
         }
-        public IndexViewModel(IEnumerable<Bon> alleBonnen, IEnumerable<Bon> top3Bonnen, Dictionary<Categorie, int> top9CategorieMetAantal)
+        public IndexViewModel(IEnumerable<Bon> top30Bonnen, IEnumerable<Bon> top3Bonnen, Dictionary<Categorie, int> top9CategorieMetAantal)
         {
-            AlleBonnen = alleBonnen.Select(b => new IndexAlleBonnenLijstModel(b)).ToList();
+            Top30Bonnen = top30Bonnen.Select(b => new IndexTop30BonnenLijstModel(b)).ToList();
             Top3Bonnen = top3Bonnen.Select(b => new IndexTop3BonnenLijstModel(b)).ToList();
             Top9CategorieMetAantal = top9CategorieMetAantal.Select(b => new IndexCategorieMetAantalLijstModel(b)).ToList();
         }

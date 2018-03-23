@@ -28,7 +28,7 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
 
-            return View(new IndexViewModel(_bonRepository.GetAll().ToList(), _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
+            return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAll().ToList()).ToList(), _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
         }
 
         public IActionResult About()
