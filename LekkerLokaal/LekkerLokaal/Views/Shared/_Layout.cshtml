@@ -153,7 +153,7 @@
                                     </ul>
                                 </li>
                                 <li class="Aanbiedingen-List-Item">
-                                    <a href="#">Aanbiedingen</a>
+                                    <a asp-controller="Home" asp-action="Aanbiedingen">Aanbiedingen</a>
                                 </li>
                                 <li class="Over-List-Item">
                                     <a asp-controller="Home" asp-action="About">Over ons</a>
@@ -185,6 +185,9 @@
                 <script>$(".Home-List-Item").addClass("active");</script>
                 break;
             case "Zoeken":
+                <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
+                break;
+            case "Aanbiedingen":
                 <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
                 break;
             case "Over":
