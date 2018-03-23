@@ -149,7 +149,7 @@
                                                                     <label class="float-left ">Prijs:</label>
                                                                 </div>
                                                                 <div class="col-xs-offset-1 col-xs-7 no-padding">
-                                                                    <input id="@(bon.BonId.ToString() + "PrijsField")" step="0.01" class="form-control" type="number" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
+                                                                    <input id="@(bon.BonId.ToString() + "PrijsField")" step="0.01" class="form-control winkelmand-register-enter" type="number" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
                                                                 </div>
                                                             </div>
                                                             <div class="PopupAddToCart-line">
@@ -157,15 +157,14 @@
                                                                     <label class="float-left">Aantal:</label>
                                                                 </div>
                                                                 <div class="col-xs-offset-1 col-xs-7 no-padding">
-                                                                    <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control" type="number" min="1" max="100" value="1">
+                                                                    <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control winkelmand-register-enter" type="number" min="1" max="100" value="1">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4 showcode no-padding">
                                                                 <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
                                                             </div>
                                                             <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
-                                                                <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" />
-                                                                
+                                                                <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" id="@(bon.BonId.ToString() + "BevestigKnop")"/>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -191,26 +190,4 @@
             </section>
         </div>
     </div>
-
-    <script>
-        function DynamicAddCartRegion(id) {
-            $('#' + id + "default").slideToggle('slow', function () {
-                $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
-            });
-            $('#' + id + "card").slideToggle('slow', function () {
-                $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
-            });
-        }
-
-        function VoegToeAanWinkelmand(id) {
-            var id = id;
-            var prijs = document.getElementById(id + "PrijsField").value;
-            var aantal = document.getElementById(id + "AantalField").value;
-            
-            window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
-
-            return false;
-        }
-    </script>
-
 </main>
