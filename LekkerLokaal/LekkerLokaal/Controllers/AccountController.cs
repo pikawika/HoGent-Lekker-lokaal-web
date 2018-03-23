@@ -554,18 +554,13 @@ namespace LekkerLokaal.Controllers
             switch (checkoutId)
             {
                 case "Gast":
-                    return Redirect("Home/Zoeken");
-                    break;
+                    return Redirect("gast");
                 case "Nieuw":
-                    return Redirect("Home/Zoeken");
-                    break;
+                    return Redirect("Register");
                 case "LogIn":
-                    //return View(nameof(Login));
-                    return Redirect("Home/Zoeken");
-                    break;
+                    return Redirect("Login");
                 default:
-                    return Redirect("Home/Index");
-                    break;
+                    return Redirect("default");
             }
         }
 
