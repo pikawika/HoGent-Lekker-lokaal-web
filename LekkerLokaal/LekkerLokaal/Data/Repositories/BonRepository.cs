@@ -112,13 +112,19 @@ namespace LekkerLokaal.Data.Repositories
         public IEnumerable<Bon> GetByLigging(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             string _zoekKey = zoekKey.ToLower();
-            return inputlijst.Where(b => b.Gemeente.ToLower().Contains(_zoekKey)).ToList();
+            _zoekKey = _zoekKey.Replace("-", "");
+            _zoekKey = _zoekKey.Replace("_", "");
+            _zoekKey = VerwijderAccenten(zoekKey);
+            return inputlijst.Where(b => VerwijderAccenten(b.Gemeente.ToLower().Replace("-", "").Replace("_", "")).Contains(_zoekKey)).ToList();
         }
 
         public IEnumerable<Bon> GetByNaam(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             string _zoekKey = zoekKey.ToLower();
-            return inputlijst.Where(b => b.Naam.ToLower().Contains(_zoekKey)).ToList();
+            _zoekKey = _zoekKey.Replace("-", "");
+            _zoekKey = _zoekKey.Replace("_", "");
+            _zoekKey = VerwijderAccenten(zoekKey);
+            return inputlijst.Where(b => VerwijderAccenten(b.Naam.ToLower().Replace("-", "").Replace("_", "")).Contains(_zoekKey)).ToList();
         }
 
         public IEnumerable<Bon> GetByPrijs(int zoekKey, IEnumerable<Bon> inputlijst)
