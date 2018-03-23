@@ -22,11 +22,6 @@ namespace LekkerLokaal.Data.Repositories
             return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
         }
 
-        public IEnumerable<Bon> GetTop3(IEnumerable<Bon> inputlijst)
-        {
-            return inputlijst.OrderByDescending(b => b.AantalBesteld).Take(3).ToList();
-        }
-
         public IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             if (zoekKey.Trim().Length != 0)

@@ -28,7 +28,7 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
 
-            return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAll().ToList()).ToList(), _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
+            return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAll().ToList()).ToList(), _bonRepository.GetBonnenAanbiedingSlider(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
         }
 
         public IActionResult Aanbiedingen()
@@ -120,7 +120,6 @@ namespace LekkerLokaal.Controllers
                     GefilterdeBonnen = _bonRepository.GetByPrijs(input, GefilterdeBonnen);
                     ViewData["ZoekOpdracht"] = ViewData["ZoekOpdracht"] + ", met maximum prijs " + input;
                 }
-
             }
 
             return View(GefilterdeBonnen.Select(b => new ZoekViewModel(b)).ToList());

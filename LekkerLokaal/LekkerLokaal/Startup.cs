@@ -134,7 +134,7 @@ namespace LekkerLokaal
                     name: "winkelwagen",
                     template: "{controller=Winkelwagen}/{action=Add}/{Id}/{Prijs}/{Aantal}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }

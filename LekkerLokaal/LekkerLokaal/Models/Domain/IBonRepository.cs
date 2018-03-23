@@ -5,7 +5,6 @@ namespace LekkerLokaal.Models.Domain
     public interface IBonRepository
     {
         IEnumerable<Bon> GetAll();
-        IEnumerable<Bon> GetTop3(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetTop30(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetBonnenAanbiedingSlider(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetBonnenAanbiedingStandaard(IEnumerable<Bon> inputlijst);
