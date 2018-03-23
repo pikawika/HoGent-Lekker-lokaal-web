@@ -6,6 +6,7 @@ namespace LekkerLokaal.Models.Domain
     {
         IEnumerable<Bon> GetAll();
         IEnumerable<Bon> GetTop3(IEnumerable<Bon> inputlijst);
+        IEnumerable<Bon> GetTop30(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetByLigging(string zoekKey, IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetByNaam(string zoekKey, IEnumerable<Bon> inputlijst);

@@ -15,7 +15,7 @@
         slidesToShow: 3,
         lazyLoad: 1,
         slidesToScroll: 3,
-        rows: 3,
+        rows: 2,
         dots: true,
         responsive: [
             {
@@ -23,7 +23,7 @@
                 settings: {
                     slidesToShow: 3,
                     slidesToScroll: 3,
-                    rows: 3,
+                    rows: 2,
                 }
             },
             {
@@ -292,21 +292,6 @@
     };
 
     /*-------------------------------------
-     HTML attr direction
-    -------------------------------------*/
-    var html_direction = function () {
-        var html_tag = $("html"),
-            dir = html_tag.attr("dir"),
-            directions = ['ltr', 'rtl'];
-        if (html_tag.hasAttr('dir') && jQuery.inArray(dir, directions)) {
-            html_tag.addClass(dir);
-        } else {
-            html_tag.attr("dir", directions[0]).addClass(directions[0]);
-        }
-    };
-
-
-    /*-------------------------------------
      CSS fix for IE Mobile
     -------------------------------------*/
     var bugfix = function () {
@@ -435,16 +420,6 @@
     };
 
     /*-------------------------------------
-     Add Deal to Favorite
-    -------------------------------------*/
-    var add_favorite = function () {
-        var like_btn = $('.actions .like-deal');
-        like_btn.on('click', function () {
-            $(this).toggleClass('favorite');
-        });
-    };
-
-    /*-------------------------------------
      Flexslider
     -------------------------------------*/
     var product_slider = function () {
@@ -467,102 +442,13 @@
         });
     };
 
-    /*-------------------------------------
-     Stars Rating functions
-    -------------------------------------*/
-    var data_rating = function () {
-        $('.rating').each(function () {
-            var rating = $(this).find('.rating-stars').attr('data-rating'),
-                rating_index = 5 - rating;
-            $(this).find('.rating-stars > i').eq(rating_index).addClass('star-active');
-        });
-    };
-
-    var do_rating = function () {
-        var rating_stars_select = $('.rating .rating-stars.rate-allow');
-        rating_stars_select.on('mouseenter', function () {
-            $(this).find('i').removeClass('star-active');
-        });
-        rating_stars_select.on('mouseleave', function () {
-            data_rating();
-        });
-        rating_stars_select.on('click', 'i', function () {
-            var num_stars = $(this).siblings().length + 1,
-                rating_index = $(this).index(),
-                rating_count_select = $(this).parent().parent().find('.rating-count'),
-                reviews_num = parseInt(rating_count_select.text(), 10),
-                rate_value = num_stars - rating_index;
-            reviews_num++;
-
-            $(this).parent().attr('data-rating', rate_value);
-            data_rating();
-            if ($(this).parent().attr('data-review')) {
-                return false;
-            }
-            else {
-                $(this).parent().attr('data-review', '1');
-                rating_count_select.text(reviews_num);
-            }
-        });
-    };
-
-    /*-------------------------------------
-     Deals Countdown function
-    -------------------------------------*/
-    var countdown = function () {
-        var countdown_select = $("[data-countdown]");
-        countdown_select.each(function () {
-            $(this).countdown($(this).data('countdown'))
-                .on('update.countdown', function (e) {
-                    var format = '%H : %M : %S';
-                    if (e.offset.totalDays > 0) {
-                        format = '%d Day%!d ' + format;
-                    }
-                    if (e.offset.weeks > 0) {
-                        format = '%w Week%!w ' + format;
-                    }
-                    $(this).html(e.strftime(format));
-                });
-        }).on('finish.countdown', function (e) {
-            $(this).html('This offer ha expired!').addClass('disabled');
-        });
-    };
-
-    /*-------------------------------------
-     Delete Item From Cart
-    -------------------------------------*/
-    var cart_delete_item = function () {
-        var close = $("#cart_list").find(".close[data-dismiss='alert']");
-        close.on('click', function () {
-            if (confirm("Do You Really Want to Delete This item ?") === false) {
-                return false;
-            }
-        });
-    };
-
-    var buyTheme = function () {
-        if (top.location != self.location) {
-            top.location = self.location.href;
-        }
-        if ($('#buy_theme').length) {
-            var buyBtn = $('#buy_theme');
-            buyBtn.attr('href', window.location.href);
-            buyBtn.on('click', function () {
-                var affiliateLink = buyBtn.data('href');
-                $("head").append('<meta http-equiv="refresh" content="1;url=' + affiliateLink + '" />');
-            });
-        }
-    };
-
     /* ================================
        When document is ready, do
     ================================= */
 
     $(document).on('ready', function () {
-        buyTheme();
         preloader();
         $('[data-toggle="tooltip"]').tooltip();
-        html_direction();
         background_color();
         background_image();
         link_void();
@@ -570,14 +456,8 @@
         bugfix();
         navbar_js();
         share_social();
-        add_favorite();
         owl_carousel();
         toogle_class();
-        countdown();
-        data_rating();
-        do_rating();
-        countdown();
-        cart_delete_item();
     });
 
     /* ================================
