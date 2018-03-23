@@ -547,21 +547,25 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        public IActionResult CheckoutMethode(int checkoutId, string returnUrl = null)
+        [AllowAnonymous]
+        public IActionResult CheckoutMethode(string checkoutId)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["ReturnUrl"] = returnUrl;
             switch (checkoutId)
             {
-                case 0:
-                    return RedirectToAction("BonAanmaken", "Winkelwagen", null);
-                case 1:
-                    return View(nameof(Register));
-                case 2:
+                case "Gast":
+                    return Redirect("Home/Zoeken");
+                    break;
+                case "Nieuw":
+                    return Redirect("Home/Zoeken");
+                    break;
+                case "LogIn":
                     //return View(nameof(Login));
-                    return RedirectToAction("BonAanmaken", "Winkelwagen", null);
+                    return Redirect("Home/Zoeken");
+                    break;
                 default:
-                    return RedirectToAction("Index", "Home", null);
+                    return Redirect("Home/Index");
+                    break;
             }
         }
 

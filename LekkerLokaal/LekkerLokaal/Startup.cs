@@ -133,6 +133,10 @@ namespace LekkerLokaal
                 routes.MapRoute(
                     name: "winkelwagen",
                     template: "{controller=Winkelwagen}/{action=Add}/{Id}/{Prijs}/{Aantal}");
+
+                routes.MapRoute(
+                    name: "Account",
+                    template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}");
             });
             //datainit.InitializeData().Wait();
         }
