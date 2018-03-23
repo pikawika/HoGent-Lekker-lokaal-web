@@ -5,6 +5,14 @@
     <UserSecretsId>aspnet-LekkerLokaal-7E2FAF54-277B-4ABB-A72A-265C9275510E</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\vendors\NewFolder\**" />
     <Content Remove="wwwroot\vendors\NewFolder\**" />

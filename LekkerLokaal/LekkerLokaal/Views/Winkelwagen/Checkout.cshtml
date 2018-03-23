@@ -79,20 +79,20 @@
                     }
                     else
                     {
-                        <form asp-controller="Account" asp-action="CheckoutMethode" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                        <form asp-controller="Home" asp-action="Index" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                             <section class="section checkout-area panel prl-30 pt-20 pb-40">
                                 <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
                                 <div class="custom-radio mb-10">
-                                    <input type="radio" name="checkout_method" asp-route-id="0" value="0" checked="checked">
+                                    <input type="radio" name="checkoutId" id="as_guest" value="0" checked="checked">
                                     <label class="color-mid" for="as_guest">Ga door als gast</label>
                                 </div>
                                 <div class="custom-radio mb-10">
-                                    <input type="radio" name="checkout_method" asp-route-id="1" value="1">
-                                    <label class="color-mid" for="sign_up">Maak een nieuw account aan</label>
+                                    <input type="radio" name="checkout_method" id="sign_up" value="1">z
+                                    <label class="color-mid" for="checkoutId">Maak een nieuw account aan</label>
                                 </div>
                                 <div class="custom-radio mb-20">
-                                    <input type="radio" name="checkout_method" asp-route-id="2" value="2">
-                                    <label class="color-mid" for="sign_in">Meld aan met een bestaand account</label>
+                                    <input type="radio" name="checkout_method" id="sign_in" value="2">
+                                    <label class="color-mid" for="checkoutId">Meld aan met een bestaand account</label>
                                 </div>
                                 <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
                                 <button type="submit" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</button>
