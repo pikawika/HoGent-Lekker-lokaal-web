@@ -31,6 +31,12 @@ namespace LekkerLokaal.Controllers
             return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAll().ToList()).ToList(), _bonRepository.GetTop3(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
         }
 
+        public IActionResult Aanbiedingen()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            return View(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAll().ToList()).Select(b => new ZoekViewModel(b)).ToList());
+        }
+
         public IActionResult About()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();

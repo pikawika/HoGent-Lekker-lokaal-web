@@ -157,5 +157,20 @@ namespace LekkerLokaal.Data.Repositories
         {
             return inputlijst.OrderByDescending(b => b.AantalBesteld).Take(30).ToList();
         }
+
+        public IEnumerable<Bon> GetBonnenAanbiedingSlider(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.Where(b => b.Aanbieding == Aanbieding.Slider).ToList();
+        }
+
+        public IEnumerable<Bon> GetBonnenAanbiedingStandaard(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.Where(b => b.Aanbieding == Aanbieding.Standaard).ToList();
+        }
+
+        public IEnumerable<Bon> GetBonnenAanbiedingStandaardEnSlider(IEnumerable<Bon> inputlijst)
+        {
+            return GetBonnenAanbiedingSlider(inputlijst).Union(GetBonnenAanbiedingStandaard(inputlijst)).ToList();
+        }
     }
 }
