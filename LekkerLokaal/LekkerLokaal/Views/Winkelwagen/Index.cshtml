@@ -47,11 +47,11 @@
                                             </td>
                                             <td class="text-center">@($"€ {line.Prijs:N2}")</td>
                                             <td class="text-center">
-                                                <a asp-controller="Winkelwagen" asp-action="Min" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs">
+                                                <a asp-controller="Winkelwagen" asp-action="Min" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs.ToString().Replace(",", ".")">
                                                     <i class="fas fa-minus"></i>
                                                 </a>
                                                 <input class="quantity-label text-center" type="number" value="@($"{line.Aantal}")">
-                                                <a asp-controller="Winkelwagen" asp-action="Plus" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs">
+                                                <a asp-controller="Winkelwagen" asp-action="Plus" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs.ToString().Replace(",",".")">
                                                     <i class="fas fa-plus"></i>
                                                 </a>
                                             </td>
@@ -59,7 +59,7 @@
                                                 <div class="sub-total">@($"€ {line.SubTotaal:N2}")</div>
                                             </td>
                                             <td class="text-center">
-                                                <a asp-controller="Winkelwagen" asp-action="Remove" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs">
+                                                <a asp-controller="Winkelwagen" asp-action="Remove" asp-route-Id="@line.BonId" asp-route-Prijs="@line.Prijs.ToString().Replace(",",".")">
                                                     <i class="fas fa-trash-alt font-26"></i>
                                                 </a>
                                             </td>
