@@ -1,6 +1,14 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.nav-coupon-category .all-cat a {
+    cursor: default;
+    padding-right: 20px;
+    padding-left: 20px;
+    height: 54px;
+    line-height: 50px;
+}
+
 .nav-coupon-category li a.animatedCategorie:hover {
     padding-left: 12px;
 }
@@ -1325,14 +1333,6 @@
         line-height: 46px;
         height: 46px;
     }
-}
-
-.nav-coupon-category .all-cat a {
-    cursor: default;    
-    padding-right: 20px;
-    padding-left: 20px;
-    height: 50px;
-    line-height: 50px;
 }
 
 .nav-coupon-category li a .fa {
