@@ -29,7 +29,12 @@ $(".winkelmand-register-enter").keyup(function (event) {
 });
 
 $(function () {
-    new WOW().init();
+    wow = new WOW(
+        {
+            mobile: false
+        }
+    )
+    wow.init();
 });
 
 
