@@ -18,6 +18,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="Views\Winkelwagen\WinkelWagenLijstPartial.cshtml" />
     <Content Remove="wwwroot\vendors\PrettierSelect\css\easydropdown.flat.css" />
     <Content Remove="wwwroot\vendors\PrettierSelect\css\easydropdown.metro.css" />
   </ItemGroup>

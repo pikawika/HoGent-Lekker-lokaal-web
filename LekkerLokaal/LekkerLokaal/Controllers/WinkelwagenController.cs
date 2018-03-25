@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using LekkerLokaal.Filters;
-using LekkerLokaal.Models.CartViewModels;
+using LekkerLokaal.Models.WinkelwagenViewModels;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Mvc;
 
@@ -25,8 +25,7 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["Navbar"] = "None";
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["Totaal"] = winkelwagen.TotaleWaarde;
-            return View(winkelwagen.WinkelwagenLijnen.Select(w => new IndexViewModel(w)).ToList());
+            return View(new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
         [HttpGet]
@@ -40,27 +39,27 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(Index), "Home");
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Remove(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             Bon bon = _bonRepository.GetByBonId(id);
             winkelwagen.VerwijderLijn(bon, prijs);
             TempData["message"] = $"Bon {bon.Naam} met bedrag € {prijs} werd verwijderd uit uw winkelwagen.";
-            return RedirectToAction(nameof(Index));
+            return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Plus(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerhoogAantal(id, prijs);
-            return RedirectToAction(nameof(Index));
+            return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Min(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerlaagAantal(id, prijs);
-            return RedirectToAction(nameof(Index));
+            return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
     }
 }
