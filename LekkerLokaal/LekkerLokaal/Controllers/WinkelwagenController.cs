@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 using LekkerLokaal.Filters;
 using LekkerLokaal.Models.CartViewModels;
 using LekkerLokaal.Models.Domain;
+using LekkerLokaal.Models.WinkelwagenViewModels;
 using Microsoft.AspNetCore.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace LekkerLokaal.Controllers
 {
@@ -81,5 +85,31 @@ namespace LekkerLokaal.Controllers
             ViewData["Aantal"] = winkelwagen.AantalBonnen;
             return View(nameof(BonAanmaken));
         }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BonAanmaken(BonAanmakenViewModel model, string returnUrl = null)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["ReturnUrl"] = returnUrl;
+            if (ModelState.IsValid)
+            {
+
+                string message;
+                message =
+
+                    //Text = "Dit is een test."
+                    String.Format("Hey, " + "{0}\n" + " {1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
+                var doc1 = new Document(new Rectangle(100f, 300f));
+                var filePath = @"wwwroot/pdf";
+                PdfWriter.GetInstance(doc1, new FileStream(filePath + "/Doc1.pdf", FileMode.Create));
+                doc1.Open();
+                doc1.Add(new Paragraph(message));
+                doc1.Close();
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            return RedirectToAction(nameof(Index));
+        }
+
     }
 }
