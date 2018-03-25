@@ -1,6 +1,21 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+@media only screen and (max-width: 959px) {
+    .background-blue-xs {
+        background-color: #003399 !important;
+    }
+}
+
+.cart-icon-xs{
+    line-height: 53px !important;
+    left: -20px !important;
+}
+
+.cart-number-xs {
+    line-height: 25px !important;
+}
+
 .nav-coupon-category .all-cat a {
     cursor: default;
     padding-right: 20px;
@@ -32,7 +47,7 @@
     position: relative;
 }
 
-.height-150px{
+.height-150px {
     height: 150px;
 }
 
@@ -104,9 +119,9 @@
     background: #e9ebee;
 }
 
-.Not-Clickable{
+.Not-Clickable {
     opacity: 0.4;
-    cursor:not-allowed !important;
+    cursor: not-allowed !important;
 }
 
 /* ––––––––––––––––––––––––––––––––––––––––––––– */

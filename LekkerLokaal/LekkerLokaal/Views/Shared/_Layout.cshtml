@@ -48,7 +48,7 @@
                                 <img src="/images/logo.png" alt="" width="150">
                             </a>
                         </div>
-                        <div class="header-search col-md-9">
+                        <div class="header-search col-xs-12">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
                                     <div class="search-form">
@@ -84,7 +84,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 t-xs-center t-md-right">
+                                <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
                                     <div class="header-cart">
                                         <a asp-controller="Winkelwagen" asp-action="Index">
                                             <span class="icon lnr lnr-cart font-40"></span>
@@ -171,8 +171,23 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item">
-                            <a asp-controller="Account" asp-action="RegisterHandelaar">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
+                            <div class="header-cart visible-xs">
+                                <a asp-controller="Winkelwagen" asp-action="Index">
+                                    <i class="icon lnr lnr-cart font-40 cart-icon-xs color-white"></i>
+                                    <div class="cart-number-xs color-white">
+                                        @if (winkelwagen == null)
+                                        {
+                                            <span>0</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@winkelwagen.AantalBonnen</span>
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                         </div>
                     </nav>
                 </div>
