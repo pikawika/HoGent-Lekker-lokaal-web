@@ -1,6 +1,10 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.wow {
+    z-index: 100;
+}
+
 @media only screen and (max-width: 959px) {
     .background-blue-xs {
         background-color: #003399 !important;
