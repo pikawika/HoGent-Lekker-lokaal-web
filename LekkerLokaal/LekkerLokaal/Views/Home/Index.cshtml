@@ -63,7 +63,7 @@
             </div>
             <div class="section explain-process-area ptb-30">
                 <div class="row row-rl-10">
-                    <div class="col-md-4">
+                    <div class="col-md-4 wow bounceInUp" data-wow-delay=".1s">
                         <div class="item panel prl-15 ptb-20">
                             <div class="row row-rl-5 row-xs-cell">
                                 <div class="col-xs-4 valign-middle">
@@ -77,7 +77,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 wow bounceInUp" data-wow-delay=".2s">
                         <div class="item panel prl-15 ptb-20">
                             <div class="row row-rl-5 row-xs-cell">
                                 <div class="col-xs-4 valign-middle">
@@ -91,7 +91,7 @@
                         </div>
                     </div>
 
-                    <div class="col-md-4">
+                    <div class="col-md-4 wow bounceInUp" data-wow-delay=".3s">
                         <div class="item panel prl-15 ptb-20">
                             <div class="row row-rl-5 row-xs-cell">
                                 <div class="col-xs-4 valign-middle">
@@ -106,9 +106,9 @@
                     </div>
                 </div>
             </div>
-            <section class="section latest-deals-area ptb-30">
+            <section class="section latest-deals-area ptb-30 font-18">
                 <header style="background-color: #1E90FF" class="panel ptb-15 prl-20 pos-r mb-30">
-                    <h3 style="color: white" class="section-title font-18">
+                    <h3 style="color: white" class="section-title">
                         Meest verkochte cadeaubonnen
                         <element class="slide-navigation-lekkerlokaal"><a class="vorige-slide-index-grid"><i class="fa fa-arrow-circle-left"></i> vorige </a> | <a class="volgende-slide-index-grid">volgende <i class="fa fa-arrow-circle-right"></i></a></element>
                     </h3>
@@ -149,7 +149,7 @@
                                                                     <label class="float-left ">Prijs:</label>
                                                                 </div>
                                                                 <div class="col-xs-offset-1 col-xs-7 no-padding">
-                                                                    <input id="@(bon.BonId.ToString() + "PrijsField")" step="0.01" class="form-control" type="number" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
+                                                                    <input id="@(bon.BonId.ToString() + "PrijsField")" step="0.01" class="form-control winkelmand-register-enter" type="number" min="@(bon.MinPrijs.ToString().Replace(",","."))" max="@(bon.MaxPrijs.ToString().Replace(",","."))" value="@(bon.MinPrijs.ToString().Replace(",","."))">
                                                                 </div>
                                                             </div>
                                                             <div class="PopupAddToCart-line">
@@ -157,15 +157,14 @@
                                                                     <label class="float-left">Aantal:</label>
                                                                 </div>
                                                                 <div class="col-xs-offset-1 col-xs-7 no-padding">
-                                                                    <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control" type="number" min="1" max="100" value="1">
+                                                                    <input id="@(bon.BonId.ToString() + "AantalField")" class="form-control winkelmand-register-enter" type="number" min="1" max="100" value="1">
                                                                 </div>
                                                             </div>
                                                             <div class="col-xs-4 showcode no-padding">
                                                                 <a onclick="DynamicAddCartRegion(@bon.BonId);" class="btn btn-sm btn-block">Terug</a>
                                                             </div>
                                                             <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
-                                                                <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" />
-                                                                
+                                                                <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" id="@(bon.BonId.ToString() + "BevestigKnop")"/>
                                                             </div>
                                                         </form>
                                                     </div>
@@ -191,26 +190,4 @@
             </section>
         </div>
     </div>
-
-    <script>
-        function DynamicAddCartRegion(id) {
-            $('#' + id + "default").slideToggle('slow', function () {
-                $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
-            });
-            $('#' + id + "card").slideToggle('slow', function () {
-                $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
-            });
-        }
-
-        function VoegToeAanWinkelmand(id) {
-            var id = id;
-            var prijs = document.getElementById(id + "PrijsField").value;
-            var aantal = document.getElementById(id + "AantalField").value;
-            
-            window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
-
-            return false;
-        }
-    </script>
-
 </main>

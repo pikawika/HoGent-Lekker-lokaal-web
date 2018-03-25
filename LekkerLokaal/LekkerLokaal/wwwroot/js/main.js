@@ -1,6 +1,44 @@
+/*-------------------------------------
+Custom coded JS calls
+-------------------------------------*/
+function DynamicAddCartRegion(id) {
+    $('#' + id + "default").slideToggle('slow', function () {
+        $('#' + id + "default").toggleClass('selecionado', $(this).is(':visible'));
+    });
+    $('#' + id + "card").slideToggle('slow', function () {
+        $('#' + id + "card").toggleClass('selecionado', $(this).is(':visible'));
+    });
+}
+
+function VoegToeAanWinkelmand(id) {
+    var id = id;
+    var prijs = document.getElementById(id + "PrijsField").value;
+    var aantal = document.getElementById(id + "AantalField").value;
+
+    window.location.href = "/Winkelwagen/Add?Id=" + id + "&Prijs=" + prijs + "&Aantal=" + aantal;
+
+    return false;
+}
+
+$(".winkelmand-register-enter").keyup(function (event) {
+    if (event.keyCode === 13) {
+        var idVanWinkelMandTrigger = event.target.id;
+        var idVanKnopWinkelMandVoorTrigger = "." + idVanWinkelMandTrigger.toString().replace("PrijsField", "").replace("AantalField", "") + "BevestigKnop"
+        document.getElementById(idVanKnopWinkelMandVoorTrigger).click();
+    }
+});
+
+$(function () {
+    wow = new WOW(
+        {
+            mobile: false
+        }
+    )
+    wow.init();
+});
+
 
 (function ($) {
-
     /*-------------------------------------
      Slick voor grid van lekker lokaal
     -------------------------------------*/
@@ -45,7 +83,7 @@
                 }
             }]
     });
-    
+
 
     if (typeof $(".lekkerLokaal-driexdrierow").slick("getSlick").options != "undefined") {
         var currentSlideAfterInitSlick = $('.lekkerLokaal-driexdrierow').slick('slickCurrentSlide');
@@ -79,7 +117,7 @@
 
     function SlickHideElementsWhenOneSlide() {
         $(".slide-navigation-lekkerlokaal-hideOnOneSlide").addClass("hidden");
-    }   
+    }
 
     "use strict";
 
@@ -429,8 +467,8 @@
             animationLoop: false,
             slideshow: false,
             itemWidth: 150,
-            asNavFor: '#product_slider' 
-            
+            asNavFor: '#product_slider'
+
         });
 
         $('#product_slider').flexslider({

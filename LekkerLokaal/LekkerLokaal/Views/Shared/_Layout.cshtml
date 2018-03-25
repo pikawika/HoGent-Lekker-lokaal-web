@@ -25,6 +25,7 @@
     <link href="/vendors/flexslider/flexslider.css" rel="stylesheet">
     <link href="/css/base.css" rel="stylesheet">
     <link href="/css/style.css" rel="stylesheet">
+    <link href="/css/animate.css" rel="stylesheet">
     <link rel="stylesheet" type="text/css" href="/vendors/slick/slick.css" />
     <link rel="stylesheet" type="text/css" href="/vendors/slick/slick-theme.css" />
 </head>
@@ -48,7 +49,7 @@
                                 <img src="/images/logo.png" alt="" width="150">
                             </a>
                         </div>
-                        <div class="header-search col-md-9">
+                        <div class="header-search col-xs-12">
                             <div class="row row-tb-10 ">
                                 <div class="col-sm-8">
                                     <div class="search-form">
@@ -74,7 +75,7 @@
                                         </div>
                                         <div id="advancedSearch" class="collapse mt-15">
                                             <select name="Categorie" id="Categorie" class="input-sm">
-                                                <option value="*">Categorie</option>
+                                                <option value="">Categorie</option>
                                                 @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
                                                 {
                                                     <option value="@categorie.Naam">@categorie.Naam</option>
@@ -84,7 +85,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-4 t-xs-center t-md-right">
+                                <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
                                     <div class="header-cart">
                                         <a asp-controller="Winkelwagen" asp-action="Index">
                                             <span class="icon lnr lnr-cart font-40"></span>
@@ -122,7 +123,7 @@
                                     <a asp-controller="Home" asp-action="Index">Home</a>
                                 </li>
                                 <li class="Categorieen-List-Item">
-                                    <a href="#">Categorieën</a>
+                                    <a>Categorieën</a>
                                     <ul>
                                         @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
                                         {
@@ -171,8 +172,23 @@
                                 </li>
                             </ul>
                         </div>
-                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item">
-                            <a asp-controller="Account" asp-action="RegisterHandelaar">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
+                            <div class="header-cart visible-xs">
+                                <a asp-controller="Winkelwagen" asp-action="Index">
+                                    <i class="icon lnr lnr-cart font-40 cart-icon-xs color-white"></i>
+                                    <div class="cart-number-xs color-white">
+                                        @if (winkelwagen == null)
+                                        {
+                                            <span>0</span>
+                                        }
+                                        else
+                                        {
+                                            <span>@winkelwagen.AantalBonnen</span>
+                                        }
+                                    </div>
+                                </a>
+                            </div>
+                            <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                         </div>
                     </nav>
                 </div>
@@ -253,7 +269,6 @@
                 document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
             }
         }
-
     </script>
     <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
     <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
@@ -261,14 +276,24 @@
     <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
     <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
     <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/js/wow.js"></script>
     <script type="text/javascript" src="~/js/main.js"></script>
     <script type='text/javascript'>
         function Zoeken() {
-            var ZoekSoort = document.getElementById("ZoekSoort").value;
-            var ZoekKey = document.getElementById("ZoekKey").value;
-            var Categorie = document.getElementById("Categorie").value;
-            var MaxStartPrijs = document.getElementById("MaxStartPrijs").value;
-            window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + "&ZoekKey=" + ZoekKey + "&Categorie=" + Categorie + "&MaxStartPrijs=" + MaxStartPrijs;
+            var ZoekSoort = "";
+            var ZoekKey = "";
+            var Categorie = "";
+            var MaxStartPrijs = "";
+
+            if (document.getElementById("ZoekSoort").value != "")
+                ZoekSoort = document.getElementById("ZoekSoort").value;
+            if (document.getElementById("ZoekKey").value != "")
+                ZoekKey = "&ZoekKey=" + document.getElementById("ZoekKey").value;
+            if (document.getElementById("Categorie").value != "")
+                Categorie = "&Categorie=" + document.getElementById("Categorie").value;
+            if (document.getElementById("MaxStartPrijs").value != "")
+                MaxStartPrijs = "&MaxStartPrijs=" + document.getElementById("MaxStartPrijs").value;
+            window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + ZoekKey + Categorie + MaxStartPrijs;
         }
     </script>
     <script>
@@ -285,7 +310,6 @@
     </script>
 </body>
 </html>
-
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
 }
