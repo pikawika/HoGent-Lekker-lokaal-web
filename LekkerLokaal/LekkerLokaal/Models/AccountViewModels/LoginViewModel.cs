@@ -8,15 +8,15 @@ namespace LekkerLokaal.Models.AccountViewModels
 {
     public class LoginViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "Gelieve uw e-mailadres in te voeren.")]
         [EmailAddress]
         public string Email { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "Gelieve uw wachtwoord in te voeren.")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        [Display(Name = "Remember me?")]
+        [Display(Name = "Aangemeld blijven")]
         public bool RememberMe { get; set; }
     }
 }

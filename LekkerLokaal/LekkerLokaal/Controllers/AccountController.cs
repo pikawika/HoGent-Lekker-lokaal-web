@@ -89,7 +89,7 @@ namespace LekkerLokaal.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
                     return View(model);
                 }
             }
@@ -247,7 +247,7 @@ namespace LekkerLokaal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Achternaam = model.Familienaam };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -548,19 +548,17 @@ namespace LekkerLokaal.Controllers
         }
 
         [AllowAnonymous]
-        [HttpGet]
         public IActionResult CheckoutMethode(string checkoutId, string returnUrl = null)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["ReturnUrl"] = returnUrl;
             switch (checkoutId)
             {
                 case "Gast":
-                    return RedirectToAction(nameof(WinkelwagenController.BonAanmaken), "Winkelwagen");
+                    return RedirectToAction(nameof(CheckoutController.Index), "Checkout");
                 case "Nieuw":
-                    return View(nameof(Register), returnUrl);
+                    return RedirectToAction(nameof(Register), new { ReturnUrl = returnUrl });
                 case "LogIn":
-                    return View(nameof(Login), returnUrl);
+                    return RedirectToAction(nameof(Login), new { ReturnUrl = returnUrl });
                 default:
                     return RedirectToAction(nameof(HomeController.Index), "Home");
             }

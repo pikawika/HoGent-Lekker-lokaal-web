@@ -74,14 +74,14 @@
                                 </form>
                             </div>
                             <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
-                            <a asp-controller="Winkelwagen" asp-action="BonAanmaken" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
+                            <a asp-controller="Checkout" asp-action="Index" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
                         </section>
                     }
                     else
                     {
                         <section class="section checkout-area panel prl-30 pt-20 pb-40">
                             <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
-                            <form asp-controller="Account" asp-action="CheckoutMethode" asp-route-returnUrl="@ViewData["ReturnUrl"]" method="get">
+                            <form asp-controller="Account" asp-action="CheckoutMethode" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                                 <div class="custom-radio mb-10">
                                     <input type="radio" name="checkoutId" id="Gast" value="Gast" checked="checked">
                                     <label class="color-mid" for="Gast">Ga door als gast</label>
