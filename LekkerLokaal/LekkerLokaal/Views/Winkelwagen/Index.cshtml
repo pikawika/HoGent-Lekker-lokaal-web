@@ -23,7 +23,10 @@
               data: { Id: plusId, Prijs: plusPrijs }
                 }).done(function (result) {
                     $("#winkelwagen-list-partial").html(result);
-             });
+                    updateWinkelMandCount();
+                });
+
+
         };
 
         function winkelmandAantalVerlagen(id, prijs) {
@@ -35,7 +38,8 @@
               url: '@Url.Action("Min", "Winkelwagen")',
               data: { Id: plusId, Prijs: plusPrijs }
             }).done(function (result) {
-                    $("#winkelwagen-list-partial").html(result);
+                $("#winkelwagen-list-partial").html(result);
+                updateWinkelMandCount();
             });
         };
 
@@ -50,8 +54,19 @@
                     data: { Id: plusId, Prijs: plusPrijs }
                 }).done(function (result) {
                     $("#winkelwagen-list-partial").html(result);
+                    updateWinkelMandCount();
                 });
             }
         };
+
+        function updateWinkelMandCount() {
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("UpdateWinkelwagenCount", "Home")'
+                }).done(function (result) {
+                    $("#layout-winkelwagen-count").html(result);
+             });
+        }
+
     </script>
 </main>

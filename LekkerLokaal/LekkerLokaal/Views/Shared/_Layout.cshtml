@@ -1,10 +1,4 @@
 ﻿@using LekkerLokaal.Models.Domain;
-@using Microsoft.AspNetCore.Http;
-@using Newtonsoft.Json;
-
-@{
-    Winkelwagen winkelwagen = Context.Session.GetString("winkelwagen") == null ? null : JsonConvert.DeserializeObject<Winkelwagen>(Context.Session.GetString("winkelwagen"));
-}
 
 <!DOCTYPE html>
 <html>
@@ -89,15 +83,8 @@
                                     <div class="header-cart">
                                         <a asp-controller="Winkelwagen" asp-action="Index">
                                             <span class="icon lnr lnr-cart font-40"></span>
-                                            <div>
-                                                @if (winkelwagen == null)
-                                                {
-                                                    <span class="cart-number">0</span>
-                                                }
-                                                else
-                                                {
-                                                    <span class="cart-number">@winkelwagen.AantalBonnen</span>
-                                                }
+                                            <div id="layout-winkelwagen-count">
+                                                @await Html.PartialAsync("winkelWagenCountPartial")
                                             </div>
                                         </a>
                                     </div>
@@ -176,15 +163,8 @@
                             <div class="header-cart visible-xs">
                                 <a asp-controller="Winkelwagen" asp-action="Index">
                                     <i class="icon lnr lnr-cart font-40 cart-icon-xs color-white"></i>
-                                    <div class="cart-number-xs color-white">
-                                        @if (winkelwagen == null)
-                                        {
-                                            <span>0</span>
-                                        }
-                                        else
-                                        {
-                                            <span>@winkelwagen.AantalBonnen</span>
-                                        }
+                                    <div class="cart-number-xs color-white" id="layout-winkelwagen-count">
+                                        @await Html.PartialAsync("winkelWagenCountPartial")
                                     </div>
                                 </a>
                             </div>

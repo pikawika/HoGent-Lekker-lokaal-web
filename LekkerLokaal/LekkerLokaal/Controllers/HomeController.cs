@@ -157,5 +157,11 @@ namespace LekkerLokaal.Controllers
             }
             return View(nameof(About), model);
         }
+
+        [HttpPost]
+        public IActionResult UpdateWinkelwagenCount()
+        {
+            return PartialView("../Shared/winkelwagenCountPartial");
+        }
     }
 }
