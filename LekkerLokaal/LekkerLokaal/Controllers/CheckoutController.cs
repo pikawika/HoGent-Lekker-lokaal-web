@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace LekkerLokaal.Controllers
@@ -51,13 +52,36 @@ namespace LekkerLokaal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                string message = String.Format("Hey, " + "{0}\n" + " {1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
+                string bon = String.Format("Hey, " + "{0}\n" + " {1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
                 var doc1 = new Document(PageSize.A4);
-                var filePath = @"wwwroot/pdf";
-                PdfWriter.GetInstance(doc1, new FileStream(filePath + "/Doc1.pdf", FileMode.Create));
+                var bonPath = @"wwwroot/pdf";
+                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
                 doc1.Open();
-                doc1.Add(new Paragraph(message));
+                doc1.Add(new Paragraph(bon));
                 doc1.Close();
+
+                string[] to = { model.EmailOntvanger, model.UwEmail };
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+
+                foreach (var m in to)
+                {
+                    message.To.Add(m);
+                }
+
+                message.Subject = "Uw order van Lekker Lokaal";
+                message.Body = String.Format("Dit zijn de cadeaubonnen die u bestelde.");
+
+                var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
+                attachment.Name = "cadeaubon.pdf";
+                message.Attachments.Add(attachment);
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(message);
+                attachment.Dispose();
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View(model);
