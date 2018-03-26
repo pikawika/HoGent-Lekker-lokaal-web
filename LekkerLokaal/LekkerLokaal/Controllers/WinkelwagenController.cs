@@ -28,7 +28,7 @@ namespace LekkerLokaal.Controllers
             return View(new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpGet]
+        [HttpPost]
         public IActionResult Add(int Id, decimal Prijs, int Aantal, Winkelwagen winkelwagen)
         {
             Bon bon = _bonRepository.GetByBonId(Id);
