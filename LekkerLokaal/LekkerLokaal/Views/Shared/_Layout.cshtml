@@ -294,10 +294,22 @@
     </div>
     <div class="addedToWinkelmandPopupContainerBackground">
         <div id="addedToWinkelmandPopup" class="modal addedToWinkelModal">
-            <div class="addedToWinkelModalContent">
+            <div id="addedToWinkelModalContent" class="addedToWinkelModalContent">
                 <span class="closeWinkelMandPopup" id="closeWinkelMandPopup">&times;</span>
-                <img id="winkelMandPopupBonAfbeelding" height="40" width="60">
-                <p id="winkelMandPopupBonNaam">Naam van de bon</p>
+                <img id="winkelMandPopupBonAfbeelding" class="hidden-xs col-lg-7">
+                <div class="col-xs-12 col-lg-5">
+                    <h3 class="color-blue winkelMandPopupBonNaam" id="winkelMandPopupBonNaam"> <i class="far fa-check-circle font-26"></i> Titel</h3>
+                    <br>
+                    <h4 id="winkelMandPopupBonWaarde">- Waarde: € 25</h4>
+                    <br>
+                    <h4 id="winkelMandPopupBonAantal">- Aantal: 1</h4>
+                    <div class="col-xs-12 showcode mt-20">
+                        <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-sm btn-block">Verder naar bestellen <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="col-xs-12 showcode mt-20">
+                        <a class="btn btn-sm btn-block" onclick="verbergAddedToWinkelmandPopup();"><i class="fas fa-arrow-left"></i> Blijf verder winkelen</a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

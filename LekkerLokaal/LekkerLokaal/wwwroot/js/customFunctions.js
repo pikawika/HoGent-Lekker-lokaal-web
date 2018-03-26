@@ -120,7 +120,7 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
         var prijs = parseFloat(document.getElementById(id + "PrijsField").value.replace(',', '.'));
         var aantal = document.getElementById(id + "AantalField").value;
         document.getElementById((id + "TerugKnop")).click();
-        toonAddedToWinkelmandPopup(afbeelding, naam);
+        toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
 
         $.ajax({
             type: "POST",
@@ -135,25 +135,29 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
     }
 }
 
-function toonAddedToWinkelmandPopup(afbeelding, naam) {
-    document.getElementById("winkelMandPopupBonNaam").innerHTML = naam + ' toegevoegd in winkelwagen!';
+function verbergAddedToWinkelmandPopup() {
+    document.getElementById('addedToWinkelmandPopup').style.display = 'none';
+    document.getElementById("paginaWrapperVoorBlur").classList.remove('blurOverlay');
+    enableScroll();
+}
+
+function toonAddedToWinkelmandPopup(afbeelding, naam, waarde, aantal) {
+    document.getElementById("winkelMandPopupBonNaam").innerHTML = '<i class="far fa-check-circle font-26"></i> ' + naam + ' werd toegevoegd aan uw winkelwagen!';
     document.getElementById("winkelMandPopupBonAfbeelding").src = "/" + afbeelding;
+    document.getElementById("winkelMandPopupBonWaarde").innerHTML = "- Bedrag: &euro; " + waarde;
+    document.getElementById("winkelMandPopupBonAantal").innerHTML = "- Aantal: " + aantal;
 
     document.getElementById("paginaWrapperVoorBlur").classList.add("blurOverlay");
 
-    document.getElementById('addedToWinkelmandPopup').style.display = "block";
+    document.getElementById('addedToWinkelmandPopup').style.display = 'block';
 
     document.getElementById("closeWinkelMandPopup").onclick = function () {
-        document.getElementById('addedToWinkelmandPopup').style.display = "none";
-        document.getElementById("paginaWrapperVoorBlur").classList.remove("blurOverlay");
-        enableScroll();
+        verbergAddedToWinkelmandPopup()
     }
 
     window.onclick = function (event) {
         if (event.target == document.getElementById('addedToWinkelmandPopup')) {
-            document.getElementById('addedToWinkelmandPopup').style.display = "none";
-            document.getElementById("paginaWrapperVoorBlur").classList.remove("blurOverlay");
-            enableScroll();
+            verbergAddedToWinkelmandPopup()
         }
     }
 
