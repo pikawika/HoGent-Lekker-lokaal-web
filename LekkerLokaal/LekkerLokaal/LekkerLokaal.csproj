@@ -42,6 +42,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="Data\Mappers\" />
     <Folder Include="wwwroot\images\temp\" />
   </ItemGroup>
 
