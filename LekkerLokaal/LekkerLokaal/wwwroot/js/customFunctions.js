@@ -119,15 +119,16 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
         var naam = naam;
         var prijs = parseFloat(document.getElementById(id + "PrijsField").value.replace(',', '.'));
         var aantal = document.getElementById(id + "AantalField").value;
-        document.getElementById((id + "TerugKnop")).click();
-        toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
+        
 
         $.ajax({
             type: "POST",
             url: '/Winkelwagen/Add',
             data: { Id: id, Prijs: prijs, Aantal: aantal }
         }).done(function () {
+            toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
             updateWinkelMandCount();
+            document.getElementById((id + "TerugKnop")).click();
         });
         return false;
     } catch (e) {
