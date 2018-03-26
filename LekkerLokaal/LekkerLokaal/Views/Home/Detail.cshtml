@@ -70,7 +70,7 @@
                                             @Model.HandelaarBeschrijving
                                         </p>
                                         <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(Model.BonId.ToString() + "card")">
-                                            <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@Model.BonId);">
+                                            <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@Model.BonId, '@Model.GetThumbPath.Replace("\\","\\\\")', '@Model.Naam');">
                                                 <div class="PopupAddToCart-line">
                                                     <div class="col-xs-4 no-padding">
                                                         <label class="float-left ">Prijs:</label>
@@ -88,7 +88,7 @@
                                                     </div>
                                                 </div>
                                                 <div class="col-xs-4 showcode no-padding">
-                                                    <a onclick="DynamicAddCartRegion(@Model.BonId);" class="btn btn-sm btn-block">Terug</a>
+                                                    <a onclick="DynamicAddCartRegion(@Model.BonId);" class="btn btn-sm btn-block" id="@(Model.BonId.ToString() + "TerugKnop")">Terug</a>
                                                 </div>
                                                 <div class="col-xs-offset-1 col-xs-7 showcode no-padding">
                                                     <input name="Submit" type="submit" value="Bevestig" class="btn btn-sm btn-block" id="@(Model.BonId.ToString() + "BevestigKnop")"/>

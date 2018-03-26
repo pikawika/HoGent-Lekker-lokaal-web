@@ -23,6 +23,7 @@ namespace LekkerLokaal.Models.HomeViewModels
         public string Gemeente { get; }
         public string CategorieIcon { get; }
         public string CategorieNaam { get; }
+        public string GetThumbPath { get; }
 
         public DetailViewModel()
         {
@@ -43,6 +44,7 @@ namespace LekkerLokaal.Models.HomeViewModels
             Gemeente = bon.Gemeente;
             CategorieIcon = bon.Categorie.Icon;
             CategorieNaam = bon.Categorie.Naam;
+            GetThumbPath = bon.GetThumbPath();
         }
     }
 }

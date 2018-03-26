@@ -137,7 +137,7 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
 
 function toonAddedToWinkelmandPopup(afbeelding, naam) {
     document.getElementById("winkelMandPopupBonNaam").innerHTML = naam + ' toegevoegd in winkelwagen!';
-    document.getElementById("winkelMandPopupBonAfbeelding").src = afbeelding;
+    document.getElementById("winkelMandPopupBonAfbeelding").src = "/" + afbeelding;
 
     document.getElementById("paginaWrapperVoorBlur").classList.add("blurOverlay");
 
