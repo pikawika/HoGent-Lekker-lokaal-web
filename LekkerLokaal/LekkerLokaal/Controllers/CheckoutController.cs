@@ -1,5 +1,6 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
+using LekkerLokaal.Filters;
 using LekkerLokaal.Models.Domain;
 using LekkerLokaal.Models.WinkelwagenViewModels;
 using Microsoft.AspNetCore.Mvc;
@@ -11,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Controllers
 {
+    [ServiceFilter(typeof(CartSessionFilter))]
     public class CheckoutController : Controller
     {
         private readonly ICategorieRepository _categorieRepository;
@@ -41,23 +43,29 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["Totaal"] = winkelwagen.TotaleWaarde;
             ViewData["Aantal"] = winkelwagen.AantalBonnen;
-            return View(nameof(BonAanmaken));
+            return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BonAanmaken(BonAanmakenViewModel model, string returnUrl = null)
+        public async Task<IActionResult> BonAanmaken(Winkelwagen winkelwagen, BonAanmakenViewModel model, string returnUrl = null)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                string bon = String.Format("Hey, " + "{0}\n" + " {1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
+                string bon = String.Format("Hey, " + "{0}\n" + "{1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
+                string boodschap = String.Format("{0}", model.Boodschap);
                 var doc1 = new Document(PageSize.A4);
+                Paragraph p1 = new Paragraph(bon);
+                Paragraph p2 = new Paragraph(boodschap);
+                p1.Alignment = Element.ALIGN_CENTER;
+                p2.Alignment = Element.ALIGN_CENTER;
                 var bonPath = @"wwwroot/pdf";
                 PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
                 doc1.Open();
-                doc1.Add(new Paragraph(bon));
+                doc1.Add(p1);
+                doc1.Add(p2);
                 doc1.Close();
 
                 string[] to = { model.EmailOntvanger, model.UwEmail };

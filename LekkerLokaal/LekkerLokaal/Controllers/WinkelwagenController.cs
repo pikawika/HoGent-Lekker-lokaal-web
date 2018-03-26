@@ -75,7 +75,7 @@ namespace LekkerLokaal.Controllers
             ViewData["Totaal"] = winkelwagen.TotaleWaarde;
             ViewData["Aantal"] = winkelwagen.AantalBonnen;
             ViewData["ReturnUrl"] = "/Winkelwagen/Checkout";
-            return View(nameof(Checkout));
+            return View();
         }
 
     }
