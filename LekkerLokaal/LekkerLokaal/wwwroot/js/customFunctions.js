@@ -45,7 +45,7 @@ function winkelmandAantalVerhogen(id, prijs) {
     var plusPrijs = prijs;
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/Winkelwagen/Plus',
         data: { Id: plusId, Prijs: plusPrijs }
     }).done(function (result) {
@@ -61,7 +61,7 @@ function winkelmandAantalVerlagen(id, prijs) {
     var plusPrijs = prijs;
 
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/Winkelwagen/Min',
         data: { Id: plusId, Prijs: plusPrijs }
     }).done(function (result) {
@@ -76,7 +76,7 @@ function winkelmandItemVerwijderen(id, prijs) {
         var plusPrijs = prijs;
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: '/Winkelwagen/Remove',
             data: { Id: plusId, Prijs: plusPrijs }
         }).done(function (result) {
@@ -92,7 +92,7 @@ Winkelmand count span acties acties
 
 function updateWinkelMandCount() {
     $.ajax({
-        type: "POST",
+        type: "GET",
         url: '/Home/UpdateWinkelwagenCount'
     }).done(function (result) {
         $("#layout-winkelwagen-count").html(result);
@@ -117,13 +117,14 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
         var id = id;
         var afbeelding = afbeelding;
         var naam = naam;
-        var prijs = parseFloat(document.getElementById(id + "PrijsField").value.replace(',', '.'));
+        var prijs = parseFloat(document.getElementById(id + "PrijsField").value.replace(',', '.')).toFixed(2);
         var aantal = document.getElementById(id + "AantalField").value;
+
         document.getElementById((id + "TerugKnop")).click();
         toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
 
         $.ajax({
-            type: "POST",
+            type: "GET",
             url: '/Winkelwagen/Add',
             data: { Id: id, Prijs: prijs, Aantal: aantal }
         }).done(function () {

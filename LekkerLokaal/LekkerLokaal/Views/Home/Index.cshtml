@@ -135,7 +135,6 @@
 
                                                     <div class="height-70px">
                                                         <h4 class="color-blue mb-10 t-uppercase">@bon.Naam</h4>
-
                                                     </div>
                                                     <div class="height-70px">
                                                         <h5 class="deal-title mb-10">
@@ -170,7 +169,7 @@
                                                     </div>
                                                     <div class="DynamicAddCartRegionDefault height-150px" id="@(bon.BonId.ToString() + "default")">
                                                         <p class="color-muted font-12"><i class="fa @bon.CategorieIcon"></i> @bon.CategorieNaam</p>
-                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro;@bon.MinPrijs</p>
+                                                        <p class="mb-15 color-muted mb-20 font-12"><i class="fa fa-credit-card-alt"></i> Vanaf &euro; @bon.MinPrijs</p>
                                                         <div class="showcode">
                                                             <a asp-controller="Home" asp-action="Detail" asp-route-id="@bon.BonId" class="btn btn-sm btn-block">Bekijk details</a>
                                                         </div>

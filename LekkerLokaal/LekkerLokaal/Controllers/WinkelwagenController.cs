@@ -5,7 +5,6 @@ using System.Threading.Tasks;
 using LekkerLokaal.Filters;
 using LekkerLokaal.Models.WinkelwagenViewModels;
 using LekkerLokaal.Models.Domain;
-using LekkerLokaal.Models.WinkelwagenViewModels;
 using Microsoft.AspNetCore.Mvc;
 using iTextSharp.text;
 using iTextSharp.text.pdf;
@@ -32,7 +31,7 @@ namespace LekkerLokaal.Controllers
             return View(new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Add(int Id, decimal Prijs, int Aantal, Winkelwagen winkelwagen)
         {
             Bon bon = _bonRepository.GetByBonId(Id);
@@ -44,7 +43,7 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Remove(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             Bon bon = _bonRepository.GetByBonId(id);
@@ -53,14 +52,14 @@ namespace LekkerLokaal.Controllers
             return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Plus(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerhoogAantal(id, prijs);
             return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
 
-        [HttpPost]
+        [HttpGet]
         public IActionResult Min(int id, decimal prijs, Winkelwagen winkelwagen)
         {
             winkelwagen.VerlaagAantal(id, prijs);
