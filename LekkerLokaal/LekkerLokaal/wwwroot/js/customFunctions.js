@@ -120,12 +120,13 @@ function VoegToeAanWinkelmand(id, afbeelding, naam) {
         var prijs = parseFloat(document.getElementById(id + "PrijsField").value.replace(',', '.')).toFixed(2);
         var aantal = document.getElementById(id + "AantalField").value;
 
+        toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
+
         $.ajax({
             type: "GET",
             url: '/Winkelwagen/Add',
             data: { Id: id, Prijs: prijs, Aantal: aantal }
         }).done(function () {
-            toonAddedToWinkelmandPopup(afbeelding, naam, prijs, aantal);
             updateWinkelMandCount();
             document.getElementById((id + "TerugKnop")).click();
         });
