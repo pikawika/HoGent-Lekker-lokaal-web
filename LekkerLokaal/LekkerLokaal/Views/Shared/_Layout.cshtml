@@ -34,8 +34,8 @@
             <div class="loader-cube__item3 loader-cube__item"></div>
         </div>
     </div>
-    <div id="pageWrapper" class="page-wrapper">
-        <div id="paginaWrapperVoorBlur">
+    <div id="paginaWrapperVoorBlur">
+        <div id="pageWrapper" class="page-wrapper">
             <header id="mainHeader" class="main-header">
                 <div class="header-header bg-white">
                     <div class="container">
@@ -211,89 +211,90 @@
                     break;
             }
             @RenderBody()
-            <section class="footer-top-area pt-30 pb-10 pos-r bg-blue">
-                <div class="container">
-                    <div class="row row-tb-20">
-                        <div class="col-xs-12">
-                            <p class="text-center" style="color: white">Wij aanvaarden volgende betaalmethoden:</p>
-                            <div class="payment-methods t-center">
-                                <span><img src="/images/icons/payment/paypal.jpg" alt=""></span>
-                                <span><img src="/images/icons/payment/visa.jpg" alt=""></span>
-                                <span><img src="/images/icons/payment/mastercard.jpg" alt=""></span>
-                                <span><img src="/images/icons/payment/discover.jpg" alt=""></span>
-                                <span><img src="/images/icons/payment/american.jpg" alt=""></span>
-                            </div>
+        </div>
+        <section class="footer-top-area pt-30 pb-10 pos-r bg-blue">
+            <div class="container">
+                <div class="row row-tb-20">
+                    <div class="col-xs-12">
+                        <p class="text-center" style="color: white">Wij aanvaarden volgende betaalmethoden:</p>
+                        <div class="payment-methods t-center">
+                            <span><img src="/images/icons/payment/paypal.jpg" alt=""></span>
+                            <span><img src="/images/icons/payment/visa.jpg" alt=""></span>
+                            <span><img src="/images/icons/payment/mastercard.jpg" alt=""></span>
+                            <span><img src="/images/icons/payment/discover.jpg" alt=""></span>
+                            <span><img src="/images/icons/payment/american.jpg" alt=""></span>
                         </div>
                     </div>
                 </div>
-            </section>
-            <footer id="mainFooter" class="main-footer">
-                <div class="container">
-                    <div class="row">
-                        <p>
-                            Copyright &copy;
-                            <script language="javascript" type="text/javascript">
-                                var today = new Date()
-                                var year = today.getFullYear()
-                                document.write(year)
-                            </script> Lekker Lokaal. Alle rechten voorbehouden.
-                        </p>
-                    </div>
+            </div>
+        </section>
+        <footer id="mainFooter" class="main-footer">
+            <div class="container">
+                <div class="row">
+                    <p>
+                        Copyright &copy;
+                        <script language="javascript" type="text/javascript">
+                            var today = new Date()
+                            var year = today.getFullYear()
+                            document.write(year)
+                        </script> Lekker Lokaal. Alle rechten voorbehouden.
+                    </p>
                 </div>
-            </footer>
-        </div>
-        <div id="backTop" class="back-top is-hidden-sm-down">
-            <i class="fa fa-angle-up" aria-hidden="true"></i>
-        </div>
-        <script>
-            function ChangeGeavanceerdZoeken() {
-                if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
-                    document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
-                }
-                else {
-                    document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
-                }
+            </div>
+        </footer>
+    </div>
+    <div id="backTop" class="back-top is-hidden-sm-down">
+        <i class="fa fa-angle-up" aria-hidden="true"></i>
+    </div>
+    <script>
+        function ChangeGeavanceerdZoeken() {
+            if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
+                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
             }
-        </script>
-        <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
-        <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
-        <script type="text/javascript" src="~/vendors/modernizr/modernizr-2.6.2.min.js"></script>
-        <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
-        <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
-        <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
-        <script type="text/javascript" src="~/js/wow.js"></script>
-        <script type="text/javascript" src="~/js/customFunctions.js"></script>
-        <script type="text/javascript" src="~/js/main.js"></script>
-        <script type='text/javascript'>
-            function Zoeken() {
-                var ZoekSoort = "";
-                var ZoekKey = "";
-                var Categorie = "";
-                var MaxStartPrijs = "";
+            else {
+                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
+            }
+        }
+    </script>
+    <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="~/vendors/modernizr/modernizr-2.6.2.min.js"></script>
+    <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+    <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
+    <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
+    <script type="text/javascript" src="~/js/wow.js"></script>
+    <script type="text/javascript" src="~/js/customFunctions.js"></script>
+    <script type="text/javascript" src="~/js/main.js"></script>
+    <script type='text/javascript'>
+        function Zoeken() {
+            var ZoekSoort = "";
+            var ZoekKey = "";
+            var Categorie = "";
+            var MaxStartPrijs = "";
 
-                if (document.getElementById("ZoekSoort").value != "")
-                    ZoekSoort = document.getElementById("ZoekSoort").value;
-                if (document.getElementById("ZoekKey").value != "")
-                    ZoekKey = "&ZoekKey=" + document.getElementById("ZoekKey").value;
-                if (document.getElementById("Categorie").value != "")
-                    Categorie = "&Categorie=" + document.getElementById("Categorie").value;
-                if (document.getElementById("MaxStartPrijs").value != "")
-                    MaxStartPrijs = "&MaxStartPrijs=" + document.getElementById("MaxStartPrijs").value;
-                window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + ZoekKey + Categorie + MaxStartPrijs;
+            if (document.getElementById("ZoekSoort").value != "")
+                ZoekSoort = document.getElementById("ZoekSoort").value;
+            if (document.getElementById("ZoekKey").value != "")
+                ZoekKey = "&ZoekKey=" + document.getElementById("ZoekKey").value;
+            if (document.getElementById("Categorie").value != "")
+                Categorie = "&Categorie=" + document.getElementById("Categorie").value;
+            if (document.getElementById("MaxStartPrijs").value != "")
+                MaxStartPrijs = "&MaxStartPrijs=" + document.getElementById("MaxStartPrijs").value;
+            window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + ZoekKey + Categorie + MaxStartPrijs;
+        }
+    </script>
+    <script>
+        $("#ZoekKey").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
             }
-        </script>
-        <script>
-            $("#ZoekKey").keyup(function (event) {
-                if (event.keyCode === 13) {
-                    $("#zoekKnop").click();
-                }
-            });
-            $("#MaxStartPrijs").keyup(function (event) {
-                if (event.keyCode === 13) {
-                    $("#zoekKnop").click();
-                }
-            });
-        </script>
+        });
+        $("#MaxStartPrijs").keyup(function (event) {
+            if (event.keyCode === 13) {
+                $("#zoekKnop").click();
+            }
+        });
+    </script>
     </div>
     <div class="addedToWinkelmandPopupContainerBackground">
         <div id="addedToWinkelmandPopup" class="modal addedToWinkelModal">
