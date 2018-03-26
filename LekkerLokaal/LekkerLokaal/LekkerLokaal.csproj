@@ -5,6 +5,14 @@
     <UserSecretsId>aspnet-LekkerLokaal-7E2FAF54-277B-4ABB-A72A-265C9275510E</UserSecretsId>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <LangVersion>latest</LangVersion>
+  </PropertyGroup>
+
   <ItemGroup>
     <Compile Remove="wwwroot\vendors\NewFolder\**" />
     <Content Remove="wwwroot\vendors\NewFolder\**" />
@@ -25,6 +33,7 @@
 
 
   <ItemGroup>
+    <PackageReference Include="iTextSharp" Version="5.5.13" />
     <PackageReference Include="MailKit" Version="2.0.1" />
     <PackageReference Include="Microsoft.AspNetCore.All" Version="2.0.5" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.Twitter" Version="2.0.1" />
@@ -45,6 +54,7 @@
   <ItemGroup>
     <Folder Include="Data\Mappers\" />
     <Folder Include="wwwroot\images\temp\" />
+    <Folder Include="wwwroot\pdf\" />
   </ItemGroup>
 
 </Project>

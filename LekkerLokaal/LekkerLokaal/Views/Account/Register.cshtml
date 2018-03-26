@@ -10,7 +10,6 @@
     ViewData["Navbar"] = "Account";
 }
 
-<!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
 <main id="mainContent" class="main-content">
     <div class="page-container ptb-60">
         <div class="container">
@@ -62,7 +61,7 @@
                     </div>
                     <div class="col-sm-6 col-md-5 col-right">
                         <div class="social-login p-40">
-                            <form asp-controller="Account" asp-action="Login" asp-route-returnUrl="@null" method="get">
+                            <form asp-controller="Account" asp-action="Login" method="get">
                                 <div class="mb-20">
                                     <button type="submit" class="btn btn-lg btn-block btn-social btn-facebook"><i class="fab fa-facebook-square font-18"></i> Meld aan met Facebook</button>
                                 </div>
@@ -82,7 +81,4 @@
             </section>
         </div>
     </div>
-
-
 </main>
-<!-- –––––––––––––––[ END PAGE CONTENT ]––––––––––––––– -->

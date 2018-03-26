@@ -5,7 +5,11 @@ using System.Threading.Tasks;
 using LekkerLokaal.Filters;
 using LekkerLokaal.Models.WinkelwagenViewModels;
 using LekkerLokaal.Models.Domain;
+using LekkerLokaal.Models.WinkelwagenViewModels;
 using Microsoft.AspNetCore.Mvc;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
 
 namespace LekkerLokaal.Controllers
 {
@@ -36,7 +40,8 @@ namespace LekkerLokaal.Controllers
             {
                 winkelwagen.VoegLijnToe(bon, Aantal, Prijs);
             }
-            return RedirectToAction(nameof(Index), "Home");
+            //return RedirectToAction(nameof(Index), "Home");
+            return RedirectToAction(nameof(Index));
         }
 
         [HttpPost]
@@ -61,5 +66,15 @@ namespace LekkerLokaal.Controllers
             winkelwagen.VerlaagAantal(id, prijs);
             return PartialView("IndexPartialItemsLijst", new IndexViewModel(winkelwagen.WinkelwagenLijnen, winkelwagen.TotaleWaarde));
         }
+
+        public IActionResult Checkout(Winkelwagen winkelwagen)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Totaal"] = winkelwagen.TotaleWaarde;
+            ViewData["Aantal"] = winkelwagen.AantalBonnen;
+            ViewData["ReturnUrl"] = "/Winkelwagen/Checkout";
+            return View();
+        }
+
     }
 }

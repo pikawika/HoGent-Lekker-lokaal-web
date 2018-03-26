@@ -89,7 +89,7 @@ namespace LekkerLokaal.Controllers
                 }
                 else
                 {
-                    ModelState.AddModelError(string.Empty, "Invalid login attempt.");
+                    ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
                     return View(model);
                 }
             }
@@ -247,7 +247,7 @@ namespace LekkerLokaal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, Voornaam = model.Voornaam, Achternaam = model.Familienaam };
                 var result = await _userManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -266,7 +266,8 @@ namespace LekkerLokaal.Controllers
                     var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
                     await _emailSender.SendEmailConfirmationAsync(model.Email, callbackUrl);
 
-                    //await _signInManager.SignInAsync(user, isPersistent: false);
+                    //Dit zorgt ervoor dat na registratie een gebruiker automatisch aangemeld wordt, momenteel enkel voor testen
+                    await _signInManager.SignInAsync(user, isPersistent: false);
                     _logger.LogInformation("User created a new account with password.");
                     return RedirectToLocal(returnUrl);
                 }
@@ -335,10 +336,12 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Logout()
+        public async Task<IActionResult> Logout(string returnUrl = null)
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
+            if (Url.IsLocalUrl(returnUrl) && returnUrl != null)
+                return Redirect(returnUrl);
             return RedirectToAction(nameof(HomeController.Index), "Home");
         }
 
@@ -426,6 +429,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> ConfirmEmail(string userId, string code)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (userId == null || code == null)
             {
                 return RedirectToAction(nameof(HomeController.Index), "Home");
