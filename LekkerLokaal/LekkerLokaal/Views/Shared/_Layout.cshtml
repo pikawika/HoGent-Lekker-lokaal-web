@@ -24,6 +24,7 @@
     <link rel="stylesheet" type="text/css" href="/vendors/slick/slick-theme.css" />
 </head>
 <body id="body" class="wide-layout preloader-active">
+
     <script src="~/js/jquery-1.12.3.min.js"></script>
     <div id="preloader" class="preloader">
         <div class="loader-cube">
@@ -34,261 +35,287 @@
         </div>
     </div>
     <div id="pageWrapper" class="page-wrapper">
-        <header id="mainHeader" class="main-header">
-            <div class="header-header bg-white">
-                <div class="container">
-                    <div class="row row-rl-0 row-tb-20 row-md-cell">
-                        <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
-                            <a asp-controller="Home" asp-action="Index" class="logo">
-                                <img src="/images/logo.png" alt="" width="150">
-                            </a>
-                        </div>
-                        <div class="header-search col-xs-12">
-                            <div class="row row-tb-10 ">
-                                <div class="col-sm-8">
-                                    <div class="search-form">
-                                        <div class="input-group">
-                                            <input type="text" name="ZoekKey" id="ZoekKey" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in...">
-                                            <div class="input-group-btn">
-                                                <div class="input-group">
-                                                    <select name="ZoekSoort" id="ZoekSoort" class="form-control input-lg search-select">
-                                                        <option value="Alles">Alles</option>
-                                                        <option value="Naam">Naam</option>
-                                                        <option value="Ligging">Ligging</option>
-                                                    </select>
-                                                    <div class="input-group-btn">
-                                                        <a onclick='Zoeken();' id="zoekKnop" class="btn btn-lg btn-search btn-block">
-                                                            <i class="fa fa-search font-16"></i>
-                                                        </a>
+        <div id="paginaWrapperVoorBlur">
+            <header id="mainHeader" class="main-header">
+                <div class="header-header bg-white">
+                    <div class="container">
+                        <div class="row row-rl-0 row-tb-20 row-md-cell">
+                            <div class="brand col-md-3 t-xs-center t-md-left valign-middle">
+                                <a asp-controller="Home" asp-action="Index" class="logo">
+                                    <img src="/images/logo.png" alt="" width="150">
+                                </a>
+                            </div>
+                            <div class="header-search col-xs-12">
+                                <div class="row row-tb-10 ">
+                                    <div class="col-sm-8">
+                                        <div class="search-form">
+                                            <div class="input-group">
+                                                <input type="text" name="ZoekKey" id="ZoekKey" class="form-control input-lg search-input" placeholder="Voer zoekopdracht in...">
+                                                <div class="input-group-btn">
+                                                    <div class="input-group">
+                                                        <select name="ZoekSoort" id="ZoekSoort" class="form-control input-lg search-select">
+                                                            <option value="Alles">Alles</option>
+                                                            <option value="Naam">Naam</option>
+                                                            <option value="Ligging">Ligging</option>
+                                                        </select>
+                                                        <div class="input-group-btn">
+                                                            <a onclick='Zoeken();' id="zoekKnop" class="btn btn-lg btn-search btn-block">
+                                                                <i class="fa fa-search font-16"></i>
+                                                            </a>
+                                                        </div>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <div class="float-right">
-                                            <a onclick="ChangeGeavanceerdZoeken()" data-toggle="collapse" id="GeavenceerdZoekenExpander" data-target="#advancedSearch">geavanceerd zoeken <i class="fas fa-arrow-down"></i></a>
-                                        </div>
-                                        <div id="advancedSearch" class="collapse mt-15">
-                                            <select name="Categorie" id="Categorie" class="input-sm">
-                                                <option value="">Categorie</option>
-                                                @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
-                                                {
-                                                    <option value="@categorie.Naam">@categorie.Naam</option>
-                                                }
-                                            </select>
-                                            <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
-                                    <div class="header-cart">
-                                        <a asp-controller="Winkelwagen" asp-action="Index">
-                                            <span class="icon lnr lnr-cart font-40"></span>
-                                            <div id="layout-winkelwagen-count">
-                                                @await Html.PartialAsync("winkelWagenCountPartial")
+                                            <div class="float-right">
+                                                <a onclick="ChangeGeavanceerdZoeken()" data-toggle="collapse" id="GeavenceerdZoekenExpander" data-target="#advancedSearch">geavanceerd zoeken <i class="fas fa-arrow-down"></i></a>
                                             </div>
-                                        </a>
+                                            <div id="advancedSearch" class="collapse mt-15">
+                                                <select name="Categorie" id="Categorie" class="input-sm">
+                                                    <option value="">Categorie</option>
+                                                    @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
+                                                    {
+                                                        <option value="@categorie.Naam">@categorie.Naam</option>
+                                                    }
+                                                </select>
+                                                <input type="number" name="MaxStartPrijs" id="MaxStartPrijs" class="input-sm" style="width: 90px" min="1" max="100000" placeholder="Max prijs">
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
+                                        <div class="header-cart">
+                                            <a asp-controller="Winkelwagen" asp-action="Index">
+                                                <span class="icon lnr lnr-cart font-40"></span>
+                                                <div id="layout-winkelwagen-count">
+                                                    @await Html.PartialAsync("winkelWagenCountPartial")
+                                                </div>
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="header-menu bg-blue">
-                <div class="container">
-                    <nav class="nav-bar">
-                        <div class="nav-header">
-                            <span class="nav-toggle" data-toggle="#header-navbar">
-                                <i></i>
-                                <i></i>
-                                <i></i>
-                            </span>
-                        </div>
-                        <div id="header-navbar" class="nav-collapse">
-                            <ul class="nav-menu">
-                                <li class="Home-List-Item">
-                                    <a asp-controller="Home" asp-action="Index">Home</a>
-                                </li>
-                                <li class="Categorieen-List-Item">
-                                    <a>Categorieën</a>
-                                    <ul>
-                                        @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
-                                        {
-                                            <li>
-                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Naam"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
-                                            </li>
-                                        }
-                                    </ul>
-                                </li>
-                                <li class="BestSellers-List-Item">
-                                    <a href="#">Best sellers</a>
-                                    <ul>
-                                        <li>
-                                            <a href="#">Meest verkocht</a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="25">Tot &euro; 25</a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="50">Tot &euro; 50</a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="75">Tot &euro; 75</a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="100">Tot &euro; 100</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li class="Aanbiedingen-List-Item">
-                                    <a asp-controller="Home" asp-action="Aanbiedingen">Aanbiedingen</a>
-                                </li>
-                                <li class="Over-List-Item">
-                                    <a asp-controller="Home" asp-action="About">Over ons</a>
-                                </li>
-                                <li class="Account-List-Item">
-                                    <a href="#">Account</a>
-                                    <ul>
-                                        <li>
-                                            <a asp-controller="Account" asp-action="Login">Meld aan</a>
-                                        </li>
-                                        <li>
-                                            <a asp-controller="Account" asp-action="Register">Registreer</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                            </ul>
-                        </div>
-                        <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
-                            <div class="header-cart visible-xs">
-                                <a asp-controller="Winkelwagen" asp-action="Index">
-                                    <i class="icon lnr lnr-cart font-40 cart-icon-xs color-white"></i>
-                                    <div class="cart-number-xs color-white" id="layout-winkelwagen-count">
-                                        @await Html.PartialAsync("winkelWagenCountPartial")
-                                    </div>
-                                </a>
+                <div class="header-menu bg-blue">
+                    <div class="container">
+                        <nav class="nav-bar">
+                            <div class="nav-header">
+                                <span class="nav-toggle" data-toggle="#header-navbar">
+                                    <i></i>
+                                    <i></i>
+                                    <i></i>
+                                </span>
                             </div>
-                            <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
-                        </div>
-                    </nav>
+                            <div id="header-navbar" class="nav-collapse">
+                                <ul class="nav-menu">
+                                    <li class="Home-List-Item">
+                                        <a asp-controller="Home" asp-action="Index">Home</a>
+                                    </li>
+                                    <li class="Categorieen-List-Item">
+                                        <a>Categorieën</a>
+                                        <ul>
+                                            @foreach (Categorie categorie in (IEnumerable<Categorie>)ViewData["AlleCategorien"])
+                                            {
+                                                <li>
+                                                    <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="Categorie" asp-route-ZoekKey="@categorie.Naam"><i class="fa @categorie.Icon"></i> - @categorie.Naam</a>
+                                                </li>
+                                            }
+                                        </ul>
+                                    </li>
+                                    <li class="BestSellers-List-Item">
+                                        <a href="#">Best sellers</a>
+                                        <ul>
+                                            <li>
+                                                <a href="#">Meest verkocht</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="25">Tot &euro; 25</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="50">Tot &euro; 50</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="75">Tot &euro; 75</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Home" asp-action="Zoeken" asp-route-ZoekSoort="*" asp-route-MaxStartPrijs="100">Tot &euro; 100</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li class="Aanbiedingen-List-Item">
+                                        <a asp-controller="Home" asp-action="Aanbiedingen">Aanbiedingen</a>
+                                    </li>
+                                    <li class="Over-List-Item">
+                                        <a asp-controller="Home" asp-action="About">Over ons</a>
+                                    </li>
+                                    <li class="Account-List-Item">
+                                        <a href="#">Account</a>
+                                        <ul>
+                                            <li>
+                                                <a asp-controller="Account" asp-action="Login">Meld aan</a>
+                                            </li>
+                                            <li>
+                                                <a asp-controller="Account" asp-action="Register">Registreer</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
+                                <div class="header-cart visible-xs">
+                                    <a asp-controller="Winkelwagen" asp-action="Index">
+                                        <i class="icon lnr lnr-cart font-40 cart-icon-xs color-white"></i>
+                                        <div class="cart-number-xs color-white" id="layout-winkelwagen-count">
+                                            @await Html.PartialAsync("winkelWagenCountPartial")
+                                        </div>
+                                    </a>
+                                </div>
+                                <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                            </div>
+                        </nav>
+                    </div>
                 </div>
-            </div>
-        </header>
+            </header>
 
-        @switch (ViewData["Navbar"])
-        {
-            case "Home":
-                <script>$(".Home-List-Item").addClass("active");</script>
-                break;
-            case "Zoeken":
-                <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
-                break;
-            case "Aanbiedingen":
-                <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
-                break;
-            case "Over":
-                <script>$(".Over-List-Item").addClass("active");</script>
-                break;
-            case "Account":
-                <script>
-                    $(".Account-List-Item").addClass("active");</script>
-                break;
-            case "Handelaar":
-                <script>$(".Handelaar-List-Item").addClass("active");</script>
-                break;
-            case "BestSellers":
-                <script>$(".BestSellers-List-Item").addClass("active");</script>
-                break;
-            case "None":
-                break;
-            default:
-                <script>$(".Home-List-Item").addClass("active");</script>
-                break;
-        }
-        @RenderBody()
+            @switch (ViewData["Navbar"])
+            {
+                case "Home":
+                    <script>$(".Home-List-Item").addClass("active");</script>
+                    break;
+                case "Zoeken":
+                    <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
+                    break;
+                case "Aanbiedingen":
+                    <script>$(".Aanbiedingen-List-Item").addClass("active");</script>
+                    break;
+                case "Over":
+                    <script>$(".Over-List-Item").addClass("active");</script>
+                    break;
+                case "Account":
+                    <script>
+                        $(".Account-List-Item").addClass("active");</script>
+                    break;
+                case "Handelaar":
+                    <script>$(".Handelaar-List-Item").addClass("active");</script>
+                    break;
+                case "BestSellers":
+                    <script>$(".BestSellers-List-Item").addClass("active");</script>
+                    break;
+                case "None":
+                    break;
+                default:
+                    <script>$(".Home-List-Item").addClass("active");</script>
+                    break;
+            }
+            @RenderBody()
+            <section class="footer-top-area pt-30 pb-10 pos-r bg-blue">
+                <div class="container">
+                    <div class="row row-tb-20">
+                        <div class="col-xs-12">
+                            <p class="text-center" style="color: white">Wij aanvaarden volgende betaalmethoden:</p>
+                            <div class="payment-methods t-center">
+                                <span><img src="/images/icons/payment/paypal.jpg" alt=""></span>
+                                <span><img src="/images/icons/payment/visa.jpg" alt=""></span>
+                                <span><img src="/images/icons/payment/mastercard.jpg" alt=""></span>
+                                <span><img src="/images/icons/payment/discover.jpg" alt=""></span>
+                                <span><img src="/images/icons/payment/american.jpg" alt=""></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <footer id="mainFooter" class="main-footer">
+                <div class="container">
+                    <div class="row">
+                        <p>
+                            Copyright &copy;
+                            <script language="javascript" type="text/javascript">
+                                var today = new Date()
+                                var year = today.getFullYear()
+                                document.write(year)
+                            </script> Lekker Lokaal. Alle rechten voorbehouden.
+                        </p>
+                    </div>
+                </div>
+            </footer>
+        </div>
+        <div id="backTop" class="back-top is-hidden-sm-down">
+            <i class="fa fa-angle-up" aria-hidden="true"></i>
+        </div>
+        <script>
+            function ChangeGeavanceerdZoeken() {
+                if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
+                    document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
+                }
+                else {
+                    document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
+                }
+            }
+        </script>
+        <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
+        <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="~/vendors/modernizr/modernizr-2.6.2.min.js"></script>
+        <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
+        <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
+        <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
+        <script type="text/javascript" src="~/js/wow.js"></script>
+        <script type="text/javascript" src="~/js/customFunctions.js"></script>
+        <script type="text/javascript" src="~/js/main.js"></script>
+        <script type='text/javascript'>
+            function Zoeken() {
+                var ZoekSoort = "";
+                var ZoekKey = "";
+                var Categorie = "";
+                var MaxStartPrijs = "";
+
+                if (document.getElementById("ZoekSoort").value != "")
+                    ZoekSoort = document.getElementById("ZoekSoort").value;
+                if (document.getElementById("ZoekKey").value != "")
+                    ZoekKey = "&ZoekKey=" + document.getElementById("ZoekKey").value;
+                if (document.getElementById("Categorie").value != "")
+                    Categorie = "&Categorie=" + document.getElementById("Categorie").value;
+                if (document.getElementById("MaxStartPrijs").value != "")
+                    MaxStartPrijs = "&MaxStartPrijs=" + document.getElementById("MaxStartPrijs").value;
+                window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + ZoekKey + Categorie + MaxStartPrijs;
+            }
+        </script>
+        <script>
+            $("#ZoekKey").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    $("#zoekKnop").click();
+                }
+            });
+            $("#MaxStartPrijs").keyup(function (event) {
+                if (event.keyCode === 13) {
+                    $("#zoekKnop").click();
+                }
+            });
+        </script>
     </div>
-    <section class="footer-top-area pt-30 pb-10 pos-r bg-blue">
-        <div class="container">
-            <div class="row row-tb-20">
-                <div class="col-xs-12">
-                    <p class="text-center" style="color: white">Wij aanvaarden volgende betaalmethoden:</p>
-                    <div class="payment-methods t-center">
-                        <span><img src="/images/icons/payment/paypal.jpg" alt=""></span>
-                        <span><img src="/images/icons/payment/visa.jpg" alt=""></span>
-                        <span><img src="/images/icons/payment/mastercard.jpg" alt=""></span>
-                        <span><img src="/images/icons/payment/discover.jpg" alt=""></span>
-                        <span><img src="/images/icons/payment/american.jpg" alt=""></span>
+    <div class="addedToWinkelmandPopupContainerBackground">
+        <div id="addedToWinkelmandPopup" class="modal addedToWinkelModal">
+            <div id="addedToWinkelModalContent" class="addedToWinkelModalContent">
+                <span class="closeWinkelMandPopup" id="closeWinkelMandPopup">&times;</span>
+                <img id="winkelMandPopupBonAfbeelding" class="hidden-xs col-lg-7">
+                <div class="col-xs-12 col-lg-5">
+                    <h3 class="color-blue winkelMandPopupBonNaam" id="winkelMandPopupBonNaam"> <i class="far fa-check-circle font-26"></i> Titel</h3>
+                    <br>
+                    <h4 id="winkelMandPopupBonWaarde">- Waarde: € 25</h4>
+                    <br>
+                    <h4 id="winkelMandPopupBonAantal">- Aantal: 1</h4>
+                    <div class="col-xs-12 showcode mt-20">
+                        <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-sm btn-block">Verder naar bestellen <i class="fas fa-arrow-right"></i></a>
+                    </div>
+                    <div class="col-xs-12 showcode mt-20">
+                        <a class="btn btn-sm btn-block" onclick="verbergAddedToWinkelmandPopup();"><i class="fas fa-arrow-left"></i> Blijf verder winkelen</a>
                     </div>
                 </div>
             </div>
         </div>
-    </section>
-    <footer id="mainFooter" class="main-footer">
-        <div class="container">
-            <div class="row">
-                <p>
-                    Copyright &copy;
-                    <script language="javascript" type="text/javascript">
-                        var today = new Date()
-                        var year = today.getFullYear()
-                        document.write(year)
-                    </script> Lekker Lokaal. Alle rechten voorbehouden.
-                </p>
-            </div>
-        </div>
-    </footer>
-    <div id="backTop" class="back-top is-hidden-sm-down">
-        <i class="fa fa-angle-up" aria-hidden="true"></i>
     </div>
-    <script>
-        function ChangeGeavanceerdZoeken() {
-            if (document.getElementById("GeavenceerdZoekenExpander").innerHTML != 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>') {
-                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-up"></i>'
-            }
-            else {
-                document.getElementById("GeavenceerdZoekenExpander").innerHTML = 'geavanceerd zoeken <i class="fas fa-arrow-down"></i>'
-            }
-        }
-    </script>
-    <script type="text/javascript" src="/vendors/slick/slick.min.js"></script>
-    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
-    <script type="text/javascript" src="~/vendors/modernizr/modernizr-2.6.2.min.js"></script>
-    <script type="text/javascript" src="~/vendors/owl-carousel/owl.carousel.min.js"></script>
-    <script type="text/javascript" src="~/vendors/flexslider/jquery.flexslider-min.js"></script>
-    <script type="text/javascript" src="~/vendors/countdown/jquery.countdown.js"></script>
-    <script type="text/javascript" src="~/js/wow.js"></script>
-    <script type="text/javascript" src="~/js/main.js"></script>
-    <script type='text/javascript'>
-        function Zoeken() {
-            var ZoekSoort = "";
-            var ZoekKey = "";
-            var Categorie = "";
-            var MaxStartPrijs = "";
-
-            if (document.getElementById("ZoekSoort").value != "")
-                ZoekSoort = document.getElementById("ZoekSoort").value;
-            if (document.getElementById("ZoekKey").value != "")
-                ZoekKey = "&ZoekKey=" + document.getElementById("ZoekKey").value;
-            if (document.getElementById("Categorie").value != "")
-                Categorie = "&Categorie=" + document.getElementById("Categorie").value;
-            if (document.getElementById("MaxStartPrijs").value != "")
-                MaxStartPrijs = "&MaxStartPrijs=" + document.getElementById("MaxStartPrijs").value;
-            window.location.href = "/Home/Zoeken?ZoekSoort=" + ZoekSoort + ZoekKey + Categorie + MaxStartPrijs;
-        }
-    </script>
-    <script>
-        $("#ZoekKey").keyup(function (event) {
-            if (event.keyCode === 13) {
-                $("#zoekKnop").click();
-            }
-        });
-        $("#MaxStartPrijs").keyup(function (event) {
-            if (event.keyCode === 13) {
-                $("#zoekKnop").click();
-            }
-        });
-    </script>
 </body>
+<!-- Modal verdergaan met winkelen -->
+
 </html>
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")

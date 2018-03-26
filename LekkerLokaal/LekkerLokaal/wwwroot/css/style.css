@@ -1,6 +1,72 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+
+.winkelMandPopupBonNaam {
+    margin-top: -40px;
+    margin-right: 5px;
+}
+
+.addedToWinkelmandPopupContainerBackground {
+    width: 100%;
+    height: 100%;
+}
+
+.blurOverlay {
+    -webkit-filter: blur(3px);
+    -moz-filter: blur(3px);
+    -o-filter: blur(3px);
+    -ms-filter: blur(3px);
+    filter: blur(3px);
+    width: 100%;
+    height: 100%;
+    -webkit-transition: all 0.5s ease;
+    -moz-transition: all 0.5s ease;
+    -o-transition: all 0.5s ease;
+    transition: all 0.5s ease;
+}
+
+.addedToWinkelModal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 100px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    z-index: 9999;
+}
+
+
+.addedToWinkelModalContent {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 4px solid #1E90FF;
+    border-radius: 25px;
+    max-width: 50%;
+    max-height: 50%;
+    left: 25%;
+    top: 25%;
+    overflow: auto;
+}
+
+.closeWinkelMandPopup {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+    .closeWinkelMandPopup:hover,
+    .closeWinkelMandPopup:focus {
+        color: #000;
+        text-decoration: none;
+        cursor: pointer;
+    }
+
 .wow {
     z-index: 100;
 }
