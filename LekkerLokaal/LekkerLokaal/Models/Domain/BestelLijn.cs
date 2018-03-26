@@ -9,5 +9,6 @@ namespace LekkerLokaal.Models.Domain
     {
         public int BestelLijnId { get; private set; }
         public int BestellingId { get; set; }
+        public Geldigheid Geldigheid { get; set; }
     }
 }

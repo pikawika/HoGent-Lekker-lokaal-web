@@ -32,7 +32,8 @@ namespace LekkerLokaal.Models.Domain
                         Bon = lijn.Bon,
                         Aantal = 1,
                         Prijs = lijn.Prijs,
-                        BestellingId = BestellingId
+                        BestellingId = BestellingId,
+                        Geldigheid = Geldigheid.Geldig
                     });
                 }
             }
