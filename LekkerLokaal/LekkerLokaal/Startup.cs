@@ -51,6 +51,9 @@ namespace LekkerLokaal
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
 
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
             {
                 // configure identity options
