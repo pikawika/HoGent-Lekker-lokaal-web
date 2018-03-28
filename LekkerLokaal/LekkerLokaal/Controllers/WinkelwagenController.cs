@@ -39,7 +39,6 @@ namespace LekkerLokaal.Controllers
             {
                 winkelwagen.VoegLijnToe(bon, Aantal, Prijs);
             }
-            //return RedirectToAction(nameof(Index), "Home");
             return RedirectToAction(nameof(Index));
         }
 

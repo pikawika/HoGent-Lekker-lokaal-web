@@ -24,7 +24,6 @@ namespace LekkerLokaal
             var builder = new ConfigurationBuilder();
             builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
-            //Configuration = configuration;
             foreach (var item in configuration.AsEnumerable())
             {
                 Configuration[item.Key] = item.Value;
