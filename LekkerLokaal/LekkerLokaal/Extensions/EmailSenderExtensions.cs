@@ -11,8 +11,6 @@ namespace LekkerLokaal.Services
     {
         public static Task SendEmailConfirmationAsync(this IEmailSender emailSender, string email, string link, string voornaam)
         {
-            //return emailSender.SendEmailAsync(email, "Bevestig uw e-mailadres",
-            //    $"Please confirm your account by clicking this link: <a href='{HtmlEncoder.Default.Encode(link)}'>link</a>");
             return emailSender.SendEmailAsync(email, "Bevestig uw e-mailadres",
                 $"<p>Hallo {voornaam}!</p>" +
                 $"<p>Bedankt voor uw registratie bij Lekker Lokaal.</p>" +
