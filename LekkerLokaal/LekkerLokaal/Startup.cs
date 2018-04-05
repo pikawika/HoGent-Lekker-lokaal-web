@@ -137,7 +137,7 @@ namespace LekkerLokaal
                     name: "Account",
                     template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}/{returnUrl}");
             });
-            //datainit.InitializeData().Wait();
+            datainit.InitializeData().Wait();
         }
     }
 }

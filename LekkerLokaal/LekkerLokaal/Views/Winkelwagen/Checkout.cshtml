@@ -6,6 +6,7 @@
 
 @{
     ViewData["Title"] = "Bestelling";
+    var user = UserManager.GetUserAsync(User);
 }
 
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
@@ -65,7 +66,7 @@
                         <section class="section checkout-area panel prl-30 pt-20 pb-40">
                             <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
                             <div class="mb-30">
-                                <p>De bestelling zal worden uitgevoerd op naam van @UserManager.GetUserName(User).</p>
+                                <p>De bestelling zal worden uitgevoerd op naam van @user.Result.Voornaam @user.Result.Achternaam.</p>
                                 <form asp-controller="Account" asp-action="Logout" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                                     <label class="color-mid">
                                         Bent u dit niet?

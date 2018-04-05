@@ -13,6 +13,7 @@ using Microsoft.Extensions.Options;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.ManageViewModels;
 using LekkerLokaal.Services;
+using LekkerLokaal.Models.Domain;
 
 namespace LekkerLokaal.Controllers
 {
@@ -25,6 +26,7 @@ namespace LekkerLokaal.Controllers
         private readonly IEmailSender _emailSender;
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
+        private readonly ICategorieRepository _categorieRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -34,13 +36,15 @@ namespace LekkerLokaal.Controllers
           SignInManager<ApplicationUser> signInManager,
           IEmailSender emailSender,
           ILogger<ManageController> logger,
-          UrlEncoder urlEncoder)
+          UrlEncoder urlEncoder,
+          ICategorieRepository categorieRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _emailSender = emailSender;
             _logger = logger;
             _urlEncoder = urlEncoder;
+            _categorieRepository = categorieRepository;
         }
 
         [TempData]
@@ -49,6 +53,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -71,6 +77,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Index(IndexViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -110,6 +117,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SendVerificationEmail(IndexViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -124,7 +133,7 @@ namespace LekkerLokaal.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
             var email = user.Email;
-            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl);
+            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl, model.Username);
 
             StatusMessage = "Verification email sent. Please check your email.";
             return RedirectToAction(nameof(Index));
@@ -133,6 +142,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> ChangePassword()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -153,6 +164,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ChangePassword(ChangePasswordViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -181,6 +194,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> SetPassword()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -202,6 +217,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> SetPassword(SetPasswordViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             if (!ModelState.IsValid)
             {
                 return View(model);
@@ -229,6 +246,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> ExternalLogins()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -249,6 +268,7 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> LinkLogin(string provider)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
@@ -261,6 +281,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> LinkLoginCallback()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -290,6 +312,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RemoveLogin(RemoveLoginViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -310,6 +334,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> TwoFactorAuthentication()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -329,6 +355,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> Disable2faWarning()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -347,6 +375,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Disable2fa()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -366,6 +396,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> EnableAuthenticator()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -382,6 +414,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -418,6 +452,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult ShowRecoveryCodes()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var recoveryCodes = (string[])TempData[RecoveryCodesKey];
             if (recoveryCodes == null)
             {
@@ -431,6 +467,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult ResetAuthenticatorWarning()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View(nameof(ResetAuthenticator));
         }
 
@@ -438,6 +475,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> ResetAuthenticator()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -454,6 +493,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public async Task<IActionResult> GenerateRecoveryCodesWarning()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
@@ -472,6 +513,8 @@ namespace LekkerLokaal.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> GenerateRecoveryCodes()
         {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
             {
