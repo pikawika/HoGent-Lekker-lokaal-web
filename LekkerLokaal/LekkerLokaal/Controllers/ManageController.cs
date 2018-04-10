@@ -14,6 +14,7 @@ using LekkerLokaal.Models;
 using LekkerLokaal.Models.ManageViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LekkerLokaal.Controllers
 {
@@ -27,6 +28,7 @@ namespace LekkerLokaal.Controllers
         private readonly ILogger _logger;
         private readonly UrlEncoder _urlEncoder;
         private readonly ICategorieRepository _categorieRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -37,7 +39,8 @@ namespace LekkerLokaal.Controllers
           IEmailSender emailSender,
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
-          ICategorieRepository categorieRepository)
+          ICategorieRepository categorieRepository,
+          IGebruikerRepository gebruikerRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,6 +48,7 @@ namespace LekkerLokaal.Controllers
             _logger = logger;
             _urlEncoder = urlEncoder;
             _categorieRepository = categorieRepository;
+            _gebruikerRepository = gebruikerRepository;
         }
 
         [TempData]
@@ -54,6 +58,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Index()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Geslacht"] = Geslachten();
 
             var user = await _userManager.GetUserAsync(User);
             if (user == null)
@@ -61,16 +66,30 @@ namespace LekkerLokaal.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
+
             var model = new IndexViewModel
             {
                 Username = user.UserName,
                 Email = user.Email,
-                PhoneNumber = user.PhoneNumber,
+                Voornaam = gebruiker.Voornaam,
+                Familienaam = gebruiker.Familienaam,
+                Geslacht = gebruiker.Geslacht,
                 IsEmailConfirmed = user.EmailConfirmed,
                 StatusMessage = StatusMessage
             };
 
             return View(model);
+        }
+
+        private SelectList Geslachten()
+        {
+            var geslachten = new List<Geslacht>();
+            foreach (Geslacht geslacht in Enum.GetValues(typeof(Geslacht)))
+            {
+                geslachten.Add(geslacht);
+            }
+            return new SelectList(geslachten);
         }
 
         [HttpPost]
@@ -89,6 +108,8 @@ namespace LekkerLokaal.Controllers
                 throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
             }
 
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
+
             var email = user.Email;
             if (model.Email != email)
             {
@@ -97,19 +118,32 @@ namespace LekkerLokaal.Controllers
                 {
                     throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
                 }
+                gebruiker.Emailadres = model.Email;
+                _gebruikerRepository.SaveChanges();
             }
 
-            var phoneNumber = user.PhoneNumber;
-            if (model.PhoneNumber != phoneNumber)
+            var voornaam = gebruiker.Voornaam;
+            if (model.Voornaam != voornaam)
             {
-                var setPhoneResult = await _userManager.SetPhoneNumberAsync(user, model.PhoneNumber);
-                if (!setPhoneResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting phone number for user with ID '{user.Id}'.");
-                }
+                gebruiker.Voornaam = model.Voornaam;
+                _gebruikerRepository.SaveChanges();
             }
 
-            StatusMessage = "Your profile has been updated";
+            var familienaam = gebruiker.Familienaam;
+            if (model.Familienaam != familienaam)
+            {
+                gebruiker.Familienaam = model.Familienaam;
+                _gebruikerRepository.SaveChanges();
+            }
+
+            var geslacht = gebruiker.Geslacht;
+            if (model.Geslacht != geslacht)
+            {
+                gebruiker.Geslacht = model.Geslacht;
+                _gebruikerRepository.SaveChanges();
+            }
+
+            StatusMessage = "Uw gegevens werden succesvol bijgewerkt.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -135,7 +169,7 @@ namespace LekkerLokaal.Controllers
             var email = user.Email;
             await _emailSender.SendEmailConfirmationAsync(email, callbackUrl, model.Username);
 
-            StatusMessage = "Verification email sent. Please check your email.";
+            StatusMessage = "Er is een nieuwe bevestigingsmail naar uw e-mailadres verzonden.";
             return RedirectToAction(nameof(Index));
         }
 
@@ -186,7 +220,7 @@ namespace LekkerLokaal.Controllers
 
             await _signInManager.SignInAsync(user, isPersistent: false);
             _logger.LogInformation("User changed their password successfully.");
-            StatusMessage = "Your password has been changed.";
+            StatusMessage = "Uw wachtwoord is succesvol gewijzigd.";
 
             return RedirectToAction(nameof(ChangePassword));
         }
@@ -238,7 +272,7 @@ namespace LekkerLokaal.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "Your password has been set.";
+            StatusMessage = "Uw wachtwoord werd opnieuw ingesteld.";
 
             return RedirectToAction(nameof(SetPassword));
         }
@@ -304,7 +338,7 @@ namespace LekkerLokaal.Controllers
             // Clear the existing external cookie to ensure a clean login process
             await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
 
-            StatusMessage = "The external login was added.";
+            StatusMessage = "De externe login werd succesvol toegevoegd.";
             return RedirectToAction(nameof(ExternalLogins));
         }
 
@@ -327,211 +361,8 @@ namespace LekkerLokaal.Controllers
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
-            StatusMessage = "The external login was removed.";
+            StatusMessage = "De externe login werd succesvol verwijderd.";
             return RedirectToAction(nameof(ExternalLogins));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> TwoFactorAuthentication()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var model = new TwoFactorAuthenticationViewModel
-            {
-                HasAuthenticator = await _userManager.GetAuthenticatorKeyAsync(user) != null,
-                Is2faEnabled = user.TwoFactorEnabled,
-                RecoveryCodesLeft = await _userManager.CountRecoveryCodesAsync(user),
-            };
-
-            return View(model);
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> Disable2faWarning()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
-            }
-
-            return View(nameof(Disable2fa));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Disable2fa()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var disable2faResult = await _userManager.SetTwoFactorEnabledAsync(user, false);
-            if (!disable2faResult.Succeeded)
-            {
-                throw new ApplicationException($"Unexpected error occured disabling 2FA for user with ID '{user.Id}'.");
-            }
-
-            _logger.LogInformation("User with ID {UserId} has disabled 2fa.", user.Id);
-            return RedirectToAction(nameof(TwoFactorAuthentication));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> EnableAuthenticator()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            var model = new EnableAuthenticatorViewModel();
-            await LoadSharedKeyAndQrCodeUriAsync(user, model);
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EnableAuthenticator(EnableAuthenticatorViewModel model)
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!ModelState.IsValid)
-            {
-                await LoadSharedKeyAndQrCodeUriAsync(user, model);
-                return View(model);
-            }
-
-            // Strip spaces and hypens
-            var verificationCode = model.Code.Replace(" ", string.Empty).Replace("-", string.Empty);
-
-            var is2faTokenValid = await _userManager.VerifyTwoFactorTokenAsync(
-                user, _userManager.Options.Tokens.AuthenticatorTokenProvider, verificationCode);
-
-            if (!is2faTokenValid)
-            {
-                ModelState.AddModelError("Code", "Verification code is invalid.");
-                await LoadSharedKeyAndQrCodeUriAsync(user, model);
-                return View(model);
-            }
-
-            await _userManager.SetTwoFactorEnabledAsync(user, true);
-            _logger.LogInformation("User with ID {UserId} has enabled 2FA with an authenticator app.", user.Id);
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            TempData[RecoveryCodesKey] = recoveryCodes.ToArray();
-
-            return RedirectToAction(nameof(ShowRecoveryCodes));
-        }
-
-        [HttpGet]
-        public IActionResult ShowRecoveryCodes()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var recoveryCodes = (string[])TempData[RecoveryCodesKey];
-            if (recoveryCodes == null)
-            {
-                return RedirectToAction(nameof(TwoFactorAuthentication));
-            }
-
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes };
-            return View(model);
-        }
-
-        [HttpGet]
-        public IActionResult ResetAuthenticatorWarning()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            return View(nameof(ResetAuthenticator));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ResetAuthenticator()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            await _userManager.SetTwoFactorEnabledAsync(user, false);
-            await _userManager.ResetAuthenticatorKeyAsync(user);
-            _logger.LogInformation("User with id '{UserId}' has reset their authentication app key.", user.Id);
-
-            return RedirectToAction(nameof(EnableAuthenticator));
-        }
-
-        [HttpGet]
-        public async Task<IActionResult> GenerateRecoveryCodesWarning()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' because they do not have 2FA enabled.");
-            }
-
-            return View(nameof(GenerateRecoveryCodes));
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> GenerateRecoveryCodes()
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            var user = await _userManager.GetUserAsync(User);
-            if (user == null)
-            {
-                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
-            }
-
-            if (!user.TwoFactorEnabled)
-            {
-                throw new ApplicationException($"Cannot generate recovery codes for user with ID '{user.Id}' as they do not have 2FA enabled.");
-            }
-
-            var recoveryCodes = await _userManager.GenerateNewTwoFactorRecoveryCodesAsync(user, 10);
-            _logger.LogInformation("User with ID {UserId} has generated new 2FA recovery codes.", user.Id);
-
-            var model = new ShowRecoveryCodesViewModel { RecoveryCodes = recoveryCodes.ToArray() };
-
-            return View(nameof(ShowRecoveryCodes), model);
         }
 
         #region Helpers
@@ -559,28 +390,6 @@ namespace LekkerLokaal.Controllers
             }
 
             return result.ToString().ToLowerInvariant();
-        }
-
-        private string GenerateQrCodeUri(string email, string unformattedKey)
-        {
-            return string.Format(
-                AuthenticatorUriFormat,
-                _urlEncoder.Encode("LekkerLokaal"),
-                _urlEncoder.Encode(email),
-                unformattedKey);
-        }
-
-        private async Task LoadSharedKeyAndQrCodeUriAsync(ApplicationUser user, EnableAuthenticatorViewModel model)
-        {
-            var unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            if (string.IsNullOrEmpty(unformattedKey))
-            {
-                await _userManager.ResetAuthenticatorKeyAsync(user);
-                unformattedKey = await _userManager.GetAuthenticatorKeyAsync(user);
-            }
-
-            model.SharedKey = FormatKey(unformattedKey);
-            model.AuthenticatorUri = GenerateQrCodeUri(user.Email, unformattedKey);
         }
 
         #endregion

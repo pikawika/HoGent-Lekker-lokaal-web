@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LekkerLokaal.Models.Domain;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -12,13 +13,20 @@ namespace LekkerLokaal.Models.ManageViewModels
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} is verplicht.")]
         [EmailAddress]
+        [Display(Name = "E-mailadres")]
         public string Email { get; set; }
 
-        [Phone]
-        [Display(Name = "Phone number")]
-        public string PhoneNumber { get; set; }
+        [Required(ErrorMessage = "{0} is verplicht.")]
+        [DataType(DataType.Text)]
+        public string Voornaam { get; set; }
+
+        [Required(ErrorMessage = "{0} is verplicht.")]
+        [DataType(DataType.Text)]
+        public string Familienaam { get; set; }
+
+        public Geslacht Geslacht { get; set; }
 
         public string StatusMessage { get; set; }
     }
