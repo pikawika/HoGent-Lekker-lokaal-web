@@ -25,30 +25,5 @@ namespace LekkerLokaal.Controllers
             PaymentResponse payment = await this._paymentClient.GetPaymentAsync(id);
             return this.Redirect(payment.Links.PaymentUrl);
         }
-
-        [HttpGet]
-        public ActionResult Create()
-        {
-            PaymentRequestModel payment = new PaymentRequestModel();
-            return this.View(payment);
-        }
-
-        [HttpPost]
-        public async Task<ActionResult> Create(PaymentRequestModel paymentRequestModel)
-        {
-            if (this.ModelState.IsValid)
-            {
-                PaymentRequest paymentRequest = new PaymentRequest();
-                paymentRequest.Amount = paymentRequestModel.Amount;
-                paymentRequest.Description = paymentRequestModel.Description;
-                paymentRequest.RedirectUrl = paymentRequestModel.RedirectUrl;
-                await this._paymentClient.CreatePaymentAsync(paymentRequest);
-
-                return this.RedirectToAction("Index");
-            }
-
-            return this.View(paymentRequestModel);
-        }
-
     }
 }
