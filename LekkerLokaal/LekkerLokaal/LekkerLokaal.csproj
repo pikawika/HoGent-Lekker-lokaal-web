@@ -54,6 +54,7 @@
   <ItemGroup>
     <Folder Include="Data\Mappers\" />
     <Folder Include="wwwroot\images\temp\" />
+    <Folder Include="wwwroot\NewFolder\" />
     <Folder Include="wwwroot\pdf\" />
   </ItemGroup>
 
