@@ -1,6 +1,10 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.bg-light-blue {
+    background-color: #1E90FF !important;
+}
+
 .btntop3:hover {
     color: #1E90FF;
     -webkit-transition: all 0.5s ease;
@@ -1031,7 +1035,7 @@
 .nav-menu-fixed.active > a,
 .nav-menu > li:hover > a,
 .nav-menu > li.active > a {
-    background-color: #1E90FF;
+    background-color: #006ad1;
 }
 
 .nav-menu > li > ul a {
