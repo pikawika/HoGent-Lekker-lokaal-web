@@ -1,0 +1,145 @@
+﻿
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lekker Lokaal - @ViewData["Title"]</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <!-- bootstrap-css -->
+    <link href="~/css/bootstrap.min.css" rel="stylesheet">
+    <!-- //bootstrap-css -->
+    <!-- Custom CSS -->
+    <link href="~/admin/css/style.css" rel='stylesheet' type='text/css' />
+    <link href="~/admin/css/style-responsive.css" rel="stylesheet" />
+    <!-- font CSS -->
+    <link href='https://fonts.googleapis.com/css?family=Roboto:400,100,100italic,300,300italic,400italic,500,500italic,700,700italic,900,900italic' rel='stylesheet' type='text/css'>
+    <!-- font-awesome icons -->
+    <link rel="stylesheet" href="~/admin/css/font.css" type="text/css" />
+    <link href="~/vendors/font-awesome/css/fontawesome-all.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="~/admin/css/morris.css" type="text/css" />
+    <!-- //font-awesome icons -->
+    <script src="~/admin/js/jquery2.0.3.min.js"></script>
+    <script src="~/admin/js/raphael-min.js"></script>
+    <script src="~/admin/js/morris.js"></script>
+</head>
+
+<body>
+    <section id="container">
+        <!--header start-->
+        <header class="header fixed-top clearfix">
+            <!--logo start-->
+            <div class="brand">
+                <a href="index.html" class="logo">L L</a>
+                <div class="sidebar-toggle-box">
+                    <div class="fa fa-bars"></div>
+                </div>
+            </div>
+            <!--logo end-->
+            <div class="top-nav clearfix">
+                <!--search & user info start-->
+                <ul class="nav pull-right top-menu">
+                    <!-- user login dropdown start-->
+                    <li class="dropdown">
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <img alt="" src="images/2.png">
+                            <span class="username">Gebruiker</span>
+                            <b class="caret"></b>
+                        </a>
+                        <ul class="dropdown-menu extended logout">
+                            <li><a><i class=" fas fa-cogs"></i>Instellingen</a></li>
+                            <li><a><i class="fas fa-sign-out-alt"></i>Afmelden</a></li>
+                        </ul>
+                    </li>
+                    <!-- user login dropdown end -->
+
+                </ul>
+                <!--search & user info end-->
+            </div>
+        </header>
+        <!--header end-->
+        <!--sidebar start-->
+        <aside>
+            <div id="sidebar" class="nav-collapse">
+                <!-- sidebar menu start-->
+                <div class="leftside-navigation">
+                    <ul class="sidebar-menu" id="nav-accordion">
+                        <li>
+                            <a asp-controller="Admin" asp-action="Dashboard">
+                                <i class="fas fa-home"></i>
+                                <span>Home</span>
+                            </a>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="#">
+                                <i class="fas fa-handshake"></i>
+                                <span>Handelaars beheren</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a><i class="fas fa-user-plus"></i> Handelaarsverzoeken</a></li>
+                                <li><a><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
+                                <li><a><i class="fas fa-edit"></i> Handelaar bewerken</a></li>
+                            </ul>
+                        </li>
+                        <li class="sub-menu">
+                            <a href="#">
+                                <i class="fas fa-gift"></i>
+                                <span>Cadeaubonnen beheren</span>
+                            </a>
+                            <ul class="sub">
+                                <li><a><i class="fas fa-user-plus"></i> Cadeaubonverzoeken</a></li>
+                                <li><a><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
+                                <li><a><i class="fas fa-edit"></i> Cadeaubon bewerken</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="VerkochteCadeaubonnen">
+                                <i class="fas fa-cloud-download-alt"></i>
+                                <span>Verkochte cadeaubonnen</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a asp-controller="Admin" asp-action="UitbetaaldeCadeaubonnen">
+                                <i class="fas fa-cloud-upload-alt"></i>
+                                <span>Uitbetaalde cadeaubonnen</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <!-- sidebar menu end-->
+            </div>
+        </aside>
+        <!--sidebar end-->
+        <!--main content start-->
+        <section id="main-content">
+
+            @RenderBody()
+
+
+            <!-- footer -->
+            <div class="footer">
+                <div class="wthree-copyright">
+                    <p>
+                        Copyright &copy;
+                        <script language="javascript" type="text/javascript">
+                            var today = new Date()
+                            var year = today.getFullYear()
+                            document.write(year)
+                        </script> Lekker Lokaal. Alle rechten voorbehouden.
+                    </p>
+                </div>
+            </div>
+            <!-- / footer -->
+        </section>
+        <!--main content end-->
+    </section>
+    <script type="text/javascript" src="~/js/bootstrap.min.js"></script>
+    <script src="~/admin/js/jquery.dcjqaccordion.2.7.js"></script>
+    <script src="~/admin/js/scripts.js"></script>
+    <script src="~/admin/js/jquery.slimscroll.js"></script>
+    <script src="~/admin/js/jquery.nicescroll.js"></script>
+    <script src="~/admin/js/jquery.scrollTo.js"></script>
+</body>
+
+</html>
+
