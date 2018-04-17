@@ -111,16 +111,6 @@ namespace LekkerLokaal.Controllers
             var gebruiker = _gebruikerRepository.GetBy(user.Email);
 
             var email = user.Email;
-            if (model.Email != email)
-            {
-                var setEmailResult = await _userManager.SetEmailAsync(user, model.Email);
-                if (!setEmailResult.Succeeded)
-                {
-                    throw new ApplicationException($"Unexpected error occurred setting email for user with ID '{user.Id}'.");
-                }
-                gebruiker.Emailadres = model.Email;
-                _gebruikerRepository.SaveChanges();
-            }
 
             var voornaam = gebruiker.Voornaam;
             if (model.Voornaam != voornaam)
