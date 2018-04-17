@@ -1,13 +1,3 @@
-/*
- * DC jQuery Vertical Accordion Menu - jQuery vertical accordion menu plugin
- * Copyright (c) 2011 Design Chemical
- *
- * Dual licensed under the MIT and GPL licenses:
- * 	http://www.opensource.org/licenses/mit-license.php
- * 	http://www.gnu.org/licenses/gpl.html
- *
- */
-
 (function($){
 
 	$.fn.dcAccordion = function(options) {
@@ -25,10 +15,9 @@
 			autoClose    : true,
 			autoExpand	 : false,
 			speed        : 'slow',
-			saveState	 : true,
+			saveState	 : false,
 			disableLink	 : true,
 			showCount : false,
-//			cookie	: 'dcjq-accordion'
 		};
 
 		//call in the default otions
@@ -38,9 +27,6 @@
 
 			var obj = this;
 			setUpAccordion();
-//			if(defaults.saveState == true){
-//				checkCookie(defaults.cookie, obj);
-//			}
 			if(defaults.autoExpand == true){
 				$('li.'+defaults.classExpand+' > a').addClass(defaults.classActive);
 			}
@@ -104,11 +90,6 @@
 						$(this).siblings('ul').slideToggle(defaults.speed);
 						$('> a',$activeLi).addClass(defaults.classActive);
 					}
-					
-//					// Write cookie if save state is on
-//					if(defaults.saveState == true){
-//						createCookie(defaults.cookie, obj);
-//					}
 				});
 			}
 
@@ -156,11 +137,6 @@
 				$(this).siblings('ul').slideToggle(defaults.speed);
 				$('> a',$activeLi).addClass(defaults.classActive);
 			}
-
-			// Write cookie if save state is on
-			if(defaults.saveState == true){
-				createCookie(defaults.cookie, obj);
-			}
 		}
 
 		function linkOut(){
@@ -170,7 +146,6 @@
 		}
 
 		function menuOut(){
-
 			if(defaults.menuClose == true){
 				$('ul',obj).slideUp(defaults.speed);
 				// Reset active links
@@ -193,33 +168,6 @@
 			$allActiveLi.siblings('ul').show();
 		}
 		});
-
-		// Retrieve cookie value and set active items
-//		function checkCookie(cookieId, obj){
-//			var cookieVal = $.cookie(cookieId);
-//			if(cookieVal != null){
-//				// create array from cookie string
-//				var activeArray = cookieVal.split(',');
-//				$.each(activeArray, function(index,value){
-//					var $cookieLi = $('li:eq('+value+')',obj);
-//					$('> a',$cookieLi).addClass(defaults.classActive);
-//					var $parentsLi = $cookieLi.parents('li');
-//					$('> a',$parentsLi).addClass(defaults.classActive);
-//				});
-//			}
-//		}
-
-		// Write cookie
-//		function createCookie(cookieId, obj){
-//			var activeIndex = [];
-//			// Create array of active items index value
-//			$('li a.'+defaults.classActive,obj).each(function(i){
-//				var $arrayItem = $(this).parent('li');
-//				var itemIndex = $('li',obj).index($arrayItem);
-//					activeIndex.push(itemIndex);
-//				});
-//			// Store in cookie
-//			$.cookie(cookieId, activeIndex, { path: '/' });
 //		}
 	};
 })(jQuery);
