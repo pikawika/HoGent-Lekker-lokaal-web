@@ -1,3 +1,4 @@
+using LekkerLokaal.Models.Domain;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -10,6 +11,17 @@ namespace LekkerLokaal.Models.AccountViewModels
     {
         [Required]
         [EmailAddress]
+        [Display(Name = "E-mailadres")]
         public string Email { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string Voornaam { get; set; }
+
+        [Required]
+        [DataType(DataType.Text)]
+        public string Familienaam { get; set; }
+
+        public Geslacht Geslacht { get; set; }
     }
 }

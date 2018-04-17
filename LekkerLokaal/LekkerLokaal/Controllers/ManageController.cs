@@ -167,7 +167,10 @@ namespace LekkerLokaal.Controllers
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
             var callbackUrl = Url.EmailConfirmationLink(user.Id, code, Request.Scheme);
             var email = user.Email;
-            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl, model.Username);
+
+            var gebruiker = _gebruikerRepository.GetBy(email);
+
+            await _emailSender.SendEmailConfirmationAsync(email, callbackUrl, gebruiker.Voornaam);
 
             StatusMessage = "Er is een nieuwe bevestigingsmail naar uw e-mailadres verzonden.";
             return RedirectToAction(nameof(Index));

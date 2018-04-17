@@ -386,9 +386,34 @@ namespace LekkerLokaal.Controllers
                 // If the user does not have an account, then ask the user to create an account.
                 ViewData["ReturnUrl"] = returnUrl;
                 ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+                ViewData["Geslacht"] = Geslachten();
                 ViewData["LoginProvider"] = info.LoginProvider;
-                var email = info.Principal.FindFirstValue(ClaimTypes.Email);
-                return View("ExternalLogin", new ExternalLoginViewModel { Email = email });
+
+                var email = info.Principal.FindFirstValue(ClaimTypes.Email) ?? "Uw e-mailadres";
+                var voornaam = info.Principal.FindFirstValue(ClaimTypes.GivenName) ?? "John";
+                var familienaam = info.Principal.FindFirstValue(ClaimTypes.Surname) ?? "Doe";
+                var geslachtTekst = info.Principal.FindFirstValue(ClaimTypes.Gender) ?? "Anders";
+                var geslacht = Geslacht.Anders;
+
+                switch(geslachtTekst.ToLower())
+                {
+                    case "male":
+                        geslacht = Geslacht.Man;
+                        break;
+                    case "female":
+                        geslacht = Geslacht.Vrouw;
+                        break;
+                    default:
+                        geslacht = Geslacht.Anders;
+                        break;
+                }
+
+                return View("ExternalLogin", new ExternalLoginViewModel {
+                    Email = email,
+                    Voornaam = voornaam,
+                    Familienaam = familienaam,
+                    Geslacht = geslacht
+                });
             }
         }
 
@@ -409,6 +434,16 @@ namespace LekkerLokaal.Controllers
                 var result = await _userManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
+                    var gebruiker = new Gebruiker
+                    {
+                        Voornaam = model.Voornaam,
+                        Familienaam = model.Familienaam,
+                        Geslacht = model.Geslacht,
+                        Emailadres = model.Email
+                    };
+                    _gebruikerRepository.Add(gebruiker);
+                    _gebruikerRepository.SaveChanges();
+
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
                     {

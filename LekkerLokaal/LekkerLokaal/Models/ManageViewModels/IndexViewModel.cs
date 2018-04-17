@@ -9,6 +9,7 @@ namespace LekkerLokaal.Models.ManageViewModels
 {
     public class IndexViewModel
     {
+        [Display(Name = "Gebruikersnaam")]
         public string Username { get; set; }
 
         public bool IsEmailConfirmed { get; set; }

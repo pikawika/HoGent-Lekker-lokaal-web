@@ -15,14 +15,13 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index">
-                <p>Welkom</p>
                 @if (@gebruikerRepository.GetBy(user.Result.Email) != null)
                 {
-                    <p>, @gebruikerRepository.GetBy(user.Result.Email).Voornaam</p>
+                <p>Welkom, @gebruikerRepository.GetBy(user.Result.Email).Voornaam</p>
                 }
                 else
                 {
-                    <p>!</p>
+                <p>Welkom!</p>
                 }
                 </a>
             </li>
