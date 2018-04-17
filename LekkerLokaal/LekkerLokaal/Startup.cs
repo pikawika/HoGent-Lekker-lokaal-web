@@ -24,7 +24,6 @@ namespace LekkerLokaal
             var builder = new ConfigurationBuilder();
             builder.AddUserSecrets<Startup>();
             Configuration = builder.Build();
-            //Configuration = configuration;
             foreach (var item in configuration.AsEnumerable())
             {
                 Configuration[item.Key] = item.Value;
@@ -68,12 +67,16 @@ namespace LekkerLokaal
             {
                 facebookOptions.AppId = Configuration["Authentication:Facebook:AppId"];
                 facebookOptions.AppSecret = Configuration["Authentication:Facebook:AppSecret"];
+                facebookOptions.Fields.Add("first_name");
+                facebookOptions.Fields.Add("last_name");
+                facebookOptions.Fields.Add("gender");
             });
 
             services.AddAuthentication().AddTwitter(twitterOptions =>
             {
                 twitterOptions.ConsumerKey = Configuration["Authentication:Twitter:ConsumerKey"];
                 twitterOptions.ConsumerSecret = Configuration["Authentication:Twitter:ConsumerSecret"];
+                twitterOptions.RetrieveUserDetails = true;
             });
 
             services.AddAuthentication().AddGoogle(googleOptions =>
@@ -138,7 +141,7 @@ namespace LekkerLokaal
                     name: "Account",
                     template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}/{returnUrl}");
             });
-            //datainit.InitializeData().Wait();
+            datainit.InitializeData().Wait();
         }
     }
 }

@@ -1,11 +1,13 @@
 ﻿@{
-    ViewData["Title"] = "E-mail conformatie";
+    ViewData["Title"] = "E-mailadres bevestigd";
     ViewData["Navbar"] = "Account";
 }
 
-<h2>@ViewData["Title"]</h2>
-<div>
-    <p>
-        Thank you for confirming your email.
-    </p>
+<meta http-equiv="refresh" content="5;url=@Url.Action("Index", "Home")" />
+<div class="col-xs-12 text-center mtb-60">
+    <h2 class="mb-15">@ViewData["Title"]</h2>
+    <p>Bedankt om uw e-mailadres te bevestigen! Uw account is nu volledig aangemaakt.</p>
+    <p>U wordt binnen enkele seconden teruggestuurd naar het startscherm van de website.</p>
+    <p>Gebeurt dit niet vanzelf? <a asp-controller="Home" asp-action="Index">Klik dan hier om terug te gaan.</a></p>
+    <a asp-controller="Home" asp-action="Index"><img src="~/images/icons/home/home.png"></a>
 </div>

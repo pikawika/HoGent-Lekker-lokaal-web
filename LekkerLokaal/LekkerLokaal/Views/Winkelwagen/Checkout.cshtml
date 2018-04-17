@@ -1,11 +1,13 @@
 ﻿@using Microsoft.AspNetCore.Identity
-@using LekkerLokaal.Models
+@using LekkerLokaal.Models.Domain
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
+@inject IGebruikerRepository gebruikerRepository
 
 @{
     ViewData["Title"] = "Bestelling";
+    var user = UserManager.GetUserAsync(User);
 }
 
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
@@ -62,10 +64,11 @@
                     <!-- Checkout Area -->
                     @if (SignInManager.IsSignedIn(User))
                     {
+                        var gebruiker = gebruikerRepository.GetBy(user.Result.Email);
                         <section class="section checkout-area panel prl-30 pt-20 pb-40">
                             <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
                             <div class="mb-30">
-                                <p>De bestelling zal worden uitgevoerd op naam van @UserManager.GetUserName(User).</p>
+                                <p>De bestelling zal worden uitgevoerd op naam van @gebruiker.Voornaam @gebruiker.Familienaam.</p>
                                 <form asp-controller="Account" asp-action="Logout" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
                                     <label class="color-mid">
                                         Bent u dit niet?

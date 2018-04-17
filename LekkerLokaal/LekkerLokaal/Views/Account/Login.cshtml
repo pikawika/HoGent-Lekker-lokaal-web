@@ -13,7 +13,7 @@
     <div class="page-container ptb-60">
         <div class="container">
             <section class="sign-area panel p-40">
-                <h3 class="sign-title">Meld aan <small>of <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="color-blue">Registreer</a></small></h3>
+                <h3 class="sign-title">Meld aan <small>of <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="color-blue">maak een account aan</a></small></h3>
                 <div class="row row-rl-0">
                     <div class="col-sm-6 col-md-7 col-left">
                         <form asp-route-returnurl="@ViewData["ReturnUrl"]" method="post" class="p-40">
@@ -58,7 +58,7 @@
                                 </div>
                             </form>
                             <div class="text-center color-mid">
-                                Nog geen account? <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="color-blue">Maak een aan.</a>
+                                <p>Heeft u nog geen account? <a asp-action="Register" asp-route-returnurl="@ViewData["ReturnUrl"]" class="color-blue">Maak er hier één aan.</a></p>
                             </div>
                         </div>
                     </div>

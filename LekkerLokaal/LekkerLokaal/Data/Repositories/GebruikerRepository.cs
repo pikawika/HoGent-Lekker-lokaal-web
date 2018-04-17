@@ -25,7 +25,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public Gebruiker GetBy(string email)
         {
-            return _gebruikers.Include(g => g.Bestellingen).Include(g => g.Geslacht).SingleOrDefault(g => g.Emailadres == email);
+            return _gebruikers.Include(g => g.Bestellingen).SingleOrDefault(g => g.Emailadres == email);
         }
 
         public void SaveChanges()
