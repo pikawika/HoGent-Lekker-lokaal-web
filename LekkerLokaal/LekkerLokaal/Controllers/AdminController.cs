@@ -71,6 +71,7 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
+
         public IActionResult Dashboard()
         {
             return View();
@@ -153,5 +154,6 @@ namespace LekkerLokaal.Controllers
         {
             return View();
         }
+
     }
 }
