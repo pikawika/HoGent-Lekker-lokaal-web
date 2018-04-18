@@ -1,8 +1,15 @@
-﻿@{ 
+﻿@using LekkerLokaal.Models.Domain
+
+@{
     String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken" };
     String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken" };
     String[] layoutSubMenu = { "LayoutSliderIndex", "LayoutAanbiedingen" };
-    }
+    var user = UserManager.GetUserAsync(User);
+}
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IGebruikerRepository gebruikerRepository
 
 <!DOCTYPE html>
 <html>
@@ -47,12 +54,13 @@
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                             <img alt="" src="images/2.png">
-                            <span class="username">Gebruiker</span>
+                            <span class="username">@gebruikerRepository.GetBy(user.Result.Email).Voornaam</span>
                             <b class="caret"></b>
                         </a>
+                        <form id="logout" asp-controller="Admin" asp-action="Logout" method="post"></form>
                         <ul class="dropdown-menu extended logout">
                             <li><a><i class=" fas fa-cogs"></i>Instellingen</a></li>
-                            <li><a><i class="fas fa-sign-out-alt"></i>Afmelden</a></li>
+                            <li><a onclick="document.getElementById('logout').submit();" class="clickable"><i class="fas fa-sign-out-alt"></i>Afmelden</a></li>
                         </ul>
                     </li>
                     <!-- user login dropdown end -->
