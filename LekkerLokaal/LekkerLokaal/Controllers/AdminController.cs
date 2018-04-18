@@ -12,7 +12,7 @@ using Microsoft.Extensions.Logging;
 
 namespace LekkerLokaal.Controllers
 {
-    [Authorize(Roles = "administrator")]
+    [Authorize(Roles = "admin")]
     [Route("[controller]/[action]")]
     public class AdminController : Controller
     {

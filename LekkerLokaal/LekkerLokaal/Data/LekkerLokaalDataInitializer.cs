@@ -225,14 +225,31 @@ namespace LekkerLokaal.Data
 
                 _dbContext.Gebruikers.AddRange(personen);
 
-                await CreateUser("admin@sportsstore.be", "admin@sportsstore.be", "P@ssword1!", "Admin");
+                //admin user met admin ww @dministr@tor
+                await CreateUser("lekkerlokaalst@gmail.com", "lekkerlokaalst@gmail.com", "@dministr@tor", "admin");
+                await CreateUser("klant@gmail.com", "klant@gmail.com", "klantje", "klant");
+                _dbContext.SaveChanges();
+                _dbContext.Gebruikers.Add(new Gebruiker
+                {
+                    Emailadres = "lekkerlokaalst@gmail.com",
+                    Voornaam = "Joachim",
+                    Familienaam = "Rummens",
+                    Geslacht = Geslacht.Man
+                });
+                _dbContext.Gebruikers.Add(new Gebruiker
+                {
+                    Emailadres = "klant@gmail.com",
+                    Voornaam = "Klant",
+                    Familienaam = "Janssens",
+                    Geslacht = Geslacht.Man
+                });
                 _dbContext.SaveChanges();
             }
         }
 
         private async Task CreateUser(string userName, string email, string password, string role)
         {
-            var user = new ApplicationUser { UserName = userName, Email = email };
+            var user = new ApplicationUser { UserName = userName, Email = email, EmailConfirmed = true };
             await _userManager.CreateAsync(user, password);
             await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, role));
         }
