@@ -45,12 +45,14 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, false, lockoutOnFailure: false);
-                if (!await _userManager.IsInRoleAsync(await _userManager.FindByEmailAsync(model.Email), "admin")) 
+                var claims = await _userManager.GetClaimsAsync(await _userManager.FindByEmailAsync(model.Email));
+
+                if (!claims.Any(claimpje => claimpje.Value == "admin"))
                 {
                     ModelState.AddModelError(string.Empty, "U beschikt niet over de nodige rechten om u aan te melden op deze applicatie.");
                     return View(model);
                 }
+                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User logged in.");
