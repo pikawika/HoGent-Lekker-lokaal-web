@@ -54,8 +54,7 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            System.Diagnostics.Debug.WriteLine(returnUrl);
-            if (returnUrl.StartsWith("/admin/", StringComparison.OrdinalIgnoreCase))
+            if (returnUrl != null && returnUrl.StartsWith("/admin/", StringComparison.OrdinalIgnoreCase))
             {
                 return RedirectToAction("Index", "Admin");
             }
@@ -580,7 +579,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            return RedirectToAction("Index", "Admin");
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            return View();
         }
 
         #region Helpers
