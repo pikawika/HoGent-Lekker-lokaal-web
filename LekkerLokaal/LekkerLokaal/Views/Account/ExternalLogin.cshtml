@@ -5,7 +5,7 @@
 }
 
 <div class="page-container ptb-60">
-    <div class="container">
+    <div class="container width-625">
         <section class="sign-area panel p-40">
             <h2>@ViewData["Title"]</h2>
             <h4>Koppel uw @ViewData["LoginProvider"] account.</h4>
@@ -20,7 +20,7 @@
 
 
             <div class="row">
-                <div class="col-md-4">
+                <div class="col-md-12">
                     <form asp-action="ExternalLoginConfirmation" asp-route-returnurl="@ViewData["ReturnUrl"]" method="post">
                         <div asp-validation-summary="All" class="text-danger"></div>
                         <div class="form-group">
