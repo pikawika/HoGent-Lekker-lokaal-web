@@ -580,9 +580,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult AccessDenied()
         {
-            LekkerLokaal.Models.AdminViewModels.LoginViewModel model = new LekkerLokaal.Models.AdminViewModels.LoginViewModel();
-            ModelState.AddModelError(string.Empty, "U heeft niet de juiste rechten om aan te melden op het admin panel");
-            return View("../Admin/Index", model);
+            return RedirectToAction("Index", "Admin");
         }
 
         #region Helpers

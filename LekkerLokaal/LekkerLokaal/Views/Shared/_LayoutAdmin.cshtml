@@ -53,7 +53,7 @@
                     <!-- user login dropdown start-->
                     <li class="dropdown">
                         <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                            <img alt="" src="images/2.png">
+                            <img src="@(gebruikerRepository.GetBy(user.Result.Email).Afbeelding)">
                             <span class="username">@gebruikerRepository.GetBy(user.Result.Email).Voornaam</span>
                             <b class="caret"></b>
                         </a>
