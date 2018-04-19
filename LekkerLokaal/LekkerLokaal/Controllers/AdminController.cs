@@ -73,7 +73,7 @@ namespace LekkerLokaal.Controllers
         {
             await _signInManager.SignOutAsync();
             _logger.LogInformation("User logged out.");
-            
+
             return RedirectToAction("Index");
         }
 
@@ -97,6 +97,18 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
+        public IActionResult ZoekHandelaar()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult ZoekCadeaubon()
+        {
+            return View();
+        }
+
+        [HttpGet]
         public IActionResult ZoekVerkochteCadeaubon()
         {
             return View();
@@ -104,6 +116,18 @@ namespace LekkerLokaal.Controllers
 
         [HttpGet]
         public IActionResult HandelaarsVerzoeken()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult HandelaarVerzoekEvaluatie()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public IActionResult CadeabonVerzoekEvaluatie()
         {
             return View();
         }

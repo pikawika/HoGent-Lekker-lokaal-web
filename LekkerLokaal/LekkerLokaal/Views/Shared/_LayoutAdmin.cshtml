@@ -1,8 +1,8 @@
 ﻿﻿@using LekkerLokaal.Models.Domain
 
 @{
-    String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken" };
-    String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken" };
+    String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken", "ZoekHandelaar" };
+    String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken", "ZoekCadeaubon" };
     String[] layoutSubMenu = { "LayoutSliderIndex", "LayoutAanbiedingen" };
     var user = UserManager.GetUserAsync(User);
 }
@@ -90,7 +90,8 @@
                             <ul class="sub">
                                 <li><a asp-controller="Admin" asp-action="HandelaarsVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsVerzoeken" ? "active" : "")"><i class="fas fa-user-plus"></i> Handelaarsverzoeken</a></li>
                                 <li><a asp-controller="Admin" asp-action="HandelaarToevoegen" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarToevoegen" ? "active" : "")"><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
-                                <li><a asp-controller="Admin" asp-action="HandelaarsOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsOverzicht" ? "active" : "")"><i class="fas fa-plus-square"></i> Overzicht handelaars</a></li>
+                                <li><a asp-controller="Admin" asp-action="ZoekHandelaar" class="@(ViewContext.RouteData.Values["Action"].ToString() == "ZoekHandelaar" ? "active" : "")"><i class="fas fa-search"></i> Zoek handelaar</a></li>
+                                <li><a asp-controller="Admin" asp-action="HandelaarsOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsOverzicht" ? "active" : "")"><i class="fas fas fa-ellipsis-h"></i> Overzicht handelaars</a></li>
                                 <li><a asp-controller="Admin" asp-action="HandelaarBewerken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarBewerken" ? "active" : "")"><i class="fas fa-edit"></i> Handelaar bewerken</a></li>
                             </ul>
                         </li>
@@ -102,7 +103,8 @@
                             <ul class="sub">
                                 <li><a asp-controller="Admin" asp-action="CadeaubonVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonVerzoeken" ? "active" : "")"><i class="fas fa-user-plus"></i> Cadeaubonverzoeken</a></li>
                                 <li><a asp-controller="Admin" asp-action="CadeaubonToevoegen" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonToevoegen" ? "active" : "")"><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
-                                <li><a asp-controller="Admin" asp-action="CadeaubonOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonOverzicht" ? "active" : "")"><i class="fas fa-plus-square"></i> Overzicht Cadeaubonnen</a></li>
+                                <li><a asp-controller="Admin" asp-action="ZoekCadeaubon" class="@(ViewContext.RouteData.Values["Action"].ToString() == "ZoekCadeaubon" ? "active" : "")"><i class="fas fa-search"></i> Zoek cadeaubon</a></li>
+                                <li><a asp-controller="Admin" asp-action="CadeaubonOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonOverzicht" ? "active" : "")"><i class="fas fas fa-ellipsis-h"></i> Overzicht Cadeaubonnen</a></li>
                                 <li><a asp-controller="Admin" asp-action="CadeaubonBewerken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonBewerken" ? "active" : "")"><i class="fas fa-edit"></i> Cadeaubon bewerken</a></li>
                             </ul>
                         </li>
@@ -118,6 +120,7 @@
                                 <span>Uitbetaalde cadeaubonnen</span>
                             </a>
                         </li>
+
                         <li>
                             <a asp-controller="Admin" asp-action="ZoekVerkochteCadeaubon" class="@(ViewContext.RouteData.Values["Action"].ToString() == "ZoekVerkochteCadeaubon" ? "active" : "")">
                                 <i class="fas fa-search"></i>
