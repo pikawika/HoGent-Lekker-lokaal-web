@@ -1,8 +1,8 @@
 ﻿﻿@using LekkerLokaal.Models.Domain
 
 @{
-    String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken", "ZoekHandelaar" };
-    String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken", "ZoekCadeaubon" };
+    String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken", "ZoekHandelaar", "HandelaarVerzoekEvaluatie" };
+    String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken", "ZoekCadeaubon", "CadeaubonVerzoekEvaluatie" };
     String[] layoutSubMenu = { "LayoutSliderIndex", "LayoutAanbiedingen" };
     var user = UserManager.GetUserAsync(User);
 }
@@ -64,7 +64,6 @@
                         </ul>
                     </li>
                     <!-- user login dropdown end -->
-
                 </ul>
                 <!--search & user info end-->
             </div>
@@ -88,7 +87,7 @@
                                 <span>Handelaars beheren</span>
                             </a>
                             <ul class="sub">
-                                <li><a asp-controller="Admin" asp-action="HandelaarsVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsVerzoeken" ? "active" : "")"><i class="fas fa-user-plus"></i> Handelaarsverzoeken</a></li>
+                                <li><a asp-controller="Admin" asp-action="HandelaarsVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsVerzoeken" ? "active" : (ViewContext.RouteData.Values["Action"].ToString() == "HandelaarVerzoekEvaluatie" ? "active" : ""))"><i class="fas fa-user-plus"></i> Handelaarsverzoeken</a></li>
                                 <li><a asp-controller="Admin" asp-action="HandelaarToevoegen" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarToevoegen" ? "active" : "")"><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
                                 <li><a asp-controller="Admin" asp-action="ZoekHandelaar" class="@(ViewContext.RouteData.Values["Action"].ToString() == "ZoekHandelaar" ? "active" : "")"><i class="fas fa-search"></i> Zoek handelaar</a></li>
                                 <li><a asp-controller="Admin" asp-action="HandelaarsOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "HandelaarsOverzicht" ? "active" : "")"><i class="fas fas fa-ellipsis-h"></i> Overzicht handelaars</a></li>
@@ -101,7 +100,7 @@
                                 <span>Cadeaubonnen beheren</span>
                             </a>
                             <ul class="sub">
-                                <li><a asp-controller="Admin" asp-action="CadeaubonVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonVerzoeken" ? "active" : "")"><i class="fas fa-user-plus"></i> Cadeaubonverzoeken</a></li>
+                                <li><a asp-controller="Admin" asp-action="CadeaubonVerzoeken" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonVerzoeken" ? "active" : (ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonVerzoekEvaluatie" ? "active" : ""))"><i class="fas fa-user-plus"></i> Cadeaubonverzoeken</a></li>
                                 <li><a asp-controller="Admin" asp-action="CadeaubonToevoegen" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonToevoegen" ? "active" : "")"><i class="fas fa-plus-square"></i> Manueel toevoegen</a></li>
                                 <li><a asp-controller="Admin" asp-action="ZoekCadeaubon" class="@(ViewContext.RouteData.Values["Action"].ToString() == "ZoekCadeaubon" ? "active" : "")"><i class="fas fa-search"></i> Zoek cadeaubon</a></li>
                                 <li><a asp-controller="Admin" asp-action="CadeaubonOverzicht" class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonOverzicht" ? "active" : "")"><i class="fas fas fa-ellipsis-h"></i> Overzicht Cadeaubonnen</a></li>
