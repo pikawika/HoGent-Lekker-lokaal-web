@@ -1,8 +1,10 @@
 ﻿using iTextSharp.text;
 using iTextSharp.text.pdf;
 using LekkerLokaal.Filters;
+using LekkerLokaal.Models;
 using LekkerLokaal.Models.Domain;
 using LekkerLokaal.Models.WinkelwagenViewModels;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.IO;
@@ -16,10 +18,17 @@ namespace LekkerLokaal.Controllers
     public class CheckoutController : Controller
     {
         private readonly ICategorieRepository _categorieRepository;
+        private readonly UserManager<ApplicationUser> _userManager;
+        private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IGebruikerRepository _gebruikerRepository;
 
-        public CheckoutController(ICategorieRepository categorieRepository)
+        public CheckoutController(UserManager<ApplicationUser> userManager,
+            SignInManager<ApplicationUser> signInManager, ICategorieRepository categorieRepository, IGebruikerRepository gebruikerRepository)
         {
+            _userManager = userManager;
+            _signInManager = signInManager;
             _categorieRepository = categorieRepository;
+            _gebruikerRepository = gebruikerRepository;
         }
 
         public IActionResult Index(string checkoutId, string returnUrl = null)
@@ -28,7 +37,9 @@ namespace LekkerLokaal.Controllers
             switch (checkoutId)
             {
                 case "Gast":
-                    return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout");
+                    //voor te testen
+                    //return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout");
+                    return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout");
                 case "Nieuw":
                     return RedirectToAction(nameof(AccountController.Register), "Account", new { ReturnUrl = returnUrl });
                 case "LogIn":
@@ -93,6 +104,26 @@ namespace LekkerLokaal.Controllers
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View(model);
+        }
+
+        public IActionResult Bedankt(Winkelwagen winkelwagen)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Totaal"] = winkelwagen.TotaleWaarde;
+            ViewData["Aantal"] = winkelwagen.AantalBonnen;
+
+            var gebruiker = _gebruikerRepository.GetBy("lekkerlokaal");
+            if (_signInManager.IsSignedIn(User))
+            {
+                var user = _userManager.GetUserAsync(User);
+                if (_gebruikerRepository.GetBy(user.Result.Email) != null)
+                    gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            }
+
+            gebruiker.PlaatsBestelling(winkelwagen);
+            _gebruikerRepository.SaveChanges();
+
+            return View();
         }
     }
 }
