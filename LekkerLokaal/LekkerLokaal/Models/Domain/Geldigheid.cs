@@ -9,6 +9,7 @@ namespace LekkerLokaal.Models.Domain
     {
         Geldig,
         Ongeldig,
-        Verlopen
+        Verlopen,
+        Gebruikt
     }
 }

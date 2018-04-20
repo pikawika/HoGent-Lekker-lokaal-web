@@ -34,6 +34,7 @@ namespace LekkerLokaal.Models.Domain
                         Prijs = lijn.Prijs,
                         Geldigheid = Geldigheid.Geldig,
                         AanmaakDatum = DateTime.Today,
+                        Handelaar = lijn.Bon.Handelaar,
                         QRCode = String.Format(Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddhhmmssffffff"))
                 });
                 }

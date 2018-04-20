@@ -11,5 +11,6 @@ namespace LekkerLokaal.Models.Domain
         public Geldigheid Geldigheid { get; set; }
         public DateTime AanmaakDatum { get; set; }
         public string QRCode { get; set; }
+        public Handelaar Handelaar { get; set; }
     }
 }
