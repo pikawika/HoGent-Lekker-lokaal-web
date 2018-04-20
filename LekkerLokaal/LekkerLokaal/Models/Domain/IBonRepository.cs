@@ -15,5 +15,6 @@ namespace LekkerLokaal.Models.Domain
         IEnumerable<Bon> GetByCategorie(string zoekKey, IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetByPrijs(int zoekKey, IEnumerable<Bon> inputlijst);
         Bon GetByBonId(int bonId);
+        void SaveChanges();
     }
 }
