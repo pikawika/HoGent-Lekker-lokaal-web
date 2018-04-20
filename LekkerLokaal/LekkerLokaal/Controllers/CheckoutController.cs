@@ -123,6 +123,8 @@ namespace LekkerLokaal.Controllers
             gebruiker.PlaatsBestelling(winkelwagen);
             _gebruikerRepository.SaveChanges();
 
+            winkelwagen.MaakLeeg();
+
             return View();
         }
     }
