@@ -6,6 +6,7 @@
 
 <ul class="nav nav-pills nav-stacked ml-10">
     <li class="@ManageNavPages.IndexNavClass(ViewContext) col-md-7"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
+    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) col-md-7"><a asp-action="PersoonlijkeBestellingen">Uw Bestellingen</a></li>
     <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) col-md-7"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
     @if (hasExternalLogins)
     {
