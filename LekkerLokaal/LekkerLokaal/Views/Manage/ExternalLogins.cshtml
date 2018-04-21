@@ -7,46 +7,55 @@
 @Html.Partial("_StatusMessage", Model.StatusMessage)
 @if (Model.CurrentLogins?.Count > 0)
 {
-    <h4>Gekoppelde sociale media</h4>
-    <table class="table">
-        <tbody>
-            @foreach (var login in Model.CurrentLogins)
-            {
-                <tr>
-                    <td>@login.LoginProvider</td>
-                    <td>
-                        @if (Model.ShowRemoveButton)
+    <div class="page-container ptb-10">
+        <div class="container width-100">
+            <section class="sign-area panel p-40 mr-10">
+                <h4>Gekoppelde sociale media</h4>
+                <table class="table">
+                    <tbody>
+                        @foreach (var login in Model.CurrentLogins)
                         {
-                            <form asp-action="RemoveLogin" method="post">
-                                <div>
-                                    <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
-                                    <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
-                                    <button type="submit" class="btn btn-default" title="Verwijder @login.LoginProvider van uw account">Verwijder</button>
-                                </div>
-                            </form>
+                            <tr>
+                                <td>@login.LoginProvider</td>
+                                <td>
+                                    @if (Model.ShowRemoveButton)
+                                    {
+                                        <form asp-action="RemoveLogin" method="post">
+                                            <div>
+                                                <input asp-for="@login.LoginProvider" name="LoginProvider" type="hidden" />
+                                                <input asp-for="@login.ProviderKey" name="ProviderKey" type="hidden" />
+                                                <button type="submit" class="btn btn-default" title="Verwijder @login.LoginProvider van uw account">Verwijder</button>
+                                            </div>
+                                        </form>
+                                    }
+                                    else
+                                    {
+                                        @: &nbsp;
+                                    }
+                                </td>
+                            </tr>
                         }
-                        else
-                        {
-                            @: &nbsp;
-                        }
-                    </td>
-                </tr>
-            }
-        </tbody>
-    </table>
-}
-@if (Model.OtherLogins?.Count > 0)
-{
-    <h4>Koppel sociale media aan uw account</h4>
-    <hr />
-    <form asp-action="LinkLogin" method="post" class="form-horizontal">
-        <div id="socialLoginList">
-            <p>
-                @foreach (var provider in Model.OtherLogins)
+                    </tbody>
+                </table>
+
+                
+                @if (Model.OtherLogins?.Count > 0)
                 {
-                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Koppel @provider.DisplayName aan uw account">@provider.DisplayName</button>
+                    <h4>Koppel sociale media aan uw account</h4>
+                    <hr />
+                    <form asp-action="LinkLogin" method="post" class="form-horizontal">
+                        <div id="socialLoginList">
+                            <p>
+                                @foreach (var provider in Model.OtherLogins)
+                                {
+                                    <button type="submit" class="btn btn-default" name="provider" value="@provider.Name" title="Koppel @provider.DisplayName aan uw account">@provider.DisplayName</button>
+                                }
+                            </p>
+                        </div>
+                    </form>
                 }
-            </p>
+            </section>
         </div>
-    </form>
+    </div>
 }
+

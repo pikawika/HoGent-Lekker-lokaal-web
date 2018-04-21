@@ -361,6 +361,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> PersoonlijkeBestellingen()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             return View();
         }
 

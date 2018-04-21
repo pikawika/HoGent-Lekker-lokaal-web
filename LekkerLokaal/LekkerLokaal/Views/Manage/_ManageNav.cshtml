@@ -4,13 +4,19 @@
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
 }
 
-<ul class="nav nav-pills nav-stacked ml-10">
-    <li class="@ManageNavPages.IndexNavClass(ViewContext) col-md-7"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) col-md-7"><a asp-action="PersoonlijkeBestellingen">Uw Bestellingen</a></li>
-    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext) col-md-7"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
-    @if (hasExternalLogins)
-    {
-        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext) col-md-7"><a asp-action="ExternalLogins">Koppel uw sociale media</a></li>
-    }
-</ul>
+<div class="page-container ptb-10">
+    <div class="container width-100">
+        <section class="sign-area panel p-40 mr-10">
+            <ul class="nav nav-pills nav-stacked">
+                <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
+                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PersoonlijkeBestellingen" ? "active" : "")"><a asp-action="PersoonlijkeBestellingen">Uw bestellingen</a></li>
+                <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
+                @if (hasExternalLogins)
+                {
+                    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Koppel uw sociale media</a></li>
+                }
+            </ul>
+        </section>
+    </div>
+</div>
 
