@@ -8,6 +8,9 @@ namespace LekkerLokaal.Models.Domain
     public interface IHandelaarRepository
     {
         IEnumerable<Handelaar> GetAll();
-        
+
+        void Add(Handelaar handelaar);
+
+        void SaveChanges();
     }
 }

@@ -30,6 +30,7 @@ namespace LekkerLokaal.Controllers
         private readonly ILogger _logger;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
+        private readonly IHandelaarRepository _handelaarRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -322,6 +323,9 @@ namespace LekkerLokaal.Controllers
                 var fileStream = new FileStream(filePath, FileMode.Create);
                 await model.Logo.CopyToAsync(fileStream);
                 fileStream.Close();
+                Handelaar handelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, "implementafbeelding", model.Straat, model.Huisnummer, int.Parse(model.Postcode), model.Plaatsnaam, false);
+                _handelaarRepository.Add(handelaar);
+                _handelaarRepository.SaveChanges();
 
                 var attachment = new Attachment(@"wwwroot/images/temp/logo.jpg");
                 attachment.Name = "logo.jpg";
@@ -333,7 +337,6 @@ namespace LekkerLokaal.Controllers
 
                 SmtpServer.Send(message);
                 attachment.Dispose();
-                System.IO.File.Delete(@"wwwroot/images/temp/logo.jpg");
                 return RedirectToLocal(returnUrl);
             }
             // If we got this far, something failed, redisplay form

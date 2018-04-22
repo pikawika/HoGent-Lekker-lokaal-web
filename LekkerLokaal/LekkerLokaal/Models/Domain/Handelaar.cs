@@ -18,14 +18,16 @@ namespace LekkerLokaal.Models.Domain
         public string Huisnummer { get; set; }
         public int Postcode { get; set; }
         public string Gemeente { get; set; }
+        public bool Goedgekeurd { get; set; }
 
         protected Handelaar()
         {
 
         }
 
-        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente)
+        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente, bool goedgekeurd = true)
         {
+            Goedgekeurd = goedgekeurd;
             Naam = naam;
             Emailadres = emailadres;
             Beschrijving = beschrijving;
