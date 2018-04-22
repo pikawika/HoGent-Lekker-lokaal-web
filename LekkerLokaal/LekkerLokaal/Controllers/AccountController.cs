@@ -38,7 +38,8 @@ namespace LekkerLokaal.Controllers
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             ICategorieRepository categorieRepository,
-            IGebruikerRepository gebruikerRepository)
+            IGebruikerRepository gebruikerRepository,
+            IHandelaarRepository handelaarRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -46,6 +47,7 @@ namespace LekkerLokaal.Controllers
             _logger = logger;
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
+            _handelaarRepository = handelaarRepository;
         }
 
         [TempData]

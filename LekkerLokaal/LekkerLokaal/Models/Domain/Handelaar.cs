@@ -25,7 +25,7 @@ namespace LekkerLokaal.Models.Domain
 
         }
 
-        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente, bool goedgekeurd = true)
+        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente, bool goedgekeurd = false)
         {
             Goedgekeurd = goedgekeurd;
             Naam = naam;
