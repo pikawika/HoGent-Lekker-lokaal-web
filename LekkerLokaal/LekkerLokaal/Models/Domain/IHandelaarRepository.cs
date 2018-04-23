@@ -13,6 +13,10 @@ namespace LekkerLokaal.Models.Domain
 
         void Add(Handelaar handelaar);
 
+        void Remove(int handelaarId);
+
+        void KeurAanvraagGoed(int handelaarId);
+
         void SaveChanges();
 
         int getAantalHandelaarsverzoeken();

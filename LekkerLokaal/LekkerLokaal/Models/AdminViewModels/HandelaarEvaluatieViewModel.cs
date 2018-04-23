@@ -10,7 +10,7 @@ namespace LekkerLokaal.Models.AdminViewModels
     public class HandelaarEvaluatieViewModel
     {
         [Required]
-        public int HandelaarId { get; }
+        public int HandelaarId { get; set; }
 
         [Required]
         public string Naam { get; set; }

@@ -11,6 +11,7 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
+using System.IO;
 
 namespace LekkerLokaal.Controllers
 {
@@ -146,7 +147,7 @@ namespace LekkerLokaal.Controllers
                 {
                     message.Body = String.Format("Beste, \n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geweigerd. \n\n" +
-                   model.Opmerking +
+                   model.Opmerking + "\n\n" +
                    "Als u denkt dat u alsnog recht heeft om handelaar te worden bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
                    "Met vriendelijke groet, \n" +
                   "Het Lekker Lokaal team");
@@ -166,8 +167,52 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
 
-                
+                _handelaarRepository.Remove(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
 
+                var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId;
+                Directory.Delete(filePath, true);
+
+
+                return RedirectToAction("Dashboard");
+            }
+            return View(nameof(HandelaarVerzoekEvaluatie), model);
+        }
+
+        [HttpPost]
+        public IActionResult AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Emailadres);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geaccepteerd!";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   model.Opmerking + "\n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
 
                 return RedirectToAction("Dashboard");
             }
