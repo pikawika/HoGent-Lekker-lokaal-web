@@ -1,6 +1,14 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.width-100{
+    width: 100% !important;
+}
+
+.width-625{
+    width: 625px !important;
+}
+
 .bg-light-blue {
     background-color: #1E90FF !important;
 }
@@ -88,7 +96,7 @@
     }
 }
 
-.cart-icon-xs{
+.cart-icon-xs {
     line-height: 53px !important;
     left: -20px !important;
 }

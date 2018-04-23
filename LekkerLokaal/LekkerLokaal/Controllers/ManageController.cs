@@ -358,6 +358,15 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(ExternalLogins));
         }
 
+        public async Task<IActionResult> PersoonlijkeBestellingen()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
+            return View();
+        }
+
+
+
         #region Helpers
 
         private void AddErrors(IdentityResult result)
