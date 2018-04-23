@@ -1,0 +1,39 @@
+﻿@using LekkerLokaal.Models.Domain
+
+@{
+    ViewData["Title"] = "Uw bestellingen";
+}
+
+
+<div class="page-container ptb-10">
+    <div class="container width-100">
+        <section class="sign-area panel p-40 mr-10">
+            <h4 class="mb-10">@ViewData["Title"]</h4>
+            @if (ViewData["gebruiker"] == null)
+            {
+                <p>U heeft nog geen bestellingen.</p>
+            }
+            else
+            {
+                <table style="width:100%">
+                    <tr>
+                        <th>Bestelnummer</th>
+                        <th>Datum</th>
+                        <th>Totaalbedrag</th>
+                    </tr>
+                    @foreach (Bestelling b in (IEnumerable<Bestelling>)ViewData["gebruiker"])
+                    {
+                        <tr>
+                            <td>@b.BestellingId</td>
+                            <td>@b.BestelDatum.ToString("dd/MM/yyyy")</td>
+                            <td>@b.BestellingTotaal</td>
+                        </tr>
+
+                    }
+
+                </table>
+
+            }
+        </section>
+    </div>
+</div>
