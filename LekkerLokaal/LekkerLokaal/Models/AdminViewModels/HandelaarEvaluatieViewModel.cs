@@ -1,6 +1,7 @@
 ﻿using LekkerLokaal.Models.Domain;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -8,16 +9,36 @@ namespace LekkerLokaal.Models.AdminViewModels
 {
     public class HandelaarEvaluatieViewModel
     {
+        [Required]
         public int HandelaarId { get; }
+
+        [Required]
         public string Naam { get; set; }
+
+        [Required]
         public string Emailadres { get; set; }
+
+        [Required]
         public string Beschrijving { get; set; }
+
+        [Required]
         public string BTW_Nummer { get; set; }
+
+        [Required]
         public string Straat { get; set; }
+
+        [Required]
         public string Huisnummer { get; set; }
+
+        [Required]
         public string Postcode { get; set; }
+
+        [Required]
         public string Gemeente { get; set; }
+
         public string LogoPath { get; }
+
+        public string Opmerking { get; set; }
 
 
         public HandelaarEvaluatieViewModel(Handelaar handelaar)
@@ -34,5 +55,9 @@ namespace LekkerLokaal.Models.AdminViewModels
             LogoPath = handelaar.GetLogoPath();
         }
 
+        public HandelaarEvaluatieViewModel()
+        {
+
+        }
     }
 }

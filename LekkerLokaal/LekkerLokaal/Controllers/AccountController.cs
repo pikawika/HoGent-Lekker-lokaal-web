@@ -69,7 +69,7 @@ namespace LekkerLokaal.Controllers
                 ViewData["ReturnUrl"] = returnUrl;
                 return View();
             }
-            
+
         }
 
         [HttpPost]
@@ -320,13 +320,13 @@ namespace LekkerLokaal.Controllers
                                         "BTW Nummer: {6}\n" +
                                         "Beschrijving: {7}\n",
                                         model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
-                
+
                 //handelaar maken
                 Handelaar nieuweHandelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, false);
                 _handelaarRepository.Add(nieuweHandelaar);
                 _handelaarRepository.SaveChanges();
 
-               
+
                 var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
                 Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 var fileStream = new FileStream(filePath, FileMode.Create);
@@ -342,7 +342,27 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(message);
+                message.Attachments.Remove(attachment);
                 attachment.Dispose();
+
+                var berichtNaarHandelaar = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Email);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
+                message.Body = String.Format("Beste, \n" +
+                                        "Uw verzoek om handelaar te worden bij LekkerLokaal.be is correct ontvangen. \n\n" +
+                                        "Onderstaande gegevens zullen gecontroleerd worden door een administrator. U mag een E-mail verwachten zodra uw verzoek al dan niet aanvaard wordt." +
+                                        "Naam handelszaak: {0}\n" +
+                                        "E-mailadres: {1}\n" +
+                                        "Straat: {2}\n" +
+                                        "Huisnummer: {3}\n" +
+                                        "Postcode: {4}\n" +
+                                        "Gemeente: {5}\n" +
+                                        "BTW Nummer: {6}\n" +
+                                        "Beschrijving: {7}\n",
+                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                SmtpServer.Send(message);
+
                 return RedirectToLocal(returnUrl);
             }
             // If we got this far, something failed, redisplay form
@@ -412,7 +432,7 @@ namespace LekkerLokaal.Controllers
                 var geslachtTekst = info.Principal.FindFirstValue(ClaimTypes.Gender) ?? "Anders";
                 var geslacht = Geslacht.Anders;
 
-                switch(geslachtTekst.ToLower())
+                switch (geslachtTekst.ToLower())
                 {
                     case "male":
                         geslacht = Geslacht.Man;
@@ -425,7 +445,8 @@ namespace LekkerLokaal.Controllers
                         break;
                 }
 
-                return View("ExternalLogin", new ExternalLoginViewModel {
+                return View("ExternalLogin", new ExternalLoginViewModel
+                {
                     Email = email,
                     Voornaam = voornaam,
                     Familienaam = familienaam,

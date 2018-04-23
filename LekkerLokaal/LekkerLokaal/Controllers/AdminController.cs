@@ -10,6 +10,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using System.Net.Mail;
 
 namespace LekkerLokaal.Controllers
 {
@@ -25,7 +26,7 @@ namespace LekkerLokaal.Controllers
         public AdminController(
             UserManager<ApplicationUser> userManager,
             ILogger<AdminController> logger,
-            SignInManager<ApplicationUser> signInManager, 
+            SignInManager<ApplicationUser> signInManager,
             IHandelaarRepository handelaarRepository)
         {
             _userManager = userManager;
@@ -129,6 +130,48 @@ namespace LekkerLokaal.Controllers
         {
             Handelaar geselecteerdeHandelaarEvaluatie = _handelaarRepository.GetByHandelaarId(Id);
             return View(new HandelaarEvaluatieViewModel(geselecteerdeHandelaarEvaluatie));
+        }
+
+        [HttpPost]
+        public IActionResult VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Emailadres);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geweigerd.";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geweigerd. \n\n" +
+                   model.Opmerking +
+                   "Als u denkt dat u alsnog recht heeft om handelaar te worden bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste, \n" +
+                  "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geweigerd. \n\n" +
+                  "Als u denkt dat u alsnog recht heeft om handelaar te worden bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
+                  "Met vriendelijke groet, \n\n" +
+                  "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                
+
+
+                return RedirectToAction("Dashboard");
+            }
+            return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
 
         [HttpGet]

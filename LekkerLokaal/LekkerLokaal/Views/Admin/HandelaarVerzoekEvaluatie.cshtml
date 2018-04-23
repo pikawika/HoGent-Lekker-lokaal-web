@@ -11,60 +11,60 @@
     <section class="panel">
         <header class="panel-heading">Aanvraag tot handelaarsaccount: @Model.Naam</header>
         <div class="panel-body">
-            <form class="form-horizontal bucket-form" method="get">
+            <form action="" method="post" class="form-horizontal bucket-form">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Naam handelszaak</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Naam" disabled="">
+                        <input type="text" asp-for="Naam" class="form-control" readonly="readonly" required>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">E-mailadres</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Emailadres" disabled="">
+                        <input type="text" asp-for="Emailadres" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Straatnaam</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Straat" disabled="">
+                        <input type="text" asp-for="Straat" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Huisnummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Huisnummer" disabled="">
+                        <input type="text" asp-for="Huisnummer" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Postcode</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Postcode" disabled="">
+                        <input type="text" asp-for="Postcode" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Gemeente</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Gemeente" disabled="">
+                        <input type="text" asp-for="Gemeente" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Btw nummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.BTW_Nummer" disabled="">
+                        <input type="text" asp-for="BTW_Nummer" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Korte omschrijving</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="@Model.Beschrijving" disabled="">
+                        <input type="text" asp-for="Beschrijving" class="form-control" readonly="readonly">
                     </div>
                 </div>
 
@@ -75,19 +75,17 @@
                     </div>
                 </div>
 
-                
-
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Opmerking (optioneel)</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" placeholder="Laat dit veld leeg als u geen opmerking wilt versturen">
+                        <input asp-for="Opmerking" type="text" class="form-control" placeholder="Laat dit veld leeg als u geen opmerking wilt versturen">
                         <p class="help-block">Bij het aanvaarden of afkeuren van de aanvraag zal de handelaar automatisch een mail ontvangen met de nodige gegevens. Als je nog een opmerking wenst toe te voegen (bv: reden van afkeur of persoonlijk welkoms bericht) kan u dat hierboven invullen.</p>
                     </div>
                 </div>
                 <div class="col-md-9 col-md-offset-3">
-                    <button type="submit" class="btn btn-warning">Pas de gegevens aan</button>
-                    <button type="submit" class="btn btn-danger">Keur de aanvraag af</button>
-                    <button type="submit" class="btn btn-success">Aanvaard de aanvraag</button>
+                    <button class="btn btn-warning">Pas de gegevens aan</button>
+                    <button type="submit" formaction="VerwijderHandelaarVerzoek" class="btn btn-danger">Keur de aanvraag af</button>
+                    <button type="submit" formaction="AccepteerHandelaarVerzoek" class="btn btn-success">Aanvaard de aanvraag</button>
                 </div>
             </form>
         </div>
