@@ -23,6 +23,11 @@ namespace LekkerLokaal.Data.Repositories
             _bestellingen.Add(bestelling);
         }
 
+        public Bestelling GetBy(int bestellingId)
+        {
+            return _bestellingen.Where(b => b.BestellingId == bestellingId).Include(bl => bl.BestelLijnen).SingleOrDefault();
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

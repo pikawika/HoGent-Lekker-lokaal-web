@@ -15,6 +15,7 @@ using LekkerLokaal.Models.ManageViewModels;
 using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using System.Collections;
 
 namespace LekkerLokaal.Controllers
 {
@@ -29,6 +30,7 @@ namespace LekkerLokaal.Controllers
         private readonly UrlEncoder _urlEncoder;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
+        private readonly IBestellingRepository _bestellingRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -40,7 +42,8 @@ namespace LekkerLokaal.Controllers
           ILogger<ManageController> logger,
           UrlEncoder urlEncoder,
           ICategorieRepository categorieRepository,
-          IGebruikerRepository gebruikerRepository)
+          IGebruikerRepository gebruikerRepository,
+          IBestellingRepository bestellingRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -49,6 +52,7 @@ namespace LekkerLokaal.Controllers
             _urlEncoder = urlEncoder;
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
+            _bestellingRepository = bestellingRepository;
         }
 
         [TempData]
@@ -358,10 +362,22 @@ namespace LekkerLokaal.Controllers
             return RedirectToAction(nameof(ExternalLogins));
         }
 
+        [HttpGet]
         public async Task<IActionResult> PersoonlijkeBestellingen()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
+            ViewData["gebruiker"] = null;
+            var user = _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            ICollection<Bestelling> bestellingen = new HashSet<Bestelling>();
+            if (gebruiker.Bestellingen.Count != 0 && gebruiker.Bestellingen != null)
+            {
+                foreach (Bestelling b in gebruiker.Bestellingen)
+                {
+                    bestellingen.Add(_bestellingRepository.GetBy(b.BestellingId));
+                }
+                ViewData["gebruiker"] = bestellingen;
+            }
             return View();
         }
 
