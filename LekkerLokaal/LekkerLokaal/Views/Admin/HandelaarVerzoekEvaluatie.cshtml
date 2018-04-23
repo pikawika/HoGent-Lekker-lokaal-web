@@ -103,6 +103,7 @@
                     <label class="col-sm-3 control-label">Logo</label>
                     <div class="col-sm-6">
                         <img src="@Model.LogoPath" alt="Logo" class="img-thumbnail max-height-350px">
+
                     </div>
                 </div>
 
@@ -122,3 +123,9 @@
         </div>
     </section>
 </section>
+
+<script>
+    $("#fileToUpload").change(function () {
+        document.getElementById('fileselectionTekst').innerHTML = 'U heeft een nieuw logo geselecteerd';
+    });
+</script>

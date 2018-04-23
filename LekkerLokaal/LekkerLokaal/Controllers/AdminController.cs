@@ -51,23 +51,33 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var claims = await _userManager.GetClaimsAsync(await _userManager.FindByEmailAsync(model.Email));
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (!claims.Any(claimpje => claimpje.Value == "admin"))
-                {
-                    ModelState.AddModelError(string.Empty, "U beschikt niet over de nodige rechten om u aan te melden op deze applicatie.");
-                    return View(model);
-                }
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Dashboard");
-                }
-                else
+                if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
                     return View(model);
+                }
+                else
+                {
+                    var claims = await _userManager.GetClaimsAsync(user);
+
+                    if (!claims.Any(claimpje => claimpje.Value == "admin"))
+                    {
+                        ModelState.AddModelError(string.Empty, "U beschikt niet over de nodige rechten om u aan te melden op deze applicatie.");
+                        return View(model);
+                    }
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return RedirectToAction("Dashboard");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
+                        return View(model);
+                    }
                 }
             }
             return View(model);
