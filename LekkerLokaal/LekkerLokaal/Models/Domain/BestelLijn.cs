@@ -8,7 +8,9 @@ namespace LekkerLokaal.Models.Domain
     public class BestelLijn : WinkelwagenLijn
     {
         public int BestelLijnId { get; private set; }
-        public int BestellingId { get; set; }
         public Geldigheid Geldigheid { get; set; }
+        public DateTime AanmaakDatum { get; set; }
+        public string QRCode { get; set; }
+        public Handelaar Handelaar { get; set; }
     }
 }

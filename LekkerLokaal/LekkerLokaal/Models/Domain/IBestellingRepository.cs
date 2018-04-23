@@ -5,11 +5,9 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
 {
-    public enum Geldigheid
+    public interface IBestellingRepository
     {
-        Geldig,
-        Ongeldig,
-        Verlopen,
-        Gebruikt
+        void Add(Bestelling bestelling);
+        void SaveChanges();
     }
 }

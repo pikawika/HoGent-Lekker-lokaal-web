@@ -47,8 +47,11 @@ namespace LekkerLokaal
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+
             services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+                options.UseMySQL(Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddIdentity<ApplicationUser, IdentityRole>(o =>
             {
@@ -92,6 +95,8 @@ namespace LekkerLokaal
             services.AddScoped<ICategorieRepository, CategorieRepository>();
             services.AddScoped<IHandelaarRepository, HandelaarRepository>();
             services.AddScoped<IGebruikerRepository, GebruikerRepository>();
+            services.AddScoped<IBestellijnRepository, BestellijnRepository>();
+            services.AddScoped<IBestellingRepository, BestellingRepository>();
 
             // Add application services.
             services.AddTransient<IEmailSender, EmailSender>();
@@ -141,7 +146,7 @@ namespace LekkerLokaal
                     name: "Account",
                     template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}/{returnUrl}");
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }

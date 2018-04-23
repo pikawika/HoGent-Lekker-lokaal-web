@@ -14,7 +14,6 @@ namespace LekkerLokaal.Models.ManageViewModels
 
         public bool IsEmailConfirmed { get; set; }
 
-        [Required(ErrorMessage = "{0} is verplicht.")]
         [EmailAddress]
         [Display(Name = "E-mailadres")]
         public string Email { get; set; }
