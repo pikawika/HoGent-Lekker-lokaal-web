@@ -37,6 +37,11 @@ namespace LekkerLokaal.Data.Repositories
             return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId);
         }
 
+        public IEnumerable<Handelaar> GetHandelaarsGoedgekeurd(IEnumerable<Handelaar> inputlijst)
+        {
+            return inputlijst.OrderBy(h => h.HandelaarId).Where(h => h.Goedgekeurd).ToList();
+        }
+
         public IEnumerable<Handelaar> GetHandelaarsNogNietGoedgekeurd(IEnumerable<Handelaar> inputlijst)
         {
             return inputlijst.OrderBy(h => h.HandelaarId).Where(h => !h.Goedgekeurd).ToList();

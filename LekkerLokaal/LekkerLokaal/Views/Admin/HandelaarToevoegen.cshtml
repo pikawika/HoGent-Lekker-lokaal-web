@@ -1,4 +1,5 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.ManueelNieuweHandelaarViewModel
+
 @{
     ViewData["Title"] = "HandelaarToevoegen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -10,81 +11,98 @@
     <section class="panel">
         <header class="panel-heading">Manueel handelaar toevoegen</header>
         <div class="panel-body">
-            <form class="form-horizontal bucket-form" method="get">
+            <form class="form-horizontal bucket-form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Naam handelszaak</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Naam">
+                        <span asp-validation-for="Naam" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">E-mailadres</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Email">
+                        <span asp-validation-for="Email" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Straatnaam</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Straatnaam">
+                        <span asp-validation-for="Straatnaam" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Huisnummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Huisnummer">
+                        <span asp-validation-for="Huisnummer" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Postcode</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Postcode">
+                        <span asp-validation-for="Postcode" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Gemeente</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Gemeente">
+                        <span asp-validation-for="Gemeente" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Btw nummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="BtwNummer">
+                        <span asp-validation-for="BtwNummer" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Korte omschrijving</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" required="required" asp-for="Omschrijving">
+                        <span asp-validation-for="Omschrijving" class="text-danger"></span>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Afbeelding</label>
+                    <label class="col-sm-3 control-label">Logo</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <label class="btn btn-default" id="fileselection">
+                            <a class="force-whiteColor" id="fileselectionTekst">Selecteer een logo</a><input asp-for="Afbeelding" accept=".jpg" id="fileToUpload" style="display: none;">
+                        </label>
+                        <span asp-validation-for="Afbeelding" class="text-danger"></span>
                     </div>
                 </div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Opmerking (optioneel)</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control">
+                        <input class="form-control" asp-for="Opmerking">
                         <p class="help-block">Bij het aanvaarden of afkeuren van de aanvraag zal de handelaar automatisch een mail ontvangen met de nodige gegevens. Als je nog een opmerking wenst toe te voegen (bv: reden van afkeur of persoonlijk welkoms bericht) kan u dat hierboven invullen.</p>
                     </div>
                 </div>
                 <div class="col-md-9 col-md-offset-3">
-                    <button type="submit" class="btn btn-danger">Annuleer</button>
+                    <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-danger mr-20">Annuleer</a>
                     <button type="submit" class="btn btn-success">Voeg handelaar toe</button>
                 </div>
             </form>
         </div>
     </section>
 </section>
+
+<script>
+    $("#fileToUpload").change(function () {
+        document.getElementById('fileselectionTekst').innerHTML = 'U heeft een bestand geselecteerd';
+    });
+</script>

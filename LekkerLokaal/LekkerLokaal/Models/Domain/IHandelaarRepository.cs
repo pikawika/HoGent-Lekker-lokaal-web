@@ -11,6 +11,8 @@ namespace LekkerLokaal.Models.Domain
 
         IEnumerable<Handelaar> GetHandelaarsNogNietGoedgekeurd(IEnumerable<Handelaar> inputlijst);
 
+        IEnumerable<Handelaar> GetHandelaarsGoedgekeurd(IEnumerable<Handelaar> inputlijst);
+
         void Add(Handelaar handelaar);
 
         void Remove(int handelaarId);

@@ -11,67 +11,99 @@
     <section class="panel">
         <header class="panel-heading">Aanvraag tot handelaarsaccount: @Model.Naam</header>
         <div class="panel-body">
-            <form onsubmit="return confirm('Bent u zeker dat u de gekozen actie wilt uitvoeren?');" action="" method="post" class="form-horizontal bucket-form">
+            <form onsubmit="return confirm('Bent u zeker dat u de gekozen actie wilt uitvoeren?');" method="post" enctype="multipart/form-data" class="form-horizontal bucket-form">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">ID (niet aanpasbaar)</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="HandelaarId" class="form-control" readonly="readonly">
+                        <input type="text" asp-for="HandelaarId" class="form-control" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Naam handelszaak</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Naam" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="2" asp-for="Naam" readonly>
+                        <span asp-validation-for="Naam" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('2')" class="clickable"><i id="2icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">E-mailadres</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Emailadres" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="3" asp-for="Emailadres" readonly>
+                        <span asp-validation-for="Emailadres" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('3')" class="clickable"><i id="3icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Straatnaam</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Straat" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="4" asp-for="Straat" readonly>
+                        <span asp-validation-for="Straat" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('4')" class="clickable"><i id="4icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Huisnummer</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Huisnummer" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="5" asp-for="Huisnummer" readonly>
+                        <span asp-validation-for="Huisnummer" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('5')" class="clickable"><i id="5icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Postcode</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Postcode" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="6" asp-for="Postcode" readonly>
+                        <span asp-validation-for="Postcode" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('6')" class="clickable"><i id="6icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Gemeente</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Gemeente" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="7" asp-for="Gemeente" readonly>
+                        <span asp-validation-for="Gemeente" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('7')" class="clickable"><i id="7icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Btw nummer</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="BTW_Nummer" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="8" asp-for="BTW_Nummer" readonly>
+                        <span asp-validation-for="BTW_Nummer" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('8')" class="clickable"><i id="8icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Korte omschrijving</label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="Beschrijving" class="form-control" readonly="readonly">
+                        <input class="form-control" required="required" id="9" asp-for="Beschrijving" readonly>
+                        <span asp-validation-for="Beschrijving" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('9')" class="clickable"><i id="9icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 
@@ -79,6 +111,10 @@
                     <label class="col-sm-3 control-label">Logo</label>
                     <div class="col-sm-6">
                         <img src="@Model.LogoPath" alt="Logo" class="img-thumbnail max-height-350px">
+                        <label class="btn btn-default" id="fileselection">
+                            <a class="force-whiteColor" id="fileselectionTekst">Selecteer een logo</a><input asp-for="Afbeelding" accept=".jpg" id="fileToUpload" style="display: none;">
+                        </label>
+                        <span asp-validation-for="Afbeelding" class="text-danger"></span>
                     </div>
                 </div>
 
@@ -90,11 +126,17 @@
                     </div>
                 </div>
                 <div class="col-md-9 col-md-offset-3">
-                    <button class="btn btn-warning">Pas de gegevens aan</button>
-                    <button type="submit" formaction="VerwijderHandelaarVerzoek" class="btn btn-danger">Keur de aanvraag af</button>
+                    <a asp-controller="Admin" asp-action="HandelaarsVerzoeken" class="btn btn-warning mr-20">Annuleer</a>
+                    <button type="submit" formaction="VerwijderHandelaarVerzoek" class="btn btn-danger mr-20">Keur de aanvraag af</button>
                     <button type="submit" formaction="AccepteerHandelaarVerzoek" class="btn btn-success">Aanvaard de aanvraag</button>
                 </div>
             </form>
         </div>
     </section>
 </section>
+
+<script>
+    $("#fileToUpload").change(function () {
+        document.getElementById('fileselectionTekst').innerHTML = 'U heeft een nieuw logo geselecteerd';
+    });
+</script>

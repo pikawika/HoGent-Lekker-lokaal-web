@@ -51,23 +51,33 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                var claims = await _userManager.GetClaimsAsync(await _userManager.FindByEmailAsync(model.Email));
+                var user = await _userManager.FindByEmailAsync(model.Email);
 
-                if (!claims.Any(claimpje => claimpje.Value == "admin"))
-                {
-                    ModelState.AddModelError(string.Empty, "U beschikt niet over de nodige rechten om u aan te melden op deze applicatie.");
-                    return View(model);
-                }
-                var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
-                if (result.Succeeded)
-                {
-                    _logger.LogInformation("User logged in.");
-                    return RedirectToAction("Dashboard");
-                }
-                else
+                if (user == null)
                 {
                     ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
                     return View(model);
+                }
+                else
+                {
+                    var claims = await _userManager.GetClaimsAsync(user);
+
+                    if (!claims.Any(claimpje => claimpje.Value == "admin"))
+                    {
+                        ModelState.AddModelError(string.Empty, "U beschikt niet over de nodige rechten om u aan te melden op deze applicatie.");
+                        return View(model);
+                    }
+                    var result = await _signInManager.PasswordSignInAsync(model.Email, model.Password, isPersistent: false, lockoutOnFailure: false);
+                    if (result.Succeeded)
+                    {
+                        _logger.LogInformation("User logged in.");
+                        return RedirectToAction("Dashboard");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, "Uw e-mailadres en/of wachtwoord is fout. Gelieve het opnieuw te proberen");
+                        return View(model);
+                    }
                 }
             }
             return View(model);
@@ -134,6 +144,7 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
@@ -174,16 +185,29 @@ namespace LekkerLokaal.Controllers
                 Directory.Delete(filePath, true);
 
 
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
 
         [HttpPost]
-        public IActionResult AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
             {
+                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
+
+                if(model.Afbeelding != null)
+                {
+                    var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId + "/logo.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeelding.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+                
                 var message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(model.Emailadres);
@@ -211,10 +235,7 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
 
-                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
-                _handelaarRepository.SaveChanges();
-
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
@@ -231,10 +252,67 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> HandelaarToevoegen(ManueelNieuweHandelaarViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Handelaar nieuweHandelaar = new Handelaar(model.Naam, model.Email, model.Omschrijving, model.BtwNummer, model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, true);
+                _handelaarRepository.Add(nieuweHandelaar);
+                _handelaarRepository.SaveChanges();
+
+
+                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Afbeelding.CopyToAsync(fileStream);
+                fileStream.Close();
+
+
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Email);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geaccepteerd!";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   model.Opmerking + "\n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                return RedirectToAction("Dashboard");
+            }
+            return View(nameof(HandelaarToevoegen), model);
+        }
+
         [HttpGet]
         public IActionResult HandelaarsOverzicht()
         {
-            return View();
+            return View(new HandelaarsOverzichtViewModel(_handelaarRepository.GetHandelaarsGoedgekeurd(_handelaarRepository.GetAll())));
+        }
+
+        [HttpGet]
+        public IActionResult HandelaarDetail(int Id)
+        {
+            Handelaar geselecteerdeHandelaar = _handelaarRepository.GetByHandelaarId(Id);
+            return View(new HandelaarDetailViewModel(geselecteerdeHandelaar));
         }
 
         [HttpGet]
