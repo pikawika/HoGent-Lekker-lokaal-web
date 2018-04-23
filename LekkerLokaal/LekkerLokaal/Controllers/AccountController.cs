@@ -318,18 +318,22 @@ namespace LekkerLokaal.Controllers
                                         "Postcode: {4}\n" +
                                         "Gemeente: {5}\n" +
                                         "BTW Nummer: {6}\n" +
-                                        "Categorie: {7}\n" +
-                                        "Beschrijving: {8}\n",
-                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving);
-                var filePath = @"wwwroot/images/temp/logo.jpg";
+                                        "Beschrijving: {7}\n",
+                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                
+                //handelaar maken
+                Handelaar nieuweHandelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, false);
+                _handelaarRepository.Add(nieuweHandelaar);
+                _handelaarRepository.SaveChanges();
+
+               
+                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 var fileStream = new FileStream(filePath, FileMode.Create);
                 await model.Logo.CopyToAsync(fileStream);
                 fileStream.Close();
-                Handelaar handelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, "implementafbeelding", model.Straat, model.Huisnummer, int.Parse(model.Postcode), model.Plaatsnaam, false);
-                _handelaarRepository.Add(handelaar);
-                _handelaarRepository.SaveChanges();
 
-                var attachment = new Attachment(@"wwwroot/images/temp/logo.jpg");
+                var attachment = new Attachment(@"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg");
                 attachment.Name = "logo.jpg";
                 message.Attachments.Add(attachment);
                 var SmtpServer = new SmtpClient("smtp.gmail.com");
