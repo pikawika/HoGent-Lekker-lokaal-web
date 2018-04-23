@@ -9,10 +9,14 @@ namespace LekkerLokaal.Models.Domain
     {
         IEnumerable<Handelaar> GetAll();
 
+        IEnumerable<Handelaar> GetHandelaarsNogNietGoedgekeurd(IEnumerable<Handelaar> inputlijst);
+
         void Add(Handelaar handelaar);
 
         void SaveChanges();
 
         int getAantalHandelaarsverzoeken();
+
+        Handelaar GetByHandelaarId(int handelaarId);
     }
 }

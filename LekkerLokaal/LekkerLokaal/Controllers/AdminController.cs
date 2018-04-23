@@ -121,13 +121,14 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult HandelaarsVerzoeken()
         {
-            return View();
+            return View(new HandelaarsVerzoekenViewModel(_handelaarRepository.GetHandelaarsNogNietGoedgekeurd(_handelaarRepository.GetAll())));
         }
 
         [HttpGet]
-        public IActionResult HandelaarVerzoekEvaluatie()
+        public IActionResult HandelaarVerzoekEvaluatie(int Id)
         {
-            return View();
+            Handelaar geselecteerdeHandelaarEvaluatie = _handelaarRepository.GetByHandelaarId(Id);
+            return View(new HandelaarEvaluatieViewModel(geselecteerdeHandelaarEvaluatie));
         }
 
         [HttpGet]

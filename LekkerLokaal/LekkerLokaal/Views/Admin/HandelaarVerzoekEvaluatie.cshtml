@@ -1,4 +1,5 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.HandelaarEvaluatieViewModel
+
 @{
     ViewData["Title"] = "HandelaarVerzoekEvaluatie";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
@@ -8,71 +9,67 @@
     <h1 class="text-center"></h1>
 
     <section class="panel">
-        <header class="panel-heading">Aanvraag tot handelaarsaccount: Lennert NV.</header>
+        <header class="panel-heading">Aanvraag tot handelaarsaccount: @Model.Naam</header>
         <div class="panel-body">
             <form class="form-horizontal bucket-form" method="get">
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Naam handelszaak</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Naam" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">E-mailadres</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Emailadres" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Straatnaam</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Straat" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Huisnummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Huisnummer" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Postcode</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Postcode" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Gemeente</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Gemeente" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Btw nummer</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.BTW_Nummer" disabled="">
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Korte omschrijving</label>
                     <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
+                        <input type="text" class="form-control" value="@Model.Beschrijving" disabled="">
                     </div>
                 </div>
 
-                <div class="form-group">
-                    <label class="col-sm-3 control-label">Afbeelding</label>
-                    <div class="col-sm-6">
-                        <input type="text" class="form-control" value="TEKSTTTTTTT" disabled="">
-                    </div>
-                </div>
+                
+
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Opmerking (optioneel)</label>
                     <div class="col-sm-6">
