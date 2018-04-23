@@ -167,5 +167,9 @@ namespace LekkerLokaal.Data.Repositories
         {
             return GetBonnenAanbiedingSlider(inputlijst).Union(GetBonnenAanbiedingStandaard(inputlijst)).ToList();
         }
+        public void SaveChanges()
+        {
+            _context.SaveChanges();
+        }
     }
 }

@@ -214,13 +214,14 @@ namespace LekkerLokaal.Data
 
                 _dbContext.Bonnen.AddRange(bonnen);
 
+                Gebruiker user00 = new Gebruiker { Voornaam = "John", Familienaam = "Doe", Geslacht = Geslacht.Anders, Emailadres = "lekkerlokaal" };
                 Gebruiker user01 = new Gebruiker { Voornaam = "Brent", Familienaam = "Schets", Geslacht = Geslacht.Man, Emailadres = "brent@schets.com" };
                 Gebruiker user02 = new Gebruiker { Voornaam = "Bram", Familienaam = "De Coninck", Geslacht = Geslacht.Man, Emailadres = "bram@bramdeconinck.com" };
                 Gebruiker user03 = new Gebruiker { Voornaam = "Lennert", Familienaam = "Bontinck", Geslacht = Geslacht.Man, Emailadres = "lennert@lennertbontinck.com" };
 
                 var personen = new List<Gebruiker>
                 {
-                    user01, user02, user03
+                    user00, user01, user02, user03
                 };
 
                 _dbContext.Gebruikers.AddRange(personen);

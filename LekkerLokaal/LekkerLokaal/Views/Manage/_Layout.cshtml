@@ -2,16 +2,16 @@
     Layout = "/Views/Shared/_Layout.cshtml";
 }
 
-<h2>Accountbeheer</h2>
+<center><h2 class="mt-30">Accountbeheer</h2></center>
 
 <div>
-    <h4>Bekijk of bewerk de instellingen van uw account</h4>
+    <center><h4>Bekijk of bewerk de instellingen van uw account</h4></center>
     <hr />
     <div class="row">
         <div class="col-md-3">
             @await Html.PartialAsync("_ManageNav")
         </div>
-        <div class="col-md-9">
+        <div class="col-md-6">
             @RenderBody()
         </div>
     </div>
