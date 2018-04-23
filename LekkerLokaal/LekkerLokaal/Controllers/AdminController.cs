@@ -305,7 +305,14 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult HandelaarsOverzicht()
         {
-            return View();
+            return View(new HandelaarsOverzichtViewModel(_handelaarRepository.GetHandelaarsGoedgekeurd(_handelaarRepository.GetAll())));
+        }
+
+        [HttpGet]
+        public IActionResult HandelaarDetail(int Id)
+        {
+            Handelaar geselecteerdeHandelaar = _handelaarRepository.GetByHandelaarId(Id);
+            return View(new HandelaarDetailViewModel(geselecteerdeHandelaar));
         }
 
         [HttpGet]

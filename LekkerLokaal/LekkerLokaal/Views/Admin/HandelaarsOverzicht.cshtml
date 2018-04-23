@@ -1,9 +1,47 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.HandelaarsOverzichtViewModel
+
 @{
     ViewData["Title"] = "HandelaarsOverzicht";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    <h1>TEMP</h1>
+    @if (Model.AlleHandelaarsGesorteerdOpId == null || !Model.AlleHandelaarsGesorteerdOpId.Any())
+    {
+        <h1 class="text-center mtb-40">Er zijn momenteel geen handelaars in het systeem!</h1>
+        <a asp-controller="Admin" asp-action="HandelaarToevoegen"><h3 class="text-center">Voeg manueel een handelaar toe.</h3></a>
+    }
+    else
+    {
+        <div class="table-agile-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Handelaars op LekkerLokaal.be
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Naam handelaar</th>
+                                <th>Gemeente</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        @foreach (var handelaar in Model.AlleHandelaarsGesorteerdOpId)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@handelaar.Id</td>
+                                    <td>@handelaar.Naam</td>
+                                    <td>@handelaar.Gemeente</td>
+                                    <td><a asp-controller="Admin" asp-action="HandelaarDetail" asp-route-id="@handelaar.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+            </div>
+        </div>
+    }
 </section>
