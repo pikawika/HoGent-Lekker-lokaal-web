@@ -13,11 +13,11 @@ namespace LekkerLokaal.Models.Domain
         public string Beschrijving { get; set; }
         public string BTW_Nummer { get; set; }
         public ICollection<Bon> Cadeaubonnen { get; private set; }
-        public string Afbeelding { get; set; }
         public string Straat { get; set; }
         public string Huisnummer { get; set; }
-        public int Postcode { get; set; }
+        public string Postcode { get; set; }
         public string Gemeente { get; set; }
+        public bool Goedgekeurd { get; set; }
         public string Gebruikersnaam { get; set; }
         public string Wachtwoord { get; private set; }
         public bool EersteAanmelding { get; set; }
@@ -27,13 +27,13 @@ namespace LekkerLokaal.Models.Domain
 
         }
 
-        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string afbeelding, string straat, string huisnummer, int postcode, string gemeente)
+        public Handelaar(string naam, string emailadres, string beschrijving, string btw_nummer, string straat, string huisnummer, string postcode, string gemeente, bool goedgekeurd = false)
         {
+            Goedgekeurd = goedgekeurd;
             Naam = naam;
             Emailadres = emailadres;
             Beschrijving = beschrijving;
             BTW_Nummer = btw_nummer;
-            Afbeelding = afbeelding;
             Straat = straat;
             Huisnummer = huisnummer;
             Postcode = postcode;
@@ -47,6 +47,11 @@ namespace LekkerLokaal.Models.Domain
         public void VoegBonToe(Bon bon)
         {
             Cadeaubonnen.Add(bon);
+        }
+
+        public string GetLogoPath()
+        {
+            return @"/images/handelaar/" + HandelaarId + "/logo.jpg";
         }
     }
 }

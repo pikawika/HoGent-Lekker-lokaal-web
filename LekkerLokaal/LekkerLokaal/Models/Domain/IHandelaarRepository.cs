@@ -8,6 +8,19 @@ namespace LekkerLokaal.Models.Domain
     public interface IHandelaarRepository
     {
         IEnumerable<Handelaar> GetAll();
-        
+
+        IEnumerable<Handelaar> GetHandelaarsNogNietGoedgekeurd(IEnumerable<Handelaar> inputlijst);
+
+        void Add(Handelaar handelaar);
+
+        void Remove(int handelaarId);
+
+        void KeurAanvraagGoed(int handelaarId);
+
+        void SaveChanges();
+
+        int getAantalHandelaarsverzoeken();
+
+        Handelaar GetByHandelaarId(int handelaarId);
     }
 }

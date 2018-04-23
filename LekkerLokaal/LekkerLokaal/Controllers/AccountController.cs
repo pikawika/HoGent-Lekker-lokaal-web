@@ -30,6 +30,7 @@ namespace LekkerLokaal.Controllers
         private readonly ILogger _logger;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
+        private readonly IHandelaarRepository _handelaarRepository;
 
         public AccountController(
             UserManager<ApplicationUser> userManager,
@@ -37,7 +38,8 @@ namespace LekkerLokaal.Controllers
             IEmailSender emailSender,
             ILogger<AccountController> logger,
             ICategorieRepository categorieRepository,
-            IGebruikerRepository gebruikerRepository)
+            IGebruikerRepository gebruikerRepository,
+            IHandelaarRepository handelaarRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -45,6 +47,7 @@ namespace LekkerLokaal.Controllers
             _logger = logger;
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
+            _handelaarRepository = handelaarRepository;
         }
 
         [TempData]
@@ -54,11 +57,19 @@ namespace LekkerLokaal.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Login(string returnUrl = null)
         {
-            // Clear the existing external cookie to ensure a clean login process
-            await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["ReturnUrl"] = returnUrl;
-            return View();
+            if (returnUrl != null && returnUrl.StartsWith("/admin/", StringComparison.OrdinalIgnoreCase))
+            {
+                return RedirectToAction("Index", "Admin");
+            }
+            else
+            {
+                // Clear the existing external cookie to ensure a clean login process
+                await HttpContext.SignOutAsync(IdentityConstants.ExternalScheme);
+                ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+                ViewData["ReturnUrl"] = returnUrl;
+                return View();
+            }
+
         }
 
         [HttpPost]
@@ -307,15 +318,22 @@ namespace LekkerLokaal.Controllers
                                         "Postcode: {4}\n" +
                                         "Gemeente: {5}\n" +
                                         "BTW Nummer: {6}\n" +
-                                        "Categorie: {7}\n" +
-                                        "Beschrijving: {8}\n",
-                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Categorie, model.Beschrijving);
-                var filePath = @"wwwroot/images/temp/logo.jpg";
+                                        "Beschrijving: {7}\n",
+                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+
+                //handelaar maken
+                Handelaar nieuweHandelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, false);
+                _handelaarRepository.Add(nieuweHandelaar);
+                _handelaarRepository.SaveChanges();
+
+
+                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                 var fileStream = new FileStream(filePath, FileMode.Create);
                 await model.Logo.CopyToAsync(fileStream);
                 fileStream.Close();
 
-                var attachment = new Attachment(@"wwwroot/images/temp/logo.jpg");
+                var attachment = new Attachment(@"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg");
                 attachment.Name = "logo.jpg";
                 message.Attachments.Add(attachment);
                 var SmtpServer = new SmtpClient("smtp.gmail.com");
@@ -324,8 +342,27 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
 
                 SmtpServer.Send(message);
+                message.Attachments.Remove(attachment);
                 attachment.Dispose();
-                System.IO.File.Delete(@"wwwroot/images/temp/logo.jpg");
+
+                var berichtNaarHandelaar = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Email);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
+                message.Body = String.Format("Beste, \n" +
+                                        "Uw verzoek om handelaar te worden bij LekkerLokaal.be is correct ontvangen. \n\n" +
+                                        "Onderstaande gegevens zullen gecontroleerd worden door een administrator. U mag een E-mail verwachten zodra uw verzoek al dan niet aanvaard wordt." +
+                                        "Naam handelszaak: {0}\n" +
+                                        "E-mailadres: {1}\n" +
+                                        "Straat: {2}\n" +
+                                        "Huisnummer: {3}\n" +
+                                        "Postcode: {4}\n" +
+                                        "Gemeente: {5}\n" +
+                                        "BTW Nummer: {6}\n" +
+                                        "Beschrijving: {7}\n",
+                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                SmtpServer.Send(message);
+
                 return RedirectToLocal(returnUrl);
             }
             // If we got this far, something failed, redisplay form
@@ -395,7 +432,7 @@ namespace LekkerLokaal.Controllers
                 var geslachtTekst = info.Principal.FindFirstValue(ClaimTypes.Gender) ?? "Anders";
                 var geslacht = Geslacht.Anders;
 
-                switch(geslachtTekst.ToLower())
+                switch (geslachtTekst.ToLower())
                 {
                     case "male":
                         geslacht = Geslacht.Man;
@@ -408,7 +445,8 @@ namespace LekkerLokaal.Controllers
                         break;
                 }
 
-                return View("ExternalLogin", new ExternalLoginViewModel {
+                return View("ExternalLogin", new ExternalLoginViewModel
+                {
                     Email = email,
                     Voornaam = voornaam,
                     Familienaam = familienaam,

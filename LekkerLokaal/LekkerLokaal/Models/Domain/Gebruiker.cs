@@ -13,7 +13,23 @@ namespace LekkerLokaal.Models.Domain
         public Geslacht Geslacht { get; set; }
         public string Emailadres { get; set; }
         public ICollection<Bestelling> Bestellingen { get; set; }
-        public string Afbeelding { get; set; }
+
+        private string _afbeelding;
+        public string Afbeelding
+        {
+            get {
+                if (_afbeelding == null)
+                {
+                    return @"\images\gebruikers\default.png";
+                }
+                else
+                {
+                    return _afbeelding;
+                }
+                }
+            set { _afbeelding = value; }
+        }
+
 
         public Gebruiker()
         {

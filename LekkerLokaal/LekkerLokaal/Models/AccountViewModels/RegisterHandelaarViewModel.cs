@@ -47,10 +47,6 @@ namespace LekkerLokaal.Models.AccountViewModels
         public string BTWNummer { get; set; }
 
         [Required(ErrorMessage = "{0} is verplicht.")]
-        [Display(Name = "categorie")]
-        public string Categorie { get; set; }
-
-        [Required(ErrorMessage = "{0} is verplicht.")]
         [DataType(DataType.Text)]
         [Display(Name = "Korte beschrijving")]
         public string Beschrijving { get; set; }

@@ -14,45 +14,38 @@
                         <form class="p-40" asp-route-returnUrl="@ViewData["Register"]" enctype="multipart/form-data" method="post">
                             <div class="form-group">
                                 <label asp-for="NaamHandelszaak" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Naam handelszaak" asp-for="NaamHandelszaak">
+                                <input class="form-control input-lg" placeholder="Naam handelszaak" asp-for="NaamHandelszaak" required>
                                 <span asp-validation-for="NaamHandelszaak" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="Email" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="E-mailadres" asp-for="Email">
+                                <input class="form-control input-lg" placeholder="E-mailadres" asp-for="Email" required>
                                 <span asp-validation-for="Email" class="text-danger"></span>
                             </div>
                             <div class="form-group col-sm-9 no-padding">
                                 <label asp-for="Straat" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Straat" asp-for="Straat">
+                                <input class="form-control input-lg" placeholder="Straat" asp-for="Straat" required>
                                 <span asp-validation-for="Straat" class="text-danger"></span>
                             </div>
                             <div class="form-group col-sm-offset-1 col-sm-2 no-padding">
                                 <label asp-for="Huisnummer" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Nummer" asp-for="Huisnummer">
+                                <input class="form-control input-lg" placeholder="Nr" asp-for="Huisnummer" required>
                                 <span asp-validation-for="Huisnummer" class="text-danger"></span>
                             </div>
                             <div class="form-group col-sm-3 no-padding">
                                 <label asp-for="Postcode" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Postcode" asp-for="Postcode">
+                                <input class="form-control input-lg" placeholder="Postcode" asp-for="Postcode" required>
                                 <span asp-validation-for="Postcode" class="text-danger"></span>
                             </div>
                             <div class="form-group col-sm-offset-1 col-sm-8 no-padding">
                                 <label asp-for="Plaatsnaam" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="Plaatsnaam" asp-for="Plaatsnaam">
+                                <input class="form-control input-lg" placeholder="Plaatsnaam" asp-for="Plaatsnaam" required>
                                 <span asp-validation-for="Plaatsnaam" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label asp-for="BTWNummer" class="sr-only"></label>
-                                <input class="form-control input-lg" placeholder="BTW Nummer" asp-for="BTWNummer">
+                                <input class="form-control input-lg" placeholder="BTW Nummer" asp-for="BTWNummer" required>
                                 <span asp-validation-for="BTWNummer" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label class="sr-only" asp-for="Categorie"></label>
-                                <select class="form-control input-lg search-select" asp-for="Categorie" asp-items="@(ViewData["categorie"] as SelectList)">
-                                    <option value="">--- Selecteer categorie ---</option>
-                                </select>
-                                <span asp-validation-for="Categorie" class="text-danger"></span>
                             </div>
                             <div class="form-group">
                                 <label class="sr-only" asp-for="Beschrijving">korte omschrijving van uw bedrijf</label>

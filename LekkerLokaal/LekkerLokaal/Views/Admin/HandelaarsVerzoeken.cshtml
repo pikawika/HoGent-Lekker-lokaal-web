@@ -1,0 +1,39 @@
+﻿@model LekkerLokaal.Models.AdminViewModels.HandelaarsVerzoekenViewModel
+
+@{
+    ViewData["Title"] = "HandelaarsVerzoeken";
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<section class="wrapper">
+    <div class="table-agile-info">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                Handelaarsverzoeken
+            </div>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Naam handelaar</th>
+                            <th>Gemeente</th>
+                            <th>Detail</th>
+                        </tr>
+                    </thead>
+                    @foreach (var handelaar in Model.AlleHandelaarsVerzoekenGesorteerdOpId)
+                    {
+                        <tbody>
+                            <tr>
+                                <td>@handelaar.Id</td>
+                                <td>@handelaar.Naam</td>
+                                <td>@handelaar.Gemeente</td>
+                                <td><a asp-controller="Admin" asp-action="HandelaarVerzoekEvaluatie" asp-route-id="@handelaar.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                            </tr>
+                        </tbody>
+                    }
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
