@@ -1,4 +1,8 @@
 /*CUSTOM*/
+li.disabled > span {
+    cursor: not-allowed !important;
+}
+
 .max-height-350px {
     max-height: 350px !important;
 }
