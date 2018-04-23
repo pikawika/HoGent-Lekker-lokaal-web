@@ -134,6 +134,7 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
@@ -174,16 +175,21 @@ namespace LekkerLokaal.Controllers
                 Directory.Delete(filePath, true);
 
 
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
             {
+                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
+
+
                 var message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(model.Emailadres);
@@ -211,10 +217,7 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
 
-                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
-                _handelaarRepository.SaveChanges();
-
-                return RedirectToAction("Dashboard");
+                return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
@@ -229,6 +232,56 @@ namespace LekkerLokaal.Controllers
         public IActionResult HandelaarToevoegen()
         {
             return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> HandelaarToevoegen(ManueelNieuweHandelaarViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Handelaar nieuweHandelaar = new Handelaar(model.Naam, model.Email, model.Omschrijving, model.BtwNummer, model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, true);
+                _handelaarRepository.Add(nieuweHandelaar);
+                _handelaarRepository.SaveChanges();
+
+
+                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Afbeelding.CopyToAsync(fileStream);
+                fileStream.Close();
+
+
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(model.Email);
+                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geaccepteerd!";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   model.Opmerking + "\n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste, \n" +
+                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   "Met vriendelijke groet, \n" +
+                  "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                return RedirectToAction("Dashboard");
+            }
+            return View(nameof(HandelaarToevoegen), model);
         }
 
         [HttpGet]
