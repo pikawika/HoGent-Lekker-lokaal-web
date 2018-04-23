@@ -12,5 +12,7 @@ namespace LekkerLokaal.Models.Domain
         void Add(Handelaar handelaar);
 
         void SaveChanges();
+
+        int getAantalHandelaarsverzoeken();
     }
 }

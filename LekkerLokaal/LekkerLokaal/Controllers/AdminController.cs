@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.AdminViewModels;
+using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -18,16 +19,19 @@ namespace LekkerLokaal.Controllers
     {
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
+        private readonly IHandelaarRepository _handelaarRepository;
         private readonly ILogger _logger;
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
             ILogger<AdminController> logger,
-            SignInManager<ApplicationUser> signInManager)
+            SignInManager<ApplicationUser> signInManager, 
+            IHandelaarRepository handelaarRepository)
         {
             _userManager = userManager;
             _logger = logger;
             _signInManager = signInManager;
+            _handelaarRepository = handelaarRepository;
         }
 
         [HttpGet]
@@ -81,7 +85,7 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Dashboard()
         {
-            return View();
+            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken()));
         }
 
         [HttpGet]

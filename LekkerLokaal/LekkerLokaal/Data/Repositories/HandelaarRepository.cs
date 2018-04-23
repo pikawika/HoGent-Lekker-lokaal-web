@@ -22,6 +22,11 @@ namespace LekkerLokaal.Data.Repositories
             _handelaars.Add(handelaar);
         }
 
+        public int getAantalHandelaarsverzoeken()
+        {
+            return _handelaars.Count(h => h.Goedgekeurd == false);
+        }
+
         public IEnumerable<Handelaar> GetAll()
         {
             return _handelaars.AsNoTracking().ToList();
