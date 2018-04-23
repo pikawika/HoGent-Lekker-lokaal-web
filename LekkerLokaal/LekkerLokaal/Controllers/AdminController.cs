@@ -192,14 +192,22 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        public async Task<IActionResult> AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
             {
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 
-
+                if(model.Afbeelding != null)
+                {
+                    var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId + "/logo.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeelding.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+                
                 var message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(model.Emailadres);
