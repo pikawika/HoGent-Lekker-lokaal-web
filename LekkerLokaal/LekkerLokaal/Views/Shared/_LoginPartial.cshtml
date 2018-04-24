@@ -6,7 +6,7 @@
 @inject IGebruikerRepository gebruikerRepository
 
 @{
-    var user = UserManager.GetUserAsync(User);
+    var user = await UserManager.GetUserAsync(User);
 }
 
 @if (SignInManager.IsSignedIn(User))
@@ -15,9 +15,9 @@
         <ul class="nav navbar-nav navbar-right">
             <li>
                 <a asp-area="" asp-controller="Manage" asp-action="Index">
-                @if (@gebruikerRepository.GetBy(user.Result.Email) != null)
+                @if (@gebruikerRepository.GetBy(user.Email) != null)
                 {
-                <p>Welkom, @gebruikerRepository.GetBy(user.Result.Email).Voornaam</p>
+                <p>Welkom, @gebruikerRepository.GetBy(user.Email).Voornaam</p>
                 }
                 else
                 {

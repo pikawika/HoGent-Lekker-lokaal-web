@@ -1,4 +1,13 @@
-﻿@using LekkerLokaal.Models.Domain;
+﻿@using Microsoft.AspNetCore.Identity
+@using LekkerLokaal.Models.Domain;
+@using System.Security.Claims;
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
 
 <!DOCTYPE html>
 <html>
@@ -159,7 +168,26 @@
                                         </div>
                                     </a>
                                 </div>
-                                <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                @if (SignInManager.IsSignedIn(User))
+                                {
+                                    IList<Claim> claims = await UserManager.GetClaimsAsync(user);
+                                    @if (claims.Any(claimpje => claimpje.Value == "admin"))
+                                    {
+                                        <a asp-controller="Admin" asp-action="Dashboard" class="hidden-xs">Admin<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                    }
+                                    else if (claims.Any(claimpje => claimpje.Value == "handelaar"))
+                                    {
+                                        <a asp-controller="Handelaar" asp-action="Index" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                    }
+                                    else
+                                    {
+                                        <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                    }
+                                }
+                                else
+                                {
+                                    <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                }
                             </div>
                         </nav>
                     </div>
