@@ -1,0 +1,45 @@
+﻿@using LekkerLokaal.Models.Domain
+
+@{
+    ViewData["Title"] = "Details van bestelling";
+}
+
+
+<div class="page-container ptb-10">
+    <div class="container width-100">
+        <section class="sign-area panel p-40 mr-10">
+            <div class="button-back">
+                <a asp-controller="Manage" asp-action="PersoonlijkeBestellingen" class="btn btn-sm btn-block mb-10"><i class="fas fa-arrow-left"></i> Terug naar bestellingen</a>
+
+            </div>
+            
+            <h4 class="mb-10">@ViewData["Title"]</h4>
+            @if (ViewData["bestellijnen"] == null)
+            {
+                <p>Uw bestelling kon niet worden opgehaald.</p>
+            }
+            else
+            {
+
+                <table style="width:100%" class="spacing-10">
+                    <tr>
+                        <th>Bon</th>
+                        <th>Naam</th>
+                        <th>Bedrag</th>
+                    </tr>
+                    @foreach (BestelLijn b in (IEnumerable<BestelLijn>)ViewData["bestellijnen"])
+                    {
+                        <tr>
+                            <td>@b.BestelLijnId</td>
+                            <td>@b.Bon.Naam</td>
+                            <td>@b.Prijs</td>
+                            <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@b.Bon.BonId" class="btn btn-sm btn-block">Details bon</a></td>
+                        </tr>
+
+                    }
+
+                </table>
+            }
+        </section>
+    </div>
+</div>

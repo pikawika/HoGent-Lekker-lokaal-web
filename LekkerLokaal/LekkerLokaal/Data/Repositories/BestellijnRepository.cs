@@ -34,6 +34,11 @@ namespace LekkerLokaal.Data.Repositories
             return _bestellijnen.SingleOrDefault(g => g.QRCode == qrcode);
         }
 
+        public BestelLijn GetById(int bestellijnid)
+        {
+            return _bestellijnen.Include(b => b.Bon).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

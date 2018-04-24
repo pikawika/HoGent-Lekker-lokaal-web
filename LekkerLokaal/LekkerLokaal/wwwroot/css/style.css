@@ -2,6 +2,16 @@
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
 
+.spacing-10 {
+    border-collapse: separate; /* allow spacing between cell borders */
+    border-spacing: 0 10px; /* NOTE: syntax is <horizontal value> <vertical value> */
+}
+
+.button-back{
+    height:auto !important;
+    width: 250px !important;
+}
+
 .width-100{
     width: 100% !important;
 }
