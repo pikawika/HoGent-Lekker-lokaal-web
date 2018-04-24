@@ -196,6 +196,9 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Emailadres);
+                user.EmailConfirmed = true;
+
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 

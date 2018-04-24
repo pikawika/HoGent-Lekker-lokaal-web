@@ -12,6 +12,7 @@
         <header class="panel-heading">Aanvraag tot handelaarsaccount: @Model.Naam</header>
         <div class="panel-body">
             <form onsubmit="return confirm('Bent u zeker dat u de gekozen actie wilt uitvoeren?');" method="post" enctype="multipart/form-data" class="form-horizontal bucket-form">
+                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
                     <label class="col-sm-3 control-label">ID (niet aanpasbaar)</label>
                     <div class="col-sm-6">
@@ -35,9 +36,6 @@
                     <div class="col-sm-6">
                         <input class="form-control" required="required" id="3" asp-for="Emailadres" readonly>
                         <span asp-validation-for="Emailadres" class="text-danger"></span>
-                    </div>
-                    <div class="col-sm-1">
-                        <a onclick="ToggleReadOnly('3')" class="clickable"><i id="3icon" class="fas fa-lock-open"></i></a>
                     </div>
                 </div>
 

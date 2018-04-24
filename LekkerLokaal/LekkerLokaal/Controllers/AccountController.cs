@@ -307,63 +307,70 @@ namespace LekkerLokaal.Controllers
             ViewData["ReturnUrl"] = returnUrl;
             if (ModelState.IsValid)
             {
-                var message = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add("lekkerlokaalst@gmail.com");
-                message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
-                message.Body = String.Format("Naam handelszaak: {0}\n" +
-                                        "E-mailadres: {1}\n" +
-                                        "Straat: {2}\n" +
-                                        "Huisnummer: {3}\n" +
-                                        "Postcode: {4}\n" +
-                                        "Gemeente: {5}\n" +
-                                        "BTW Nummer: {6}\n" +
-                                        "Beschrijving: {7}\n",
-                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                var user = new ApplicationUser { UserName = model.Emailadres, Email = model.Emailadres };
+                var result = await _userManager.CreateAsync(user, Guid.NewGuid().ToString());
+                if (result.Succeeded)
+                {
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "handelaar"));
 
-                //handelaar maken
-                Handelaar nieuweHandelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, false);
-                _handelaarRepository.Add(nieuweHandelaar);
-                _handelaarRepository.SaveChanges();
+                    var message = new MailMessage();
+                    message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message.To.Add("lekkerlokaalst@gmail.com");
+                    message.Subject = "Een nieuwe handelaar heeft zich zopas ingeschreven via het handelaarsformulier";
+                    message.Body = String.Format("Naam handelszaak: {0}\n" +
+                                            "E-mailadres: {1}\n" +
+                                            "Straat: {2}\n" +
+                                            "Huisnummer: {3}\n" +
+                                            "Postcode: {4}\n" +
+                                            "Gemeente: {5}\n" +
+                                            "BTW Nummer: {6}\n" +
+                                            "Beschrijving: {7}\n",
+                                            model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+
+                    Handelaar nieuweHandelaar = new Handelaar(model.NaamHandelszaak, model.Email, model.Beschrijving, model.BTWNummer, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, false);
+                    _handelaarRepository.Add(nieuweHandelaar);
+                    _handelaarRepository.SaveChanges();
 
 
-                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-                var fileStream = new FileStream(filePath, FileMode.Create);
-                await model.Logo.CopyToAsync(fileStream);
-                fileStream.Close();
+                    var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Logo.CopyToAsync(fileStream);
+                    fileStream.Close();
 
-                var attachment = new Attachment(@"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg");
-                attachment.Name = "logo.jpg";
-                message.Attachments.Add(attachment);
-                var SmtpServer = new SmtpClient("smtp.gmail.com");
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                SmtpServer.EnableSsl = true;
+                    var attachment = new Attachment(@"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg");
+                    attachment.Name = "logo.jpg";
+                    message.Attachments.Add(attachment);
+                    var SmtpServer = new SmtpClient("smtp.gmail.com");
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                    SmtpServer.EnableSsl = true;
 
-                SmtpServer.Send(message);
-                message.Attachments.Remove(attachment);
-                attachment.Dispose();
+                    SmtpServer.Send(message);
+                    message.Attachments.Remove(attachment);
+                    attachment.Dispose();
 
-                var berichtNaarHandelaar = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add(model.Email);
-                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
-                message.Body = String.Format("Beste, \n" +
-                                        "Uw verzoek om handelaar te worden bij LekkerLokaal.be is correct ontvangen. \n\n" +
-                                        "Onderstaande gegevens zullen gecontroleerd worden door een administrator. U mag een E-mail verwachten zodra uw verzoek al dan niet aanvaard wordt." +
-                                        "Naam handelszaak: {0}\n" +
-                                        "E-mailadres: {1}\n" +
-                                        "Straat: {2}\n" +
-                                        "Huisnummer: {3}\n" +
-                                        "Postcode: {4}\n" +
-                                        "Gemeente: {5}\n" +
-                                        "BTW Nummer: {6}\n" +
-                                        "Beschrijving: {7}\n",
-                                        model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
-                SmtpServer.Send(message);
+                    var berichtNaarHandelaar = new MailMessage();
+                    message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message.To.Add(model.Email);
+                    message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
+                    message.Body = String.Format("Beste, \n" +
+                                            "Uw verzoek om handelaar te worden bij LekkerLokaal.be is correct ontvangen. \n\n" +
+                                            "Onderstaande gegevens zullen gecontroleerd worden door een administrator. U mag een E-mail verwachten zodra uw verzoek al dan niet aanvaard wordt." +
+                                            "Naam handelszaak: {0}\n" +
+                                            "E-mailadres: {1}\n" +
+                                            "Straat: {2}\n" +
+                                            "Huisnummer: {3}\n" +
+                                            "Postcode: {4}\n" +
+                                            "Gemeente: {5}\n" +
+                                            "BTW Nummer: {6}\n" +
+                                            "Beschrijving: {7}\n",
+                                            model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                    SmtpServer.Send(message);
 
-                return RedirectToLocal(returnUrl);
+                    return RedirectToLocal(returnUrl);
+                }
+                AddErrors(result);
             }
             // If we got this far, something failed, redisplay form
             ViewData["categorie"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
