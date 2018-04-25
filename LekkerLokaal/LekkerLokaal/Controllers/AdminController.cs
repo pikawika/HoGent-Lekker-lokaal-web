@@ -237,6 +237,8 @@ namespace LekkerLokaal.Controllers
                 {
                     handelaarInDB.Gemeente = model.Gemeente;
                 }
+                var user = await _userManager.FindByEmailAsync(model.Emailadres);
+                user.EmailConfirmed = true;
 
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();

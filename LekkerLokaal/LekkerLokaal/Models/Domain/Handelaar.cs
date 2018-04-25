@@ -19,9 +19,6 @@ namespace LekkerLokaal.Models.Domain
         public string Postcode { get; set; }
         public string Gemeente { get; set; }
         public bool Goedgekeurd { get; set; }
-        public string Gebruikersnaam { get; set; }
-        public string Wachtwoord { get; private set; }
-        public bool EersteAanmelding { get; set; }
 
         protected Handelaar()
         {
@@ -40,9 +37,6 @@ namespace LekkerLokaal.Models.Domain
             Postcode = postcode;
             Gemeente = gemeente;
             Cadeaubonnen = new HashSet<Bon>();
-            Gebruikersnaam = emailadres.Remove(emailadres.IndexOf("@"));
-            Wachtwoord = "Paswoord";
-            EersteAanmelding = true;
         }
 
         public void VoegBonToe(Bon bon)
