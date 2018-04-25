@@ -405,7 +405,7 @@ namespace LekkerLokaal.Controllers
                     {
                         bestellijnen.Add(_bestellijnRepository.GetById(bl.BestelLijnId));
                     }
-                    ViewData["bestellijnen"] = bestellijnen.ToArray();
+                    ViewData["bestellijnen"] = bestellijnen;
                     ViewData["bestelid"] = bestelling.BestellingId;
                 }
             }
