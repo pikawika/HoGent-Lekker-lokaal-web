@@ -196,6 +196,48 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
+                Handelaar handelaarInDB = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
+
+                if (handelaarInDB.Naam != model.Naam)
+                {
+                    handelaarInDB.Naam = model.Naam;
+                }
+
+                if (handelaarInDB.Emailadres != model.Emailadres)
+                {
+                    handelaarInDB.Emailadres = model.Emailadres;
+                }
+
+                if (handelaarInDB.Beschrijving != model.Beschrijving)
+                {
+                    handelaarInDB.Beschrijving = model.Beschrijving;
+                }
+
+                if (handelaarInDB.BTW_Nummer != model.BTW_Nummer)
+                {
+                    handelaarInDB.BTW_Nummer = model.BTW_Nummer;
+                }
+
+                if (handelaarInDB.Straat != model.Straat)
+                {
+                    handelaarInDB.Straat = model.Straat;
+                }
+
+                if (handelaarInDB.Huisnummer != model.Huisnummer)
+                {
+                    handelaarInDB.Huisnummer = model.Huisnummer;
+                }
+
+                if (handelaarInDB.Postcode != model.Postcode)
+                {
+                    handelaarInDB.Postcode = model.Postcode;
+                }
+
+                if (handelaarInDB.Gemeente != model.Gemeente)
+                {
+                    handelaarInDB.Gemeente = model.Gemeente;
+                }
+
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 

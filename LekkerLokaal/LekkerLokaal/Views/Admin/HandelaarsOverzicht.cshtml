@@ -25,6 +25,7 @@
                                 <th>Id</th>
                                 <th>Naam handelaar</th>
                                 <th>Gemeente</th>
+                                <th>Aantal bonnen</th>
                                 <th>Detail</th>
                             </tr>
                         </thead>
@@ -35,6 +36,7 @@
                                     <td>@handelaar.Id</td>
                                     <td>@handelaar.Naam</td>
                                     <td>@handelaar.Gemeente</td>
+                                    <td>@handelaar.AantalBonnenInSysteem</td>
                                     <td><a asp-controller="Admin" asp-action="HandelaarDetail" asp-route-id="@handelaar.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
                                 </tr>
                             </tbody>

@@ -44,8 +44,10 @@ namespace LekkerLokaal.Models.AdminViewModels
         public string Beschrijving { get; set; }
 
         [DataType(DataType.Text)]
-        [Display(Name = "Opmerking (optioneel)")]
-        public string Opmerking { get; set; }
+        [Display(Name = "Aantal bonnen")]
+        public int AantalBonnenInSysteem { get; }
+
+        public ICollection<Bon> Cadeaubonnen { get; }
 
         public string LogoPath { get; }
 
@@ -61,6 +63,8 @@ namespace LekkerLokaal.Models.AdminViewModels
             Postcode = handelaar.Postcode;
             Gemeente = handelaar.Gemeente;
             LogoPath = handelaar.GetLogoPath();
+            AantalBonnenInSysteem = handelaar.Cadeaubonnen == null ? 0 : handelaar.Cadeaubonnen.Count;
+            Cadeaubonnen = handelaar.Cadeaubonnen;
         }
 
         public HandelaarDetailViewModel()

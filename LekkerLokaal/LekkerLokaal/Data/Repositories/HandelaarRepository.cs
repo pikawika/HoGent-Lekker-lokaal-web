@@ -29,7 +29,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<Handelaar> GetAll()
         {
-            return _handelaars.AsNoTracking().ToList();
+            return _handelaars.Include(h => h.Cadeaubonnen).AsNoTracking().ToList();
         }
 
         public Handelaar GetByHandelaarId(int handelaarId)

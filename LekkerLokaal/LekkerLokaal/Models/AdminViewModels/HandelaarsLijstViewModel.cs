@@ -12,11 +12,14 @@ namespace LekkerLokaal.Models.AdminViewModels
         public string Gemeente { get; }
         public string Naam { get; }
 
+        public int AantalBonnenInSysteem { get; }
+
         public HandelaarsLijstViewModel(Handelaar handelaar)
         {
             Id = handelaar.HandelaarId;
             Gemeente = handelaar.Gemeente;
             Naam = handelaar.Naam;
+            AantalBonnenInSysteem = handelaar.Cadeaubonnen.Count;
         }
 
 
