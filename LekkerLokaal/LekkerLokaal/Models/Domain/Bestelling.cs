@@ -1,5 +1,8 @@
-﻿using System;
+﻿using QRCoder;
+using System;
 using System.Collections.Generic;
+using System.Drawing;
+using System.Drawing.Imaging;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -27,6 +30,7 @@ namespace LekkerLokaal.Models.Domain
             {
                 for (int i = 1; i <= lijn.Aantal; i++)
                 {
+                    string qrcode = String.Format(Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddhhmmssffffff"));
                     BestelLijnen.Add(new BestelLijn
                     {
                         Bon = lijn.Bon,
@@ -35,8 +39,16 @@ namespace LekkerLokaal.Models.Domain
                         Geldigheid = Geldigheid.Geldig,
                         AanmaakDatum = DateTime.Today,
                         Handelaar = lijn.Bon.Handelaar,
-                        QRCode = String.Format(Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddhhmmssffffff"))
-                });
+                        QRCode = qrcode
+                    });
+
+                    //BEGIN QR CODE
+                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
+                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
+                    QRCode qrCode = new QRCode(qrCodeData);
+                    Bitmap qrCodeImage = qrCode.GetGraphic(20);
+                    qrCodeImage.Save(qrcode + ".png", ImageFormat.Png);
+                    //EINDE QR CODE
                 }
             }
         }
