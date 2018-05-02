@@ -243,6 +243,8 @@ namespace LekkerLokaal.Controllers
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 
+                var resetToken = _userManager.GeneratePasswordResetTokenAsync(user);
+
                 if(model.Afbeelding != null)
                 {
                     var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId + "/logo.jpg";
