@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using System.IO;
+using System.Security.Claims;
 
 namespace LekkerLokaal.Controllers
 {
@@ -145,7 +146,7 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public IActionResult VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        public async Task<IActionResult> VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -177,6 +178,9 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
+
+                var user = await _userManager.FindByEmailAsync(model.Emailadres);
+                await _userManager.DeleteAsync(user);
 
                 _handelaarRepository.Remove(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
@@ -243,9 +247,11 @@ namespace LekkerLokaal.Controllers
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 
-                var resetToken = _userManager.GeneratePasswordResetTokenAsync(user);
+                var wachtwoord = new Guid().ToString();
+                var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+                await _userManager.ResetPasswordAsync(user, token, wachtwoord);
 
-                if(model.Afbeelding != null)
+                if (model.Afbeelding != null)
                 {
                     var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId + "/logo.jpg";
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
@@ -264,6 +270,10 @@ namespace LekkerLokaal.Controllers
                     message.Body = String.Format("Beste, \n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
                    model.Opmerking + "\n\n" +
+                   "Uw gegevens om aan te melden zijn: \n" +
+                   "E-mailadres: " + model.Emailadres + "\n" +
+                   "Wachtwoord: " + wachtwoord + "\n\n" +
+                   "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
                    "Met vriendelijke groet, \n" +
                   "Het Lekker Lokaal team");
                 }
@@ -271,6 +281,10 @@ namespace LekkerLokaal.Controllers
                 {
                     message.Body = String.Format("Beste, \n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                   "Uw gegevens om aan te melden zijn: \n" +
+                   "E-mailadres: " + model.Emailadres + "\n" +
+                   "Wachtwoord: " + wachtwoord + "\n\n" +
+                   "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
                    "Met vriendelijke groet, \n" +
                   "Het Lekker Lokaal team");
                 }
@@ -304,46 +318,61 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                Handelaar nieuweHandelaar = new Handelaar(model.Naam, model.Email, model.Omschrijving, model.BtwNummer, model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, true);
-                _handelaarRepository.Add(nieuweHandelaar);
-                _handelaarRepository.SaveChanges();
-
-
-                var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
-                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-                var fileStream = new FileStream(filePath, FileMode.Create);
-                await model.Afbeelding.CopyToAsync(fileStream);
-                fileStream.Close();
-
-
-                var message = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add(model.Email);
-                message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geaccepteerd!";
-
-                if (model.Opmerking != null)
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var wachtwoord = Guid.NewGuid().ToString();
+                var result = await _userManager.CreateAsync(user, wachtwoord);
+                if (result.Succeeded)
                 {
-                    message.Body = String.Format("Beste, \n" +
-                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
-                   model.Opmerking + "\n\n" +
-                   "Met vriendelijke groet, \n" +
-                  "Het Lekker Lokaal team");
-                }
-                else
-                {
-                    message.Body = String.Format("Beste, \n" +
-                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
-                   "Met vriendelijke groet, \n" +
-                  "Het Lekker Lokaal team");
-                }
+                    await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "handelaar"));
 
-                var SmtpServer = new SmtpClient("smtp.gmail.com");
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                SmtpServer.EnableSsl = true;
-                SmtpServer.Send(message);
+                    Handelaar nieuweHandelaar = new Handelaar(model.Naam, model.Email, model.Omschrijving, model.BtwNummer, model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, true);
+                    _handelaarRepository.Add(nieuweHandelaar);
+                    _handelaarRepository.SaveChanges();
 
-                return RedirectToAction("Dashboard");
+                    var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeelding.CopyToAsync(fileStream);
+                    fileStream.Close();
+
+
+                    var message = new MailMessage();
+                    message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message.To.Add(model.Email);
+                    message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is geaccepteerd!";
+
+                    if (model.Opmerking != null)
+                    {
+                        message.Body = String.Format("Beste, \n" +
+                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       model.Opmerking + "\n\n" +
+                       "Uw gegevens om aan te melden zijn: \n" +
+                       "E-mailadres: " + model.Email + "\n" +
+                       "Wachtwoord: " + wachtwoord + "\n\n" +
+                       "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
+                       "Met vriendelijke groet, \n" +
+                      "Het Lekker Lokaal team");
+                    }
+                    else
+                    {
+                        message.Body = String.Format("Beste, \n" +
+                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       "Uw gegevens om aan te melden zijn: \n" +
+                       "E-mailadres: " + model.Email + "\n" +
+                       "Wachtwoord: " + wachtwoord + "\n\n" +
+                       "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
+                       "Met vriendelijke groet, \n" +
+                      "Het Lekker Lokaal team");
+                    }
+
+                    var SmtpServer = new SmtpClient("smtp.gmail.com");
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(message);
+
+                    return RedirectToAction("Dashboard");
+                }
             }
             return View(nameof(HandelaarToevoegen), model);
         }
