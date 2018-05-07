@@ -247,7 +247,7 @@ namespace LekkerLokaal.Controllers
                 _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
                 _handelaarRepository.SaveChanges();
 
-                var wachtwoord = new Guid().ToString();
+                var wachtwoord = Guid.NewGuid().ToString();
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, wachtwoord);
 
