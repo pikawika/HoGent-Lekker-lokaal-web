@@ -116,7 +116,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult ZoekHandelaar()
         {
-            return View();
+            return RedirectToAction("HandelaarsOverzicht");
         }
 
         [HttpGet]
@@ -140,13 +140,17 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult HandelaarVerzoekEvaluatie(int Id)
         {
-            Handelaar geselecteerdeHandelaarEvaluatie = _handelaarRepository.GetByHandelaarId(Id);
-            return View(new HandelaarEvaluatieViewModel(geselecteerdeHandelaarEvaluatie));
+            Handelaar geselecteerdeHandelaarEvaluatie = _handelaarRepository.GetByHandelaarIdNotAccepted(Id);
+            if (geselecteerdeHandelaarEvaluatie == null)
+            {
+                return RedirectToAction("HandelaarVerzoekEvaluatie");
+            }
+            return View(new HandelaarBewerkViewModel(geselecteerdeHandelaarEvaluatie));
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> VerwijderHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        public async Task<IActionResult> VerwijderHandelaarVerzoek(HandelaarBewerkViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -196,7 +200,7 @@ namespace LekkerLokaal.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> AccepteerHandelaarVerzoek(HandelaarEvaluatieViewModel model)
+        public async Task<IActionResult> AccepteerHandelaarVerzoek(HandelaarBewerkViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -384,16 +388,78 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult HandelaarDetail(int Id)
+        public IActionResult HandelaarBewerken(int Id)
         {
             Handelaar geselecteerdeHandelaar = _handelaarRepository.GetByHandelaarId(Id);
-            return View(new HandelaarDetailViewModel(geselecteerdeHandelaar));
+            if (geselecteerdeHandelaar == null)
+            {
+                return RedirectToAction("HandelaarsOverzicht");
+            }
+            return View(new HandelaarBewerkViewModel(geselecteerdeHandelaar));
         }
 
-        [HttpGet]
-        public IActionResult HandelaarBewerken()
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> HandelaarBewerken(HandelaarBewerkViewModel model)
         {
-            return View();
+            if (ModelState.IsValid)
+            {
+                Handelaar handelaarInDB = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
+
+                if (handelaarInDB.Naam != model.Naam)
+                {
+                    handelaarInDB.Naam = model.Naam;
+                }
+
+                if (handelaarInDB.Emailadres != model.Emailadres)
+                {
+                    handelaarInDB.Emailadres = model.Emailadres;
+                }
+
+                if (handelaarInDB.Beschrijving != model.Beschrijving)
+                {
+                    handelaarInDB.Beschrijving = model.Beschrijving;
+                }
+
+                if (handelaarInDB.BTW_Nummer != model.BTW_Nummer)
+                {
+                    handelaarInDB.BTW_Nummer = model.BTW_Nummer;
+                }
+
+                if (handelaarInDB.Straat != model.Straat)
+                {
+                    handelaarInDB.Straat = model.Straat;
+                }
+
+                if (handelaarInDB.Huisnummer != model.Huisnummer)
+                {
+                    handelaarInDB.Huisnummer = model.Huisnummer;
+                }
+
+                if (handelaarInDB.Postcode != model.Postcode)
+                {
+                    handelaarInDB.Postcode = model.Postcode;
+                }
+
+                if (handelaarInDB.Gemeente != model.Gemeente)
+                {
+                    handelaarInDB.Gemeente = model.Gemeente;
+                }
+                
+                _handelaarRepository.SaveChanges();
+
+                if (model.Afbeelding != null)
+                {
+                    var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId + "/logo.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeelding.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+
+                return RedirectToAction("HandelaarsOverzicht");
+            }
+            return View(nameof(HandelaarVerzoekEvaluatie), model);
         }
 
         [HttpGet]

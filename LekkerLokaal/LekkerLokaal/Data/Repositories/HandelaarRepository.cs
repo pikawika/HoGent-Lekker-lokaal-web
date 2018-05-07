@@ -24,7 +24,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public int getAantalHandelaarsverzoeken()
         {
-            return _handelaars.Count(h => h.Goedgekeurd == false);
+            return _handelaars.Count(h => !h.Goedgekeurd);
         }
 
         public IEnumerable<Handelaar> GetAll()
@@ -35,6 +35,11 @@ namespace LekkerLokaal.Data.Repositories
         public Handelaar GetByHandelaarId(int handelaarId)
         {
             return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId);
+        }
+
+        public Handelaar GetByHandelaarIdNotAccepted(int handelaarId)
+        {
+            return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId && !h.Goedgekeurd);
         }
 
         public IEnumerable<Handelaar> GetHandelaarsGoedgekeurd(IEnumerable<Handelaar> inputlijst)

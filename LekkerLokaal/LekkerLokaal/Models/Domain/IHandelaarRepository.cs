@@ -24,5 +24,7 @@ namespace LekkerLokaal.Models.Domain
         int getAantalHandelaarsverzoeken();
 
         Handelaar GetByHandelaarId(int handelaarId);
+
+        Handelaar GetByHandelaarIdNotAccepted(int handelaarId);
     }
 }
