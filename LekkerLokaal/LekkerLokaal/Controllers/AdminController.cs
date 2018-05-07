@@ -248,12 +248,13 @@ namespace LekkerLokaal.Controllers
                 var user = await _userManager.FindByEmailAsync(model.Emailadres);
                 user.EmailConfirmed = true;
 
-                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
-                _handelaarRepository.SaveChanges();
-
                 var wachtwoord = Guid.NewGuid().ToString();
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, wachtwoord);
+
+                handelaarInDB.sha256(wachtwoord);
+                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
 
                 if (model.Afbeelding != null)
                 {
@@ -331,6 +332,7 @@ namespace LekkerLokaal.Controllers
 
                     Handelaar nieuweHandelaar = new Handelaar(model.Naam, model.Email, model.Omschrijving, model.BtwNummer, model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, true);
                     _handelaarRepository.Add(nieuweHandelaar);
+                    nieuweHandelaar.sha256(wachtwoord);
                     _handelaarRepository.SaveChanges();
 
                     var filePath = @"wwwroot/images/handelaar/" + nieuweHandelaar.HandelaarId + "/logo.jpg";
