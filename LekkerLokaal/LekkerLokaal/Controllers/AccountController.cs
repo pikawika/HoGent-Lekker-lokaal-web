@@ -350,8 +350,8 @@ namespace LekkerLokaal.Controllers
                     message.Attachments.Remove(attachment);
                     attachment.Dispose();
 
-                    var berichtNaarHandelaar = new MailMessage();
                     message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message.To.Clear();
                     message.To.Add(model.Email);
                     message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
                     message.Body = String.Format("Beste, \n" +
