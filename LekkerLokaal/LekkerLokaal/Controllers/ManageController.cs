@@ -16,6 +16,13 @@ using LekkerLokaal.Services;
 using LekkerLokaal.Models.Domain;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
+using System.IO;
+using System.Net.Mail;
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
 
 namespace LekkerLokaal.Controllers
 {
@@ -32,6 +39,7 @@ namespace LekkerLokaal.Controllers
         private readonly IGebruikerRepository _gebruikerRepository;
         private readonly IBestellingRepository _bestellingRepository;
         private readonly IBestellijnRepository _bestellijnRepository;
+        private readonly IHandelaarRepository _handelaarRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -45,7 +53,8 @@ namespace LekkerLokaal.Controllers
           ICategorieRepository categorieRepository,
           IGebruikerRepository gebruikerRepository,
           IBestellingRepository bestellingRepository,
-          IBestellijnRepository bestellijnRepository)
+          IBestellijnRepository bestellijnRepository,
+          IHandelaarRepository handelaarRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -56,6 +65,7 @@ namespace LekkerLokaal.Controllers
             _gebruikerRepository = gebruikerRepository;
             _bestellingRepository = bestellingRepository;
             _bestellijnRepository = bestellijnRepository;
+            _handelaarRepository = handelaarRepository;
         }
 
         [TempData]
@@ -412,6 +422,82 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> BonAanmaken(int Id)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            if (ModelState.IsValid)
+            {
+                var bon = _bestellijnRepository.GetById(Id);
+                string waarde = String.Format("Bedrag: € " + bon.Prijs);
+                string verval = bon.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
+                string geldigheid = String.Format("Geldig tot: " +  verval);
+                var doc1 = new Document(PageSize.A4);
+                Paragraph p1 = new Paragraph(waarde);
+                Paragraph p2 = new Paragraph(geldigheid);
+                GenerateQR(bon.QRCode);
+                var imageURL = @"wwwroot/images/temp/" + bon.QRCode + ".png";
+                iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
+                jpg.ScaleToFit(140f, 140f);
+                var logoURL = @"wwwroot/images/logo.png";
+                iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
+                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURL);
+
+                logoLL.SetAbsolutePosition(30, 750);
+                logoLL.ScalePercent(50f);
+
+                jpg.Alignment = Element.ALIGN_CENTER;
+                p1.Alignment = Element.ALIGN_CENTER;
+                p2.Alignment = Element.ALIGN_CENTER;
+                var bonPath = @"wwwroot/pdf";
+                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
+
+                doc1.Open();
+                doc1.Add(logoLL);
+                //doc1.Add(logoHandelaar);
+                doc1.Add(p1);
+                doc1.Add(p2);
+                doc1.Add(jpg);
+                doc1.Close();
+
+                System.IO.File.Delete(imageURL);
+
+                var user = _userManager.GetUserAsync(User);
+                var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+
+                string to = String.Format("lekkerlokaalst@gmail.com");
+                MailMessage message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(to);
+                message.Subject = "Uw cadeaubon van Lekker Lokaal.";
+                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + ", "+ System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubonnen opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
+
+                var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
+                attachment.Name = "cadeaubon.pdf";
+                message.Attachments.Add(attachment);
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+                attachment.Dispose();
+                System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
+
+                return RedirectToAction(nameof(HomeController.Index), "Home");
+            }
+            return View();
+        }
+
+        public void GenerateQR(string qrcode)
+        {
+            var bonPath = @"wwwroot/images/temp/";
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            qrCodeImage.Save(bonPath + qrcode + ".png", ImageFormat.Png);
+        }
 
 
         #region Helpers

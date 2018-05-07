@@ -41,18 +41,11 @@ namespace LekkerLokaal.Models.Domain
                         Handelaar = lijn.Bon.Handelaar,
                         QRCode = qrcode
                     });
-
-                    //BEGIN QR CODE
-                    QRCodeGenerator qrGenerator = new QRCodeGenerator();
-                    QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
-                    QRCode qrCode = new QRCode(qrCodeData);
-                    Bitmap qrCodeImage = qrCode.GetGraphic(20);
-                    qrCodeImage.Save(qrcode + ".png", ImageFormat.Png);
-                    //EINDE QR CODE
                 }
             }
         }
 
         public bool HeeftBesteld(Bon bon) => BestelLijnen.Any(b => b.Bon.Equals(bon));
-    }
+
+}
 }

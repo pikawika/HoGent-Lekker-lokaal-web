@@ -147,6 +147,10 @@ namespace LekkerLokaal
                     template: "{controller=Winkelwagen}/{action=Add}/{Id}/{Prijs}/{Aantal}");
 
                 routes.MapRoute(
+                    name: "geneerGekochteBon",
+                    template: "{controller=Manage}/{action=BonAanmaken}/{Id}");
+
+                routes.MapRoute(
                     name: "Account",
                     template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}/{returnUrl}");
             });

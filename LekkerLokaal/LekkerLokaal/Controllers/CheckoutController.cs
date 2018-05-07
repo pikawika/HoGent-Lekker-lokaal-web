@@ -101,7 +101,7 @@ namespace LekkerLokaal.Controllers
 
                 SmtpServer.Send(message);
                 attachment.Dispose();
-                return RedirectToAction(nameof(HomeController.Index), "Home");
+                return RedirectToAction("Bedankt");
             }
             return View(model);
         }
