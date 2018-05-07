@@ -9,25 +9,28 @@
     <div class="container width-100">
         <section class="sign-area panel p-40 mr-10">
             <h4 class="mb-10">@ViewData["Title"]</h4>
-            @if (ViewData["gebruiker"] == null)
+            @if (ViewData["bestelling"] == null)
             {
                 <p>U heeft nog geen bestellingen.</p>
             }
             else
             {
-                <table style="width:100%">
+                <table style="width:100%" class="spacing-10">
                     <tr>
                         <th>Bestelnummer</th>
-                        <th>Datum</th>
+                        <th>Bestelt op</th>
                         <th>Totaalbedrag</th>
                     </tr>
-                    @foreach (Bestelling b in (IEnumerable<Bestelling>)ViewData["gebruiker"])
+                    @foreach (Bestelling b in (IEnumerable<Bestelling>)ViewData["bestelling"])
                     {
+
                         <tr>
                             <td>@b.BestellingId</td>
                             <td>@b.BestelDatum.ToString("dd/MM/yyyy")</td>
                             <td>@b.BestellingTotaal</td>
+                            <td><a asp-controller="Manage" asp-action="DetailBestelling" asp-route-id="@b.BestellingId" class="btn btn-sm btn-block">Details</a></td>
                         </tr>
+
 
                     }
 

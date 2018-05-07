@@ -11,5 +11,6 @@ namespace LekkerLokaal.Models.Domain
         BestelLijn GetBy(string qrcode);
         IEnumerable<BestelLijn> GetAll();
         void SaveChanges();
+        BestelLijn GetById(int bestellijnid);
     }
 }

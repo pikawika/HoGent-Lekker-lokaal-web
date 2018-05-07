@@ -28,6 +28,11 @@ namespace LekkerLokaal.Data.Repositories
             return _gebruikers.Include(g => g.Bestellingen).SingleOrDefault(g => g.Emailadres == email);
         }
 
+        public Gebruiker GetByBestellingId(int bestellingid)
+        {
+            return _gebruikers.Include(g => g.Bestellingen).SingleOrDefault(g => g.Bestellingen.Select(b => b.BestellingId).Contains(bestellingid));
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

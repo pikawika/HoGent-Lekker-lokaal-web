@@ -31,6 +31,7 @@ namespace LekkerLokaal.Controllers
         private readonly ICategorieRepository _categorieRepository;
         private readonly IGebruikerRepository _gebruikerRepository;
         private readonly IBestellingRepository _bestellingRepository;
+        private readonly IBestellijnRepository _bestellijnRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -43,7 +44,8 @@ namespace LekkerLokaal.Controllers
           UrlEncoder urlEncoder,
           ICategorieRepository categorieRepository,
           IGebruikerRepository gebruikerRepository,
-          IBestellingRepository bestellingRepository)
+          IBestellingRepository bestellingRepository,
+          IBestellijnRepository bestellijnRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -53,6 +55,7 @@ namespace LekkerLokaal.Controllers
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
             _bestellingRepository = bestellingRepository;
+            _bestellijnRepository = bestellijnRepository;
         }
 
         [TempData]
@@ -366,7 +369,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> PersoonlijkeBestellingen()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["gebruiker"] = null;
+            ViewData["bestelling"] = null;
             var user = _userManager.GetUserAsync(User);
             var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
             ICollection<Bestelling> bestellingen = new HashSet<Bestelling>();
@@ -376,7 +379,35 @@ namespace LekkerLokaal.Controllers
                 {
                     bestellingen.Add(_bestellingRepository.GetBy(b.BestellingId));
                 }
-                ViewData["gebruiker"] = bestellingen;
+                ViewData["bestelling"] = bestellingen;
+            }
+            return View();
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> DetailBestelling(int id)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["bestellijnen"] = null;
+
+            var user = _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+
+            if (_bestellingRepository.GetBy(id) != null)
+            {
+                var bestelling = _bestellingRepository.GetBy(id);
+                var gebruiker2 = _gebruikerRepository.GetByBestellingId(id);
+
+                if(gebruiker == gebruiker2)
+                {
+                    ICollection<BestelLijn> bestellijnen = new HashSet<BestelLijn>();
+                    foreach (BestelLijn bl in bestelling.BestelLijnen)
+                    {
+                        bestellijnen.Add(_bestellijnRepository.GetById(bl.BestelLijnId));
+                    }
+                    ViewData["bestellijnen"] = bestellijnen;
+                    ViewData["bestelid"] = bestelling.BestellingId;
+                }
             }
             return View();
         }
