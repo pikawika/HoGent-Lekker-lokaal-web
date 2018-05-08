@@ -48,7 +48,7 @@ namespace LekkerLokaal.Models.Domain
 
         public string GetLogoPath()
         {
-            return @"wwwroot/images/handelaar/" + HandelaarId + "/logo.jpg";
+            return @"/images/handelaar/" + HandelaarId + "/logo.jpg";
         }
 
         public void sha256(string randomString)
