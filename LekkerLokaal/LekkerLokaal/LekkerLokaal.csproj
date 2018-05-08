@@ -59,6 +59,7 @@
 
   <ItemGroup>
     <Folder Include="Data\Mappers\" />
+    <Folder Include="Views\Handelaar\" />
     <Folder Include="wwwroot\images\temp\" />
     <Folder Include="wwwroot\pdf\" />
   </ItemGroup>
