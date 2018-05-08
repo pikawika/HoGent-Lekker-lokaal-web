@@ -486,8 +486,34 @@ namespace LekkerLokaal.Controllers
                         Geslacht = model.Geslacht,
                         Emailadres = model.Email
                     };
+
                     _gebruikerRepository.Add(gebruiker);
                     _gebruikerRepository.SaveChanges();
+
+                    var wachtwoord = Guid.NewGuid().ToString();
+                    await _userManager.AddPasswordAsync(user, wachtwoord);
+                    var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                    await _userManager.ConfirmEmailAsync(user, token);
+
+                    var message = new MailMessage();
+                    message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message.To.Add(model.Email);
+                    message.Subject = "U heeft een account aangemaakt bij Lekker Lokaal!";
+
+                    message.Body = String.Format("Beste, \n" +
+                   "U heeft recent een account aangemaakt op Lekker Lokaal via sociale media. \n\n" +
+                   "Uw gegevens om aan te melden zijn: \n" +
+                   "E-mailadres: " + model.Email + "\n" +
+                   "Wachtwoord: " + wachtwoord + "\n\n" +
+                   "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
+                   "Met vriendelijke groeten, \n" +
+                   "Het Lekker Lokaal team");
+
+                    var SmtpServer = new SmtpClient("smtp.gmail.com");
+                    SmtpServer.Port = 587;
+                    SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                    SmtpServer.EnableSsl = true;
+                    SmtpServer.Send(message);
 
                     result = await _userManager.AddLoginAsync(user, info);
                     if (result.Succeeded)
