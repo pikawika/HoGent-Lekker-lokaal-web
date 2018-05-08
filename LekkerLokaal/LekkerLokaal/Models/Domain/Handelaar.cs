@@ -52,7 +52,7 @@ namespace LekkerLokaal.Models.Domain
 
         public string GetLogoPath()
         {
-            return @"/images/handelaar/" + HandelaarId + "/logo.jpg";
+            return @"wwwroot/images/handelaar/" + HandelaarId + "/logo.jpg";
         }
     }
 }

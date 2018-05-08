@@ -30,12 +30,17 @@
                     </tr>
                     @foreach (BestelLijn b in (IEnumerable<BestelLijn>)ViewData["bestellijnen"])
                     {
-                        <tr>
-                            <td>@(teller++)</td>
-                            <td>@b.Bon.Naam</td>
-                            <td>@b.Prijs</td>
-                            <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@b.Bon.BonId" class="btn btn-sm btn-block">Details bon</a></td>
-                        </tr>
+                    <tr>
+                        <td>@(teller++)</td>
+                        <td>@b.Bon.Naam</td>
+                        <td>@b.Prijs</td>
+                        <td><a asp-controller="Home" asp-action="Detail" asp-route-id="@b.Bon.BonId" class="btn btn-sm btn-block">Details bon</a></td>
+                        <td>
+                            <form asp-controller="Manage" asp-action="BonAanmaken" asp-route-id="@b.BestelLijnId" method="post">
+                                <button type="submit" class="btn btn-sm btn-block m-lg-10">Bon opnieuw versturen</button>
+                            </form>
+                        </td>
+                    </tr>
 
                     }
 

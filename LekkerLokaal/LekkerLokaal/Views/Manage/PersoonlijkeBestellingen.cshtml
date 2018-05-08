@@ -24,12 +24,12 @@
                     @foreach (Bestelling b in (IEnumerable<Bestelling>)ViewData["bestelling"])
                     {
 
-                        <tr>
-                            <td>@b.BestellingId</td>
-                            <td>@b.BestelDatum.ToString("dd/MM/yyyy")</td>
-                            <td>@b.BestellingTotaal</td>
-                            <td><a asp-controller="Manage" asp-action="DetailBestelling" asp-route-id="@b.BestellingId" class="btn btn-sm btn-block">Details</a></td>
-                        </tr>
+                    <tr>
+                        <td>@b.BestellingId</td>
+                        <td>@b.BestelDatum.ToString("dd/MM/yyyy")</td>
+                        <td>@b.BestellingTotaal</td>
+                        <td><a asp-controller="Manage" asp-action="DetailBestelling" asp-route-id="@b.BestellingId" class="btn btn-sm btn-block">Details</a></td>
+                    </tr>
 
 
                     }
