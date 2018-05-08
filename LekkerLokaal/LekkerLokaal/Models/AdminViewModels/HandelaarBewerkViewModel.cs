@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.AdminViewModels
 {
-    public class HandelaarEvaluatieViewModel
+    public class HandelaarBewerkViewModel
     {
         [Required]
         public int HandelaarId { get; set; }
@@ -63,7 +63,7 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public string LogoPath { get; }
 
-        public HandelaarEvaluatieViewModel(Handelaar handelaar)
+        public HandelaarBewerkViewModel(Handelaar handelaar)
         {
             HandelaarId = handelaar.HandelaarId;
             Naam = handelaar.Naam;
@@ -77,7 +77,7 @@ namespace LekkerLokaal.Models.AdminViewModels
             LogoPath = handelaar.GetLogoPath();
         }
 
-        public HandelaarEvaluatieViewModel()
+        public HandelaarBewerkViewModel()
         {
 
         }

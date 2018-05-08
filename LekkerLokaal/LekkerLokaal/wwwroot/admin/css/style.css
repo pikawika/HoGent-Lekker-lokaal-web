@@ -7,6 +7,25 @@ li.disabled > span {
     max-height: 350px !important;
 }
 
+.color-white {
+    color: white !important;
+}
+
+.color-darkblue {
+    color: #313b4d !important;
+    -webkit-transition: color 0.2s ease-out;
+    -moz-transition: color 0.2s ease-out;
+    -o-transition: color 0.2s ease-out;
+    transition: color 0.2s ease-out;
+}
+
+.color-darkblue:hover {
+    color: #fff !important;
+
+}
+
+
+
 .clickable {
     cursor: pointer;
 }
