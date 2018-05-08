@@ -23,6 +23,11 @@ namespace LekkerLokaal.Data.Repositories
             return _categorieen.OrderBy(c => c.Naam).AsNoTracking().ToList();
         }
 
+        public Categorie GetByNaam(string naam)
+        {
+            return _categorieen.SingleOrDefault(c => c.Naam.ToLower() == naam.ToLower());
+        }
+
         public Dictionary<Categorie, int> GetTop9WithAmount()
         {
             var map = new Dictionary<Categorie, int>();

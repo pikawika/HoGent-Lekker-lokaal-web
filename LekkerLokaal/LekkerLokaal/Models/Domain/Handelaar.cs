@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace LekkerLokaal.Models.Domain
@@ -19,9 +20,7 @@ namespace LekkerLokaal.Models.Domain
         public string Postcode { get; set; }
         public string Gemeente { get; set; }
         public bool Goedgekeurd { get; set; }
-        public string Gebruikersnaam { get; set; }
-        public string Wachtwoord { get; private set; }
-        public bool EersteAanmelding { get; set; }
+        public string Wachtwoord { get; set; }
 
         protected Handelaar()
         {
@@ -40,9 +39,6 @@ namespace LekkerLokaal.Models.Domain
             Postcode = postcode;
             Gemeente = gemeente;
             Cadeaubonnen = new HashSet<Bon>();
-            Gebruikersnaam = emailadres.Remove(emailadres.IndexOf("@"));
-            Wachtwoord = "Paswoord";
-            EersteAanmelding = true;
         }
 
         public void VoegBonToe(Bon bon)
@@ -53,6 +49,18 @@ namespace LekkerLokaal.Models.Domain
         public string GetLogoPath()
         {
             return @"wwwroot/images/handelaar/" + HandelaarId + "/logo.jpg";
+        }
+
+        public void sha256(string randomString)
+        {
+            var crypt = new System.Security.Cryptography.SHA256Managed();
+            var hash = new System.Text.StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(randomString));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+            Wachtwoord = hash.ToString();
         }
     }
 }

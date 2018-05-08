@@ -171,5 +171,10 @@ namespace LekkerLokaal.Data.Repositories
         {
             _context.SaveChanges();
         }
+
+        public void Add(Bon bon)
+        {
+            _bonnen.Add(bon);
+        }
     }
 }

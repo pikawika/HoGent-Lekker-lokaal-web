@@ -9,6 +9,8 @@ namespace LekkerLokaal.Models.Domain
     {
         IEnumerable<Categorie> GetAll();
 
+        Categorie GetByNaam(string naam);
+
         Dictionary<Categorie, int> GetTop9WithAmount();
     }
 }
