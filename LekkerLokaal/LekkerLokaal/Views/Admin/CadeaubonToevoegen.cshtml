@@ -55,7 +55,7 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label" asp-for="Categorie"></label>
                     <div class="col-sm-6">
-                        <select class="form-control input-lg search-select" asp-for="Categorie" asp-items="@(ViewData["categorieen"] as SelectList)">
+                        <select class="form-control" asp-for="Categorie" asp-items="@(ViewData["categorieen"] as SelectList)">
                             <option value="">--- Selecteer categorie ---</option>
                         </select>
                         <span asp-validation-for="Categorie" class="text-danger"></span>
@@ -126,7 +126,7 @@
 
                 <div class="col-md-9 col-md-offset-3">
                     <a asp-controller="Admin" asp-action="Dashboard" class="btn btn-danger mr-20">Annuleer</a>
-                    <button type="submit" class="btn btn-success">Voeg handelaar toe</button>
+                    <button type="submit" class="btn btn-success">Voeg cadeaubon toe</button>
                 </div>
             </form>
         </div>
