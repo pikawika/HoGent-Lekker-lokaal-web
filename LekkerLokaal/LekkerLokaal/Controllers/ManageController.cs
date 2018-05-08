@@ -40,6 +40,7 @@ namespace LekkerLokaal.Controllers
         private readonly IBestellingRepository _bestellingRepository;
         private readonly IBestellijnRepository _bestellijnRepository;
         private readonly IHandelaarRepository _handelaarRepository;
+        private readonly IBonRepository _bonRepository;
 
         private const string AuthenticatorUriFormat = "otpauth://totp/{0}:{1}?secret={2}&issuer={0}&digits=6";
         private const string RecoveryCodesKey = nameof(RecoveryCodesKey);
@@ -54,7 +55,8 @@ namespace LekkerLokaal.Controllers
           IGebruikerRepository gebruikerRepository,
           IBestellingRepository bestellingRepository,
           IBestellijnRepository bestellijnRepository,
-          IHandelaarRepository handelaarRepository)
+          IHandelaarRepository handelaarRepository,
+          IBonRepository bonRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
@@ -66,6 +68,7 @@ namespace LekkerLokaal.Controllers
             _bestellingRepository = bestellingRepository;
             _bestellijnRepository = bestellijnRepository;
             _handelaarRepository = handelaarRepository;
+            _bonRepository = bonRepository;
         }
 
         [TempData]
@@ -429,33 +432,43 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
-                var bon = _bestellijnRepository.GetById(Id);
-                string waarde = String.Format("Bedrag: € " + bon.Prijs);
-                string verval = bon.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
+                var bestellijn = _bestellijnRepository.GetById(Id);
+                var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
+                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+                
+                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
+                string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " +  verval);
-                var doc1 = new Document(PageSize.A4);
+                var doc1 = new Document(PageSize.A5);
                 Paragraph p1 = new Paragraph(waarde);
                 Paragraph p2 = new Paragraph(geldigheid);
-                GenerateQR(bon.QRCode);
-                var imageURL = @"wwwroot/images/temp/" + bon.QRCode + ".png";
+                GenerateQR(bestellijn.QRCode);
+                var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
                 iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
                 jpg.ScaleToFit(140f, 140f);
                 var logoURL = @"wwwroot/images/logo.png";
+                var logoURLHandelaar = handelaar.GetLogoPath();
                 iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
-                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURL);
+                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
+                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
-                logoLL.SetAbsolutePosition(30, 750);
+                logoLL.SetAbsolutePosition(30, 515);
                 logoLL.ScalePercent(50f);
+                logoHandelaar.ScalePercent(10f);
 
                 jpg.Alignment = Element.ALIGN_CENTER;
+                naamBon.Alignment = Element.ALIGN_CENTER;
                 p1.Alignment = Element.ALIGN_CENTER;
                 p2.Alignment = Element.ALIGN_CENTER;
+                logoHandelaar.Alignment = Element.ALIGN_RIGHT;
+
                 var bonPath = @"wwwroot/pdf";
                 PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
 
                 doc1.Open();
                 doc1.Add(logoLL);
-                //doc1.Add(logoHandelaar);
+                doc1.Add(logoHandelaar);
+                doc1.Add(naamBon);
                 doc1.Add(p1);
                 doc1.Add(p2);
                 doc1.Add(jpg);
@@ -471,7 +484,7 @@ namespace LekkerLokaal.Controllers
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(to);
                 message.Subject = "Uw cadeaubon van Lekker Lokaal.";
-                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + ", "+ System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubonnen opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
+                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + ", "+ System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
 
                 var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
                 attachment.Name = "cadeaubon.pdf";
