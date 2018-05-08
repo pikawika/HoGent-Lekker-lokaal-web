@@ -13,6 +13,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Mail;
 using System.IO;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace LekkerLokaal.Controllers
 {
@@ -23,18 +24,24 @@ namespace LekkerLokaal.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHandelaarRepository _handelaarRepository;
+        private readonly IBonRepository _bonRepository;
+        private readonly ICategorieRepository _categorieRepository;
         private readonly ILogger _logger;
 
         public AdminController(
             UserManager<ApplicationUser> userManager,
             ILogger<AdminController> logger,
             SignInManager<ApplicationUser> signInManager,
-            IHandelaarRepository handelaarRepository)
+            IHandelaarRepository handelaarRepository,
+            IBonRepository bonRepository,
+            ICategorieRepository categorieRepository)
         {
             _userManager = userManager;
             _logger = logger;
             _signInManager = signInManager;
             _handelaarRepository = handelaarRepository;
+            _bonRepository = bonRepository;
+            _categorieRepository = categorieRepository;
         }
 
         [HttpGet]
@@ -473,7 +480,56 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult CadeaubonToevoegen()
         {
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            ViewData["aanbiedingen"] = Aanbiedingen();
             return View();
+        }
+
+        private SelectList Aanbiedingen()
+        {
+            var Aanbiedingen = new List<Aanbieding>();
+            foreach (Aanbieding aanbieding in Enum.GetValues(typeof(Aanbieding)))
+            {
+                Aanbiedingen.Add(aanbieding);
+            }
+            return new SelectList(Aanbiedingen);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CadeaubonToevoegen(ManueelNieuweBonViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(model.HandelaarID), model.Aanbieding);
+                _bonRepository.Add(nieuweBon);
+                _bonRepository.SaveChanges();
+
+                nieuweBon.Afbeelding = @"images\bon\" + nieuweBon.BonId + @"\";
+                _bonRepository.SaveChanges();
+
+                var filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/thumb.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Thumbnail.CopyToAsync(fileStream);
+                fileStream.Close();
+
+                for (int i = 0; i < model.Afbeeldingen.Count; i++)
+                {
+                    filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/Afbeeldingen/" + (i+1) + ".jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeeldingen[i].CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+                
+
+                return RedirectToAction("CadeaubonOverzicht");
+
+            }
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            ViewData["aanbiedingen"] = Aanbiedingen();
+            return View(nameof(CadeaubonToevoegen), model);
         }
 
         [HttpGet]
