@@ -4,6 +4,7 @@ using SendGrid.Helpers.Mail;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace LekkerLokaal.Services
@@ -24,18 +25,23 @@ namespace LekkerLokaal.Services
             return Execute(Options.SendGridKey, subject, message, email);
         }
 
-        public Task Execute(string apiKey, string subject, string message, string email)
+        public async Task Execute(string apiKey, string subject, string body, string email)
         {
-            var client = new SendGridClient(apiKey);
-            var msg = new SendGridMessage()
-            {
-                From = new EmailAddress("registratie@lekkerlokaal.be", "Lekker Lokaal"),
-                Subject = subject,
-                PlainTextContent = message,
-                HtmlContent = message
-            };
-            msg.AddTo(new EmailAddress(email));
-            return client.SendEmailAsync(msg);
+            var message = new MailMessage();
+
+            message.From = new MailAddress("lekkerlokaalst@gmail.com");
+            message.To.Add(email);
+            message.Subject = subject;
+            message.IsBodyHtml = true;
+            message.Body = body;
+
+
+            var SmtpServer = new SmtpClient("smtp.gmail.com");
+            SmtpServer.Port = 587;
+            SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+            SmtpServer.EnableSsl = true;
+
+            SmtpServer.Send(message);
         }
     }
 }
