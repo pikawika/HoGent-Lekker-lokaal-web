@@ -447,7 +447,7 @@ namespace LekkerLokaal.Controllers
                 iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
                 jpg.ScaleToFit(140f, 140f);
                 var logoURL = @"wwwroot/images/logo.png";
-                var logoURLHandelaar = handelaar.GetLogoPath();
+                var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
                 iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
                 iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
                 Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
