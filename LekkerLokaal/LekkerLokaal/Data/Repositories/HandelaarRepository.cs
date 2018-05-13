@@ -32,6 +32,11 @@ namespace LekkerLokaal.Data.Repositories
             return _handelaars.Include(h => h.Cadeaubonnen).AsNoTracking().ToList();
         }
 
+        public Handelaar GetByEmail(string email)
+        {
+            return _handelaars.SingleOrDefault(h => h.Emailadres == email);
+        }
+
         public Handelaar GetByHandelaarId(int handelaarId)
         {
             return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId);

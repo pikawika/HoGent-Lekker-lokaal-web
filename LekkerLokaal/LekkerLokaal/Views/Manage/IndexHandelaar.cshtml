@@ -1,0 +1,69 @@
+﻿@model LekkerLokaal.Models.ManageViewModels.IndexHandelaarViewModel
+@{
+    ViewData["Title"] = "Uw persoonlijke gegevens";
+    ViewData.AddActivePage(ManageNavPages.Index);
+}
+
+<div class="page-container ptb-10">
+    <div class="container width-100">
+        <section class="sign-area panel p-40 mr-10">
+            <h4>@ViewData["Title"]</h4>
+            @Html.Partial("_StatusMessage", Model.StatusMessage)
+            <div class="row">
+                <div>
+                    <form method="post">
+                        <div asp-validation-summary="All" class="text-danger"></div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Naam"></label>
+                            <input class="form-control input-lg" placeholder="Naam van de handelszaak" asp-for="@Model.Naam" disabled>
+                            <span asp-validation-for="@Model.Naam" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="Email"></label>
+                            @if (Model.IsEmailConfirmed)
+                            {
+                                <div class="input-group">
+                                    <input asp-for="Email" class="form-control" disabled />
+                                    <span class="input-group-addon" aria-hidden="true"><span class="glyphicon glyphicon-ok text-success"></span></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <input asp-for="Email" class="form-control" readonly />
+                                <button asp-action="SendVerificationEmail" class="btn btn-link">Verstuur bevestigingsmail</button>
+                            }
+                            <span asp-validation-for="Email" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Beschrijving"></label>
+                            <input class="form-control input-lg" placeholder="Beschrijving" asp-for="@Model.Beschrijving">
+                            <span asp-validation-for="@Model.Beschrijving" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.BTW_Nummer"></label>
+                            <input class="form-control input-lg" placeholder="BTW nummer" asp-for="@Model.BTW_Nummer">
+                            <span asp-validation-for="@Model.BTW_Nummer" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Straat"></label>
+                            <input class="form-control input-lg" placeholder="Straat" asp-for="@Model.Straat">
+                            <span asp-validation-for="@Model.Straat" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Gemeente"></label>
+                            <input class="form-control input-lg" placeholder="Gemeente" asp-for="@Model.Gemeente">
+                            <span asp-validation-for="@Model.Gemeente" class="text-danger"></span>
+                        </div>
+                        <div class="form-group">
+                            <label asp-for="@Model.Postcode"></label>
+                            <input class="form-control input-lg" placeholder="Postcode" asp-for="@Model.Postcode">
+                            <span asp-validation-for="@Model.Postcode" class="text-danger"></span>
+                        </div>
+                        <button type="submit" class="btn btn-default">Gegevens bijwerken</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
