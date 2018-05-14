@@ -514,6 +514,64 @@ namespace LekkerLokaal.Controllers
             qrCodeImage.Save(bonPath + qrcode + ".png", ImageFormat.Png);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> Bon(int Id)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            if (ModelState.IsValid)
+            {
+                var bonPath = @"wwwroot/pdf";
+
+                var bestellijn = _bestellijnRepository.GetById(Id);
+                var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
+                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+
+                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
+                string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
+                string geldigheid = String.Format("Geldig tot: " + verval);
+                var doc1 = new Document(PageSize.A5);
+                Paragraph p1 = new Paragraph(waarde);
+                Paragraph p2 = new Paragraph(geldigheid);
+                GenerateQR(bestellijn.QRCode);
+                var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
+                iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
+                jpg.ScaleToFit(140f, 140f);
+                var logoURL = @"wwwroot/images/logo.png";
+                var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
+                iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
+                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
+                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
+
+                logoLL.SetAbsolutePosition(30, 515);
+                logoLL.ScalePercent(50f);
+                logoHandelaar.ScalePercent(10f);
+
+                jpg.Alignment = Element.ALIGN_CENTER;
+                naamBon.Alignment = Element.ALIGN_CENTER;
+                p1.Alignment = Element.ALIGN_CENTER;
+                p2.Alignment = Element.ALIGN_CENTER;
+                logoHandelaar.Alignment = Element.ALIGN_RIGHT;
+
+
+                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
+
+                doc1.Open();
+                doc1.Add(logoLL);
+                doc1.Add(logoHandelaar);
+                doc1.Add(naamBon);
+                doc1.Add(p1);
+                doc1.Add(p2);
+                doc1.Add(jpg);
+                doc1.Close();
+
+                System.IO.File.Delete(imageURL);
+
+                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
+            }
+
+            return View();
+        }
+
 
         #region Helpers
 

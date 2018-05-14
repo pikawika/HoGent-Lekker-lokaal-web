@@ -39,6 +39,9 @@
                             <form asp-controller="Manage" asp-action="BonAanmaken" asp-route-id="@b.BestelLijnId" method="post">
                                 <button type="submit" class="btn btn-sm btn-block m-lg-10">Bon opnieuw versturen</button>
                             </form>
+                            <form asp-controller="Manage" asp-action="Bon" asp-route-id="@b.BestelLijnId" method="post">
+                                <button type="submit" class="btn btn-sm btn-block m-lg-10">Bon bekijken</button>
+                            </form>
                         </td>
                     </tr>
 
