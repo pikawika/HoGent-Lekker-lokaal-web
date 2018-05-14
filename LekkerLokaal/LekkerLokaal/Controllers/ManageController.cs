@@ -432,6 +432,8 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             if (ModelState.IsValid)
             {
+                var bonPath = @"wwwroot/pdf";
+                
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
@@ -462,7 +464,7 @@ namespace LekkerLokaal.Controllers
                 p2.Alignment = Element.ALIGN_CENTER;
                 logoHandelaar.Alignment = Element.ALIGN_RIGHT;
 
-                var bonPath = @"wwwroot/pdf";
+                
                 PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
 
                 doc1.Open();
@@ -484,7 +486,7 @@ namespace LekkerLokaal.Controllers
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(to);
                 message.Subject = "Uw cadeaubon van Lekker Lokaal.";
-                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + ", "+ System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
+                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + "U vindt deze in bijlage." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
 
                 var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
                 attachment.Name = "cadeaubon.pdf";
@@ -495,7 +497,7 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
                 attachment.Dispose();
-                System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
+                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
 
                 return RedirectToAction(nameof(HomeController.Index), "Home");
             }
