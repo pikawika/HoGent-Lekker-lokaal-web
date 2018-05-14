@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.Domain;
@@ -38,7 +39,7 @@ namespace LekkerLokaal.Controllers
         public Object MeldHandelaarAan(string id, string ww)
         {
             var handelaar = _handelaarRepository.GetByEmail(id);
-            if (handelaar.Wachtwoord == ww)
+            if (handelaar.Wachtwoord == sha256(ww))
             {
                 return new
                 {
@@ -110,6 +111,19 @@ namespace LekkerLokaal.Controllers
 
                 return Models.Domain.Geldigheid.Ongeldig;
             }
+        }
+
+        //Methode voor encryptie wachtwoord
+        public string sha256(string wachtwoord)
+        {
+            var crypt = new System.Security.Cryptography.SHA256Managed();
+            var hash = new System.Text.StringBuilder();
+            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(wachtwoord));
+            foreach (byte theByte in crypto)
+            {
+                hash.Append(theByte.ToString("x2"));
+            }
+            return hash.ToString();
         }
 
     }
