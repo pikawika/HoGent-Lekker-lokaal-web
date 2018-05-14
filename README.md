@@ -26,12 +26,12 @@ Dit is de GitHub repository voor het project Lekker Lokaal van groep 1. U kan hi
 > - [Informatie over sprint 6 op Trello](https://trello.com/b/G1KPXDER)
 
 ## Releases
-[Release Sprint 1](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint1)
-[Release Sprint 2](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint2)
-[Release Sprint 3](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint3)
-[Release Sprint 4](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint4)
-[Release Sprint 5](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint5)
-[Release Sprint 6 - coming soon]()
+> - [Release Sprint 1](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint1)
+> - [Release Sprint 2](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint2)
+> - [Release Sprint 3](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint3)
+> - [Release Sprint 4](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint4)
+> - [Release Sprint 5](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint5)
+> - [Release Sprint 6 - coming soon]()
 
 ## GitHub Lekker Lokaal mobile app
 Er is een app gemaakt die de handelaar in staat steld bonnen in te scannen en te valideren. De GitHub voor deze app is:
