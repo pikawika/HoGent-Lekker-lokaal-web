@@ -11,7 +11,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace LekkerLokaal.Controllers
 {
     [Produces("application/json")]
-    [Route("API/MobieleApp")]
+    [Route("api/[controller]")]
     public class MobieleAppController : Controller
     {
         private readonly UserManager<ApplicationUser> _userManager;
@@ -34,7 +34,7 @@ namespace LekkerLokaal.Controllers
         }
 
         //GET voor aanmelden van een handelaar
-        [HttpGet("{id}/{ww}")]
+        [HttpGet("{id}/{ww}", Name = "MeldHandelaarAan")]
         public Object MeldHandelaarAan(string id, string ww)
         {
             var handelaar = _handelaarRepository.GetByEmail(id);
@@ -53,7 +53,7 @@ namespace LekkerLokaal.Controllers
         }
 
         //GET voor cadeaubon
-        [HttpGet("{id}")]
+        [HttpGet("{id}", Name = "HaalCadeaubonOp")]
         public Object HaalCadeaubonOp(string id)
         {
             var bestellijn = _bestellijnRepository.GetBy(id);
@@ -76,7 +76,7 @@ namespace LekkerLokaal.Controllers
         }
 
         //PUT voor cadeaubon
-        [HttpPut("{id}")]
+        [HttpPut("{id}", Name = "WerkCadeaubonBij")]
         public void WerkCadeaubonBij(int id, [FromBody] CadeaubonModel model)
         {
             var bestellijn = _bestellijnRepository.GetById(id);
@@ -84,6 +84,7 @@ namespace LekkerLokaal.Controllers
             {
                 bestellijn.Handelaar = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
                 bestellijn.Geldigheid = model.bepaalGeldigheid();
+                _bestellijnRepository.SaveChanges();
             }
         }
 
@@ -95,7 +96,7 @@ namespace LekkerLokaal.Controllers
 
             public Geldigheid bepaalGeldigheid()
             {
-                switch(Geldigheid)
+                switch (Geldigheid)
                 {
                     case 0:
                         return Models.Domain.Geldigheid.Geldig;
