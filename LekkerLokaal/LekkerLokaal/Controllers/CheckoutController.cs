@@ -21,14 +21,16 @@ namespace LekkerLokaal.Controllers
         private readonly UserManager<ApplicationUser> _userManager;
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IGebruikerRepository _gebruikerRepository;
+        private readonly IBonRepository _bonRepository;
 
         public CheckoutController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, ICategorieRepository categorieRepository, IGebruikerRepository gebruikerRepository)
+            SignInManager<ApplicationUser> signInManager, ICategorieRepository categorieRepository, IGebruikerRepository gebruikerRepository, IBonRepository bonRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
+            _bonRepository = bonRepository;
         }
 
         public IActionResult Index(string checkoutId, string returnUrl = null)
@@ -122,6 +124,7 @@ namespace LekkerLokaal.Controllers
 
             gebruiker.PlaatsBestelling(winkelwagen);
             _gebruikerRepository.SaveChanges();
+            _bonRepository.SaveChanges();
 
             winkelwagen.MaakLeeg();
 
