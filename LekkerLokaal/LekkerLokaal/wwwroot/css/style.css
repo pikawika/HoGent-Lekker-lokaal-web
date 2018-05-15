@@ -7,6 +7,12 @@
     border-spacing: 0 10px; /* NOTE: syntax is <horizontal value> <vertical value> */
 }
 
+.center {
+    position: absolute;
+    top: 50%;
+    left: 15%;
+}
+
 .button-back{
     height:auto !important;
     width: 250px !important;

@@ -354,18 +354,18 @@ namespace LekkerLokaal.Controllers
                     message.To.Clear();
                     message.To.Add(model.Email);
                     message.Subject = "Uw verzoek om handelaar te worden op LekkerLokaal.be is correct ontvangen.";
-                    message.Body = String.Format("Beste, \n" +
+                    message.Body = String.Format("Beste medwerker van {0}, \n" +
                                             "Uw verzoek om handelaar te worden bij LekkerLokaal.be is correct ontvangen. \n\n" +
                                             "Onderstaande gegevens zullen gecontroleerd worden door een administrator. U mag een E-mail verwachten zodra uw verzoek al dan niet aanvaard wordt." +
-                                            "Naam handelszaak: {0}\n" +
-                                            "E-mailadres: {1}\n" +
-                                            "Straat: {2}\n" +
-                                            "Huisnummer: {3}\n" +
-                                            "Postcode: {4}\n" +
-                                            "Gemeente: {5}\n" +
-                                            "BTW Nummer: {6}\n" +
-                                            "Beschrijving: {7}\n",
-                                            model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
+                                            "Naam handelszaak: {1}\n" +
+                                            "E-mailadres: {2}\n" +
+                                            "Straat: {3}\n" +
+                                            "Huisnummer: {4}\n" +
+                                            "Postcode: {5}\n" +
+                                            "Gemeente: {6}\n" +
+                                            "BTW Nummer: {7}\n" +
+                                            "Beschrijving: {8}\n",
+                                            model.NaamHandelszaak, model.NaamHandelszaak, model.Email, model.Straat, model.Huisnummer, model.Postcode, model.Plaatsnaam, model.BTWNummer, model.Beschrijving);
                     SmtpServer.Send(message);
 
                     return RedirectToLocal(returnUrl);

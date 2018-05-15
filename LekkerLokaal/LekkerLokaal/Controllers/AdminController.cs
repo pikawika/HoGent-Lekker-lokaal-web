@@ -168,19 +168,19 @@ namespace LekkerLokaal.Controllers
 
                 if (model.Opmerking != null)
                 {
-                    message.Body = String.Format("Beste, \n" +
+                    message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n\n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geweigerd. \n\n" +
                    model.Opmerking + "\n\n" +
                    "Als u denkt dat u alsnog recht heeft om handelaar te worden bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
-                   "Met vriendelijke groet, \n" +
+                   "Met vriendelijke groeten, \n" +
                   "Het Lekker Lokaal team");
                 }
                 else
                 {
-                    message.Body = String.Format("Beste, \n" +
+                    message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n\n" +
                   "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geweigerd. \n\n" +
                   "Als u denkt dat u alsnog recht heeft om handelaar te worden bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
-                  "Met vriendelijke groet, \n\n" +
+                  "Met vriendelijke groeten, \n\n" +
                   "Het Lekker Lokaal team");
                 }
 
@@ -279,25 +279,25 @@ namespace LekkerLokaal.Controllers
 
                 if (model.Opmerking != null)
                 {
-                    message.Body = String.Format("Beste, \n" +
+                    message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n\n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
                    model.Opmerking + "\n\n" +
                    "Uw gegevens om aan te melden zijn: \n" +
                    "E-mailadres: " + model.Emailadres + "\n" +
                    "Wachtwoord: " + wachtwoord + "\n\n" +
                    "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
-                   "Met vriendelijke groet, \n" +
+                   "Met vriendelijke groeten, \n" +
                   "Het Lekker Lokaal team");
                 }
                 else
                 {
-                    message.Body = String.Format("Beste, \n" +
+                    message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n\n" +
                    "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
                    "Uw gegevens om aan te melden zijn: \n" +
                    "E-mailadres: " + model.Emailadres + "\n" +
                    "Wachtwoord: " + wachtwoord + "\n\n" +
                    "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
-                   "Met vriendelijke groet, \n" +
+                   "Met vriendelijke groeten, \n" +
                   "Het Lekker Lokaal team");
                 }
 
@@ -356,25 +356,25 @@ namespace LekkerLokaal.Controllers
 
                     if (model.Opmerking != null)
                     {
-                        message.Body = String.Format("Beste, \n" +
+                        message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
                        "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
                        model.Opmerking + "\n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
                        "Wachtwoord: " + wachtwoord + "\n\n" +
                        "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
-                       "Met vriendelijke groet, \n" +
+                       "Met vriendelijke groeten, \n" +
                       "Het Lekker Lokaal team");
                     }
                     else
                     {
-                        message.Body = String.Format("Beste, \n" +
+                        message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
                        "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
                        "Wachtwoord: " + wachtwoord + "\n\n" +
                        "We bevelen u aan om bij uw eerste aanmelding uw wachtwoord te wijzigen. \n\n" +
-                       "Met vriendelijke groet, \n" +
+                       "Met vriendelijke groeten, \n" +
                       "Het Lekker Lokaal team");
                     }
 

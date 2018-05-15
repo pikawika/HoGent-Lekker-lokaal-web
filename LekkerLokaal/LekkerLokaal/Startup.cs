@@ -139,6 +139,10 @@ namespace LekkerLokaal
                     template: "{controller=Home}/{action=Detail}/{Id?}");
 
                 routes.MapRoute(
+                    name: "bon",
+                    template: "{controller=Home}/{action=Detail}/{Id?}");
+
+                routes.MapRoute(
                     name: "handelaarsVerzoekEvaluatie",
                     template: "{controller=Admin}/{action=HandelaarVerzoekEvaluatie}/{Id?}");
 
