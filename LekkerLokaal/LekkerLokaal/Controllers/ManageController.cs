@@ -626,24 +626,27 @@ namespace LekkerLokaal.Controllers
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+                var user = _userManager.GetUserAsync(User);
+                var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
 
-                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
+                string waarde = String.Format(bestellijn.Prijs.ToString() + " euro");
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5.Rotate());
-                Paragraph p1 = new Paragraph(waarde);
-                Paragraph p2 = new Paragraph(geldigheid);
+                var doc1 = new Document(PageSize.A5.Rotate(), 81,0,0,0);
+                iTextSharp.text.Font font = FontFactory.GetFont("arial", 22);
+                //Paragraph bedrag = new Paragraph(waarde);
+                //Paragraph p2 = new Paragraph(geldigheid);
                 GenerateQR(bestellijn.QRCode);
                 var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
                 iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
                 jpg.ScaleToFit(145f, 145f);
                 var logoURL = @"wwwroot/images/logo.png";
                 var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
-                var kadoURL = @"wwwroot/images/kado.png";
+                var kadoURL = @"wwwroot/images/kado.jpg";
                 iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
                 iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
                 iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
+                //Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
                 logoLL.SetAbsolutePosition(20,15);
                 logoLL.ScaleToFit(188f,100f);
@@ -652,23 +655,30 @@ namespace LekkerLokaal.Controllers
                 jpg.SetAbsolutePosition(225, 10);
                 kado.SetAbsolutePosition(65, 161);
 
+                iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 25);
+                iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
+
+                Paragraph bedrag = new Paragraph(waarde, arial);
+                Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
+                Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + gebruiker.Voornaam, arial18);
+                Paragraph geldig = new Paragraph(geldigheid, arial18);
+
+                bedrag.Alignment = Element.ALIGN_LEFT;
+                naamHandelaar.Alignment = Element.ALIGN_LEFT;
+                geschonkenDoor.Alignment = Element.ALIGN_LEFT;
+                geldig.Alignment = Element.ALIGN_LEFT;
 
 
 
-                naamBon.Alignment = Element.ALIGN_CENTER;
-                p1.Alignment = Element.ALIGN_CENTER;
-                p2.Alignment = Element.ALIGN_CENTER;
-                //logoHandelaar.Alignment = Element.ALIGN_RIGHT;
 
-
-                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-
+                PdfWriter writer = PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
                 doc1.Open();
                 doc1.Add(logoLL);
                 doc1.Add(logoHandelaar);
-                doc1.Add(naamBon);
-                doc1.Add(p1);
-                doc1.Add(p2);
+                doc1.Add(bedrag);
+                doc1.Add(naamHandelaar);
+                doc1.Add(geschonkenDoor);
+                doc1.Add(geldig);
                 doc1.Add(jpg);
                 doc1.Add(kado);
                 doc1.Close();
