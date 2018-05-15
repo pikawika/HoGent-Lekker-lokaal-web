@@ -1,9 +1,156 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.CadeaubonBerwerkViewModel
+
 @{
     ViewData["Title"] = "CadeaubonBewerken";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    <h1>TEMP</h1>
+    <h1 class="text-center"></h1>
+
+    <section class="panel">
+        <header class="panel-heading">Manueel cadeaubon toevoegen</header>
+        <div class="panel-body">
+            <form class="form-horizontal bucket-form" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Id bon</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="BonId" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Id handelaar</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="HandelaarID" readonly>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Naam cadeaubon</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Naam">
+                        <span asp-validation-for="Naam" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Beschrijving cadeaubon</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Beschrijving">
+                        <span asp-validation-for="Beschrijving" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Minimumprijs</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="MinimumPrijs">
+                        <span asp-validation-for="MinimumPrijs" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Maxmimumprijs</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Maximumprijs">
+                        <span asp-validation-for="Maximumprijs" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" asp-for="Categorie"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" asp-for="Categorie" asp-items="@(ViewData["categorieen"] as SelectList)">
+                            <option value="">--- Selecteer categorie ---</option>
+                        </select>
+                        <span asp-validation-for="Categorie" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Straatnaam</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Straatnaam">
+                        <span asp-validation-for="Straatnaam" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Huisnummer</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Huisnummer">
+                        <span asp-validation-for="Huisnummer" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Postcode</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Postcode">
+                        <span asp-validation-for="Postcode" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Gemeente</label>
+                    <div class="col-sm-6">
+                        <input class="form-control" required="required" asp-for="Gemeente">
+                        <span asp-validation-for="Gemeente" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label" asp-for="Aanbieding"></label>
+                    <div class="col-sm-6">
+                        <select class="form-control" asp-for="Aanbieding" asp-items="@(ViewData["aanbiedingen"] as SelectList)">
+                            <option value="">--- Selecteer type ---</option>
+                        </select>
+                        <span asp-validation-for="Aanbieding" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Thumbnail</label>
+                    <div class="col-sm-6">
+                        <img src="@Model.GetThumbPath" alt="Logo" class="img-thumbnail max-height-350px">
+                        <label class="btn btn-default" id="fileselection">
+                            <a class="force-whiteColor" id="fileselectionTekst">Selecteer een nieuwe thumbnail</a><input asp-for="Thumbnail" accept=".jpg" id="fileToUpload" style="display: none;">
+                        </label>
+                        <span asp-validation-for="Thumbnail" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Afbeeldingen</label>
+                    <div class="col-sm-6">
+                        <a href="@Url.Action("Detail", "Home", new { Id = Model.BonId})" target="_blank">Bekijk hier de huidige afbeeldingen</a>
+                        <label class="btn btn-default" id="fileselection2">
+                            <a class="force-whiteColor" id="fileselectionTekst2">Selecteer nieuwe afbeeldingen</a><input asp-for="Afbeeldingen" accept=".jpg" id="fileToUpload2" style="display: none;">
+                        </label>
+                        <span asp-validation-for="Afbeeldingen" class="text-danger"></span>
+                    </div>
+                </div>
+
+
+
+                <div class="col-md-9 col-md-offset-3">
+                    <a asp-controller="Admin" asp-action="CadeaubonOverzicht" class="btn btn-danger mr-20">Annuleer</a>
+                    <button type="submit" class="btn btn-success">Pas de wijzigingen aan</button>
+                </div>
+            </form>
+        </div>
+    </section>
 </section>
+
+<script>
+    $("#fileToUpload").change(function () {
+        document.getElementById('fileselectionTekst').innerHTML = 'U heeft een bestand geselecteerd';
+    });
+</script>
+
+<script>
+    $("#fileToUpload2").change(function () {
+        document.getElementById('fileselectionTekst2').innerHTML = 'U heeft een bestand geselecteerd';
+    });
+</script>

@@ -75,14 +75,16 @@ namespace LekkerLokaal.Models.Domain
         public string Huisnummer { get; set; }
         public string Postcode { get; set; }
         public string Gemeente { get; set; }
+        public bool Goedgekeurd { get; set; }
         public Aanbieding Aanbieding { get; set; }
 
         [JsonConstructor]
         protected Bon() { }
 
-        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, string postcode, string gemeente, Handelaar handelaar, Aanbieding aanbieding) : this()
+        public Bon(string naam, decimal minprijs, decimal maxprijs, string beschrijving, int aantalBesteld, string afbeelding, Categorie categorie, string straat, string huisnummer, string postcode, string gemeente, Handelaar handelaar, Aanbieding aanbieding, bool goedgekeurd = false    )
         {
             Naam = naam;
+            Goedgekeurd = goedgekeurd;
             MaxPrijs = maxprijs;
             MinPrijs = minprijs;
             Beschrijving = beschrijving;

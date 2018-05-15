@@ -1,9 +1,83 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.CadeaubonOverzichtViewModel
+
 @{
-    ViewData["Title"] = "CadeaubonOverzicht";
+    ViewData["Title"] = "Cadeaubon overzicht";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    <h1>TEMP</h1>
+    @if (Model.AlleCadeaubonnenGesorteerdOpId == null || !Model.AlleCadeaubonnenGesorteerdOpId.Any())
+    {
+        <h1 class="text-center mtb-40">Er zijn momenteel geen cadeaubonnen in het systeem!</h1>
+        <a asp-controller="Admin" asp-action="CadeaubonToevoegen"><h3 class="text-center">Voeg manueel een cadeaubon toe.</h3></a>
+    }
+    else
+    {
+        <div class="table-agile-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Cadeaubonnen op LekkerLokaal.be
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Naam Cadeaubon</th>
+                                <th>Gemeente</th>
+                                <th>Aantal verkocht</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        @foreach (var bon in Model.AlleCadeaubonnenGesorteerdOpId)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@bon.Id</td>
+                                    <td>@bon.Naam</td>
+                                    <td>@bon.Gemeente</td>
+                                    <td>@bon.AantalBonnenInSysteem</td>
+                                    <td><a asp-controller="Admin" asp-action="CadeaubonBewerken" asp-route-id="@bon.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+                <div class="pagination-section prl-30 ptb-30"></div>
+            </div>
+        </div>
+    }
 </section>
+
+<script>
+    jQuery(function ($) {
+        // alle items bepalen door tr's te tellen
+        var items = $("table tbody tr");
+
+        var aantItems = items.length;
+        var perPagina = 10;
+
+        // alleen de eerste x (perPagina) tonen
+        items.slice(perPagina).hide();
+
+        // paginatie in div plakken
+        $(".pagination-section").pagination({
+            items: aantItems,
+            itemsOnPage: perPagina,
+            //default theme da ok met bootstrap samenwerkt
+            cssStyle: "light-theme",
+
+            // pageklik
+            onPageClick: function (pageNumber) {
+                // bepalen van waar tot waar
+                var showFrom = perPagina * (pageNumber - 1);
+                var showTo = showFrom + perPagina;
+
+                // alles hiden
+                items.hide()
+                    // degene die je wel moet tonen terug showen
+                    .slice(showFrom, showTo).show();
+            }
+        });
+    });
+</script>
