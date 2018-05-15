@@ -529,28 +529,35 @@ namespace LekkerLokaal.Controllers
                 string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5);
+                var doc1 = new Document(PageSize.A5.Rotate());
                 Paragraph p1 = new Paragraph(waarde);
                 Paragraph p2 = new Paragraph(geldigheid);
                 GenerateQR(bestellijn.QRCode);
                 var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
                 iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
-                jpg.ScaleToFit(140f, 140f);
+                jpg.ScaleToFit(145f, 145f);
                 var logoURL = @"wwwroot/images/logo.png";
                 var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
+                var kadoURL = @"wwwroot/images/kado.png";
+                iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
                 iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
                 iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
                 Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
-                logoLL.SetAbsolutePosition(30, 515);
-                logoLL.ScalePercent(50f);
-                logoHandelaar.ScalePercent(10f);
+                logoLL.SetAbsolutePosition(20,15);
+                logoLL.ScaleToFit(188f,100f);
+                logoHandelaar.ScaleToFit(188f, 100f);
+                logoHandelaar.SetAbsolutePosition(410, 15);
+                jpg.SetAbsolutePosition(225, 10);
+                kado.SetAbsolutePosition(65, 161);
 
-                jpg.Alignment = Element.ALIGN_CENTER;
+
+
+
                 naamBon.Alignment = Element.ALIGN_CENTER;
                 p1.Alignment = Element.ALIGN_CENTER;
                 p2.Alignment = Element.ALIGN_CENTER;
-                logoHandelaar.Alignment = Element.ALIGN_RIGHT;
+                //logoHandelaar.Alignment = Element.ALIGN_RIGHT;
 
 
                 PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
@@ -562,6 +569,7 @@ namespace LekkerLokaal.Controllers
                 doc1.Add(p1);
                 doc1.Add(p2);
                 doc1.Add(jpg);
+                doc1.Add(kado);
                 doc1.Close();
 
                 System.IO.File.Delete(imageURL);

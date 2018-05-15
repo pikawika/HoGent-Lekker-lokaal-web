@@ -384,6 +384,11 @@ label {
         font-size: 10px !important;
     }
 
+    .center{
+        width:300px !important;
+        height: 500px !important;
+    }
+
     .font-sm-11 {
         font-size: 11px !important;
     }
