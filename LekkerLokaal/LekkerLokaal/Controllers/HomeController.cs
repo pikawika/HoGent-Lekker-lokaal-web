@@ -28,13 +28,13 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
 
-            return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAll().ToList()).ToList(), _bonRepository.GetBonnenAanbiedingSlider(_bonRepository.GetAll().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
+            return View(new IndexViewModel(_bonRepository.GetTop30(_bonRepository.GetAllGoedgekeurd().ToList()).ToList(), _bonRepository.GetBonnenAanbiedingSlider(_bonRepository.GetAllGoedgekeurd().ToList()).ToList(), _categorieRepository.GetTop9WithAmount()));
         }
 
         public IActionResult Aanbiedingen()
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            return View(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAll().ToList()).Select(b => new ZoekViewModel(b)).ToList());
+            return View(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAllGoedgekeurd().ToList()).Select(b => new ZoekViewModel(b)).ToList());
         }
 
         public IActionResult About()
@@ -61,19 +61,19 @@ namespace LekkerLokaal.Controllers
                 switch (ZoekSoort)
                 {
                     case "Alles":
-                        GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetAlles(ZoekKey, _bonRepository.GetAllGoedgekeurd());
                         break;
                     case "Ligging":
-                        GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByLigging(ZoekKey, _bonRepository.GetAllGoedgekeurd());
                         break;
                     case "Naam":
-                        GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByNaam(ZoekKey, _bonRepository.GetAllGoedgekeurd());
                         break;
                     case "Categorie":
-                        GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey, _bonRepository.GetAll());
+                        GefilterdeBonnen = _bonRepository.GetByCategorie(ZoekKey, _bonRepository.GetAllGoedgekeurd());
                         break;
                     default:
-                        GefilterdeBonnen = _bonRepository.GetAll();
+                        GefilterdeBonnen = _bonRepository.GetAllGoedgekeurd();
                         break;
                 }
                 ViewData["ZoekOpdracht"] = ZoekKey + " in " + ZoekSoort;
@@ -99,7 +99,7 @@ namespace LekkerLokaal.Controllers
             }
             else
             {
-                GefilterdeBonnen = _bonRepository.GetAll();
+                GefilterdeBonnen = _bonRepository.GetAllGoedgekeurd();
                 ViewData["ZoekOpdracht"] = "Overzicht van alle bons";
 
                 if (!string.IsNullOrEmpty(Categorie) && Categorie != "*")

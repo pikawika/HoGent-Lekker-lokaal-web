@@ -501,7 +501,7 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(model.HandelaarID), model.Aanbieding);
+                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(model.HandelaarID), model.Aanbieding, true);
                 _bonRepository.Add(nieuweBon);
                 _bonRepository.SaveChanges();
 
@@ -532,16 +532,117 @@ namespace LekkerLokaal.Controllers
             return View(nameof(CadeaubonToevoegen), model);
         }
 
+
         [HttpGet]
         public IActionResult CadeaubonOverzicht()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonGoedgekeurd(_bonRepository.GetAllGoedgekeurd())));
         }
 
         [HttpGet]
-        public IActionResult CadeaubonBewerken()
+        public IActionResult CadeaubonBewerken(int Id)
         {
-            return View();
+            Bon geselecteerdeBon = _bonRepository.GetByBonId(Id);
+            if (geselecteerdeBon == null)
+            {
+                return RedirectToAction("HandelaarsOverzicht");
+            }
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            ViewData["aanbiedingen"] = Aanbiedingen();
+            return View(new CadeaubonBerwerkViewModel(geselecteerdeBon));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CadeaubonBewerken(CadeaubonBerwerkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Bon bonInDb = _bonRepository.GetByBonId(model.BonId);
+
+                if (bonInDb.Naam != model.Naam)
+                {
+                    bonInDb.Naam = model.Naam;
+                }
+
+                if (bonInDb.Beschrijving != model.Beschrijving)
+                {
+                    bonInDb.Beschrijving = model.Beschrijving;
+                }
+
+                if (bonInDb.MinPrijs != model.MinimumPrijs)
+                {
+                    bonInDb.MinPrijs = model.MinimumPrijs;
+                }
+
+                if (bonInDb.MaxPrijs != model.Maximumprijs)
+                {
+                    bonInDb.MaxPrijs = model.Maximumprijs;
+                }
+
+                if (bonInDb.Categorie.Naam != model.Categorie)
+                {
+                    bonInDb.Categorie = _categorieRepository.GetByNaam(model.Categorie);
+                }
+
+                if (bonInDb.Straat != model.Straatnaam)
+                {
+                    bonInDb.Straat = model.Straatnaam;
+                }
+
+                if (bonInDb.Huisnummer != model.Huisnummer)
+                {
+                    bonInDb.Huisnummer = model.Huisnummer;
+                }
+
+                if (bonInDb.Postcode != model.Postcode)
+                {
+                    bonInDb.Postcode = model.Postcode;
+                }
+
+                if (bonInDb.Gemeente != model.Gemeente)
+                {
+                    bonInDb.Gemeente = model.Gemeente;
+                }
+
+                if (bonInDb.Aanbieding != model.Aanbieding)
+                {
+                    bonInDb.Aanbieding = model.Aanbieding;
+                }
+
+                _bonRepository.SaveChanges();
+
+                if (model.Thumbnail != null)
+                {
+                    var filePath = @"wwwroot/" + bonInDb.Afbeelding + "thumb.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Thumbnail.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+
+                if (model.Afbeeldingen != null)
+                {
+                    System.IO.DirectoryInfo di = new DirectoryInfo(@"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/");
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    for (int i = 0; i < model.Afbeeldingen.Count; i++)
+                    {
+                        var filePath = @"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/" + (i + 1) + ".jpg";
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                        var fileStream = new FileStream(filePath, FileMode.Create);
+                        await model.Afbeeldingen[i].CopyToAsync(fileStream);
+                        fileStream.Close();
+                    }
+                }
+
+                return RedirectToAction("CadeaubonOverzicht");
+            }
+            return View(nameof(CadeaubonVerzoekEvaluatie), model);
         }
 
         [HttpGet]

@@ -17,9 +17,9 @@ namespace LekkerLokaal.Data.Repositories
             _context = context;
             _bonnen = context.Bonnen;
         }
-        public IEnumerable<Bon> GetAll()
+        public IEnumerable<Bon> GetAllGoedgekeurd()
         {
-            return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
+            return GetBonGoedgekeurd(_bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList());
         }
 
         public IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst)
@@ -93,7 +93,7 @@ namespace LekkerLokaal.Data.Repositories
             }
             else
             {
-                return GetAll().ToList();
+                return GetAllGoedgekeurd().ToList();
             }
             
         }
@@ -175,6 +175,21 @@ namespace LekkerLokaal.Data.Repositories
         public void Add(Bon bon)
         {
             _bonnen.Add(bon);
+        }
+
+        public IEnumerable<Bon> GetBonNogNietGoedgekeurd(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.OrderBy(h => h.BonId).Where(b => !b.Goedgekeurd).ToList();
+        }
+
+        public IEnumerable<Bon> GetBonGoedgekeurd(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.OrderBy(h => h.BonId).Where(b => b.Goedgekeurd).ToList();
+        }
+
+        public IEnumerable<Bon> GetAll()
+        {
+            return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
         }
     }
 }
