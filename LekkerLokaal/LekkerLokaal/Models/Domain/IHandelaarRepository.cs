@@ -25,6 +25,8 @@ namespace LekkerLokaal.Models.Domain
 
         Handelaar GetByHandelaarId(int handelaarId);
 
+        Handelaar GetByEmail(string email);
+
         Handelaar GetByHandelaarIdNotAccepted(int handelaarId);
     }
 }

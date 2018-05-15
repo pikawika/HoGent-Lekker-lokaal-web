@@ -1,5 +1,6 @@
 ﻿@using Microsoft.AspNetCore.Identity
 @using LekkerLokaal.Models.Domain
+@using System.Security.Claims;
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -7,7 +8,7 @@
 
 @{
     ViewData["Title"] = "Bestelling";
-    var user = UserManager.GetUserAsync(User);
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <!-- –––––––––––––––[ PAGE CONTENT ]––––––––––––––– -->
@@ -64,23 +65,37 @@
                     <!-- Checkout Area -->
                     @if (SignInManager.IsSignedIn(User))
                     {
-                        var gebruiker = gebruikerRepository.GetBy(user.Result.Email);
-                        <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                            <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
-                            <div class="mb-30">
-                                <p>De bestelling zal worden uitgevoerd op naam van @gebruiker.Voornaam @gebruiker.Familienaam.</p>
-                                <form asp-controller="Account" asp-action="Logout" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
-                                    <label class="color-mid">
-                                        Bent u dit niet?
-                                        <button class="btntop3" type="submit">Meld af</button>.
-                                    </label>
-                                </form>
-                            </div>
-                            <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
-                            <!-- Tijdelijk overslaan
+                        IList<Claim> claims = await UserManager.GetClaimsAsync(user);
+                        if (claims.Any(c => c.Value == "handelaar"))
+                        {
+                            <section class="section checkout-area panel prl-30 pt-20 pb-40">
+                                <h2 class="h3 mb-20 h-title">Betaling niet mogelijk</h2>
+                                <div class="mb-30">
+                                    <p>U kunt als handelaar geen aankopen verrichten. Gelieve aan te melden met een gewoon gebruikersaccount.</p>
+                                </div>
+                                <a asp-controller="Home" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Terug naar home</a>
+                            </section>
+                        }
+                        else
+                        {
+                            var gebruiker = gebruikerRepository.GetBy(user.Email);
+                            <section class="section checkout-area panel prl-30 pt-20 pb-40">
+                                <h2 class="h3 mb-20 h-title">Doorgaan naar betalen</h2>
+                                <div class="mb-30">
+                                    <p>De bestelling zal worden uitgevoerd op naam van @gebruiker.Voornaam @gebruiker.Familienaam.</p>
+                                    <form asp-controller="Account" asp-action="Logout" method="post" asp-route-returnUrl="@ViewData["ReturnUrl"]">
+                                        <label class="color-mid">
+                                            Bent u dit niet?
+                                            <button class="btntop3" type="submit">Meld af</button>.
+                                        </label>
+                                    </form>
+                                </div>
+                                <a asp-controller="Winkelwagen" asp-action="Index" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
+                                <!-- Tijdelijk overslaan
                                 <a asp-controller="Checkout" asp-action="BonAanmaken" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a> -->
-                            <a asp-controller="Checkout" asp-action="Bedankt" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
-                        </section>
+                                <a asp-controller="Checkout" asp-action="Bedankt" class="btn btn-lg btn-rounded mr-10">Ga door naar betalen</a>
+                            </section>
+                        }
                     }
                     else
                     {
