@@ -28,9 +28,10 @@ namespace LekkerLokaal.Models.Domain
 
             foreach (WinkelwagenLijn lijn in winkelwagen.WinkelwagenLijnen)
             {
-                lijn.Bon.AantalBesteld++;
+                
                 for (int i = 1; i <= lijn.Aantal; i++)
                 {
+                    lijn.Bon.AantalBesteld++;
                     string qrcode = String.Format(Guid.NewGuid().ToString() + DateTime.Now.ToString("yyyyMMddhhmmssffffff"));
                     BestelLijnen.Add(new BestelLijn
                     {
