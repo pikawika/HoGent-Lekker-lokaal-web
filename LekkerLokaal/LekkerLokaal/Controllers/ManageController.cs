@@ -23,6 +23,7 @@ using System.Net.Mail;
 using QRCoder;
 using System.Drawing;
 using System.Drawing.Imaging;
+using System.Security.Claims;
 
 namespace LekkerLokaal.Controllers
 {
@@ -102,6 +103,35 @@ namespace LekkerLokaal.Controllers
             return View(model);
         }
 
+        [HttpGet]
+        public async Task<IActionResult> IndexHandelaar()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var handelaar = _handelaarRepository.GetByEmail(user.Email);
+
+            var model = new IndexHandelaarViewModel
+            {
+                Naam = handelaar.Naam,
+                Email = user.Email,
+                Beschrijving = handelaar.Beschrijving,
+                BTW_Nummer = handelaar.BTW_Nummer,
+                Straat = handelaar.Straat,
+                Gemeente = handelaar.Gemeente,
+                Postcode = handelaar.Postcode,
+                IsEmailConfirmed = user.EmailConfirmed,
+                StatusMessage = StatusMessage
+            };
+
+            return View(model);
+        }
+
         private SelectList Geslachten()
         {
             var geslachten = new List<Geslacht>();
@@ -155,6 +185,63 @@ namespace LekkerLokaal.Controllers
 
             StatusMessage = "Uw gegevens werden succesvol bijgewerkt.";
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> IndexHandelaar(IndexHandelaarViewModel model)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var user = await _userManager.GetUserAsync(User);
+            if (user == null)
+            {
+                throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+            }
+
+            var handelaar = _handelaarRepository.GetByEmail(user.Email);
+
+            var beschrijving = handelaar.Beschrijving;
+            if (model.Beschrijving != beschrijving)
+            {
+                handelaar.Beschrijving = model.Beschrijving;
+                _handelaarRepository.SaveChanges();
+            }
+
+            var btwnummer = handelaar.BTW_Nummer;
+            if (model.BTW_Nummer != btwnummer)
+            {
+                handelaar.BTW_Nummer = model.BTW_Nummer;
+                _handelaarRepository.SaveChanges();
+            }
+
+            var straat = handelaar.Straat;
+            if (model.Straat != straat)
+            {
+                handelaar.Straat = model.Straat;
+                _handelaarRepository.SaveChanges();
+            }
+
+            var gemeente = handelaar.Gemeente;
+            if (model.Gemeente != gemeente)
+            {
+                handelaar.Gemeente = model.Gemeente;
+                _handelaarRepository.SaveChanges();
+            }
+
+            var postcode = handelaar.Postcode;
+            if (model.Postcode != postcode)
+            {
+                handelaar.Postcode = model.Postcode;
+                _handelaarRepository.SaveChanges();
+            }
+
+            StatusMessage = "Uw gegevens werden succesvol bijgewerkt.";
+            return RedirectToAction(nameof(IndexHandelaar));
         }
 
         [HttpPost]
@@ -229,6 +316,18 @@ namespace LekkerLokaal.Controllers
             {
                 AddErrors(changePasswordResult);
                 return View(model);
+            }
+
+            IList<Claim> claims = await _userManager.GetClaimsAsync(user);
+            if (claims.Any(c => c.Value == "handelaar"))
+            {
+                var wachtwoord = model.NewPassword;
+
+                var handelaar = _handelaarRepository.GetByEmail(user.Email);
+
+                handelaar.sha256(wachtwoord);
+
+                _handelaarRepository.SaveChanges();
             }
 
             await _signInManager.SignInAsync(user, isPersistent: false);
@@ -411,7 +510,7 @@ namespace LekkerLokaal.Controllers
                 var bestelling = _bestellingRepository.GetBy(id);
                 var gebruiker2 = _gebruikerRepository.GetByBestellingId(id);
 
-                if(gebruiker == gebruiker2)
+                if (gebruiker == gebruiker2)
                 {
                     ICollection<BestelLijn> bestellijnen = new HashSet<BestelLijn>();
                     foreach (BestelLijn bl in bestelling.BestelLijnen)
@@ -435,10 +534,10 @@ namespace LekkerLokaal.Controllers
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
-                
+
                 string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
-                string geldigheid = String.Format("Geldig tot: " +  verval);
+                string geldigheid = String.Format("Geldig tot: " + verval);
                 var doc1 = new Document(PageSize.A5);
                 Paragraph p1 = new Paragraph(waarde);
                 Paragraph p2 = new Paragraph(geldigheid);
@@ -484,7 +583,7 @@ namespace LekkerLokaal.Controllers
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(to);
                 message.Subject = "Uw cadeaubon van Lekker Lokaal.";
-                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + ", "+ System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
+                message.Body = String.Format("Beste " + gebruiker.Voornaam + " " + gebruiker.Familienaam + ", " + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + " In bijlage vindt u de opgevraagde cadeaubon." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team.");
 
                 var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
                 attachment.Name = "cadeaubon.pdf";

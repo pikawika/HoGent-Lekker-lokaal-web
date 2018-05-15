@@ -1,19 +1,34 @@
 ﻿@using LekkerLokaal.Views.Manage
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims;
+
 @inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+
 @{
     var hasExternalLogins = (await SignInManager.GetExternalAuthenticationSchemesAsync()).Any();
+    var user = await UserManager.GetUserAsync(User);
+    IList<Claim> claims = await UserManager.GetClaimsAsync(user);
 }
 
 <div class="page-container ptb-10">
     <div class="container width-100">
         <section class="sign-area panel p-40 mr-10">
             <ul class="nav nav-pills nav-stacked">
-                <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
-                <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PersoonlijkeBestellingen" ? "active" : "")"><a asp-action="PersoonlijkeBestellingen">Uw bestellingen</a></li>
-                <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
-                @if (hasExternalLogins)
+                @if (!claims.Any(c => c.Value == "handelaar"))
                 {
-                    <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Koppel uw sociale media</a></li>
+                    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
+                    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "PersoonlijkeBestellingen" ? "active" : "")"><a asp-action="PersoonlijkeBestellingen">Uw bestellingen</a></li>
+                    @if (hasExternalLogins)
+                    {
+                        <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Koppel uw sociale media</a></li>
+                    }
+                }
+                else
+                {
+                    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="IndexHandelaar">Uw persoonlijke gegevens</a></li>
+                    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
                 }
             </ul>
         </section>
