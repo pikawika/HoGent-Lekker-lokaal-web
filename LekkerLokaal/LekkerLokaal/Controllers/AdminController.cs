@@ -313,9 +313,14 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult CadeaubonVerzoekEvaluatie()
+        public IActionResult CadeaubonVerzoekEvaluatie(int Id)
         {
-            return View();
+            Bon geselecteerdebonEvaluatie = _bonRepository.GetByBonId(Id);
+            if (geselecteerdebonEvaluatie == null)
+            {
+                return RedirectToAction("HandelaarVerzoekEvaluatie");
+            }
+            return View(new CadeaubonBerwerkViewModel(geselecteerdebonEvaluatie));
         }
 
         [HttpGet]

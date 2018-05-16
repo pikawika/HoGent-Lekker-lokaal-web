@@ -150,7 +150,12 @@ namespace LekkerLokaal.Data.Repositories
 
         public Bon GetByBonId(int bonId)
         {
-            return _bonnen.Include(b => b.Categorie).Include(b=>b.Handelaar).SingleOrDefault(b => b.BonId == bonId);
+            return _bonnen.Include(b => b.Categorie).Include(b=>b.Handelaar).SingleOrDefault(b => b.BonId == bonId && b.Goedgekeurd);
+        }
+
+        public Bon GetByBonIdNotAccepted(int bonId)
+        {
+            return _bonnen.Include(b => b.Categorie).Include(b => b.Handelaar).SingleOrDefault(b => b.BonId == bonId && !b.Goedgekeurd);
         }
 
         public IEnumerable<Bon> GetTop30(IEnumerable<Bon> inputlijst)
