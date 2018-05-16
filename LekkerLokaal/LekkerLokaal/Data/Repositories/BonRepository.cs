@@ -197,6 +197,15 @@ namespace LekkerLokaal.Data.Repositories
             return inputlijst.OrderBy(h => h.BonId).Where(b => b.Goedgekeurd).ToList();
         }
 
+        public void Remove(int bonId)
+        {
+            Bon tempBon = GetByBonIdNotAccepted(bonId);
+            if (tempBon == null)
+            {
+                tempBon = GetByBonId(bonId);
+            }
+            _bonnen.Remove(tempBon);
+        }
         public IEnumerable<Bon> GetAll()
         {
             return _bonnen.Include(b => b.Categorie).Include(b => b.Handelaar).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
