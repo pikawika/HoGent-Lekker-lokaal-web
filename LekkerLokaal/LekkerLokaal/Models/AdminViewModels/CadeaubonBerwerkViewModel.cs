@@ -14,7 +14,7 @@ namespace LekkerLokaal.Models.AdminViewModels
         public int BonId { get; set; }
 
         [Required]
-        public int HandelaarID { get; set; }
+        public string naamHandelaar { get; set; }
 
         [Required]
         [DataType(DataType.Text)]
@@ -81,7 +81,7 @@ namespace LekkerLokaal.Models.AdminViewModels
         public CadeaubonBerwerkViewModel(Bon bon)
         {
             BonId = bon.BonId;
-            HandelaarID = bon.Handelaar.HandelaarId;
+            naamHandelaar = bon.Handelaar.Naam;
             Naam = bon.Naam;
             Beschrijving = bon.Beschrijving;
             MinimumPrijs = bon.MinPrijs;

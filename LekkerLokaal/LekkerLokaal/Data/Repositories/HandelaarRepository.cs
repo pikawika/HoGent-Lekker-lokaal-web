@@ -39,7 +39,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public Handelaar GetByHandelaarId(int handelaarId)
         {
-            return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId);
+            return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId && h.Goedgekeurd);
         }
 
         public Handelaar GetByHandelaarIdNotAccepted(int handelaarId)
