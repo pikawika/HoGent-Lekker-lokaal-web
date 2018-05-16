@@ -475,7 +475,7 @@ namespace LekkerLokaal.Controllers
         public IActionResult CadeaubonVerzoeken()
         {
             //implement
-            return View(new HandelaarsVerzoekenViewModel(_handelaarRepository.GetHandelaarsNogNietGoedgekeurd(_handelaarRepository.GetAll())));
+            return View(new CadeaubonVerzoekenViewModel(_bonRepository.GetBonNogNietGoedgekeurd(_bonRepository.GetAll())));
         }
 
         [HttpGet]

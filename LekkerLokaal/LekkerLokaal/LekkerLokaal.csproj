@@ -14,12 +14,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Views\Handelaar\**" />
     <Compile Remove="wwwroot\NewFolder\**" />
     <Compile Remove="wwwroot\vendors\NewFolder\**" />
+    <Content Remove="Views\Handelaar\**" />
     <Content Remove="wwwroot\NewFolder\**" />
     <Content Remove="wwwroot\vendors\NewFolder\**" />
+    <EmbeddedResource Remove="Views\Handelaar\**" />
     <EmbeddedResource Remove="wwwroot\NewFolder\**" />
     <EmbeddedResource Remove="wwwroot\vendors\NewFolder\**" />
+    <None Remove="Views\Handelaar\**" />
     <None Remove="wwwroot\NewFolder\**" />
     <None Remove="wwwroot\vendors\NewFolder\**" />
   </ItemGroup>
@@ -59,7 +63,6 @@
 
   <ItemGroup>
     <Folder Include="Data\Mappers\" />
-    <Folder Include="Views\Handelaar\" />
     <Folder Include="wwwroot\images\temp\" />
     <Folder Include="wwwroot\pdf\" />
   </ItemGroup>
