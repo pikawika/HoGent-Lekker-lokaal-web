@@ -22,6 +22,11 @@ namespace LekkerLokaal.Data.Repositories
             return GetBonGoedgekeurd(_bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList());
         }
 
+        public int getAantalBonverzoeken()
+        {
+            return _bonnen.Count(b => !b.Goedgekeurd);
+        }
+
         public IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst)
         {
             if (zoekKey.Trim().Length != 0)

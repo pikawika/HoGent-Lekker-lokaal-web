@@ -132,6 +132,61 @@ namespace LekkerLokaal.Controllers
             return View(model);
         }
 
+
+        [HttpGet]
+        public IActionResult CadeaubonVerzoekToevoegen()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CadeaubonVerzoekToevoegen(CadeaubonVerzoekToevoegenViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                var user = await _userManager.GetUserAsync(User);
+                if (user == null)
+                {
+                    throw new ApplicationException($"Unable to load user with ID '{_userManager.GetUserId(User)}'.");
+                }
+                var handelaar = _handelaarRepository.GetByEmail(user.Email);
+                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(handelaar.HandelaarId), Aanbieding.Geen, false);
+                _bonRepository.Add(nieuweBon);
+                _bonRepository.SaveChanges();
+
+                nieuweBon.Afbeelding = @"images\bon\" + nieuweBon.BonId + @"\";
+                _bonRepository.SaveChanges();
+
+                var filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/thumb.jpg";
+                Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                var fileStream = new FileStream(filePath, FileMode.Create);
+                await model.Thumbnail.CopyToAsync(fileStream);
+                fileStream.Close();
+
+                for (int i = 0; i < model.Afbeeldingen.Count; i++)
+                {
+                    filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/Afbeeldingen/" + (i + 1) + ".jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Afbeeldingen[i].CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+                ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+                ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+                return View();
+
+            }
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            return View(nameof(CadeaubonVerzoekToevoegen), model);
+        }
+
+
+
+
         private SelectList Geslachten()
         {
             var geslachten = new List<Geslacht>();
