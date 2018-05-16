@@ -19,7 +19,7 @@ namespace LekkerLokaal.Models.Domain
         IEnumerable<Bon> GetBonNogNietGoedgekeurd(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetBonGoedgekeurd(IEnumerable<Bon> inputlijst);
         Bon GetByBonId(int bonId);
-
+        void Remove(int bonId);
         Bon GetByBonIdNotAccepted(int bonId);
         void Add(Bon bon);
         void SaveChanges();

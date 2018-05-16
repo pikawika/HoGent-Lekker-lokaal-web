@@ -64,7 +64,12 @@ namespace LekkerLokaal.Data.Repositories
 
         public void Remove(int handelaarId)
         {
-            _handelaars.Remove(GetByHandelaarId(handelaarId));
+            Handelaar tempHandelaar = GetByHandelaarIdNotAccepted(handelaarId);
+            if (tempHandelaar == null)
+            {
+                tempHandelaar = GetByHandelaarId(handelaarId);
+            }
+            _handelaars.Remove(tempHandelaar);
         }
 
         public void SaveChanges()
