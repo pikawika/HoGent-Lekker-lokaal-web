@@ -22,8 +22,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
-                                <th>Naam Cadeaubon</th>
+                                <th>Naam handelaar</th>
+                                <th>Naam cadeaubon</th>
                                 <th>Gemeente</th>
                                 <th>Aantal verkocht</th>
                                 <th>Detail</th>
@@ -33,8 +33,8 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@bon.Id</td>
-                                    <td>@bon.Naam</td>
+                                    <td>@bon.Handelaarnaam</td>
+                                    <td>@bon.BonNaam</td>
                                     <td>@bon.Gemeente</td>
                                     <td>@bon.AantalBonnenInSysteem</td>
                                     <td><a asp-controller="Admin" asp-action="CadeaubonBewerken" asp-route-id="@bon.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
