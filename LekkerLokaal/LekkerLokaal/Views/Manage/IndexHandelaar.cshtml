@@ -4,10 +4,10 @@
     ViewData.AddActivePage(ManageNavPages.Index);
 }
 
-<div class="page-container ptb-10">
+<div class="page-container pt-10 pb-40">
     <div class="container width-100">
         <section class="sign-area panel p-40 mr-10">
-            <h4>@ViewData["Title"]</h4>
+            <h3 class="pb-20 text-center">@ViewData["Title"]</h3>
             @Html.Partial("_StatusMessage", Model.StatusMessage)
             <div class="row">
                 <div>

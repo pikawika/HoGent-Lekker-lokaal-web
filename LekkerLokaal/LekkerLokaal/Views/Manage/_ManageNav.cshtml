@@ -15,7 +15,13 @@
     <div class="container width-100">
         <section class="sign-area panel p-40 mr-10">
             <ul class="nav nav-pills nav-stacked">
-                @if (!claims.Any(c => c.Value == "handelaar"))
+                @if (claims.Any(c => c.Value == "handelaar"))
+                {
+                    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="IndexHandelaar">Uw persoonlijke gegevens</a></li>
+                    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
+                    <li class="@(ViewContext.RouteData.Values["Action"].ToString() == "CadeaubonVerzoekToevoegen" ? "active" : "")"><a asp-action="CadeaubonVerzoekToevoegen">Cadeaubon toevoegen</a></li>
+                }
+                else
                 {
                     <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="Index">Uw persoonlijke gegevens</a></li>
                     <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
@@ -24,11 +30,6 @@
                     {
                         <li class="@ManageNavPages.ExternalLoginsNavClass(ViewContext)"><a asp-action="ExternalLogins">Koppel uw sociale media</a></li>
                     }
-                }
-                else
-                {
-                    <li class="@ManageNavPages.IndexNavClass(ViewContext)"><a asp-action="IndexHandelaar">Uw persoonlijke gegevens</a></li>
-                    <li class="@ManageNavPages.ChangePasswordNavClass(ViewContext)"><a asp-action="ChangePassword">Wachtwoord wijzigen</a></li>
                 }
             </ul>
         </section>

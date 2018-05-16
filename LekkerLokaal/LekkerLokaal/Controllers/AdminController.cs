@@ -105,7 +105,7 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Dashboard()
         {
-            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken()));
+            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), 0, 0));
         }
 
         [HttpGet]
@@ -474,7 +474,8 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult CadeaubonVerzoeken()
         {
-            return View();
+            //implement
+            return View(new HandelaarsVerzoekenViewModel(_handelaarRepository.GetHandelaarsNogNietGoedgekeurd(_handelaarRepository.GetAll())));
         }
 
         [HttpGet]
