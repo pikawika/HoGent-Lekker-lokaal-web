@@ -57,11 +57,6 @@ namespace LekkerLokaal.Data.Repositories
             return inputlijst.OrderBy(h => h.HandelaarId).Where(h => !h.Goedgekeurd).ToList();
         }
 
-        public void KeurAanvraagGoed(int handelaarId)
-        {
-            GetByHandelaarId(handelaarId).Goedgekeurd = true;
-        }
-
         public void Remove(int handelaarId)
         {
             Handelaar tempHandelaar = GetByHandelaarIdNotAccepted(handelaarId);
