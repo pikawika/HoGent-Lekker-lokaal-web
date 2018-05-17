@@ -13,14 +13,14 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public int AantalVerkochteBonnen1M { get; }
 
-        public int AantalUitbetaaldeBonnen1M { get; }
+        public int AantalGebruikteBonnen1M { get; }
 
         public DashboardViewModel(int aantalHandelaarsVerzoeken, int aantalCadeaubonVerzoeken, int aantalVerkochteBonnen1M, int aantalUitbetaaldeBonnen1M)
         {
             AantalHandelaarsVerzoeken = aantalHandelaarsVerzoeken;
             AantalCadeaubonVerzoeken = aantalCadeaubonVerzoeken;
             AantalVerkochteBonnen1M = aantalVerkochteBonnen1M;
-            AantalUitbetaaldeBonnen1M = aantalUitbetaaldeBonnen1M;
+            AantalGebruikteBonnen1M = aantalUitbetaaldeBonnen1M;
         }
 
 
