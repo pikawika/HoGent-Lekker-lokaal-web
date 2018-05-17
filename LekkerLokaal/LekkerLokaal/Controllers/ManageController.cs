@@ -176,7 +176,7 @@ namespace LekkerLokaal.Controllers
                 }
                 ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
                 ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
-                return View(nameof(CadeaubonVerzoekToevoegen), null);
+                return RedirectToAction(nameof(HomeController.Index), "Home");
 
             }
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();

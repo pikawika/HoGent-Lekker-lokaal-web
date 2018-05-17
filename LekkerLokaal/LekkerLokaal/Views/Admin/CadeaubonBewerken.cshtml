@@ -13,14 +13,14 @@
         <div class="panel-body">
             <form class="form-horizontal bucket-form" method="post" enctype="multipart/form-data">
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Id bon</label>
+                    <label class="col-sm-3 control-label">Id bon (niet aanpasbaar)</label>
                     <div class="col-sm-6">
                         <input class="form-control" required="required" asp-for="BonId" readonly>
                     </div>
                 </div>
 
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">Naam handelaar</label>
+                    <label class="col-sm-3 control-label">Naam handelaar (niet aanpasbaar)</label>
                     <div class="col-sm-6">
                         <input class="form-control" required="required" asp-for="naamHandelaar" readonly>
                     </div>
@@ -29,84 +29,114 @@
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Naam cadeaubon</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Naam">
+                        <input class="form-control" required="required" id="0" asp-for="Naam" readonly>
                         <span asp-validation-for="Naam" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('0')" class="clickable"><i id="0icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Beschrijving cadeaubon</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Beschrijving">
+                        <input class="form-control" required="required" id="1" asp-for="Beschrijving" readonly>
                         <span asp-validation-for="Beschrijving" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('1')" class="clickable"><i id="1icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Minimumprijs</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="MinimumPrijs">
+                        <input class="form-control" required="required" id="2" asp-for="MinimumPrijs" readonly>
                         <span asp-validation-for="MinimumPrijs" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('2')" class="clickable"><i id="2icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Maxmimumprijs</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Maximumprijs">
+                        <input class="form-control" required="required" id="3" asp-for="Maximumprijs" readonly>
                         <span asp-validation-for="Maximumprijs" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('3')" class="clickable"><i id="3icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label" asp-for="Categorie"></label>
                     <div class="col-sm-6">
-                        <select class="form-control" asp-for="Categorie" asp-items="@(ViewData["categorieen"] as SelectList)">
+                        <select class="form-control" asp-for="Categorie" id="4" asp-items="@(ViewData["categorieen"] as SelectList)" disabled>
                             <option value="">--- Selecteer categorie ---</option>
                         </select>
                         <span asp-validation-for="Categorie" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleDisabled('4')" class="clickable"><i id="4icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Straatnaam</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Straatnaam">
+                        <input class="form-control" required="required" id="5" asp-for="Straatnaam" readonly>
                         <span asp-validation-for="Straatnaam" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('5')" class="clickable"><i id="5icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Huisnummer</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Huisnummer">
+                        <input class="form-control" required="required" id="6" asp-for="Huisnummer" readonly>
                         <span asp-validation-for="Huisnummer" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('6')" class="clickable"><i id="6icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Postcode</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Postcode">
+                        <input class="form-control" required="required" id="7" asp-for="Postcode" readonly>
                         <span asp-validation-for="Postcode" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('7')" class="clickable"><i id="7icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label">Gemeente</label>
                     <div class="col-sm-6">
-                        <input class="form-control" required="required" asp-for="Gemeente">
+                        <input class="form-control" required="required" id="8" asp-for="Gemeente" readonly>
                         <span asp-validation-for="Gemeente" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleReadOnly('8')" class="clickable"><i id="8icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
                 <div class="form-group">
                     <label class="col-sm-3 control-label" asp-for="Aanbieding"></label>
                     <div class="col-sm-6">
-                        <select class="form-control" asp-for="Aanbieding" asp-items="@(ViewData["aanbiedingen"] as SelectList)">
+                        <select class="form-control" asp-for="Aanbieding" id="9" asp-items="@(ViewData["aanbiedingen"] as SelectList)" disabled>
                             <option value="">--- Selecteer type ---</option>
                         </select>
                         <span asp-validation-for="Aanbieding" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-1">
+                        <a onclick="ToggleDisabled('9')" class="clickable"><i id="9icon" class="fas fa-lock"></i></a>
                     </div>
                 </div>
 
