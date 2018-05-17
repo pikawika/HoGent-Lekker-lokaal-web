@@ -115,7 +115,7 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult UitbetaaldeCadeaubonnen()
+        public IActionResult GebruikteCadeaubonnen()
         {
             return View();
         }
