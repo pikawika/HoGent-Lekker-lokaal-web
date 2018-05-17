@@ -380,8 +380,6 @@ namespace LekkerLokaal.Controllers
 
                 var handelaar = _handelaarRepository.GetByEmail(user.Email);
 
-                handelaar.sha256(wachtwoord);
-
                 _handelaarRepository.SaveChanges();
             }
 

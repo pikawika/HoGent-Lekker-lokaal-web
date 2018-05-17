@@ -122,8 +122,6 @@ namespace LekkerLokaal.Data
                     Handelaar01, Handelaar02, Handelaar03, Handelaar04, Handelaar05, Handelaar06, Handelaar07, Handelaar08, Handelaar09, Handelaar10, Handelaar11, Handelaar21, Handelaar22, Handelaar23, Handelaar24, Handelaar25, Handelaar26, Handelaar31, Handelaar32, Handelaar33, Handelaar34, Handelaar35, Handelaar36, Handelaar37, Handelaar38, Handelaar39, Handelaar41, Handelaar42, Handelaar43, Handelaar44, Handelaar45, Handelaar46, Handelaar51, Handelaar52, Handelaar53, Handelaar61, Handelaar62, Handelaar63, Handelaar64, Handelaar65, Handelaar66, Handelaar67, Handelaar68, Handelaar69, Handelaar71, Handelaar72, Handelaar73, Handelaar74, Handelaar75, Handelaar76, Handelaar77, Handelaar78, Handelaar81, Handelaar82, Handelaar83, Handelaar84, Handelaar85, Handelaar86, Handelaar87, Handelaar88, Handelaar89, Handelaar91
                 };
 
-                handelaars.ForEach(h => h.Wachtwoord = "paswoord");
-
                 _dbContext.Handelaars.AddRange(handelaars);
 
                 Bon bon01 = new Bon("Restaurant lekker", 25, 50, "3 sterren resaurant in het centrum van Aalst.", 17, @"images\bon\1\", eten_drinken, "Arbeidstraat", "14", "9300", "Aalst", Handelaar01, Aanbieding.Geen, true);
