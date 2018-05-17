@@ -259,7 +259,7 @@ namespace LekkerLokaal.Controllers
                 await _userManager.ResetPasswordAsync(user, token, wachtwoord);
 
                 handelaarInDB.sha256(wachtwoord);
-                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+                handelaarInDB.Goedgekeurd = true;
                 _handelaarRepository.SaveChanges();
 
                 if (model.Afbeelding != null)
