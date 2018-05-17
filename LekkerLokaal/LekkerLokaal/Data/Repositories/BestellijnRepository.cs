@@ -39,6 +39,20 @@ namespace LekkerLokaal.Data.Repositories
             return _bestellijnen.Include(b => b.Bon).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
         }
 
+        public IEnumerable<BestelLijn> getGebruiktDezeMaand()
+        {
+            DateTime date = DateTime.Now.Date;
+            date = date.AddMonths(-1);
+            return _bestellijnen.Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig));
+        }
+
+        public IEnumerable<BestelLijn> getVerkochtDezeMaand()
+        {
+            DateTime date = DateTime.Now.Date;
+            date = date.AddMonths(-1);
+            return _bestellijnen.Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig));
+        }
+
         public void SaveChanges()
         {
             _dbContext.SaveChanges();

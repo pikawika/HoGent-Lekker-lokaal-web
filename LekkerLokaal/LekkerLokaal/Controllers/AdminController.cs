@@ -26,6 +26,7 @@ namespace LekkerLokaal.Controllers
         private readonly IHandelaarRepository _handelaarRepository;
         private readonly IBonRepository _bonRepository;
         private readonly ICategorieRepository _categorieRepository;
+        private readonly IBestellijnRepository _bestellijnRepository;
         private readonly ILogger _logger;
 
         public AdminController(
@@ -34,6 +35,7 @@ namespace LekkerLokaal.Controllers
             SignInManager<ApplicationUser> signInManager,
             IHandelaarRepository handelaarRepository,
             IBonRepository bonRepository,
+            IBestellijnRepository bestellijnRepository,
             ICategorieRepository categorieRepository)
         {
             _userManager = userManager;
@@ -41,6 +43,7 @@ namespace LekkerLokaal.Controllers
             _signInManager = signInManager;
             _handelaarRepository = handelaarRepository;
             _bonRepository = bonRepository;
+            _bestellijnRepository = bestellijnRepository;
             _categorieRepository = categorieRepository;
         }
 
@@ -105,7 +108,9 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Dashboard()
         {
-            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), 0, 0));
+            IEnumerable<BestelLijn> cadeaubonnenVerkochtDezeMaand = _bestellijnRepository.getVerkochtDezeMaand();
+
+            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), cadeaubonnenVerkochtDezeMaand.Count(), 0));
         }
 
         [HttpGet]

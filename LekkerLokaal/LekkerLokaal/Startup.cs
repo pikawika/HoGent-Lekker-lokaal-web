@@ -171,7 +171,7 @@ namespace LekkerLokaal
                     template: "{controller=Checkout}/{action=BonAanmaken}/{index?}");
 
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }
