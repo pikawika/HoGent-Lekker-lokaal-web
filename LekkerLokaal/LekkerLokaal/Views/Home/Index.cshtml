@@ -142,7 +142,7 @@
                                                         </h5>
                                                     </div>
                                                     <div class="DynamicAddCartRegionCart height-150px" style="display: none;" id="@(bon.BonId.ToString() + "card")">
-                                                        <form name="WinkelmandjeAdder" onsubmit="return VoegToeAanWinkelmand(@bon.BonId, '@bon.GetThumbPath.Replace("\\","\\\\")', '@bon.Naam');">
+                                                        <form name="WinkelmandjeAdder" onsubmit='return VoegToeAanWinkelmand(@bon.BonId, "@bon.GetThumbPath.Replace("\\","\\\\")", "@bon.Naam");'>
                                                             <div class="PopupAddToCart-line">
                                                                 <div class="col-xs-4 no-padding">
                                                                     <label class="float-left ">Prijs:</label>
