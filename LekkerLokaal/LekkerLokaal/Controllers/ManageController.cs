@@ -482,14 +482,16 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["bestelling"] = null;
-            var user = _userManager.GetUserAsync(User);
-            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            var user = await _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
             ICollection<Bestelling> bestellingen = new HashSet<Bestelling>();
             if (gebruiker.Bestellingen.Count != 0 && gebruiker.Bestellingen != null)
             {
                 foreach (Bestelling b in gebruiker.Bestellingen)
                 {
-                    bestellingen.Add(_bestellingRepository.GetBy(b.BestellingId));
+                    var bestelling = _bestellingRepository.GetBy(b.BestellingId);
+                    if (bestelling.BestelLijnen.All(bl => bl.Geldigheid != Geldigheid.Ongeldig))
+                        bestellingen.Add(bestelling);
                 }
                 ViewData["bestelling"] = bestellingen;
             }
@@ -502,8 +504,8 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["bestellijnen"] = null;
 
-            var user = _userManager.GetUserAsync(User);
-            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            var user = await _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
 
             if (_bestellingRepository.GetBy(id) != null)
             {

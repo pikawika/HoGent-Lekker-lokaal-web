@@ -28,7 +28,6 @@ namespace LekkerLokaal.Models.Domain
 
             foreach (WinkelwagenLijn lijn in winkelwagen.WinkelwagenLijnen)
             {
-                
                 for (int i = 1; i <= lijn.Aantal; i++)
                 {
                     lijn.Bon.AantalBesteld++;
@@ -38,7 +37,7 @@ namespace LekkerLokaal.Models.Domain
                         Bon = lijn.Bon,
                         Aantal = 1,
                         Prijs = lijn.Prijs,
-                        Geldigheid = Geldigheid.Geldig,
+                        Geldigheid = Geldigheid.Ongeldig,
                         AanmaakDatum = DateTime.Today,
                         Handelaar = lijn.Bon.Handelaar,
                         QRCode = qrcode

@@ -7,6 +7,8 @@ using LekkerLokaal.Models.WinkelwagenViewModels;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Net.Mail;
@@ -22,15 +24,19 @@ namespace LekkerLokaal.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IGebruikerRepository _gebruikerRepository;
         private readonly IBonRepository _bonRepository;
+        private readonly IBestellingRepository _bestellingRepository;
+        private readonly IBestellijnRepository _bestellijnRepository;
 
         public CheckoutController(UserManager<ApplicationUser> userManager,
-            SignInManager<ApplicationUser> signInManager, ICategorieRepository categorieRepository, IGebruikerRepository gebruikerRepository, IBonRepository bonRepository)
+            SignInManager<ApplicationUser> signInManager, ICategorieRepository categorieRepository, IGebruikerRepository gebruikerRepository, IBonRepository bonRepository, IBestellingRepository bestellingRepository, IBestellijnRepository bestellijnRepository)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _categorieRepository = categorieRepository;
             _gebruikerRepository = gebruikerRepository;
             _bonRepository = bonRepository;
+            _bestellingRepository = bestellingRepository;
+            _bestellijnRepository = bestellijnRepository;
         }
 
         public IActionResult Index(string checkoutId, string returnUrl = null)
@@ -39,9 +45,9 @@ namespace LekkerLokaal.Controllers
             switch (checkoutId)
             {
                 case "Gast":
+                    return RedirectToAction(nameof(CheckoutController.BestellingPlaatsen), "Checkout");
                     //voor te testen
-                    //return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout");
-                    return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout");
+                    //return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout");
                 case "Nieuw":
                     return RedirectToAction(nameof(AccountController.Register), "Account", new { ReturnUrl = returnUrl });
                 case "LogIn":
@@ -51,82 +57,100 @@ namespace LekkerLokaal.Controllers
             }
         }
 
-        public IActionResult BonAanmaken(Winkelwagen winkelwagen)
+        [HttpGet]
+        public async Task<IActionResult> BonAanmaken(int index)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["Totaal"] = winkelwagen.TotaleWaarde;
-            ViewData["Aantal"] = winkelwagen.AantalBonnen;
+
+            Gebruiker gebruiker = await HaalGebruikerOp();
+            Bestelling bestelling = _bestellingRepository.GetBy(gebruiker.Bestellingen.Last().BestellingId);
+            ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
+
+            ViewData["Bestelling"] = bestelling;
+            ViewData["Bestellijnen"] = bestellijnen;
+            ViewData["Index"] = index;
+
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BonAanmaken(Winkelwagen winkelwagen, BonAanmakenViewModel model, string returnUrl = null)
+        public async Task<IActionResult> BonAanmaken(int index, BonAanmakenViewModel model)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["ReturnUrl"] = returnUrl;
+            ViewData["Index"] = index;
+            var gebruiker = await HaalGebruikerOp();
+            Bestelling bestelling = _bestellingRepository.GetBy(gebruiker.Bestellingen.Last().BestellingId);
+            ViewData["Bestelling"] = bestelling;
+            IList<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling).ToList();
+            ViewData["Bestellijnen"] = bestellijnen;
+            
             if (ModelState.IsValid)
             {
-                string bon = String.Format("Hey, " + "{0}\n" + "{1}" + " stuurt je een cadeaubon! \n", model.NaamOntvanger, model.UwNaam);
-                string boodschap = String.Format("{0}", model.Boodschap);
-                var doc1 = new Document(PageSize.A4);
-                Paragraph p1 = new Paragraph(bon);
-                Paragraph p2 = new Paragraph(boodschap);
-                p1.Alignment = Element.ALIGN_CENTER;
-                p2.Alignment = Element.ALIGN_CENTER;
-                var bonPath = @"wwwroot/pdf";
-                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-                doc1.Open();
-                doc1.Add(p1);
-                doc1.Add(p2);
-                doc1.Close();
+                BestelLijn bestelLijn = bestellijnen[(int)index];
+                bestelLijn.VerzenderNaam = model.UwNaam;
+                bestelLijn.VerzenderEmail = model.UwEmail;
+                bestelLijn.OntvangerNaam = model.NaamOntvanger;
+                if (model.Boodschap != null && model.Boodschap != "")
+                    bestelLijn.Boodschap = model.Boodschap;
+                if (model.EmailOntvanger != null && model.EmailOntvanger != "")
+                    bestelLijn.OntvangerEmail = model.EmailOntvanger;
+                _bestellijnRepository.SaveChanges();
 
-                string[] to = { model.EmailOntvanger, model.UwEmail };
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-
-                foreach (var m in to)
-                {
-                    message.To.Add(m);
-                }
-
-                message.Subject = "Uw order van Lekker Lokaal";
-                message.Body = String.Format("Dit zijn de cadeaubonnen die u bestelde.");
-
-                var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
-                attachment.Name = "cadeaubon.pdf";
-                message.Attachments.Add(attachment);
-                var SmtpServer = new SmtpClient("smtp.gmail.com");
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                SmtpServer.EnableSsl = true;
-
-                SmtpServer.Send(message);
-                attachment.Dispose();
-                return RedirectToAction("Bedankt");
+                if ((index + 1) == bestellijnen.Count)
+                    return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout", new { Id = bestelling.BestellingId });
+                return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = index + 1 });
             }
+
             return View(model);
         }
 
-        public IActionResult Bedankt(Winkelwagen winkelwagen)
+        private async Task<Gebruiker> HaalGebruikerOp()
         {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            ViewData["Totaal"] = winkelwagen.TotaleWaarde;
-            ViewData["Aantal"] = winkelwagen.AantalBonnen;
-
             var gebruiker = _gebruikerRepository.GetBy("lekkerlokaal");
             if (_signInManager.IsSignedIn(User))
             {
-                var user = _userManager.GetUserAsync(User);
-                if (_gebruikerRepository.GetBy(user.Result.Email) != null)
-                    gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+                var user = await _userManager.GetUserAsync(User);
+                if (_gebruikerRepository.GetBy(user.Email) != null)
+                    gebruiker = _gebruikerRepository.GetBy(user.Email);
+            }
+            return gebruiker;
+        }
+
+        private ICollection<BestelLijn> HaalBestellijnenOp(Bestelling bestelling)
+        {
+            ICollection<BestelLijn> bestellijnen = new HashSet<BestelLijn>();
+
+            foreach (BestelLijn bl in bestelling.BestelLijnen)
+            {
+                bestellijnen.Add(_bestellijnRepository.GetById(bl.BestelLijnId));
             }
 
+            return bestellijnen;
+        }
+
+        public async Task<IActionResult> BestellingPlaatsen(Winkelwagen winkelwagen)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
+            var gebruiker = await HaalGebruikerOp();
             gebruiker.PlaatsBestelling(winkelwagen);
             _gebruikerRepository.SaveChanges();
             _bonRepository.SaveChanges();
 
+            return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = 0 } );
+        }
+
+        public IActionResult Bedankt(int Id, Winkelwagen winkelwagen)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             winkelwagen.MaakLeeg();
+
+            Bestelling bestelling = _bestellingRepository.GetBy(Id);
+            ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
+            bestellijnen.ToList().ForEach(bl => bl.Geldigheid = Geldigheid.Geldig);
+
+            _gebruikerRepository.SaveChanges();
 
             return View();
         }
