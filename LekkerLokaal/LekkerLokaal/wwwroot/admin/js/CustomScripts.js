@@ -23,3 +23,8 @@ function ToggleDisabled(idParam) {
         document.getElementById(idParam + "icon").classList.add('fa-lock-open');
     }
 }
+
+function PrepareFormForSubmit() {
+    $("input:disabled").removeAttr('disabled');
+    $("select:disabled").removeAttr('disabled');
+}
