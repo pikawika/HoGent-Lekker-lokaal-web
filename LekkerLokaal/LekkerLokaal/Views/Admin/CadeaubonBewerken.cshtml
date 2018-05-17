@@ -115,7 +115,7 @@
                     <div class="col-sm-6">
                         <img src="@Model.GetThumbPath" alt="Logo" class="img-thumbnail max-height-350px">
                         <label class="btn btn-default" id="fileselection">
-                            <a class="force-whiteColor" id="fileselectionTekst">Selecteer een nieuwe thumbnail</a><input asp-for="Thumbnail" accept=".jpg" id="fileToUpload" style="display: none;">
+                            <a class="" id="fileselectionTekst">Selecteer een nieuwe thumbnail</a><input asp-for="Thumbnail" accept=".jpg" id="fileToUpload" style="display: none;">
                         </label>
                         <span asp-validation-for="Thumbnail" class="text-danger"></span>
                     </div>
@@ -126,7 +126,7 @@
                     <div class="col-sm-6">
                         <a href="@Url.Action("Detail", "Home", new { Id = Model.BonId})" target="_blank">Bekijk hier de huidige afbeeldingen</a>
                         <label class="btn btn-default" id="fileselection2">
-                            <a class="force-whiteColor" id="fileselectionTekst2">Selecteer nieuwe afbeeldingen</a><input asp-for="Afbeeldingen" accept=".jpg" id="fileToUpload2" style="display: none;">
+                            <a class="" id="fileselectionTekst2">Selecteer nieuwe afbeeldingen</a><input asp-for="Afbeeldingen" accept=".jpg" id="fileToUpload2" style="display: none;">
                         </label>
                         <span asp-validation-for="Afbeeldingen" class="text-danger"></span>
                     </div>

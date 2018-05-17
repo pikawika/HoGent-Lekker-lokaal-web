@@ -11,6 +11,10 @@ li.disabled > span {
     color: white !important;
 }
 
+.force-whiteColor{
+    color: white !important;
+}
+
 .color-darkblue {
     color: #313b4d !important;
     -webkit-transition: color 0.2s ease-out;
