@@ -619,9 +619,9 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Bon(int Id)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            
             if (ModelState.IsValid)
             {
-                var bonPath = @"wwwroot/pdf";
 
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
@@ -629,11 +629,12 @@ namespace LekkerLokaal.Controllers
                 var user = _userManager.GetUserAsync(User);
                 var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
 
-                string waarde = String.Format(bestellijn.Prijs.ToString() + " euro");
+                ViewData["path"] = @"/pdf/c_" + bestellijn.QRCode + ".pdf";
+
+                string waarde = String.Format("€ " + bestellijn.Prijs.ToString());
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5.Rotate(), 81,0,0,0);
-                iTextSharp.text.Font font = FontFactory.GetFont("arial", 22);
+                var pdf = new Document(PageSize.A5.Rotate(), 81,225,25,0);
                 //Paragraph bedrag = new Paragraph(waarde);
                 //Paragraph p2 = new Paragraph(geldigheid);
                 GenerateQR(bestellijn.QRCode);
@@ -655,15 +656,18 @@ namespace LekkerLokaal.Controllers
                 jpg.SetAbsolutePosition(225, 10);
                 kado.SetAbsolutePosition(65, 161);
 
-                iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 25);
+                iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
                 iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
 
                 Paragraph bedrag = new Paragraph(waarde, arial);
+                bedrag.SpacingAfter = 50;
                 Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
+                naamHandelaar.SpacingAfter = 0;
                 Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + gebruiker.Voornaam, arial18);
                 Paragraph geldig = new Paragraph(geldigheid, arial18);
 
                 bedrag.Alignment = Element.ALIGN_LEFT;
+                
                 naamHandelaar.Alignment = Element.ALIGN_LEFT;
                 geschonkenDoor.Alignment = Element.ALIGN_LEFT;
                 geldig.Alignment = Element.ALIGN_LEFT;
@@ -671,21 +675,21 @@ namespace LekkerLokaal.Controllers
 
 
 
-                PdfWriter writer = PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-                doc1.Open();
-                doc1.Add(logoLL);
-                doc1.Add(logoHandelaar);
-                doc1.Add(bedrag);
-                doc1.Add(naamHandelaar);
-                doc1.Add(geschonkenDoor);
-                doc1.Add(geldig);
-                doc1.Add(jpg);
-                doc1.Add(kado);
-                doc1.Close();
+                PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode +".pdf", FileMode.Create));
+                pdf.Open();
+                pdf.Add(logoLL);
+                pdf.Add(logoHandelaar);
+                pdf.Add(naamHandelaar);
+                pdf.Add(bedrag);
+                pdf.Add(geschonkenDoor);
+                pdf.Add(geldig);
+                pdf.Add(jpg);
+                pdf.Add(kado);
+                pdf.Close();
 
                 System.IO.File.Delete(imageURL);
 
-                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
+                //System.IO.File.Delete(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf");
             }
 
             return View();
