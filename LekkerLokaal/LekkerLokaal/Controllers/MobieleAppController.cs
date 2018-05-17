@@ -36,19 +36,24 @@ namespace LekkerLokaal.Controllers
 
         //GET voor aanmelden van een handelaar
         [HttpGet("{id}/{ww}", Name = "MeldHandelaarAan")]
-        public Object MeldHandelaarAan(string id, string ww)
+        public async Task<Object> MeldHandelaarAan(string id, string ww)
         {
-            var handelaar = _handelaarRepository.GetByEmail(id);
-            if (handelaar.Wachtwoord == sha256(ww))
+            if (_handelaarRepository.GetByEmail(id) != null)
             {
-                return new
+                var handelaar = _handelaarRepository.GetByEmail(id);
+                var user = await _userManager.FindByEmailAsync(handelaar.Emailadres);
+
+                if (await _userManager.CheckPasswordAsync(user, ww))
                 {
-                    handelaar.HandelaarId,
-                    handelaar.BTW_Nummer,
-                    handelaar.Beschrijving,
-                    handelaar.Emailadres,
-                    handelaar.Naam
-                };
+                    return new
+                    {
+                        handelaar.HandelaarId,
+                        handelaar.BTW_Nummer,
+                        handelaar.Beschrijving,
+                        handelaar.Emailadres,
+                        handelaar.Naam
+                    };
+                }
             }
             return null;
         }
@@ -57,21 +62,24 @@ namespace LekkerLokaal.Controllers
         [HttpGet("{id}", Name = "HaalCadeaubonOp")]
         public Object HaalCadeaubonOp(string id)
         {
-            var bestellijn = _bestellijnRepository.GetBy(id);
-            if (bestellijn != null)
+            if (_bestellijnRepository.GetBy(id) != null)
             {
-                var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
-                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
-                return new
+                var bestellijn = _bestellijnRepository.GetBy(id);
+                if (bestellijn != null)
                 {
-                    bestellijn.BestelLijnId,
-                    bon.Naam,
-                    bestellijn.Prijs,
-                    bestellijn.AanmaakDatum,
-                    handelaar.HandelaarId,
-                    handelaar.Emailadres,
-                    bestellijn.Geldigheid
-                };
+                    var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
+                    var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+                    return new
+                    {
+                        bestellijn.BestelLijnId,
+                        bon.Naam,
+                        bestellijn.Prijs,
+                        bestellijn.AanmaakDatum,
+                        handelaar.HandelaarId,
+                        handelaar.Emailadres,
+                        bestellijn.Geldigheid
+                    };
+                }
             }
             return null;
         }
@@ -80,12 +88,15 @@ namespace LekkerLokaal.Controllers
         [HttpPut("{id}", Name = "WerkCadeaubonBij")]
         public void WerkCadeaubonBij(int id, [FromBody] CadeaubonModel model)
         {
-            var bestellijn = _bestellijnRepository.GetById(id);
-            if (bestellijn != null)
+            if (_bestellijnRepository.GetById(id) != null)
             {
-                bestellijn.Handelaar = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
-                bestellijn.Geldigheid = model.bepaalGeldigheid();
-                _bestellijnRepository.SaveChanges();
+                var bestellijn = _bestellijnRepository.GetById(id);
+                if (bestellijn != null)
+                {
+                    bestellijn.Handelaar = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
+                    bestellijn.Geldigheid = model.bepaalGeldigheid();
+                    _bestellijnRepository.SaveChanges();
+                }
             }
         }
 
@@ -111,19 +122,6 @@ namespace LekkerLokaal.Controllers
 
                 return Models.Domain.Geldigheid.Ongeldig;
             }
-        }
-
-        //Methode voor encryptie wachtwoord
-        public string sha256(string wachtwoord)
-        {
-            var crypt = new System.Security.Cryptography.SHA256Managed();
-            var hash = new System.Text.StringBuilder();
-            byte[] crypto = crypt.ComputeHash(Encoding.UTF8.GetBytes(wachtwoord));
-            foreach (byte theByte in crypto)
-            {
-                hash.Append(theByte.ToString("x2"));
-            }
-            return hash.ToString();
         }
 
     }
