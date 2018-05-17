@@ -1,4 +1,5 @@
-﻿using System;
+﻿using LekkerLokaal.Models.Domain;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -15,12 +16,27 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public int AantalGebruikteBonnen1M { get; }
 
-        public DashboardViewModel(int aantalHandelaarsVerzoeken, int aantalCadeaubonVerzoeken, int aantalVerkochteBonnen1M, int aantalUitbetaaldeBonnen1M)
+        public List<DashboardGrafiekViewModel> GrafiekDataLijst { get; }
+
+        public DashboardViewModel(int aantalHandelaarsVerzoeken, int aantalCadeaubonVerzoeken, IEnumerable<BestelLijn> verkochteBonnen1M, IEnumerable<BestelLijn> gebruikteBonnen1M)
         {
             AantalHandelaarsVerzoeken = aantalHandelaarsVerzoeken;
             AantalCadeaubonVerzoeken = aantalCadeaubonVerzoeken;
-            AantalVerkochteBonnen1M = aantalVerkochteBonnen1M;
-            AantalGebruikteBonnen1M = aantalUitbetaaldeBonnen1M;
+            AantalVerkochteBonnen1M = verkochteBonnen1M.Count();
+            AantalGebruikteBonnen1M = gebruikteBonnen1M.Count();
+
+            DateTime startdatum = DateTime.Now.Date;
+            startdatum = startdatum.AddMonths(-1);
+
+            GrafiekDataLijst = new List<DashboardGrafiekViewModel>();
+
+            for (DateTime currentDate = startdatum; currentDate.Date <= DateTime.Today; currentDate = currentDate.AddDays(1))
+            {
+                string datum = currentDate.ToString("yyyy-MM-dd");
+                int aantalVerkocht = verkochteBonnen1M.Where(b => b.AanmaakDatum == currentDate).Count();
+                int aantalGebruikt = gebruikteBonnen1M.Where(b => b.GebruikDatum == currentDate).Count();
+                GrafiekDataLijst.Add(new DashboardGrafiekViewModel(datum, aantalVerkocht, aantalGebruikt));
+            }
         }
 
 

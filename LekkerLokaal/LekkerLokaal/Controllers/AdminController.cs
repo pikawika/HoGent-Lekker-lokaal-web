@@ -108,9 +108,7 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Dashboard()
         {
-            IEnumerable<BestelLijn> cadeaubonnenVerkochtDezeMaand = _bestellijnRepository.getVerkochtDezeMaand();
-
-            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), cadeaubonnenVerkochtDezeMaand.Count(), 0));
+            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), _bestellijnRepository.getVerkochtDezeMaand(), _bestellijnRepository.getGebruiktDezeMaand()));
         }
 
         [HttpGet]
