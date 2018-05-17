@@ -1,13 +1,3 @@
-/**
-* simplePagination.js v1.6
-* A simple jQuery pagination plugin.
-* http://flaviusmatis.github.com/simplePagination.js/
-*
-* Copyright 2012, Flavius Matis
-* Released under the MIT license.
-* http://flaviusmatis.github.com/license.html
-*/
-
 (function($){
 
 	var methods = {
@@ -22,8 +12,8 @@
 				useAnchors: true,
 				hrefTextPrefix: '#page-',
 				hrefTextSuffix: '',
-				prevText: 'Prev',
-				nextText: 'Next',
+				prevText: 'Vorige',
+				nextText: 'Volgende',
 				ellipseText: '&hellip;',
 				ellipsePageSet: true,
 				cssStyle: 'light-theme',

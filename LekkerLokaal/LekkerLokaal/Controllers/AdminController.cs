@@ -363,7 +363,7 @@ namespace LekkerLokaal.Controllers
                     if (model.Opmerking != null)
                     {
                         message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
-                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       "U werd toegevoegd als handelaar op LekkerLokaal.be! \n\n" +
                        model.Opmerking + "\n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
@@ -375,7 +375,7 @@ namespace LekkerLokaal.Controllers
                     else
                     {
                         message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
-                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       "U werd toegevoegd als handelaar op LekkerLokaal.be! \n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
                        "Wachtwoord: " + wachtwoord + "\n\n" +
@@ -543,7 +543,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult CadeaubonOverzicht()
         {
-            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonGoedgekeurd(_bonRepository.GetAllGoedgekeurd())));
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetAllGoedgekeurd()));
         }
 
         [HttpGet]
@@ -830,13 +830,13 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult LayoutSliderIndex()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonnenAanbiedingSlider(_bonRepository.GetAllGoedgekeurd())));
         }
 
         [HttpGet]
         public IActionResult LayoutAanbiedingen()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAllGoedgekeurd())));
         }
 
     }
