@@ -154,37 +154,7 @@ namespace LekkerLokaal.Controllers
                 pdf.Close();
 
                 System.IO.File.Delete(imageURL);
-                if (model.EmailOntvanger != null && model.EmailOntvanger != "") {
-                    string boodschap = "";
-                    if (model.Boodschap != null && model.Boodschap != "")
-                    {
-                        boodschap = String.Format("Met deze peroonlijke boodschap: " + System.Environment.NewLine +
-                        model.Boodschap + System.Environment.NewLine + System.Environment.NewLine);
-                    }
-                    MailMessage message = new MailMessage();
-                    message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                    message.To.Add(bestelLijn.OntvangerEmail);
-                    message.Subject = bestelLijn.VerzenderNaam + " stuurt u een cadeaubon van Lekker Lokaal.";
-                    message.Body = String.Format(
-                        
-                        "Beste " + bestelLijn.OntvangerNaam + ", " + System.Environment.NewLine + System.Environment.NewLine +
-                        bestelLijn.VerzenderNaam + " heeft voor u een cadeaubon gekocht." + System.Environment.NewLine + System.Environment.NewLine +
-
-                        boodschap +
-
-                        "In bijlage vindt u de cadeaubon." + System.Environment.NewLine + System.Environment.NewLine +
-                        "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
-
-                    var attachment = new Attachment(@"wwwroot/pdf/c_" + bestelLijn.QRCode + ".pdf");
-                    attachment.Name = "cadeaubon.pdf";
-                    message.Attachments.Add(attachment);
-                    var SmtpServer = new SmtpClient("smtp.gmail.com");
-                    SmtpServer.Port = 587;
-                    SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                    SmtpServer.EnableSsl = true;
-                    SmtpServer.Send(message);
-                    attachment.Dispose();
-                }
+                
                 
                 if ((index + 1) == bestellijnen.Count)
                     return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout", new { Id = bestelling.BestellingId });
@@ -275,6 +245,44 @@ namespace LekkerLokaal.Controllers
             SmtpServer.Send(message);
             attachment = new Attachment(@"wwwroot/favicon.ico");
             attachment.Dispose();
+
+            for (int i = 0; i < bestellijnen.Count; i++)
+            {
+                if (bestellijn[i].OntvangerEmail != null && bestellijn[i].OntvangerEmail != "")
+                {
+                    string boodschap = "";
+                    if (bestellijn[i].Boodschap != null && bestellijn[i].Boodschap != "")
+                    {
+                        boodschap = String.Format("Met deze peroonlijke boodschap: " + System.Environment.NewLine +
+                        bestellijn[i].Boodschap + System.Environment.NewLine + System.Environment.NewLine);
+                    }
+                    MailMessage message2 = new MailMessage();
+                    message2.From = new MailAddress("lekkerlokaalst@gmail.com");
+                    message2.To.Add(bestellijn[i].OntvangerEmail);
+                    message2.Subject = bestellijn[i].VerzenderNaam + " stuurt u een cadeaubon van Lekker Lokaal.";
+                    message2.Body = String.Format(
+
+                        "Beste " + bestellijn[i].OntvangerNaam + ", " + System.Environment.NewLine + System.Environment.NewLine +
+                        bestellijn[i].VerzenderNaam + " heeft voor u een cadeaubon gekocht." + System.Environment.NewLine + System.Environment.NewLine +
+
+                        boodschap +
+
+                        "In bijlage vindt u de cadeaubon." + System.Environment.NewLine + System.Environment.NewLine +
+                        "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
+
+                    var attachment2 = new Attachment(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
+                    attachment2.Name = "cadeaubon.pdf";
+                    message.Attachments.Add(attachment2);
+                    var SmtpServer2 = new SmtpClient("smtp.gmail.com");
+                    SmtpServer2.Port = 587;
+                    SmtpServer2.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                    SmtpServer2.EnableSsl = true;
+                    SmtpServer2.Send(message2);
+                    attachment2.Dispose();
+                }
+            }
+
+               
 
             //for (int i = 0; i < bestellijnen.Count; i++)
             //{
