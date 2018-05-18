@@ -222,15 +222,15 @@ namespace LekkerLokaal.Controllers
                         "In bijlage vindt u de cadeaubon." + System.Environment.NewLine + System.Environment.NewLine +
                         "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
 
-                    var attachment2 = new Attachment(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
-                    attachment2.Name = "cadeaubon.pdf";
-                    message.Attachments.Add(attachment2);
+                    attachment = new Attachment(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
+                    attachment.Name = "cadeaubon.pdf";
+                    message2.Attachments.Add(attachment);
                     var SmtpServer2 = new SmtpClient("smtp.gmail.com");
                     SmtpServer2.Port = 587;
                     SmtpServer2.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
                     SmtpServer2.EnableSsl = true;
                     SmtpServer2.Send(message2);
-                    attachment2.Dispose();
+                    attachment.Dispose();
                 }
             }
 
