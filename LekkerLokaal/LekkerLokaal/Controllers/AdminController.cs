@@ -112,18 +112,6 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult ZoekHandelaar()
-        {
-            return RedirectToAction("HandelaarsOverzicht");
-        }
-
-        [HttpGet]
-        public IActionResult ZoekCadeaubon()
-        {
-            return RedirectToAction("CadeaubonOverzicht");
-        }
-
-        [HttpGet]
         public IActionResult HandelaarsVerzoeken()
         {
             return View(new HandelaarsVerzoekenViewModel(_handelaarRepository.GetHandelaarsNogNietGoedgekeurd(_handelaarRepository.GetAll())));
@@ -832,19 +820,13 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult VerkochteCadeaubonnen()
         {
-            return View();
+            return View(new OverzichtVerkochteBonnenViewModel(_bestellijnRepository.getVerkochteBonnen()));
         }
 
         [HttpGet]
         public IActionResult GebruikteCadeaubonnen()
         {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult ZoekVerkochteCadeaubon()
-        {
-            return View();
+            return View(new OverzichtGebruikteBonnenViewModel(_bestellijnRepository.getGebruikteBonnen()));
         }
 
     }

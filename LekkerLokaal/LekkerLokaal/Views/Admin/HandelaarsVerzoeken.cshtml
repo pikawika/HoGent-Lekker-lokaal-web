@@ -22,8 +22,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Naam handelaar</th>
+                                <th>Postcode</th>
                                 <th>Gemeente</th>
                                 <th>Detail</th>
                             </tr>
@@ -32,8 +32,8 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@handelaar.Id</td>
                                     <td>@handelaar.Naam</td>
+                                    <td>@handelaar.Postcode</td>
                                     <td>@handelaar.Gemeente</td>
                                     <td><a asp-controller="Admin" asp-action="HandelaarVerzoekEvaluatie" asp-route-id="@handelaar.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
                                 </tr>

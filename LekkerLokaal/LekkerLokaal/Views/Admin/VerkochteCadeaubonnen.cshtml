@@ -1,101 +1,53 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.OverzichtVerkochteBonnenViewModel
 @{
     ViewData["Title"] = "Verkochte cadeaubonnen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    <div class="table-agile-info">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                Verkochte Cadeaubonnen
-            </div>
-            <div>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Datum</th>
-                            <th>Bon</th>
-                            <th>Bedrag</th>
-                            <th>Status</th>
-                            <th>Detail</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>2</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>3</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>4</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>5</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>6</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>7</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>8</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>9</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                        <tr>
-                            <td>10</td>
-                            <td> Lorem ipsum </td>
-                            <td> <h5>&euro; 75</h5> </td>
-                            <td> <span class="label label-success">Betaald</span> </td>
-                            <td> <i class="fas fas fa-ellipsis-h"></i> </td>
-                        </tr>
-                    </tbody>
-                </table>
+    @if (Model.VerkochteBonnenLijst == null || !Model.VerkochteBonnenLijst.Any())
+    {
+        <h1 class="text-center mtb-40 color-white">Er zijn momenteel geen verkochte bonnen!</h1>
+    }
+    else
+    {
+        <div class="table-agile-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Verkochte Cadeaubonnen
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>DATUM</th>
+                                <th>BON</th>
+                                <th>BEDRAG</th>
+                                <th>STATUS</th>
+                                <th>DETAIL</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var bon in Model.VerkochteBonnenLijst)
+                            {
+                                <tr>
+                                    <th scope="row">@bon.Datum</th>
+                                    <td>
+                                        @bon.Naam
+                                    </td>
+                                    <td>
+                                        <h5>&euro; @bon.Bedrag</h5>
+                                    </td>
+                                    <td>
+                                        <span class="label @bon.StatusClass">@bon.Status</span>
+                                    </td>
+                                    <td><a asp-controller="Admin" asp-action="VerkochteCadeaubonBekijken" asp-route-id="@bon.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
-    </div>
+    }
 </section>
-

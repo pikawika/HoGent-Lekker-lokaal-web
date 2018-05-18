@@ -62,11 +62,14 @@
     <div class="row">
         <div class="panel-body">
             <div class="col-md-12 w3ls-graph">
+                <div class="panel-heading">
+                    Verkochte bonnen vs gebruikte bonnen
+                </div>
                 <!--agileinfo-grap-->
                 <div class="agileinfo-grap">
                     <div class="agileits-box">
+
                         <header class="agileits-box-header clearfix">
-                            <h3>Verkochte bonnen vs gebruikte bonnen</h3>
                             <div class="toolbar">
                             </div>
                         </header>
@@ -82,8 +85,10 @@
     </div>
     <div class="agileits-w3layouts-stats">
         <div class="col-md-12 stats-info stats-last widget-shadow">
+            <div class="panel-heading">
+                Laatst verkochte bonnen
+            </div>
             <div class="stats-last-agile">
-                <h3 class="text-center">Laatst verkochte bonnen</h3>
                 <table class="table stats-table ">
                     <thead>
                         <tr>
@@ -103,7 +108,7 @@
                                     @bon.Naam
                                 </td>
                                 <td>
-                                    <h5>&euro; @bon.Bedrag</h5>
+                                    &euro; @bon.Bedrag
                                 </td>
                                 <td>
                                     <span class="label @bon.StatusClass">@bon.Status</span>

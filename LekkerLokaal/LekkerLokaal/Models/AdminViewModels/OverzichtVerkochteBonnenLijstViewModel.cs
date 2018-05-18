@@ -6,7 +6,7 @@ using LekkerLokaal.Models.Domain;
 
 namespace LekkerLokaal.Models.AdminViewModels
 {
-    public class DashboardRecentLijstViewModel
+    public class OverzichtVerkochteBonnenLijstViewModel
     {
         public string Datum { get; }
         public int Id { get; }
@@ -15,7 +15,7 @@ namespace LekkerLokaal.Models.AdminViewModels
         public string Status { get; }
         public string StatusClass { get; }
 
-        public DashboardRecentLijstViewModel(BestelLijn bon)
+        public OverzichtVerkochteBonnenLijstViewModel(BestelLijn bon)
         {
             Datum = bon.AanmaakDatum.ToString("dd/MM/yyyy");
             Bedrag = bon.Prijs;
