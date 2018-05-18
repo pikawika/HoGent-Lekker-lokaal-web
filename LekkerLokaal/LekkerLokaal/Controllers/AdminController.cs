@@ -841,5 +841,13 @@ namespace LekkerLokaal.Controllers
             return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAllGoedgekeurd())));
         }
 
+        [HttpGet]
+        public IActionResult VerkochteCadeaubonBekijken()
+        {
+            return View();
+        }
+
+        
+
     }
 }

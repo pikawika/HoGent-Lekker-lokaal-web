@@ -50,7 +50,7 @@ namespace LekkerLokaal.Data.Repositories
         {
             DateTime date = DateTime.Now.Date;
             date = date.AddMonths(-1);
-            return _bestellijnen.Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig));
+            return _bestellijnen.Include(b => b.Bon).Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig));
         }
 
         public void SaveChanges()

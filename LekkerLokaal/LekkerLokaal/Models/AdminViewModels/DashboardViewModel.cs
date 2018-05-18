@@ -18,6 +18,8 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public List<DashboardGrafiekViewModel> GrafiekDataLijst { get; }
 
+        public IEnumerable<DashboardRecentLijstViewModel> RecentVerkochteLijst { get; }
+
         public DashboardViewModel(int aantalHandelaarsVerzoeken, int aantalCadeaubonVerzoeken, IEnumerable<BestelLijn> verkochteBonnen1M, IEnumerable<BestelLijn> gebruikteBonnen1M)
         {
             AantalHandelaarsVerzoeken = aantalHandelaarsVerzoeken;
@@ -28,6 +30,7 @@ namespace LekkerLokaal.Models.AdminViewModels
             DateTime startdatum = DateTime.Now.Date;
             startdatum = startdatum.AddMonths(-1);
 
+            RecentVerkochteLijst = verkochteBonnen1M.Reverse().Take(10).Select(b => new DashboardRecentLijstViewModel(b)).ToList();
             GrafiekDataLijst = new List<DashboardGrafiekViewModel>();
 
             for (DateTime currentDate = startdatum; currentDate.Date <= DateTime.Today; currentDate = currentDate.AddDays(1))

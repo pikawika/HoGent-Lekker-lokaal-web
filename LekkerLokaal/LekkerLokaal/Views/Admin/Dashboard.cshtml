@@ -95,72 +95,22 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <th scope="row">24/04/2018</th>
-                            <td>
-                                Generieke bon
-                            </td>
-                            <td>
-                                <h5>&euro; 75</h5>
-                            </td>
-                            <td>
-                                <span class="label label-success">Betaald</span>
-                            </td>
-                            <td><i class="fas fas fa-ellipsis-h"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">13/04/2018</th>
-                            <td>
-                                Restaurant Lekker Lokaal
-                            </td>
-                            <td>
-                                <h5>&euro; 50</h5>
-                            </td>
-                            <td>
-                                <span class="label label-success">Betaald</span>
-                            </td>
-                            <td><i class="fas fas fa-ellipsis-h"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">18/01/2018</th>
-                            <td>
-                                Wijnproeverij BraLenBre
-                            </td>
-                            <td>
-                                <h5>&euro; 25</h5>
-                            </td>
-                            <td>
-                                <span class="label label-primary">gebruikt</span>
-                            </td>
-                            <td><i class="fas fas fa-ellipsis-h"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">17/12/2017</th>
-                            <td>
-                                Basic-Fit Aalst
-                            </td>
-                            <td>
-                                <h5>&euro; 10</h5>
-                            </td>
-                            <td>
-                                <span class="label label-success">Betaald</span>
-                            </td>
-                            <td><i class="fas fas fa-ellipsis-h"></i></td>
-                        </tr>
-                        <tr>
-                            <th scope="row">15/04/2017</th>
-                            <td>
-                                Bontinck IT
-                            </td>
-                            <td>
-                                <h5>&euro; 100</h5>
-                            </td>
-                            <td>
-                                <span class="label label-danger">Vervallen</span>
-                            </td>
-                            <td><i class="fas fas fa-ellipsis-h"></i></td>
-                        </tr>
-
+                        @foreach (var bon in Model.RecentVerkochteLijst)
+                        {
+                            <tr>
+                                <th scope="row">@bon.Datum</th>
+                                <td>
+                                    @bon.Naam
+                                </td>
+                                <td>
+                                    <h5>&euro; @bon.Bedrag</h5>
+                                </td>
+                                <td>
+                                    <span class="label @bon.StatusClass">@bon.Status</span>
+                                </td>
+                                <td><a asp-controller="Admin" asp-action="VerkochteCadeaubonBekijken" asp-route-id="@bon.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                            </tr>
+                        }
                     </tbody>
                 </table>
             </div>
@@ -169,7 +119,7 @@
     </div>
 </section>
 
-<!-- morris JavaScript -->
+<!-- grafiek -->
 <script>
     $(document).ready(function () {
         graphArea2 = Morris.Area({

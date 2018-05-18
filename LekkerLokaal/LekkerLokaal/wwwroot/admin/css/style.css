@@ -3375,7 +3375,7 @@ ul.top-menu {
 
 .agileinfo-grap {
     padding: 2em;
-    background: rgb(238, 249, 240);
+    background: white;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 
@@ -3389,7 +3389,7 @@ header.agileits-box-header.clearfix h3 {
 }
 
 .calendar-widget {
-    background-color: #eef9f0;
+    background-color: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3466,7 +3466,7 @@ span.panel-title {
 }
 
 .notifications {
-    background-color: #eef9f0;
+    background-color: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3523,7 +3523,7 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 
 .agile-Updating-grids, .agile-bottom-grid, .agile-last-grid {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3751,7 +3751,7 @@ div#graph1, div#graph4, div#graph5, div#graph6, div#graph7, div#graph8, div#grap
 }
 /*--Progress bars--*/
 .stats-info-agileits {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3771,7 +3771,7 @@ h4.title {
 }
 
 .stats-last-agile {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3779,7 +3779,7 @@ h4.title {
 }
 
 .w3-agile-google_map {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3805,7 +3805,7 @@ h4.title {
 }
 
 .typo-agile {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -3820,7 +3820,7 @@ h4.title {
     padding: 8px 15px;
     background: rgb(218, 223, 219);
     margin: 1em 0 1em 0;
-    border: 5px solid #eef9f0;
+    border: 5px solid #fff;
     text-align: left;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -4357,7 +4357,7 @@ ul.bs-glyphicons-list {
 }
 
 .agile-grid {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -4365,7 +4365,7 @@ ul.bs-glyphicons-list {
 }
 
 .wthree-font-awesome {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -4373,7 +4373,7 @@ ul.bs-glyphicons-list {
 }
 
 .w3layouts-glyphicon {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -4385,7 +4385,7 @@ ul.bs-glyphicons-list {
 }
 
 .form-w3layouts {
-    background: #eef9f0;
+    background: #fff;
     padding: 2em;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -5232,7 +5232,7 @@ ul.inbox-pagination {
 /*-- //gallery --*/
 .gallery {
     padding: 2em;
-    background: rgb(238, 249, 240);
+    background: white;
     box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16), 0 2px 10px 0 rgba(0, 0, 0, 0.12);
 }
 /*-- gallery --*/
@@ -5374,7 +5374,7 @@ div#chartContainer5, div#chartContainer6, div#chartContainer7, div#chartContaine
 }
 
 .chart_agile_top {
-    background-color: #eef9f0;
+    background-color: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -5383,7 +5383,7 @@ div#chartContainer5, div#chartContainer6, div#chartContainer7, div#chartContaine
 }
 
 .floatcharts_w3layouts_top {
-    background-color: #eef9f0;
+    background-color: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
@@ -5391,7 +5391,7 @@ div#chartContainer5, div#chartContainer6, div#chartContainer7, div#chartContaine
 }
 
 .map_wthree_top {
-    background-color: #eef9f0;
+    background-color: #fff;
     border-radius: 4px;
     -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
     box-shadow: 0 1px 1px rgba(0,0,0,.05);
