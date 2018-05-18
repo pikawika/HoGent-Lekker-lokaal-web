@@ -812,9 +812,9 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult VerkochteCadeaubonBekijken()
+        public IActionResult VerkochteCadeaubonBekijken(int Id)
         {
-            return View();
+            return View(new VerkochteCadeaubonBekijkenViewModel(_bestellijnRepository.GetById(Id)));
         }
 
         [HttpGet]

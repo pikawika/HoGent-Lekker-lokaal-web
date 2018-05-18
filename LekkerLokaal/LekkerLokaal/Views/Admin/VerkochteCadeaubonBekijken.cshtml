@@ -1,4 +1,4 @@
-﻿@model LekkerLokaal.Models.AdminViewModels.HandelaarBewerkViewModel
+﻿@model LekkerLokaal.Models.AdminViewModels.VerkochteCadeaubonBekijkenViewModel
 
 @{
     ViewData["Title"] = "HandelaarVerzoekEvaluatie";
@@ -7,30 +7,86 @@
 
 <section class="wrapper">
     <h1 class="text-center"></h1>
-
     <section class="panel">
-        <header class="panel-heading">Gegevens van handelaarsaccount: @Model.Naam</header>
+        <header class="panel-heading">Gegevens van verkochte cadeaubon: @Model.Id</header>
         <div class="panel-body">
             <form method="post" enctype="multipart/form-data" class="form-horizontal bucket-form">
-                <div asp-validation-summary="All" class="text-danger"></div>
                 <div class="form-group">
-                    <label class="col-sm-3 control-label">ID (niet aanpasbaar)</label>
+                    <label asp-for="Id" class="col-sm-3 control-label"></label>
                     <div class="col-sm-6">
-                        <input type="text" asp-for="HandelaarId" class="form-control" readonly>
+                        <input type="text" asp-for="Id" class="form-control" readonly>
                     </div>
                 </div>
-
+                <div class="form-group">
+                    <label asp-for="HandelaarNaam" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="HandelaarNaam" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NaamCadeauBon" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="NaamCadeauBon" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Aanmaakdatum" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="Aanmaakdatum" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="Status" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <span class="label @Model.StatusClass">@Model.Status</span>
+                    </div>
+                </div>
+                @if (Model.Status == "Gebruikt")
+                {
+                    <div class="form-group">
+                        <label asp-for="GebruikDatum" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-6">
+                            <input type="text" asp-for="GebruikDatum" class="form-control" readonly>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label asp-for="NaamZender" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="NaamZender" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="EmailZender" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="EmailZender" class="form-control" readonly>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label asp-for="NaamOntvanger" class="col-sm-3 control-label"></label>
+                    <div class="col-sm-6">
+                        <input type="text" asp-for="NaamOntvanger" class="form-control" readonly>
+                    </div>
+                </div>
+                @if (Model.EmailOntvanger != "" && Model.EmailOntvanger != null)
+                {
+                    <div class="form-group">
+                        <label asp-for="EmailOntvanger" class="col-sm-3 control-label"></label>
+                        <div class="col-sm-6">
+                            <input type="text" asp-for="EmailOntvanger" class="form-control" readonly>
+                        </div>
+                    </div>
+                }
+                <div class="form-group">
+                    <label class="col-sm-3 control-label">Bon in PDF formaat</label>
+                    <div class="col-sm-6">
+                        <a class="btn btn-primary" href="#" role="button">Download PDF</a>
+                    </div>
+                </div>
                 <div class="col-md-9 col-md-offset-3">
-                    <a asp-controller="Admin" asp-action="HandelaarsOverzicht" class="btn btn-warning mr-20">Annuleer</a>
-                    <button type="submit" class="btn btn-success">Pas de wijzigingen aan</button>
+                    <a asp-controller="Admin" asp-action="VerkochteCadeaubonnen" class="btn btn-success mr-20">Keer terug</a>
                 </div>
             </form>
         </div>
     </section>
 </section>
-
-<script>
-    $("#fileToUpload").change(function () {
-        document.getElementById('fileselectionTekst').innerHTML = 'U heeft een nieuw logo geselecteerd';
-    });
-</script>

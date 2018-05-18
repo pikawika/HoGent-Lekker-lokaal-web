@@ -36,7 +36,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public BestelLijn GetById(int bestellijnid)
         {
-            return _bestellijnen.Include(b => b.Bon).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
+            return _bestellijnen.Include(b => b.Bon).Include(b => b.Handelaar).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
         }
 
         public IEnumerable<BestelLijn> getGebruikteBonnen()

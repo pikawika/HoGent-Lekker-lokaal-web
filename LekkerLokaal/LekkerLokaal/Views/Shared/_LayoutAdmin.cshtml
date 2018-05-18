@@ -4,6 +4,7 @@
     String[] handelaarsSubMenu = { "HandelaarsVerzoeken", "HandelaarToevoegen", "HandelaarsOverzicht", "HandelaarBewerken", "HandelaarVerzoekEvaluatie" };
     String[] cadeaubonnenSubMenu = { "CadeaubonVerzoeken", "CadeaubonToevoegen", "CadeaubonOverzicht", "CadeaubonBewerken", "CadeaubonVerzoekEvaluatie" };
     String[] layoutSubMenu = { "LayoutSliderIndex", "LayoutAanbiedingen" };
+    String[] verkochteCadeaubonnen = { "VerkochteCadeaubonBekijken", "VerkochteCadeaubonnen" };
     var user = UserManager.GetUserAsync(User);
 }
 
@@ -110,7 +111,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a asp-controller="Admin" asp-action="VerkochteCadeaubonnen" class="@(ViewContext.RouteData.Values["Action"].ToString() == "VerkochteCadeaubonnen" ? "active" : "")">
+                            <a asp-controller="Admin" asp-action="VerkochteCadeaubonnen" class="@(verkochteCadeaubonnen.Contains(ViewContext.RouteData.Values["Action"].ToString()) ? "active" : "")">
                                 <i class="fas fa-cloud-download-alt"></i>
                                 <span>Verkochte cadeaubonnen</span>
                             </a>
