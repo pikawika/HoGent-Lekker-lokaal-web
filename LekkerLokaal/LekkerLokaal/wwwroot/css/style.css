@@ -13,6 +13,11 @@
     left: 15%;
 }
 
+.loading-image {
+    display: block;
+    margin: 0 auto;
+}
+
 .button-back{
     height:auto !important;
     width: 250px !important;

@@ -51,8 +51,6 @@ namespace LekkerLokaal.Controllers
             {
                 case "Gast":
                     return RedirectToAction(nameof(CheckoutController.BestellingPlaatsen), "Checkout");
-                    //voor te testen
-                    //return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout");
                 case "Nieuw":
                     return RedirectToAction(nameof(AccountController.Register), "Account", new { ReturnUrl = returnUrl });
                 case "LogIn":
@@ -100,64 +98,10 @@ namespace LekkerLokaal.Controllers
                     bestelLijn.Boodschap = model.Boodschap;
                 if (model.EmailOntvanger != null && model.EmailOntvanger != "")
                     bestelLijn.OntvangerEmail = model.EmailOntvanger;
-                _bestellijnRepository.SaveChanges();
-
-                var bon = _bonRepository.GetByBonId(bestelLijn.Bon.BonId);
-                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
-
-                string waarde = String.Format("€ " + bestelLijn.Prijs);
-                string verval = bestelLijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
-                string geldigheid = String.Format("Geldig tot: " + verval);
-                var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
-                GenerateQR(bestellijnen[index].QRCode);
-                var imageURL = @"wwwroot/images/temp/" + bestelLijn.QRCode + ".png";
-                iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
-                jpg.ScaleToFit(145f, 145f);
-                var logoURL = @"wwwroot/images/logo.png";
-                var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
-                var kadoURL = @"wwwroot/images/kado.jpg";
-                iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
-                iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
-                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-
-                logoLL.SetAbsolutePosition(20, 15);
-                logoLL.ScaleToFit(188f, 100f);
-                logoHandelaar.ScaleToFit(188f, 100f);
-                logoHandelaar.SetAbsolutePosition(410, 15);
-                jpg.SetAbsolutePosition(225, 10);
-                kado.SetAbsolutePosition(65, 161);
-
-                iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
-                iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
-
-                Paragraph bedrag = new Paragraph(waarde, arial);
-                bedrag.SpacingAfter = 50;
-                Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
-                naamHandelaar.SpacingAfter = 0;
-                Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + bestelLijn.VerzenderNaam, arial18);
-                Paragraph geldig = new Paragraph(geldigheid, arial18);
-                bedrag.Alignment = Element.ALIGN_LEFT;
-                naamHandelaar.Alignment = Element.ALIGN_LEFT;
-                geschonkenDoor.Alignment = Element.ALIGN_LEFT;
-                geldig.Alignment = Element.ALIGN_LEFT;
-                
-                PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestelLijn.QRCode + ".pdf", FileMode.Create));
-                pdf.Open();
-                pdf.Add(logoLL);
-                pdf.Add(logoHandelaar);
-                pdf.Add(naamHandelaar);
-                pdf.Add(bedrag);
-                pdf.Add(geschonkenDoor);
-                pdf.Add(geldig);
-                pdf.Add(jpg);
-                pdf.Add(kado);
-                pdf.Close();
-
-                System.IO.File.Delete(imageURL);
-                
+                _bestellijnRepository.SaveChanges(); 
                 
                 if ((index + 1) == bestellijnen.Count)
-                    return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout", new { Id = bestelling.BestellingId });
+                    return RedirectToAction(nameof(CheckoutController.Betaling), "Checkout", new { Id = bestelling.BestellingId });
                 return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = index + 1 });
             }
             
@@ -208,6 +152,14 @@ namespace LekkerLokaal.Controllers
             _bonRepository.SaveChanges();
 
             return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = 0 } );
+        }
+
+        public IActionResult Betaling(int Id)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Index"] = Id;
+
+            return View();
         }
 
         public IActionResult Bedankt(int Id, Winkelwagen winkelwagen)
@@ -291,5 +243,61 @@ namespace LekkerLokaal.Controllers
 
             return View();
         }
+
+        //private void BonPdfGenereren()
+        //{
+        //    var bon = _bonRepository.GetByBonId(bestelLijn.Bon.BonId);
+        //    var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+
+        //    string waarde = String.Format("€ " + bestelLijn.Prijs);
+        //    string verval = bestelLijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
+        //    string geldigheid = String.Format("Geldig tot: " + verval);
+        //    var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
+        //    GenerateQR(bestellijnen[index].QRCode);
+        //    var imageURL = @"wwwroot/images/temp/" + bestelLijn.QRCode + ".png";
+        //    iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
+        //    jpg.ScaleToFit(145f, 145f);
+        //    var logoURL = @"wwwroot/images/logo.png";
+        //    var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
+        //    var kadoURL = @"wwwroot/images/kado.jpg";
+        //    iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
+        //    iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
+        //    iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
+
+        //    logoLL.SetAbsolutePosition(20, 15);
+        //    logoLL.ScaleToFit(188f, 100f);
+        //    logoHandelaar.ScaleToFit(188f, 100f);
+        //    logoHandelaar.SetAbsolutePosition(410, 15);
+        //    jpg.SetAbsolutePosition(225, 10);
+        //    kado.SetAbsolutePosition(65, 161);
+
+        //    iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
+        //    iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
+
+        //    Paragraph bedrag = new Paragraph(waarde, arial);
+        //    bedrag.SpacingAfter = 50;
+        //    Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
+        //    naamHandelaar.SpacingAfter = 0;
+        //    Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + bestelLijn.VerzenderNaam, arial18);
+        //    Paragraph geldig = new Paragraph(geldigheid, arial18);
+        //    bedrag.Alignment = Element.ALIGN_LEFT;
+        //    naamHandelaar.Alignment = Element.ALIGN_LEFT;
+        //    geschonkenDoor.Alignment = Element.ALIGN_LEFT;
+        //    geldig.Alignment = Element.ALIGN_LEFT;
+
+        //    PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestelLijn.QRCode + ".pdf", FileMode.Create));
+        //    pdf.Open();
+        //    pdf.Add(logoLL);
+        //    pdf.Add(logoHandelaar);
+        //    pdf.Add(naamHandelaar);
+        //    pdf.Add(bedrag);
+        //    pdf.Add(geschonkenDoor);
+        //    pdf.Add(geldig);
+        //    pdf.Add(jpg);
+        //    pdf.Add(kado);
+        //    pdf.Close();
+
+        //    System.IO.File.Delete(imageURL);
+        //}
     }
 }
