@@ -43,7 +43,7 @@ namespace LekkerLokaal.Data.Repositories
         {
             DateTime date = DateTime.Now.Date;
             date = date.AddMonths(-1);
-            return _bestellijnen.Where(b => (b.GebruikDatum >= date) && (b.Geldigheid != Geldigheid.Gebruikt));
+            return _bestellijnen.Where(b => (b.GebruikDatum >= date) && (b.Geldigheid == Geldigheid.Gebruikt));
         }
 
         public IEnumerable<BestelLijn> getVerkochtDezeMaand()
