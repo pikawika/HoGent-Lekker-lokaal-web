@@ -1,13 +1,24 @@
-﻿@{
+﻿@using LekkerLokaal.Models.Domain
+
+@{
     ViewData["Title"] = "Bestelling";
 }
 
 <div class="col-xs-12 text-center mtb-60">
     <h2 class="mb-15">Bedankt voor uw @ViewData["Title"]</h2>
-    <p>Bedankt voor het plaatsen van uw bestelling. U ontvangt uw cadeaubon(nen) op de door u gekozen manier.</p>
+    <p>Bedankt voor het plaatsen van uw bestelling. U ontvangt uw cadeaubon(nen) op de door u gekozen manier. Hieronder kan u deze bonnen ook al printen of downloaden.</p>
     <p><a asp-controller="Home" asp-action="Index">Klik hier om terug te gaan naar de home pagina.</a></p>
     <a asp-controller="Home" asp-action="Index"><img src="~/images/icons/home/home.png"></a>
 </div>
+
+@for (int i = 0; i < ((IList<BestelLijn>)ViewData["bestellijnen"]).Count; i++){
+
+    <div>
+        <embed src="~/pdf/c_@(((IList<BestelLijn>)ViewData["bestellijnen"])[i].QRCode).pdf" width="800" height="500" type='application/pdf'>
+    </div>
+
+}
+
 
 <!--
 <div class="custom-checkbox mb-20">

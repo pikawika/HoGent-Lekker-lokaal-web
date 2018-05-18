@@ -174,6 +174,7 @@ namespace LekkerLokaal.Controllers
             bestellijnen.ToList().ForEach(bl => bl.Geldigheid = Geldigheid.Geldig);
             IList<BestelLijn> bestellijn = bestellijnen.ToList();
             _gebruikerRepository.SaveChanges();
+            ViewData["bestellijnen"] = bestellijn;
 
             MailMessage message = new MailMessage();
             message.From = new MailAddress("lekkerlokaalst@gmail.com");
@@ -233,6 +234,7 @@ namespace LekkerLokaal.Controllers
                     SmtpServer2.EnableSsl = true;
                     SmtpServer2.Send(message2);
                     attachment.Dispose();
+                    
                 }
             }
 
