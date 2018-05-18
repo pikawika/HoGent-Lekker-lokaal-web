@@ -2,7 +2,7 @@
     ViewData["Title"] = "Betaling";
 }
 
-<meta http-equiv="refresh" content="5;url=@Url.Action("Bedankt", "Checkout", new { Id = (int) ViewData["Index"] })" />
+<meta http-equiv="refresh" content="5;url=@Url.Action("Bedankt", "Checkout", new { Id = ((int) ViewData["Index"]) })" />
 <div class="center-block text-center">
     <h1 class="mt-20">Betaling</h1>
     <h3 class="mt-10">De betaling wordt uitgevoerd</h3>

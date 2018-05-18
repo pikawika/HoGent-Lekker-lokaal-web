@@ -236,8 +236,6 @@ namespace LekkerLokaal.Controllers
                 }
             }
 
-
-
             //for (int i = 0; i < bestellijnen.Count; i++)
             //{
             //    System.IO.File.Delete(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
@@ -246,7 +244,6 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-<<<<<<< HEAD
         private void maakBonAan(BestelLijn bestelLijn)
         {
             var bon = _bonRepository.GetByBonId(bestelLijn.Bon.BonId);
