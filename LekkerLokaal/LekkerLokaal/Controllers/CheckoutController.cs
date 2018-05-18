@@ -51,8 +51,6 @@ namespace LekkerLokaal.Controllers
             {
                 case "Gast":
                     return RedirectToAction(nameof(CheckoutController.BestellingPlaatsen), "Checkout");
-                //voor te testen
-                //return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout");
                 case "Nieuw":
                     return RedirectToAction(nameof(AccountController.Register), "Account", new { ReturnUrl = returnUrl });
                 case "LogIn":
@@ -105,7 +103,7 @@ namespace LekkerLokaal.Controllers
                 maakBonAan(bestelLijn);
 
                 if ((index + 1) == bestellijnen.Count)
-                    return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout", new { Id = bestelling.BestellingId });
+                    return RedirectToAction(nameof(CheckoutController.Betaling), "Checkout", new { Id = bestelling.BestellingId });
                 return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = index + 1 });
             }
 
@@ -156,6 +154,14 @@ namespace LekkerLokaal.Controllers
             _bonRepository.SaveChanges();
 
             return RedirectToAction(nameof(CheckoutController.BonAanmaken), "Checkout", new { index = 0 });
+        }
+
+        public IActionResult Betaling(int Id)
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            ViewData["Index"] = Id;
+
+            return View();
         }
 
         public IActionResult Bedankt(int Id, Winkelwagen winkelwagen)
@@ -240,6 +246,7 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
+<<<<<<< HEAD
         private void maakBonAan(BestelLijn bestelLijn)
         {
             var bon = _bonRepository.GetByBonId(bestelLijn.Bon.BonId);
