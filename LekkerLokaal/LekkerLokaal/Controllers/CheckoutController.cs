@@ -182,9 +182,12 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
 
             Bestelling bestelling = _bestellingRepository.GetBy(Id);
+
+
             ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
             IList<BestelLijn> bestellijn = bestellijnen.ToList();
             ViewData["bestellijnen"] = bestellijn;
+            
             VerstuurMails(bestelling);
 
             return View();
