@@ -13,6 +13,31 @@
     left: 15%;
 }
 
+.foto {
+    max-height: 213px;
+    max-width: 320px;
+    display: inline-block !important;
+    overflow: hidden;
+}
+
+.detail-groot {
+    max-height:502px;
+    /*min-height:502px;*/
+    max-width: 753px;
+    /*min-width:753px;*/
+    display: inline-block !important;
+    overflow: hidden;
+}
+
+.detail-klein {
+    max-height: 101px;
+    min-height: 101px;
+    max-width: 150px;
+    min-width: 150px;
+    display: inline-block !important;
+    overflow: hidden;
+}
+
 .bedankt {
     max-width: 1000px; /* you have to have a size or this method doesn't work */
     
