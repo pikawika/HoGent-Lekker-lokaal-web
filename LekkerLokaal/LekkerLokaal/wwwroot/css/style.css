@@ -22,9 +22,9 @@
 
 .detail-groot {
     max-height:502px;
-    /*min-height:502px;*/
+    min-height:502px;
     max-width: 753px;
-    /*min-width:753px;*/
+    min-width:753px;
     display: inline-block !important;
     overflow: hidden;
 }
