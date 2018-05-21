@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="hidden-xs">
                                         @await Html.PartialAsync("_LoginPartial")
                                     </div>
                                     <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
@@ -157,6 +157,7 @@
                                     <li class="Over-List-Item">
                                         <a asp-controller="Home" asp-action="About">Over ons</a>
                                     </li>
+                                    @await Html.PartialAsync("_LoginPartialMobile")
                                 </ul>
                             </div>
                             <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
@@ -173,20 +174,20 @@
                                     IList<Claim> claims = await UserManager.GetClaimsAsync(user);
                                     @if (claims.Any(claimpje => claimpje.Value == "admin"))
                                     {
-                                        <a asp-controller="Admin" asp-action="Dashboard" class="hidden-xs">Admin<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                        <a asp-controller="Admin" asp-action="Dashboard" class="hidden-xs">Admin panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                     else if (claims.Any(claimpje => claimpje.Value == "handelaar"))
                                     {
-                                        /*<a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>*/
+                                        <a asp-controller="Manage" asp-action="GebruikteCadeaubonnenOverzicht" class="hidden-xs">Handelaar panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                     else
                                     {
-                                        <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                        <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Wordt handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                 }
                                 else
                                 {
-                                    <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                    <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Wordt handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                 }
                             </div>
                         </nav>
