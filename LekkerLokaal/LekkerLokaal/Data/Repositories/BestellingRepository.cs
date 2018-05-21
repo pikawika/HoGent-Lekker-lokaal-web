@@ -25,7 +25,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public Bestelling GetBy(int bestellingId)
         {
-            return _bestellingen.Where(b => b.BestellingId == bestellingId).Include(bl => bl.BestelLijnen).SingleOrDefault();
+            return _bestellingen.Include(bl => bl.BestelLijnen).Where(b => b.BestellingId == bestellingId).SingleOrDefault();
         }
 
         public void SaveChanges()

@@ -17,16 +17,13 @@ namespace LekkerLokaal.Models.Domain
         private string _afbeelding;
         public string Afbeelding
         {
-            get {
+            get
+            {
                 if (_afbeelding == null)
-                {
                     return @"\images\gebruikers\default.png";
-                }
                 else
-                {
                     return _afbeelding;
-                }
-                }
+            }
             set { _afbeelding = value; }
         }
 
@@ -39,6 +36,11 @@ namespace LekkerLokaal.Models.Domain
         public void PlaatsBestelling(Winkelwagen winkelwagen)
         {
             Bestellingen.Add(new Bestelling(winkelwagen));
+        }
+
+        public string VolledigeNaam()
+        {
+            return Voornaam + " " + Familienaam;
         }
     }
 }

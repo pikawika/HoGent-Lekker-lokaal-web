@@ -325,8 +325,6 @@ namespace LekkerLokaal.Controllers
 
                 var handelaar = _handelaarRepository.GetByEmail(user.Email);
 
-                handelaar.sha256(wachtwoord);
-
                 _handelaarRepository.SaveChanges();
             }
 
@@ -482,14 +480,16 @@ namespace LekkerLokaal.Controllers
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["bestelling"] = null;
-            var user = _userManager.GetUserAsync(User);
-            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            var user = await _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
             ICollection<Bestelling> bestellingen = new HashSet<Bestelling>();
             if (gebruiker.Bestellingen.Count != 0 && gebruiker.Bestellingen != null)
             {
                 foreach (Bestelling b in gebruiker.Bestellingen)
                 {
-                    bestellingen.Add(_bestellingRepository.GetBy(b.BestellingId));
+                    var bestelling = _bestellingRepository.GetBy(b.BestellingId);
+                    if (bestelling.BestelLijnen.All(bl => bl.Geldigheid != Geldigheid.Ongeldig))
+                        bestellingen.Add(bestelling);
                 }
                 ViewData["bestelling"] = bestellingen;
             }
@@ -502,8 +502,8 @@ namespace LekkerLokaal.Controllers
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             ViewData["bestellijnen"] = null;
 
-            var user = _userManager.GetUserAsync(User);
-            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+            var user = await _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Email);
 
             if (_bestellingRepository.GetBy(id) != null)
             {
@@ -524,87 +524,6 @@ namespace LekkerLokaal.Controllers
             return View();
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BonAanmaken(int Id)
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            if (ModelState.IsValid)
-            {
-                var bonPath = @"wwwroot/pdf";
-                
-                var bestellijn = _bestellijnRepository.GetById(Id);
-                var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
-                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
-
-                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
-                string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
-                string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5);
-                Paragraph p1 = new Paragraph(waarde);
-                Paragraph p2 = new Paragraph(geldigheid);
-                GenerateQR(bestellijn.QRCode);
-                var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
-                iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
-                jpg.ScaleToFit(140f, 140f);
-                var logoURL = @"wwwroot/images/logo.png";
-                var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
-                iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
-                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
-
-                logoLL.SetAbsolutePosition(30, 515);
-                logoLL.ScalePercent(50f);
-                logoHandelaar.ScalePercent(10f);
-
-                jpg.Alignment = Element.ALIGN_CENTER;
-                naamBon.Alignment = Element.ALIGN_CENTER;
-                p1.Alignment = Element.ALIGN_CENTER;
-                p2.Alignment = Element.ALIGN_CENTER;
-                logoHandelaar.Alignment = Element.ALIGN_RIGHT;
-
-                
-                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-
-                doc1.Open();
-                doc1.Add(logoLL);
-                doc1.Add(logoHandelaar);
-                doc1.Add(naamBon);
-                doc1.Add(p1);
-                doc1.Add(p2);
-                doc1.Add(jpg);
-                doc1.Close();
-
-                System.IO.File.Delete(imageURL);
-
-                var user = _userManager.GetUserAsync(User);
-                var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
-
-                string to = String.Format("lekkerlokaalst@gmail.com");
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add(to);
-                message.Subject = "Uw cadeaubon van Lekker Lokaal.";
-
-                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + "U vindt deze in bijlage." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
-
-
-                var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
-                attachment.Name = "cadeaubon.pdf";
-                message.Attachments.Add(attachment);
-                var SmtpServer = new SmtpClient("smtp.gmail.com");
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                SmtpServer.EnableSsl = true;
-                SmtpServer.Send(message);
-                attachment.Dispose();
-                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
-            }
-            return View();
-        }
-
         public void GenerateQR(string qrcode)
         {
             var bonPath = @"wwwroot/images/temp/";
@@ -619,63 +538,75 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Bon(int Id)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+
             if (ModelState.IsValid)
             {
-                var bonPath = @"wwwroot/pdf";
+
 
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+                var user = _userManager.GetUserAsync(User);
+                var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
 
-                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
+                ViewData["path"] = @"/pdf/c_" + bestellijn.QRCode + ".pdf";
+
+                string waarde = String.Format("€ " + bestellijn.Prijs.ToString());
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5.Rotate());
-                Paragraph p1 = new Paragraph(waarde);
-                Paragraph p2 = new Paragraph(geldigheid);
+                var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
+                //Paragraph bedrag = new Paragraph(waarde);
+                //Paragraph p2 = new Paragraph(geldigheid);
                 GenerateQR(bestellijn.QRCode);
                 var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
                 iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
                 jpg.ScaleToFit(145f, 145f);
                 var logoURL = @"wwwroot/images/logo.png";
                 var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
-                var kadoURL = @"wwwroot/images/kado.png";
+                var kadoURL = @"wwwroot/images/kado.jpg";
                 iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
                 iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
                 iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
+                //Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
-                logoLL.SetAbsolutePosition(20,15);
-                logoLL.ScaleToFit(188f,100f);
+                logoLL.SetAbsolutePosition(20, 15);
+                logoLL.ScaleToFit(188f, 100f);
                 logoHandelaar.ScaleToFit(188f, 100f);
                 logoHandelaar.SetAbsolutePosition(410, 15);
                 jpg.SetAbsolutePosition(225, 10);
                 kado.SetAbsolutePosition(65, 161);
 
+                iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
+                iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
 
+                Paragraph bedrag = new Paragraph(waarde, arial);
+                bedrag.SpacingAfter = 50;
+                Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
+                naamHandelaar.SpacingAfter = 0;
+                Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + gebruiker.Voornaam, arial18);
+                Paragraph geldig = new Paragraph(geldigheid, arial18);
 
+                bedrag.Alignment = Element.ALIGN_LEFT;
 
-                naamBon.Alignment = Element.ALIGN_CENTER;
-                p1.Alignment = Element.ALIGN_CENTER;
-                p2.Alignment = Element.ALIGN_CENTER;
-                //logoHandelaar.Alignment = Element.ALIGN_RIGHT;
+                naamHandelaar.Alignment = Element.ALIGN_LEFT;
+                geschonkenDoor.Alignment = Element.ALIGN_LEFT;
+                geldig.Alignment = Element.ALIGN_LEFT;
 
-
-                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-
-                doc1.Open();
-                doc1.Add(logoLL);
-                doc1.Add(logoHandelaar);
-                doc1.Add(naamBon);
-                doc1.Add(p1);
-                doc1.Add(p2);
-                doc1.Add(jpg);
-                doc1.Add(kado);
-                doc1.Close();
+                PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf", FileMode.Create));
+                pdf.Open();
+                pdf.Add(logoLL);
+                pdf.Add(logoHandelaar);
+                pdf.Add(naamHandelaar);
+                pdf.Add(bedrag);
+                pdf.Add(geschonkenDoor);
+                pdf.Add(geldig);
+                pdf.Add(jpg);
+                pdf.Add(kado);
+                pdf.Close();
 
                 System.IO.File.Delete(imageURL);
 
-                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
+                //System.IO.File.Delete(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf");
             }
 
             return View();

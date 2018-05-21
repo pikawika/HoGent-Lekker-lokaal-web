@@ -10,29 +10,27 @@ namespace LekkerLokaal.Models.WinkelwagenViewModels
 {
     public class BonAanmakenViewModel
     {
-        [Required]
+        [Required(ErrorMessage = "{0} is verplicht.")]
         [DataType(DataType.Text)]
-        [Display(Name = "Uw Naam")]
+        [Display(Name = "Uw naam")]
         public string UwNaam { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "{0} is verplicht.")]
+        [EmailAddress(ErrorMessage = "Gelieve een geldig e-mailadres in te voeren")]
         [Display(Name = "Uw e-mailadres")]
         public string UwEmail { get; set; }
 
-        [Required]
+        [Required(ErrorMessage = "{0} is verplicht.")]
         [DataType(DataType.Text)]
-        [Display(Name = "Naam Ontvanger")]
+        [Display(Name = "Naam ontvanger")]
         public string NaamOntvanger { get; set; }
 
-        [Required]
         [EmailAddress]
-        [Display(Name = "Email Ontvanger")]
+        [Display(Name = "E-mail ontvanger")]
         public string EmailOntvanger { get; set; }
 
-        [Required]
         [DataType(DataType.MultilineText)]
-        [Display(Name = "Persoonlijke Boodschap (optioneel)")]
+        [Display(Name = "Persoonlijke boodschap (optioneel)")]
         public string Boodschap { get; set; }
     }
 }

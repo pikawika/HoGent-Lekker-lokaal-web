@@ -161,6 +161,19 @@ namespace LekkerLokaal
                 routes.MapRoute(
                     name: "Account",
                     template: "{controller=Account}/{action=CheckoutMethode}/{checkoutId}/{returnUrl}");
+
+                routes.MapRoute(
+                    name: "CheckoutBonAanmaken",
+                    template: "{controller=Checkout}/{action=BonAanmaken}/{index}");
+
+                routes.MapRoute(
+                   name: "Betaling",
+                   template: "{controller=Checkout}/{action=Betaling}/{Id}");
+
+                routes.MapRoute(
+                   name: "BonnenBruikbaarMaken",
+                   template: "{controller=Checkout}/{action=BonnenBruikbaarMaken}/{Id}");
+
             });
             //datainit.InitializeData().Wait();
         }

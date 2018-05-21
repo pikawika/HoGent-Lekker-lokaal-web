@@ -1,6 +1,19 @@
 ﻿@model LekkerLokaal.Models.WinkelwagenViewModels.BonAanmakenViewModel
+
+@using LekkerLokaal.Models.Domain
+@using Microsoft.AspNetCore.Identity
+
+@inject SignInManager<ApplicationUser> SignInManager
+@inject UserManager<ApplicationUser> UserManager
+@inject IGebruikerRepository gebruikerRepository
+
 @{
-    ViewData["Title"] = "Bestelling";
+    ViewData["Title"] = "Bon aanmaken";
+    Bestelling bestelling = (Bestelling)ViewData["Bestelling"];
+    IList<BestelLijn> bestellijnen = ((ICollection<BestelLijn>)ViewData["Bestellijnen"]).ToList();
+    int index = (int)ViewData["Index"];
+
+    var user = await UserManager.GetUserAsync(User);
 }
 
 <main id="mainContent" class="main-content">
@@ -8,24 +21,41 @@
         <div class="container">
             <div class="row row-rl-10 row-tb-20">
                 <div class="page-content col-xs-12 col-sm-8 col-md-9">
-
-                    
-
                     <section class="section checkout-area panel prl-30 pt-20 pb-40">
-                        <h2 class="h2 mb-20 h-title">Bijkomende informatie <br>Cadeaubon 1: "Restaurant Lekker, € 50, Aalst"</h2>
-                        <form asp-controller="Checkout" asp-action="BonAanmaken" method="post" class="mb-30">
-                            <div asp-validation-summary="All" class="text-danger"></div>
-                            <div class="form-group">
-                                <label asp-for="UwNaam">Uw naam</label>
-                                <input type="text" class="form-control" placeholder="Uw naam" asp-for="UwNaam">
-                                <span asp-validation-for="UwNaam" class="text-danger"></span>
-                            </div>
+                        <h2 class="h2 mb-20 h-title">
+                            Cadeaubon personaliseren
+                            <br>
+                            @(index + 1)/@bestellijnen.Count: @bestellijnen[index].Bon.Naam - € @bestellijnen[index].Prijs
+                        </h2>
+                        <form asp-controller="Checkout" asp-action="BonAanmaken" asp-route-index="@index" class="mb-30">
+                            @if (SignInManager.IsSignedIn(User) && @gebruikerRepository.GetBy(user.Email) != null)
+                            {
+                                <div class="form-group">
+                                    <label asp-for="UwNaam">Uw naam</label>
+                                    <input type="text" class="form-control" placeholder="Uw naam" asp-for="UwNaam" value="@gebruikerRepository.GetBy(user.Email).VolledigeNaam()">
+                                    <span asp-validation-for="UwNaam" class="text-danger"></span>
+                                </div>
 
-                            <div class="form-group">
-                                <label asp-for="UwEmail">Uw e-mailadres</label>
-                                <input type="text" class="form-control" placeholder="Uw e-mailadres" asp-for="UwEmail">
-                                <span asp-validation-for="UwEmail" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="UwEmail">Uw e-mailadres</label>
+                                    <input type="text" class="form-control" placeholder="Uw e-mailadres" asp-for="UwEmail" value="@gebruikerRepository.GetBy(user.Email).Emailadres">
+                                    <span asp-validation-for="UwEmail" class="text-danger"></span>
+                                </div>
+                            }
+                            else
+                            {
+                                <div class="form-group">
+                                    <label asp-for="UwNaam">Uw naam</label>
+                                    <input type="text" class="form-control" placeholder="Uw naam" asp-for="UwNaam">
+                                    <span asp-validation-for="UwNaam" class="text-danger"></span>
+                                </div>
+
+                                <div class="form-group">
+                                    <label asp-for="UwEmail">Uw e-mailadres</label>
+                                    <input type="text" class="form-control" placeholder="Uw e-mailadres" asp-for="UwEmail">
+                                    <span asp-validation-for="UwEmail" class="text-danger"></span>
+                                </div>
+                            }
 
                             <div class="form-group">
                                 <label asp-for="NaamOntvanger">Naam ontvanger <span class="color-mid"></span></label>
@@ -33,27 +63,46 @@
                                 <span asp-validation-for="NaamOntvanger" class="text-danger"></span>
                             </div>
 
-                            <div class="form-group">
-                                <label asp-for="EmailOntvanger">E-mailadres ontvanger <span class="color-mid"></span></label>
-                                <input type="text" class="form-control" placeholder="E-mailadres ontvanger" asp-for="EmailOntvanger">
-                                <span asp-validation-for="EmailOntvanger" class="text-danger"></span>
-                            </div>
-                            <div class="form-group">
-                                <label asp-for="Boodschap">Persoonlijke boodschap (optioneel)<span class="color-mid"></span></label>
-                                <input style="height: 200px" type="text" class="form-control" placeholder="Persoonlijke boodschap" asp-for="Boodschap">
-                                <span asp-validation-for="Boodschap" class="text-danger"></span>
-                            </div>
                             <div class="custom-checkbox mb-20">
-                                <input type="checkbox" id="agree_terms">
-                                <label class="color-mid" for="agree_terms">Ik wens een factuur voor deze aankoop.</label>
+                                <input type="checkbox" id="ontvangerToevoegen">
+                                <label class="color-mid" for="ontvangerToevoegen">Verstuur de cadeaubon ook naar de ontvanger</label>
                             </div>
-                            <a asp-controller="Winkelwagen" asp-action="Checkout" class="btn btn-lg btn-warning btn-rounded">Annuleer</a>
-                            <button type="submit" class="btn btn-lg btn-rounded mr-10">Volgende cadeaubon</button>
+
+                            <div id="ontvangertje" class="collapse">
+                                <div class="form-group">
+                                    <label asp-for="EmailOntvanger">E-mailadres ontvanger <span class="color-mid"></span></label>
+                                    <input type="text" class="form-control" placeholder="E-mailadres ontvanger" asp-for="EmailOntvanger">
+                                    <span asp-validation-for="EmailOntvanger" class="text-danger"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label asp-for="Boodschap">Persoonlijke boodschap<span class="color-mid"></span></label>
+                                    <textarea rows="4" type="text" class="form-control" placeholder="Uw persoonlijke boodschap" asp-for="Boodschap"></textarea>
+                                    <span asp-validation-for="Boodschap" class="text-danger"></span>
+                                </div>
+                            </div>  
+
+                            @if (index == 0)
+                            {
+                                <a asp-controller="Winkelwagen" asp-action="Checkout" class="btn btn-lg btn-warning btn-rounded mt-20">Annuleer</a>
+                            }
+                            else
+                            {
+                                <a asp-controller="Checkout" asp-action="BonAanmaken" asp-route-index="@(index - 1)" class="btn btn-lg btn-rounded ml-5 mt-20"><i class="fas fa-arrow-left"></i> Vorige cadeaubon</a>
+                            }
+
+                            @if ((index + 1) == bestellijnen.Count)
+                            {
+                                <button type="submit" class="btn btn-lg btn-rounded ml-5 mt-20">Ga door naar betalen</button>
+                            }
+                            else
+                            {
+                                <button type="submit" class="btn btn-lg btn-rounded ml-5 mt-20">Volgende cadeaubon <i class="fas fa-arrow-right"></i></button>
+                            }
                         </form>
                     </section>
-                    
+
                 </div>
-                
+
                 <div class="page-sidebar col-xs-12 col-sm-4 col-md-3">
                     <aside class="sidebar blog-sidebar">
                         <div class="row row-tb-10">
@@ -64,11 +113,11 @@
                                             <tbody>
                                                 <tr>
                                                     <td class="color-mid">Aantal bonnen:</td>
-                                                    <td>@ViewData["Aantal"]</td>
+                                                    <td>@bestelling.BestelLijnen.Count</td>
                                                 </tr>
                                                 <tr class="font-15">
-                                                    <td class="color-mid">Totaal:</td>
-                                                    <td class="color-blue">@($"€ {ViewData["Totaal"]:N2}")</td>
+                                                    <td class="color-mid">Totaalbedrag:</td>
+                                                    <td class="color-blue">@($"€ {bestelling.BestellingTotaal:N2}")</td>
                                                 </tr>
                                             </tbody>
                                         </table>
@@ -83,3 +132,9 @@
         </div>
     </div>
 </main>
+
+<script>
+    $('#ontvangerToevoegen').change(function () {
+        $('#ontvangertje').collapse("toggle");
+    });
+</script>
