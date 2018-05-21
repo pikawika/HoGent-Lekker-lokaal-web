@@ -67,5 +67,10 @@ namespace LekkerLokaal.Data.Repositories
         {
             _dbContext.SaveChanges();
         }
+
+        public IEnumerable<BestelLijn> getGebruikteBonnenVanHandelaarId(int id)
+        {
+            return _bestellijnen.Where(b => b.Geldigheid == Geldigheid.Gebruikt).Include(b => b.Bon);
+        }
     }
 }

@@ -13,6 +13,7 @@ namespace LekkerLokaal.Models.Domain
         IEnumerable<BestelLijn> getVerkochtDezeMaand();
         IEnumerable<BestelLijn> getGebruiktDezeMaand();
         IEnumerable<BestelLijn> getGebruikteBonnen();
+        IEnumerable<BestelLijn> getGebruikteBonnenVanHandelaarId(int id);
         IEnumerable<BestelLijn> getVerkochteBonnen();
         void SaveChanges();
         BestelLijn GetById(int bestellijnid);

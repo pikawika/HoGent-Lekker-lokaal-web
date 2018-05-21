@@ -131,6 +131,13 @@ namespace LekkerLokaal.Controllers
 
             return View(model);
         }
+        [HttpGet]
+        public IActionResult GebruikteCadeaubonnenOverzicht()
+        {
+            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
+            //nog methode voorzien voor het ophalen van de bonnen gelinkt aan die handelaar
+            return View(new GebruikteCadeaubonnenOverzichtViewModel(_bestellijnRepository.getGebruikteBonnen()));
+        }
 
 
         [HttpGet]
@@ -587,7 +594,7 @@ namespace LekkerLokaal.Controllers
             if (ModelState.IsValid)
             {
                 var bonPath = @"wwwroot/pdf";
-                
+
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
@@ -618,7 +625,7 @@ namespace LekkerLokaal.Controllers
                 p2.Alignment = Element.ALIGN_CENTER;
                 logoHandelaar.Alignment = Element.ALIGN_RIGHT;
 
-                
+
                 PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
 
                 doc1.Open();
@@ -641,7 +648,7 @@ namespace LekkerLokaal.Controllers
                 message.To.Add(to);
                 message.Subject = "Uw cadeaubon van Lekker Lokaal.";
 
-                message.Body = String.Format("Beste "+ gebruiker.Voornaam + " " + gebruiker.Familienaam + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + "U vindt deze in bijlage." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
+                message.Body = String.Format("Beste " + gebruiker.Voornaam + " " + gebruiker.Familienaam + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + "U vindt deze in bijlage." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
 
 
                 var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
@@ -674,7 +681,7 @@ namespace LekkerLokaal.Controllers
         public async Task<IActionResult> Bon(int Id)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            
+
             if (ModelState.IsValid)
             {
 
@@ -689,7 +696,7 @@ namespace LekkerLokaal.Controllers
                 string waarde = String.Format("€ " + bestellijn.Prijs.ToString());
                 string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
                 string geldigheid = String.Format("Geldig tot: " + verval);
-                var pdf = new Document(PageSize.A5.Rotate(), 81,225,25,0);
+                var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
                 //Paragraph bedrag = new Paragraph(waarde);
                 //Paragraph p2 = new Paragraph(geldigheid);
                 GenerateQR(bestellijn.QRCode);
@@ -704,8 +711,8 @@ namespace LekkerLokaal.Controllers
                 iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
                 //Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
-                logoLL.SetAbsolutePosition(20,15);
-                logoLL.ScaleToFit(188f,100f);
+                logoLL.SetAbsolutePosition(20, 15);
+                logoLL.ScaleToFit(188f, 100f);
                 logoHandelaar.ScaleToFit(188f, 100f);
                 logoHandelaar.SetAbsolutePosition(410, 15);
                 jpg.SetAbsolutePosition(225, 10);
@@ -722,7 +729,7 @@ namespace LekkerLokaal.Controllers
                 Paragraph geldig = new Paragraph(geldigheid, arial18);
 
                 bedrag.Alignment = Element.ALIGN_LEFT;
-                
+
                 naamHandelaar.Alignment = Element.ALIGN_LEFT;
                 geschonkenDoor.Alignment = Element.ALIGN_LEFT;
                 geldig.Alignment = Element.ALIGN_LEFT;
@@ -730,7 +737,7 @@ namespace LekkerLokaal.Controllers
 
 
 
-                PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode +".pdf", FileMode.Create));
+                PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf", FileMode.Create));
                 pdf.Open();
                 pdf.Add(logoLL);
                 pdf.Add(logoHandelaar);
