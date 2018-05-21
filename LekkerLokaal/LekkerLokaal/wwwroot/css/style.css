@@ -24,7 +24,7 @@
 }
 
 .detail-groot {
-    max-height:502px;
+    max-height: 502px;
     max-width: 753px;
     display: inline-block !important;
     overflow: hidden;
@@ -51,6 +51,16 @@
     }
 }
 
+@media only screen and (max-width: 576px) {
+    .or {
+        display: none;
+    }
+
+    .col-left {
+        border-right: none !important;
+    }
+}
+
 .bedankt {
     max-width: 1000px; /* you have to have a size or this method doesn't work */
     position: relative; /* positions out of the flow, but according to the nearest parent */
@@ -59,7 +69,7 @@
     bottom: 0;
     left: 0;
     margin: auto; /* make em equal */
-    text-align:center;
+    text-align: center;
 }
 
 .loading-image {
@@ -67,12 +77,12 @@
     margin: 0 auto;
 }
 
-.button-back{
-    height:auto !important;
+.button-back {
+    height: auto !important;
     width: 250px !important;
 }
 
-.width-100{
+.width-100 {
     width: 100% !important;
 }
 

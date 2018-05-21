@@ -1,4 +1,10 @@
 /*CUSTOM*/
+.table {
+    display: block !important;
+    overflow-x: auto !important;
+    white-space: nowrap !important;
+}
+
 li.disabled > span {
     cursor: not-allowed !important;
 }
@@ -53,6 +59,10 @@ li.disabled > span {
 
 .font-size-70 {
     font-size: 70px !important;
+}
+
+.font-size-60 {
+    font-size: 60px !important;
 }
 
 .Lennertpopupbottommargin {

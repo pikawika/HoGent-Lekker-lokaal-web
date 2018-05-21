@@ -1,5 +1,6 @@
 @using Microsoft.AspNetCore.Identity
 @using LekkerLokaal.Models.Domain
+@using System.Security.Claims;
 
 @inject SignInManager<ApplicationUser> SignInManager
 @inject UserManager<ApplicationUser> UserManager
@@ -12,10 +13,11 @@
 <hr class="dotted-hr mrl-20 visible-xs">
 @if (SignInManager.IsSignedIn(User))
 {
+    IList<Claim> claims = await UserManager.GetClaimsAsync(user);
     <form asp-area="" asp-controller="Account" asp-action="Logout" method="post" id="logoutForm" class="navbar-right" asp-route-returnUrl="@ViewData["ReturnUrl"]"></form>
     <li class="visible-xs">
         @if (@gebruikerRepository.GetBy(user.Email) != null)
-                {
+        {
             <a asp-area="" asp-controller="Manage" asp-action="Index">
                 <p>Welkom, @gebruikerRepository.GetBy(user.Email).Voornaam</p>
             </a>
@@ -33,9 +35,30 @@
             </a>
         }
     </li>
-            <li class="visible-xs">
-                <a onclick="document.getElementById('logoutForm').submit();">Meld af</a>
-            </li>
+
+
+    @if (claims.Any(claimpje => claimpje.Value == "admin"))
+    {
+        <li class="visible-xs">
+            <a asp-controller="Admin" asp-action="Dashboard">Admin panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+        </li>
+    }
+    else if (claims.Any(claimpje => claimpje.Value == "handelaar"))
+    {
+        <li class="visible-xs">
+            <a asp-controller="Manage" asp-action="GebruikteCadeaubonnenOverzicht">Handelaar panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+        </li>
+    }
+    else
+    {
+        <li class="visible-xs">
+            <a asp-controller="Account" asp-action="RegisterHandelaar">Wordt handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+        </li>
+    }
+
+    <li class="visible-xs">
+        <a onclick="document.getElementById('logoutForm').submit();">Meld af</a>
+    </li>
 
 }
 else
