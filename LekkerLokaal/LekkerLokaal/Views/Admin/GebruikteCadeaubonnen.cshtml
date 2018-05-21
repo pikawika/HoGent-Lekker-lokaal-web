@@ -11,13 +11,17 @@
     }
     else
     {
+        <div class="text-center">
+            <h1><i class="fas fa-search"></i> Zoek op naam</h1>
+            <input onkeyup="zoekenInTabelFunctie()" type="text" class="ggg max-width-500px" id="zoekenInTabelTekstVeld" placeholder="Geef de naam van de cadeaubon in">
+        </div>
         <div class="table-agile-info">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     Gebruikte Cadeaubonnen
                 </div>
                 <div>
-                    <table class="table">
+                    <table class="table" id="tabelOmInTeZoeken">
                         <thead>
                             <tr>
                                 <th>DATUM</th>

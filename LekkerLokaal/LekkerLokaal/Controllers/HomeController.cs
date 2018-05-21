@@ -128,6 +128,14 @@ namespace LekkerLokaal.Controllers
         public IActionResult Detail(int Id)
         {
             Bon aangeklikteBon = _bonRepository.GetByBonId(Id);
+            if (aangeklikteBon == null)
+            {
+                aangeklikteBon = _bonRepository.GetByBonIdNotAccepted(Id);
+            }
+            if (aangeklikteBon == null)
+            {
+                return RedirectToAction("Index");
+            }
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
             return View(new DetailViewModel(aangeklikteBon));
         }

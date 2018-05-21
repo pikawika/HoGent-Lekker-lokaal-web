@@ -23,9 +23,26 @@ li.disabled > span {
     transition: color 0.2s ease-out;
 }
 
+::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white;
+    opacity: .5; /* Firefox */
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+    color: white;
+}
+
+::-ms-input-placeholder { /* Microsoft Edge */
+    color: white;
+}
+
 .color-darkblue:hover {
     color: #fff !important;
 
+}
+
+.max-width-500px {
+    max-width: 500px;
 }
 
 
