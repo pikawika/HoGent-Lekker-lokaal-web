@@ -1,6 +1,15 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+@media only screen and (max-width: 576px) {
+    .table {
+        display: block !important;
+        min-width: 100%;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
+}
+
 .dotted-hr {
     border-top: 4px dashed #1E90FF
 }
