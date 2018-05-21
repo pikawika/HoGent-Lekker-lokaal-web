@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 using LekkerLokaal.Models;
 using LekkerLokaal.Models.AdminViewModels;
@@ -14,6 +15,11 @@ using System.Net.Mail;
 using System.IO;
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using QRCoder;
+using System.Drawing;
+using System.Drawing.Imaging;
+using iTextSharp.text;
+using iTextSharp.text.pdf;
 
 namespace LekkerLokaal.Controllers
 {
@@ -25,6 +31,7 @@ namespace LekkerLokaal.Controllers
         private readonly SignInManager<ApplicationUser> _signInManager;
         private readonly IHandelaarRepository _handelaarRepository;
         private readonly IBonRepository _bonRepository;
+        private readonly IGebruikerRepository _gebruikerRepository;
         private readonly ICategorieRepository _categorieRepository;
         private readonly IBestellijnRepository _bestellijnRepository;
         private readonly ILogger _logger;
@@ -35,6 +42,7 @@ namespace LekkerLokaal.Controllers
             SignInManager<ApplicationUser> signInManager,
             IHandelaarRepository handelaarRepository,
             IBonRepository bonRepository,
+            IGebruikerRepository gebruikerRepository,
             IBestellijnRepository bestellijnRepository,
             ICategorieRepository categorieRepository)
         {
@@ -42,6 +50,7 @@ namespace LekkerLokaal.Controllers
             _logger = logger;
             _signInManager = signInManager;
             _handelaarRepository = handelaarRepository;
+            _gebruikerRepository = gebruikerRepository;
             _bonRepository = bonRepository;
             _bestellijnRepository = bestellijnRepository;
             _categorieRepository = categorieRepository;
@@ -814,6 +823,7 @@ namespace LekkerLokaal.Controllers
         [HttpGet]
         public IActionResult VerkochteCadeaubonBekijken(int Id)
         {
+            GeneratePDF(Id);
             return View(new VerkochteCadeaubonBekijkenViewModel(_bestellijnRepository.GetById(Id)));
         }
 
@@ -827,6 +837,82 @@ namespace LekkerLokaal.Controllers
         public IActionResult GebruikteCadeaubonnen()
         {
             return View(new OverzichtGebruikteBonnenViewModel(_bestellijnRepository.getGebruikteBonnen()));
+        }
+
+        public void GenerateQR(string qrcode)
+        {
+            var bonPath = @"wwwroot/images/temp/";
+            QRCodeGenerator qrGenerator = new QRCodeGenerator();
+            QRCodeData qrCodeData = qrGenerator.CreateQrCode(qrcode, QRCodeGenerator.ECCLevel.Q);
+            QRCode qrCode = new QRCode(qrCodeData);
+            Bitmap qrCodeImage = qrCode.GetGraphic(20);
+            qrCodeImage.Save(bonPath + qrcode + ".png", ImageFormat.Png);
+        }
+
+        public void GeneratePDF(int Id)
+        {
+            var bestellijn = _bestellijnRepository.GetById(Id);
+            var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
+            var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
+            var user = _userManager.GetUserAsync(User);
+            var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
+
+            ViewData["path"] = @"/pdf/c_" + bestellijn.QRCode + ".pdf";
+
+            string waarde = String.Format("€ " + bestellijn.Prijs.ToString());
+            string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
+            string geldigheid = String.Format("Geldig tot: " + verval);
+            var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
+            //Paragraph bedrag = new Paragraph(waarde);
+            //Paragraph p2 = new Paragraph(geldigheid);
+            GenerateQR(bestellijn.QRCode);
+            var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
+            iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
+            jpg.ScaleToFit(145f, 145f);
+            var logoURL = @"wwwroot/images/logo.png";
+            var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
+            var kadoURL = @"wwwroot/images/kado.jpg";
+            iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
+            iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
+            iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
+            //Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
+
+            logoLL.SetAbsolutePosition(20, 15);
+            logoLL.ScaleToFit(188f, 100f);
+            logoHandelaar.ScaleToFit(188f, 100f);
+            logoHandelaar.SetAbsolutePosition(410, 15);
+            jpg.SetAbsolutePosition(225, 10);
+            kado.SetAbsolutePosition(65, 161);
+
+            iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
+            iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
+
+            Paragraph bedrag = new Paragraph(waarde, arial);
+            bedrag.SpacingAfter = 50;
+            Paragraph naamHandelaar = new Paragraph(bon.Naam, arial);
+            naamHandelaar.SpacingAfter = 0;
+            Paragraph geschonkenDoor = new Paragraph("Geschonken door: " + gebruiker.Voornaam, arial18);
+            Paragraph geldig = new Paragraph(geldigheid, arial18);
+
+            bedrag.Alignment = Element.ALIGN_LEFT;
+
+            naamHandelaar.Alignment = Element.ALIGN_LEFT;
+            geschonkenDoor.Alignment = Element.ALIGN_LEFT;
+            geldig.Alignment = Element.ALIGN_LEFT;
+
+            PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf", FileMode.Create));
+            pdf.Open();
+            pdf.Add(logoLL);
+            pdf.Add(logoHandelaar);
+            pdf.Add(naamHandelaar);
+            pdf.Add(bedrag);
+            pdf.Add(geschonkenDoor);
+            pdf.Add(geldig);
+            pdf.Add(jpg);
+            pdf.Add(kado);
+            pdf.Close();
+
+            System.IO.File.Delete(imageURL);
         }
 
     }
