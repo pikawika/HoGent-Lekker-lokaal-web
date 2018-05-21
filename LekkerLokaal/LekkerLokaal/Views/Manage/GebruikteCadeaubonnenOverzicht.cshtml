@@ -1,0 +1,88 @@
+﻿@model LekkerLokaal.Models.ManageViewModels.GebruikteCadeaubonnenOverzichtViewModel
+@{
+    ViewData["Title"] = "Gebruikte cadeaubonnen bij uw handelszaak";
+}
+
+<div class="page-container pt-10 pb-40">
+    <div class="container width-100">
+        <section class="sign-area panel p-40 mr-10">
+            <h3 class="pb-20 text-center">@ViewData["Title"]</h3>
+            <div class="row">
+                <div>
+
+                    @if (Model.AlleGebruikteCadeaubonnen == null || !Model.AlleGebruikteCadeaubonnen.Any())
+                    {
+                        <h1 class="text-center mtb-40 color-white">Er zijn momenteel geen gebruikte bonnen!</h1>
+                    }
+                    else
+                    {
+                        <div class="table-agile-info">
+                            <div class="panel panel-default">
+                                <div>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>DATUM</th>
+                                                <th>BON</th>
+                                                <th>BEDRAG</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @foreach (var bon in Model.AlleGebruikteCadeaubonnen)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@bon.Datum</th>
+                                                    <td>
+                                                        @bon.Naam
+                                                    </td>
+                                                    <td>
+                                                        <h5>&euro; @bon.Bedrag</h5>
+                                                    </td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <div class="pagination-section prl-10 pt-10"></div>
+                            </div>
+                        </div>
+                    }
+
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+
+<script>
+    jQuery(function ($) {
+        // alle items bepalen door tr's te tellen
+        var items = $("table tbody tr");
+
+        var aantItems = items.length;
+        var perPagina = 10;
+
+        // alleen de eerste x (perPagina) tonen
+        items.slice(perPagina).hide();
+
+        // paginatie in div plakken
+        $(".pagination-section").pagination({
+            items: aantItems,
+            itemsOnPage: perPagina,
+            //default theme da ok met bootstrap samenwerkt
+            cssStyle: "light-theme",
+
+            // pageklik
+            onPageClick: function (pageNumber) {
+                // bepalen van waar tot waar
+                var showFrom = perPagina * (pageNumber - 1);
+                var showTo = showFrom + perPagina;
+
+                // alles hiden
+                items.hide()
+                    // degene die je wel moet tonen terug showen
+                    .slice(showFrom, showTo).show();
+            }
+        });
+    });
+</script>
