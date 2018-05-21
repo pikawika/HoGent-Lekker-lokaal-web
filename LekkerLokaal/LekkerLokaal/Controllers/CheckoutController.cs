@@ -264,11 +264,12 @@ namespace LekkerLokaal.Controllers
             logoLL.ScaleToFit(188f, 100f);
             logoHandelaar.ScaleToFit(188f, 100f);
             logoHandelaar.SetAbsolutePosition(410, 15);
-            jpg.SetAbsolutePosition(225, 10);
+            jpg.SetAbsolutePosition(225, 0);
             kado.SetAbsolutePosition(65, 161);
 
             iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
             iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
+            iTextSharp.text.Font arialSmall = FontFactory.GetFont("Arial", 7);
 
             Paragraph bedrag = new Paragraph(waarde, arial);
             bedrag.SpacingAfter = 50;
@@ -281,8 +282,15 @@ namespace LekkerLokaal.Controllers
             geschonkenDoor.Alignment = Element.ALIGN_LEFT;
             geldig.Alignment = Element.ALIGN_LEFT;
 
+            Phrase qrCodeString = new Phrase(bestelLijn.QRCode, arialSmall);
+
             PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestelLijn.QRCode + ".pdf", FileMode.Create));
             pdf.Open();
+
+            ColumnText.ShowTextAligned(writer.DirectContent,
+            Element.ALIGN_MIDDLE, qrCodeString, 195, 4, 0);
+
+
             pdf.Add(logoLL);
             pdf.Add(logoHandelaar);
             pdf.Add(naamHandelaar);

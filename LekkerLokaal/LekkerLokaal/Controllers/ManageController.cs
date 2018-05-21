@@ -626,8 +626,6 @@ namespace LekkerLokaal.Controllers
             string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
             string geldigheid = String.Format("Geldig tot: " + verval);
             var pdf = new Document(PageSize.A5.Rotate(), 81, 225, 25, 0);
-            //Paragraph bedrag = new Paragraph(waarde);
-            //Paragraph p2 = new Paragraph(geldigheid);
             GenerateQR(bestellijn.QRCode);
             var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
             iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
@@ -638,7 +636,6 @@ namespace LekkerLokaal.Controllers
             iTextSharp.text.Image kado = iTextSharp.text.Image.GetInstance(kadoURL);
             iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
             iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-            //Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
 
             logoLL.SetAbsolutePosition(20, 15);
             logoLL.ScaleToFit(188f, 100f);
