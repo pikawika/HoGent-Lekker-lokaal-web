@@ -77,7 +77,8 @@ namespace LekkerLokaal.Controllers
                         bestellijn.AanmaakDatum,
                         handelaar.HandelaarId,
                         handelaar.Emailadres,
-                        bestellijn.Geldigheid
+                        bestellijn.Geldigheid,
+                        bon.BonId
                     };
                 }
             }
