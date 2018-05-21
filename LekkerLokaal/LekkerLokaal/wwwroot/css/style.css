@@ -1,6 +1,9 @@
 ﻿@charset "utf-8";
 
 /* ––––––––––––––>>> Custom  <<<–––––––––––– */
+.dotted-hr {
+    border-top: 4px dashed #1E90FF
+}
 
 .spacing-10 {
     border-collapse: separate; /* allow spacing between cell borders */
@@ -21,10 +24,8 @@
 }
 
 .detail-groot {
-    max-height:502px;
-    min-height:502px;
+    max-height: 502px;
     max-width: 753px;
-    min-width:753px;
     display: inline-block !important;
     overflow: hidden;
 }
@@ -38,16 +39,37 @@
     overflow: hidden;
 }
 
+@media only screen and (max-width: 768px) {
+    .addedToWinkelModalContent {
+        background-color: #fefefe !important;
+        margin: auto !important;
+        padding: 20px !important;
+        border: 4px solid #1E90FF !important;
+        border-radius: 25px !important;
+        max-width: 90% !important;
+        max-height: 80% !important;
+    }
+}
+
+@media only screen and (max-width: 576px) {
+    .or {
+        display: none;
+    }
+
+    .col-left {
+        border-right: none !important;
+    }
+}
+
 .bedankt {
     max-width: 1000px; /* you have to have a size or this method doesn't work */
-    
     position: relative; /* positions out of the flow, but according to the nearest parent */
     top: 0;
     right: 0; /* confuse it i guess */
     bottom: 0;
     left: 0;
     margin: auto; /* make em equal */
-    text-align:center;
+    text-align: center;
 }
 
 .loading-image {
@@ -55,12 +77,12 @@
     margin: 0 auto;
 }
 
-.button-back{
-    height:auto !important;
+.button-back {
+    height: auto !important;
     width: 250px !important;
 }
 
-.width-100{
+.width-100 {
     width: 100% !important;
 }
 
@@ -1396,7 +1418,7 @@
 .main-footer {
     text-align: center;
     background: #1e2b35;
-    height: 60px;
+    min-height: 60px;
 }
 
     .main-footer p {

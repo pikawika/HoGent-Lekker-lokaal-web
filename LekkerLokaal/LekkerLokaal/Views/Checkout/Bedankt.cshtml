@@ -6,55 +6,27 @@
     ViewData["Title"] = "Bedankt";
 
 }
-<div class="bedankt panel">
-    <div class="col-xs-12 center-block  mtb-60">
-        <h2 class="mb-15 text-center">Bedankt voor uw bestelling bij Lekker Lokaal!</h2>
-        <p>
-            Uw cadeaubonnen worden verzonden via e-mail.
-            Indien u een ontvanger heeft toegevoegd aan een cadeaubon,
-            zal deze persoon ook via e-mail de cadeaubon ontvangen samen met de persoonlijke boodschap.
-        </p>
-        <p class="hidden-xs">Hieronder vindt u een overzicht van alle aangekochte cadeaubonnen. U kunt ze vanaf deze ook afdrukken of downloaden.</p>
-
-        <div class="custom-checkbox mb-20">
-            <input type="checkbox" id="factuurChck">
-            <label class="color-mid" for="factuurChck">Maak een factuur aan voor deze aankoop</label>
-        </div>
-
-        <div id="factuur" class="collapse ">
-            <div class="">
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Officiële Naam" asp-for="Naam">
-                    <span asp-validation-for="Naam" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="Uw naam" asp-for="Adres">
-                    <span asp-validation-for="Adres" class="text-danger"></span>
-                </div>
-                <div class="form-group">
-                    <input type="text" class="form-control" placeholder="BTW-Nummer" asp-for="BtwNumummer">
-                    <span asp-validation-for="BtwNumummer" class="text-danger"></span>
-                </div>
-            </div>
-        </div>
-        <p><a asp-controller="Home" asp-action="Index">Klik hier om terug te gaan naar de home pagina.</a></p>
-        <a asp-controller="Home" asp-action="Index"><img src="~/images/icons/home/home.png"></a>
-    </div>
-
-    <div class="hidden-xs col-lg-12">
-        @for (int i = 1; i < (((IList<BestelLijn>)ViewData["bestellijnen"]).Count + 1); i++)
+<div class="bedankt panel mb-40">
+    <div class="col-xs-12 center-block  mtb-40">
+        <h1 class="mb-15 text-center">Bedankt voor uw bestelling bij Lekker Lokaal!</h1>
+        <h3 class="mb-15">
+            U heeft een e-mail ontvangen met alle bestelde bonnen.
+        </h3>
+        <h5>
+            Indien u hiervoor gekozen heeft, <br> zal de ontvanger zijn bon ook via e-mail ontvangen hebben.
+        </h5>
+        @if (((IList<BestelLijn>)ViewData["bestellijnen"]) != null)
         {
-
-            <h2 class="mb-15 text-center">Bon @i: @(((IList<BestelLijn>)ViewData["bestellijnen"])[i - 1].Bon.Naam)</h2>
-            <div class="p-20">
-                <embed src="~/pdf/c_@(((IList<BestelLijn>)ViewData["bestellijnen"])[i-1].QRCode).pdf" width="700" height="500" type='application/pdf'>
-            </div>
-
+            @if (((IList<BestelLijn>)ViewData["bestellijnen"]).Count == 1)
+            {
+                <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/c_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubon</a></p>
+            }
+            else
+            {
+                <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/merged_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubonnen</a></p>
+            }
         }
+        <p><a asp-controller="Home" asp-action="Index"><img src="~/images/icons/home/home.png"></a></p>
+        <p><a asp-controller="Home" asp-action="Index">keer terug naar de home pagina.</a></p>
     </div>
 </div>
-<script>
-    $('#factuurChck').change(function () {
-        $('#factuur').collapse("toggle");
-    });
-</script>

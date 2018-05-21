@@ -172,24 +172,71 @@ namespace LekkerLokaal.Controllers
             bestellijnen.ToList().ForEach(bl => bl.Geldigheid = Geldigheid.Geldig);
             IList<BestelLijn> bestellijn = bestellijnen.ToList();
             _gebruikerRepository.SaveChanges();
-            //ViewData["bestellijnen"] = bestellijn;
+
+            VerstuurMails(bestelling);
 
             return RedirectToAction(nameof(CheckoutController.Bedankt), "Checkout", new { Id });
         }
 
-        public IActionResult Bedankt(int Id)
+        public async Task<IActionResult> Bedankt(int Id)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
 
             Bestelling bestelling = _bestellingRepository.GetBy(Id);
 
+            if (_signInManager.IsSignedIn(User))
+            {
+                var aanvragerUser = await _userManager.GetUserAsync(User);
+                var aanvrager = _gebruikerRepository.GetBy(aanvragerUser.Email);
+                var besteller = _gebruikerRepository.GetByBestellingId(Id);
 
-            ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
-            IList<BestelLijn> bestellijn = bestellijnen.ToList();
-            ViewData["bestellijnen"] = bestellijn;
-            
-            VerstuurMails(bestelling);
+                if (aanvrager == besteller)
+                {
+                    ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
+                    IList<BestelLijn> bestellijnlijst = bestellijnen.ToList();
+                    ViewData["bestellijnen"] = bestellijnlijst;
 
+                    // step 1: creation of a document-object
+                    Document document = new Document();
+
+                    // step 2: we create a writer that listens to the document
+                    PdfCopy writer = new PdfCopy(document, new FileStream(@"wwwroot/pdf/merged_" + bestellijnlijst[0].QRCode + ".pdf", FileMode.Create));
+                    if (writer != null)
+                    {
+                        // step 3: we open the document
+                        document.Open();
+
+                        foreach (var bestellijn in bestellijnen)
+                        {
+                            // we create a reader for a certain document
+                            PdfReader reader = new PdfReader(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf");
+                            reader.ConsolidateNamedDestinations();
+
+                            // step 4: we add content
+                            for (int i = 1; i <= reader.NumberOfPages; i++)
+                            {
+                                PdfImportedPage page = writer.GetImportedPage(reader, i);
+                                writer.AddPage(page);
+                            }
+
+                            //PRAcroForm form = reader.AcroForm;
+                            //if (form != null)
+                            //{
+                            //    writer.CopyAcroForm(reader);
+                            //}
+
+                            reader.Close();
+                        }
+
+                        // step 5: we close the document and writer
+                        writer.Close();
+                        document.Close();
+                        return View();
+                    }
+                }
+            }
+            //anoniem of hackattempt -> geen download knop
+            ViewData["bestellijnen"] = null;
             return View();
         }
 
@@ -267,7 +314,7 @@ namespace LekkerLokaal.Controllers
             for (int i = 0; i < bestellijnen.Count; i++)
             {
                 attachment = new Attachment(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
-                attachment.Name = "cadeaubon.pdf";
+                attachment.Name = "cadeaubon" + (i + 1) + ".pdf";
                 message.Attachments.Add(attachment);
 
             }
@@ -312,14 +359,9 @@ namespace LekkerLokaal.Controllers
                     SmtpServer2.EnableSsl = true;
                     SmtpServer2.Send(message2);
                     attachment.Dispose();
-                    
+
                 }
             }
-
-            //for (int i = 0; i < bestellijnen.Count; i++)
-            //{
-            //    System.IO.File.Delete(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
-            //}
         }
 
     }

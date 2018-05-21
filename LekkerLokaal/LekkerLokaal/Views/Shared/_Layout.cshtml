@@ -90,7 +90,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                    <div>
+                                    <div class="hidden-xs">
                                         @await Html.PartialAsync("_LoginPartial")
                                     </div>
                                     <div class="col-xs-4 t-xs-center t-md-right hidden-xs">
@@ -157,6 +157,7 @@
                                     <li class="Over-List-Item">
                                         <a asp-controller="Home" asp-action="About">Over ons</a>
                                     </li>
+                                    @await Html.PartialAsync("_LoginPartialMobile")
                                 </ul>
                             </div>
                             <div class="nav-menu nav-menu-fixed Handelaar-List-Item hidden-sm background-blue-xs">
@@ -173,20 +174,20 @@
                                     IList<Claim> claims = await UserManager.GetClaimsAsync(user);
                                     @if (claims.Any(claimpje => claimpje.Value == "admin"))
                                     {
-                                        <a asp-controller="Admin" asp-action="Dashboard" class="hidden-xs">Admin<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                        <a asp-controller="Admin" asp-action="Dashboard" class="hidden-xs">Admin panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                     else if (claims.Any(claimpje => claimpje.Value == "handelaar"))
                                     {
-                                        /*<a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>*/
+                                        <a asp-controller="Manage" asp-action="GebruikteCadeaubonnenOverzicht" class="hidden-xs">Handelaar panel<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                     else
                                     {
-                                        <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                        <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Wordt handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                     }
                                 }
                                 else
                                 {
-                                    <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
+                                    <a asp-controller="Account" asp-action="RegisterHandelaar" class="hidden-xs">Wordt handelaar<i class="fas fa-long-arrow-alt-right ml-10"></i></a>
                                 }
                             </div>
                         </nav>
@@ -232,11 +233,10 @@
                     <div class="col-xs-12">
                         <p class="text-center" style="color: white">Wij aanvaarden volgende betaalmethoden:</p>
                         <div class="payment-methods t-center">
-                            <span><img src="/images/icons/payment/paypal.jpg" alt=""></span>
-                            <span><img src="/images/icons/payment/visa.jpg" alt=""></span>
-                            <span><img src="/images/icons/payment/mastercard.jpg" alt=""></span>
-                            <span><img src="/images/icons/payment/discover.jpg" alt=""></span>
-                            <span><img src="/images/icons/payment/american.jpg" alt=""></span>
+                            <span><img src="~/images/icons/payment/paypal.jpg" alt=""></span>
+                            <span><img src="~/images/icons/payment/visa.jpg" alt=""></span>
+                            <span><img src="~/images/icons/payment/mastercard.jpg" alt=""></span>
+                            <span><img src="~/images/icons/payment/bancontact.jpg" alt=""></span>
                         </div>
                     </div>
                 </div>
@@ -312,7 +312,7 @@
         <div id="addedToWinkelmandPopup" class="modal addedToWinkelModal">
             <div id="addedToWinkelModalContent" class="addedToWinkelModalContent">
                 <span class="closeWinkelMandPopup" id="closeWinkelMandPopup">&times;</span>
-                <img id="winkelMandPopupBonAfbeelding" class="hidden-xs col-lg-7">
+                <img id="winkelMandPopupBonAfbeelding" class="hidden-xs hidden-sm hidden-md col-lg-7">
                 <div class="col-xs-12 col-lg-5">
                     <h3 class="color-blue winkelMandPopupBonNaam" id="winkelMandPopupBonNaam"> <i class="far fa-check-circle font-26"></i> Titel</h3>
                     <br>
