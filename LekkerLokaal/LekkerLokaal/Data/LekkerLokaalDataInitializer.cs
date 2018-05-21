@@ -227,12 +227,20 @@ namespace LekkerLokaal.Data
                 _dbContext.Gebruikers.AddRange(personen);
 
                 //admin user met admin ww @dministr@tor
-                await CreateUser("lekkerlokaalst@gmail.com", "lekkerlokaalst@gmail.com", "@dministr@tor", "admin");
+                await CreateUser("lekkerlokaalst@gmail.com", "lekkerlokaalst@gmail.com", "BraLenBreAdmin", "admin");
+                await CreateUser("admin@lekkerlokaal.be", "admin@lekkerlokaal.be", "BraLenBreProductions", "admin");
                 await CreateUser("klant@gmail.com", "klant@gmail.com", "klantje", "klant");
                 _dbContext.SaveChanges();
                 _dbContext.Gebruikers.Add(new Gebruiker
                 {
                     Emailadres = "lekkerlokaalst@gmail.com",
+                    Voornaam = "BraLenBre",
+                    Familienaam = "Groep één",
+                    Geslacht = Geslacht.Man
+                });
+                _dbContext.Gebruikers.Add(new Gebruiker
+                {
+                    Emailadres = "admin@lekkerlokaal.be",
                     Voornaam = "Joachim",
                     Familienaam = "Rummens",
                     Geslacht = Geslacht.Man
