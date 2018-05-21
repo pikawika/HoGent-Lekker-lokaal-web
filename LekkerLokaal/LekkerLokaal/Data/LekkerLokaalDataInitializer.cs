@@ -42,81 +42,81 @@ namespace LekkerLokaal.Data
                 _dbContext.Categorieen.AddRange(categories);
 
 
-                Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE 458 110 637", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE 476 452 406", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE 260 147 662", "Ravensteinstraat", "50", "1000", "Brussel", true);
-                Handelaar Handelaar04 = new Handelaar("De Coninck's", "coninck@gmail.com", "De lekkerste cocktails zijn hier te vinden. Alleen hier te vinden tegen een goed prijs!", "BE 568 718 486", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar01 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "Met deze bon kan u lekker komen eten in ons restaurant genaamd Restaurant Lekker.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar02 = new Handelaar("Bontinck", "bontinck@gmail.com", "Met deze bon kan u onze met passie gemaakte dessertjes komen proeven.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar03 = new Handelaar("Schets", "schets@gmail.com", "Alle lokale bieren zijn hier te vinden! Er kan ook plaatselijk geproefd worden.", "BE0123456789", "Ravensteinstraat", "50", "1000", "Brussel", true);
+                Handelaar Handelaar04 = new Handelaar("De Coninck's", "coninck@gmail.com", "De lekkerste cocktails zijn hier te vinden. Alleen hier te vinden tegen een goed prijs!", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
                 Handelaar Handelaar05 = new Handelaar("Wijnproeverij BraLenBre", "Handelaar01@gmail.com", "Met deze bon kan je bij wijnproeverij BraLenBre genieten van een gezellige avond. Je zal er meer uitleg krijgen over de verschillende soorten wijnen en van elke soort mogen proeven, allen vergezeld met een passend hapje. Eens de sessie over is kan met de bon, wijn gekocht worden. Enkele merken die je hier kan verwachten zijn: Francis Ford Coppola, Franschhoek Cellar, Fushs Reinhardt, Gran Sasso, Grande Provence, Guadalupe, Guillamen I Muri, ..."
-                    , "BE 305 678 557", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar06 = new Handelaar("'t Sandwichke", "sandwich@gmail.com", "Voor al uw vegatarische noden kan u bij ons terecht.", "BE 360 874 067", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar07 = new Handelaar("McDonalds", "mc@gmail.com", "Voor een snelle hap moet u bij ons zijn!", "BE 686 045 577", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar08 = new Handelaar("SOS Piet", "sospiet@gmail.com", "Het echte restaurant van SOS Piet. Altijd de beste maatlijd voor een gezonde prijs!", "BE 035 212 186", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar09 = new Handelaar("CoBoSh", "cobosh@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 327", "Arbeidstraat", "14", "9300", "Aalst", true);
+                    , "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar06 = new Handelaar("'t Sandwichke", "sandwich@gmail.com", "Voor al uw vegatarische noden kan u bij ons terecht.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar07 = new Handelaar("McDonalds", "mc@gmail.com", "Voor een snelle hap moet u bij ons zijn!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar08 = new Handelaar("SOS Piet", "sospiet@gmail.com", "Het echte restaurant van SOS Piet. Altijd de beste maatlijd voor een gezonde prijs!", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar09 = new Handelaar("CoBoSh", "cobosh@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
 
-                Handelaar Handelaar11 = new Handelaar("Sanitas", "sanitas@gmail.com", "Bekenste fitness van Wichelen.", "BE 652 760 933", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar12 = new Handelaar("Fitness Basic-Fit", "basicfit@gmail.com", "Bekenste fitness van België met vestigingen over het hele land.", "BE 652 760 204", "Ravensteinstraat", "50", "1000", "Brussel", true);
+                Handelaar Handelaar11 = new Handelaar("Sanitas", "sanitas@gmail.com", "Bekenste fitness van Wichelen.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar12 = new Handelaar("Fitness Basic-Fit", "basicfit@gmail.com", "Bekenste fitness van België met vestigingen over het hele land.", "BE0123456789", "Ravensteinstraat", "50", "1000", "Brussel", true);
 
-                Handelaar Handelaar21 = new Handelaar("Aalst", "aalst@gmail.com", "De recreatiedienst van Aalst staat in voor tal van speciale activiteiten.", "BE 656 564 542", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar22 = new Handelaar("Walibi", "walibi@gmail.com", "Een pretpark voor klein en groot.", "BE 557 481 167", "Mechelsesteenweg ", "138", "9200", "Dendermonde", true);
-                Handelaar Handelaar23 = new Handelaar("NMBS", "trein@gmail.com", "De spoorwegdienst van België. Staakt liever dan te werken.", "BE 815 755 657", "Torhoutsesteenweg", "611", "8400", "Oostende", true);
-                Handelaar Handelaar24 = new Handelaar("Disneyland Paris", "parijs@gmail.com", "Een van de grootste pretparken in Frankrijk.", "BE 802 726 432", "Leopoldlaan", "1", "1930", "Zaventem", true);
-                Handelaar Handelaar25 = new Handelaar("Hamme", "hamme@gmail.com", "Stad Hamme", "BE 263 282 287", "Rue Joseph Lamotte", "2", "5580", "Han-sur-Lesse", true);
-                Handelaar Handelaar26 = new Handelaar("Breemdonk", "breemdonk@gmail.com", "Gemeente Breemdonk", "BE 703 431 007", "Brandstraat", "57", "2830", "Willebroek", true);
+                Handelaar Handelaar21 = new Handelaar("Aalst", "aalst@gmail.com", "De recreatiedienst van Aalst staat in voor tal van speciale activiteiten.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar22 = new Handelaar("Walibi", "walibi@gmail.com", "Een pretpark voor klein en groot.", "BE0123456789", "Mechelsesteenweg ", "138", "9200", "Dendermonde", true);
+                Handelaar Handelaar23 = new Handelaar("NMBS", "trein@gmail.com", "De spoorwegdienst van België. Staakt liever dan te werken.", "BE0123456789", "Torhoutsesteenweg", "611", "8400", "Oostende", true);
+                Handelaar Handelaar24 = new Handelaar("Disneyland Paris", "parijs@gmail.com", "Een van de grootste pretparken in Frankrijk.", "BE0123456789", "Leopoldlaan", "1", "1930", "Zaventem", true);
+                Handelaar Handelaar25 = new Handelaar("Hamme", "hamme@gmail.com", "Stad Hamme", "BE0123456789", "Rue Joseph Lamotte", "2", "5580", "Han-sur-Lesse", true);
+                Handelaar Handelaar26 = new Handelaar("Breemdonk", "breemdonk@gmail.com", "Gemeente Breemdonk", "BE0123456789", "Brandstraat", "57", "2830", "Willebroek", true);
 
-                Handelaar Handelaar31 = new Handelaar("Brenk", "brenk@gmail.com", "Stel zelf uw setje bloemen samen met deze bon.", "BE 680 614 508", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar32 = new Handelaar("De Mol", "molleken@gmail.com", "Heb je grond nodig voor in een pot", "BE 415 655 144", "Kasteeldreef", "15", "9340", "Lede", true);
-                Handelaar Handelaar33 = new Handelaar("Schelfhout", "schelfhout@gmail.com", "Schelfhout, waar moet je andes zijn!", "BE 376 468 351", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar34 = new Handelaar("Liesje", "lies@gmail.com", "Lies, verkoopt ook wel een madelief", "BE 368 526 450", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar35 = new Handelaar("Funa Lima", "funa_lima@gmail.com", "Vissen, fonteinen, dieraccesoire...", "BE 146 730 153", "Kasteeldreef", "15", "9340", "Lede", true);
-                Handelaar Handelaar36 = new Handelaar("Blub", "blub@gmail.com", "Blub, de winkel voor vis enthousiasten", "BE 227 103 604", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar37 = new Handelaar("G-Bont", "grasb@gmail.com", "Jaren ervaring in het snoeien van alle gazons", "BE 250 653 443", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar38 = new Handelaar("Aveve", "aveve@gmail.com", "Bij de boerenbond vind je altijd wat je zoekt", "BE 262 005 555", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar39 = new Handelaar("Groener Gras", "groengras@gmail.com", "Gazon voorzieningen voor iedereen die een groen gazon wil!", "BE 773 202 200", "Cooppallaan ", "40", "9230", "Wetteren", true);
+                Handelaar Handelaar31 = new Handelaar("Brenk", "brenk@gmail.com", "Stel zelf uw setje bloemen samen met deze bon.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar32 = new Handelaar("De Mol", "molleken@gmail.com", "Heb je grond nodig voor in een pot", "BE0123456789", "Kasteeldreef", "15", "9340", "Lede", true);
+                Handelaar Handelaar33 = new Handelaar("Schelfhout", "schelfhout@gmail.com", "Schelfhout, waar moet je andes zijn!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar34 = new Handelaar("Liesje", "lies@gmail.com", "Lies, verkoopt ook wel een madelief", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar35 = new Handelaar("Funa Lima", "funa_lima@gmail.com", "Vissen, fonteinen, dieraccesoire...", "BE0123456789", "Kasteeldreef", "15", "9340", "Lede", true);
+                Handelaar Handelaar36 = new Handelaar("Blub", "blub@gmail.com", "Blub, de winkel voor vis enthousiasten", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar37 = new Handelaar("G-Bont", "grasb@gmail.com", "Jaren ervaring in het snoeien van alle gazons", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar38 = new Handelaar("Aveve", "aveve@gmail.com", "Bij de boerenbond vind je altijd wat je zoekt", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar39 = new Handelaar("Groener Gras", "groengras@gmail.com", "Gazon voorzieningen voor iedereen die een groen gazon wil!", "BE0123456789", "Cooppallaan ", "40", "9230", "Wetteren", true);
 
-                Handelaar Handelaar41 = new Handelaar("Pukkelpop", "ppk@gmail.com", "Tickets of coupons voor pukkelpok.", "BE 146 815 077", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar42 = new Handelaar("Bierfeesten", "bierfeesten@gmail.com", "De veste feesten in Lokeren: De Lokerse Bierfeesten!", "BE 146 815 077", "Kleine Dam", "1", "9160", "Lokeren", true);
-                Handelaar Handelaar43 = new Handelaar("Gentse Feesten", "feesten-gent@gmail.com", "Het grootste feest in Gent!", "BE 241 543 268", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar44 = new Handelaar("Gameforce", "games@gmail.com", "Grootste game beurs in België. Nu ook kortingsbonnen verkrijgbaar!", "BE 027 033 486", "Ravensteinstraat", "50", "1000", "Brussel", true);
-                Handelaar Handelaar45 = new Handelaar("Garage Ferrari", "ferfer@gmail.com", "Beste cadeau voor een Ferrari liefhebber!", "BE 022 334 837", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar46 = new Handelaar("Facts", "facts@gmail.com", "Een van de grootste cosplay beurzen van België.", "BE 721 088 160", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar41 = new Handelaar("Pukkelpop", "ppk@gmail.com", "Tickets of coupons voor pukkelpok.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar42 = new Handelaar("Bierfeesten", "bierfeesten@gmail.com", "De veste feesten in Lokeren: De Lokerse Bierfeesten!", "BE0123456789", "Kleine Dam", "1", "9160", "Lokeren", true);
+                Handelaar Handelaar43 = new Handelaar("Gentse Feesten", "feesten-gent@gmail.com", "Het grootste feest in Gent!", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar44 = new Handelaar("Gameforce", "games@gmail.com", "Grootste game beurs in België. Nu ook kortingsbonnen verkrijgbaar!", "BE0123456789", "Ravensteinstraat", "50", "1000", "Brussel", true);
+                Handelaar Handelaar45 = new Handelaar("Garage Ferrari", "ferfer@gmail.com", "Beste cadeau voor een Ferrari liefhebber!", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar46 = new Handelaar("Facts", "facts@gmail.com", "Een van de grootste cosplay beurzen van België.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
 
-                Handelaar Handelaar51 = new Handelaar("Nude", "nude@gmail.com", "Het bekendste merk voor beauty producten!", "BE 736 764 083", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar52 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE 705 084 728", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar53 = new Handelaar("Ici Paris", "ici-paris@gmail.com", "Voor een parfum moet je bij ons zijn!", "BE 780 260 577", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar51 = new Handelaar("Nude", "nude@gmail.com", "Het bekendste merk voor beauty producten!", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar52 = new Handelaar("Restaurant Lekker", "lekker@gmail.com", "korte beschrijving", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar53 = new Handelaar("Ici Paris", "ici-paris@gmail.com", "Voor een parfum moet je bij ons zijn!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
 
-                Handelaar Handelaar61 = new Handelaar("Sofa & Co", "sofaco@gmail.com", "Vind de gepaste sofa bij ons!", "BE 047 046 168", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar62 = new Handelaar("Deba", "deba@gmail.com", "Voor elk interieur stuk kan u bij ons terecht!", "BE 442 622 757", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar63 = new Handelaar("Ikea", "ikea@gmail.com", "Hebt u iets nodig tegen een lage prijs dan kan u altijd bij ons terecht.", "BE 578 162 528", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar64 = new Handelaar("Leen Bakker", "leen-bakker@gmail.com", "Iets kopen dan bent u op de juiste plaats.", "BE 365 006 747", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar65 = new Handelaar("Salon Ballon", "salon-ballon@gmail.com", "De speciaal zaak die u zocht.", "BE 063 225 184", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar66 = new Handelaar("Donald", "donald-keukens@gmail.com", "Keuken nodig kom dan bij ons!", "BE 206 664 777", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar67 = new Handelaar("Modern Gent", "gent-modern@gmail.com", "Modern interieur tegen een prijsje.", "BE 140 378 850", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar68 = new Handelaar("Kunst & Kitch", "kunst-kitch@gmail.com", "Kunst hoeft niet altijd lelijk te zijn.", "BE 466 753 428", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar69 = new Handelaar("Gill", "gill@gmail.com", "Interieur tegen een prijsje.", "BE 171 663 118", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar61 = new Handelaar("Sofa & Co", "sofaco@gmail.com", "Vind de gepaste sofa bij ons!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar62 = new Handelaar("Deba", "deba@gmail.com", "Voor elk interieur stuk kan u bij ons terecht!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar63 = new Handelaar("Ikea", "ikea@gmail.com", "Hebt u iets nodig tegen een lage prijs dan kan u altijd bij ons terecht.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar64 = new Handelaar("Leen Bakker", "leen-bakker@gmail.com", "Iets kopen dan bent u op de juiste plaats.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar65 = new Handelaar("Salon Ballon", "salon-ballon@gmail.com", "De speciaal zaak die u zocht.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar66 = new Handelaar("Donald", "donald-keukens@gmail.com", "Keuken nodig kom dan bij ons!", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar67 = new Handelaar("Modern Gent", "gent-modern@gmail.com", "Modern interieur tegen een prijsje.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar68 = new Handelaar("Kunst & Kitch", "kunst-kitch@gmail.com", "Kunst hoeft niet altijd lelijk te zijn.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar69 = new Handelaar("Gill", "gill@gmail.com", "Interieur tegen een prijsje.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
 
-                Handelaar Handelaar71 = new Handelaar("C&A", "cena@gmail.com", "De Kleding winkel van Aalst.", "BE 081 135 314", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar72 = new Handelaar("AS Adventure", "as-adventure@gmail.com", "Outdoor kleding en alles voor je outdoor ervaring.", "BE 266 553 200", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar73 = new Handelaar("Ultra Wet", "ultra-wet@gmail.com", "De kldeingspecialist voor droog en nat.", "BE 446 384 070", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar74 = new Handelaar("Holiday", "holiday@gmail.com", "Voor al uw feestkledij.", "BE 313 402 666", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar75 = new Handelaar("Bram's Fashion", "bram@gmail.com", "Voor ieder wat wilds.", "BE 402 156 543", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar76 = new Handelaar("Bontinck Panther's", "panther@gmail.com", "Pants from Bontinck are dreams for legs.", "BE 521 001 106", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar77 = new Handelaar("Bre Bra", "bre-bra@gmail.com", "Van A tot Z  u vindt het bij ons.", "BE 521 001 103", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar78 = new Handelaar("Pikantje", "pikant@gmail.com", "Eroiek u vindt het bij ons.", "BE 214 232 134", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar71 = new Handelaar("C&A", "cena@gmail.com", "De Kleding winkel van Aalst.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar72 = new Handelaar("AS Adventure", "as-adventure@gmail.com", "Outdoor kleding en alles voor je outdoor ervaring.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar73 = new Handelaar("Ultra Wet", "ultra-wet@gmail.com", "De kldeingspecialist voor droog en nat.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar74 = new Handelaar("Holiday", "holiday@gmail.com", "Voor al uw feestkledij.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar75 = new Handelaar("Bram's Fashion", "bram@gmail.com", "Voor ieder wat wilds.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar76 = new Handelaar("Bontinck Panther's", "panther@gmail.com", "Pants from Bontinck are dreams for legs.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar77 = new Handelaar("Bre Bra", "bre-bra@gmail.com", "Van A tot Z  u vindt het bij ons.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar78 = new Handelaar("Pikantje", "pikant@gmail.com", "Eroiek u vindt het bij ons.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
 
-                Handelaar Handelaar81 = new Handelaar("Fnac", "fnac@gmail.com", "De multimedia specialist in Europa.", "BE 588 137 284", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar82 = new Handelaar("Mediamarkt", "mediamarkt@gmail.com", "Electronica tegen een spot prijs.", "BE 812 573 731", "Mechelsesteenweg", "138", "9200", "Dendermonde", true);
-                Handelaar Handelaar83 = new Handelaar("Van Den Borre", "vandenborre@gmail.com", "Koffiezets voor 12€.", "BE 253 500 301", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar84 = new Handelaar("Bontinck IT", "bontinck-it@gmail.com", "Een probleempje groot of klein, dan moet je bij IT Lennert zijn.", "BE 561 032 078", "Maalse Steenweg", "50", "8310", "Brugge", true);
-                Handelaar Handelaar85 = new Handelaar("Schets Apple Premium", "schets-apple@gmail.com", "Alle laatste Apple producten moet u bij ons zijn.", "BE 786 056 478", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar86 = new Handelaar("Lab9", "lab-9@gmail.com", "Officiele Apple reseller.", "BE 075 881 157", "Arbeidstraat", "14", "9300", "Aalst", true);
-                Handelaar Handelaar87 = new Handelaar("De Conincks Screen Repair", "screenrepair@gmail.com", "Een ongelukje is snel gebeurd.", "BE 068 276 242", "Paepestraat", "178", "9260", "Wichelen", true);
-                Handelaar Handelaar88 = new Handelaar("Medion Custom", "medion@gmail.com", "Medion laptop op maat gemaakt", "BE 116 728 241", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
-                Handelaar Handelaar89 = new Handelaar("Dell Dinosaur", "dell@gmail.com", "MS Dos specialist", "BE 774 855 608", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar81 = new Handelaar("Fnac", "fnac@gmail.com", "De multimedia specialist in Europa.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar82 = new Handelaar("Mediamarkt", "mediamarkt@gmail.com", "Electronica tegen een spot prijs.", "BE0123456789", "Mechelsesteenweg", "138", "9200", "Dendermonde", true);
+                Handelaar Handelaar83 = new Handelaar("Van Den Borre", "vandenborre@gmail.com", "Koffiezets voor 12€.", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar84 = new Handelaar("Bontinck IT", "bontinck-it@gmail.com", "Een probleempje groot of klein, dan moet je bij IT Lennert zijn.", "BE0123456789", "Maalse Steenweg", "50", "8310", "Brugge", true);
+                Handelaar Handelaar85 = new Handelaar("Schets Apple Premium", "schets-apple@gmail.com", "Alle laatste Apple producten moet u bij ons zijn.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar86 = new Handelaar("Lab9", "lab-9@gmail.com", "Officiele Apple reseller.", "BE0123456789", "Arbeidstraat", "14", "9300", "Aalst", true);
+                Handelaar Handelaar87 = new Handelaar("De Conincks Screen Repair", "screenrepair@gmail.com", "Een ongelukje is snel gebeurd.", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
+                Handelaar Handelaar88 = new Handelaar("Medion Custom", "medion@gmail.com", "Medion laptop op maat gemaakt", "BE0123456789", "Sint-Pietersnieuwstraat", "124", "9000", "Gent", true);
+                Handelaar Handelaar89 = new Handelaar("Dell Dinosaur", "dell@gmail.com", "MS Dos specialist", "BE0123456789", "Paepestraat", "178", "9260", "Wichelen", true);
 
 
-                Handelaar Handelaar91 = new Handelaar("Generiek", "generiek@gmail.com", "generiek", "BE 774 123 518", "Ravensteinstraat", "50", "1000", "Brussel", true);
+                Handelaar Handelaar91 = new Handelaar("Generiek", "generiek@gmail.com", "generiek", "BE0123456789", "Ravensteinstraat", "50", "1000", "Brussel", true);
 
-                Handelaar Handelaar10 = new Handelaar("ChaCha", "chacha@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE 570 261 847", "Ravensteinstraat", "50", "1000", "Brussel", true);
+                Handelaar Handelaar10 = new Handelaar("ChaCha", "chacha@gmail.com", "Voor de beste wijnen moet je bij ons zijn! Hierbij kan altijd een hapje geserveerd worden.", "BE0123456789", "Ravensteinstraat", "50", "1000", "Brussel", true);
                 var handelaars = new List<Handelaar>
                 {
                     Handelaar01, Handelaar02, Handelaar03, Handelaar04, Handelaar05, Handelaar06, Handelaar07, Handelaar08, Handelaar09, Handelaar10, Handelaar11, Handelaar21, Handelaar22, Handelaar23, Handelaar24, Handelaar25, Handelaar26, Handelaar31, Handelaar32, Handelaar33, Handelaar34, Handelaar35, Handelaar36, Handelaar37, Handelaar38, Handelaar39, Handelaar41, Handelaar42, Handelaar43, Handelaar44, Handelaar45, Handelaar46, Handelaar51, Handelaar52, Handelaar53, Handelaar61, Handelaar62, Handelaar63, Handelaar64, Handelaar65, Handelaar66, Handelaar67, Handelaar68, Handelaar69, Handelaar71, Handelaar72, Handelaar73, Handelaar74, Handelaar75, Handelaar76, Handelaar77, Handelaar78, Handelaar81, Handelaar82, Handelaar83, Handelaar84, Handelaar85, Handelaar86, Handelaar87, Handelaar88, Handelaar89, Handelaar91
@@ -226,11 +226,12 @@ namespace LekkerLokaal.Data
 
                 _dbContext.Gebruikers.AddRange(personen);
 
-                //admin user met admin ww @dministr@tor
+                _dbContext.SaveChanges();
+
+                //admin voorbeeld
                 await CreateUser("lekkerlokaalst@gmail.com", "lekkerlokaalst@gmail.com", "BraLenBreAdmin", "admin");
                 await CreateUser("admin@lekkerlokaal.be", "admin@lekkerlokaal.be", "BraLenBreProductions", "admin");
                 await CreateUser("klant@gmail.com", "klant@gmail.com", "klantje", "klant");
-                _dbContext.SaveChanges();
                 _dbContext.Gebruikers.Add(new Gebruiker
                 {
                     Emailadres = "lekkerlokaalst@gmail.com",
@@ -252,6 +253,21 @@ namespace LekkerLokaal.Data
                     Familienaam = "Janssens",
                     Geslacht = Geslacht.Man
                 });
+
+                _dbContext.SaveChanges();
+
+                //handelaar voorbeeld
+                var user = new ApplicationUser { UserName = "info@lokaalmarkt.be", Email = "info@lokaalmarkt.be", EmailConfirmed = true };
+                var wachtwoord = "BraLenBreProductions";
+                var result = await _userManager.CreateAsync(user, wachtwoord);
+                await _userManager.AddClaimAsync(user, new Claim(ClaimTypes.Role, "handelaar"));
+
+                Handelaar lokaalmarkt = new Handelaar("Lokaal", "info@lokaalmarkt.be", "Lokaal is een overdekte boerenmarkt met bar en kinderatelier.", "BE7748556081", "Denderstraat", "22", "9300", "Aalst", true);
+                _dbContext.Handelaars.Add(lokaalmarkt);
+
+                Bon lokaalmarktBon = new Bon("Lokaalmarkt Aalst", 15, 300, "De beste markt van aalst!", 27, @"images\bon\71\", eten_drinken, "Denderstraat", "22", "9300", "Aalst", lokaalmarkt, Aanbieding.Geen, true);
+                _dbContext.Bonnen.Add(lokaalmarktBon);
+
                 _dbContext.SaveChanges();
             }
         }

@@ -24,6 +24,7 @@ namespace LekkerLokaal.Models.ManageViewModels
 
         [Required(ErrorMessage = "{0} is verplicht.")]
         [Display(Name = "BTW nummer")]
+        [RegularExpression("(BE|be)[0-9]{10}", ErrorMessage = "Gelieve een btw nummer alsvolgt in te geven: BE012345689")]
         [DataType(DataType.Text)]
         public string BTW_Nummer { get; set; }
 
