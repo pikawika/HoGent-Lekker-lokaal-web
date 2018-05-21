@@ -30,7 +30,7 @@ namespace LekkerLokaal.Models.AdminViewModels
             DateTime startdatum = DateTime.Now.Date;
             startdatum = startdatum.AddMonths(-1);
 
-            RecentVerkochteLijst = verkochteBonnen1M.Reverse().Take(10).Select(b => new OverzichtVerkochteBonnenLijstViewModel(b)).ToList();
+            RecentVerkochteLijst = verkochteBonnen1M.OrderByDescending(b => b.AanmaakDatum).Take(10).Select(b => new OverzichtVerkochteBonnenLijstViewModel(b)).ToList();
             GrafiekDataLijst = new List<DashboardGrafiekViewModel>();
 
             for (DateTime currentDate = startdatum; currentDate.Date <= DateTime.Today; currentDate = currentDate.AddDays(1))

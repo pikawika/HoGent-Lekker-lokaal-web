@@ -12,7 +12,7 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public OverzichtVerkochteBonnenViewModel(IEnumerable<BestelLijn> verkochteBonnen)
         {
-            VerkochteBonnenLijst = verkochteBonnen.Reverse().Select(b => new OverzichtVerkochteBonnenLijstViewModel(b)).ToList();
+            VerkochteBonnenLijst = verkochteBonnen.OrderByDescending(b => b.AanmaakDatum).Select(b => new OverzichtVerkochteBonnenLijstViewModel(b)).ToList();
         }
 
     }

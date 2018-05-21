@@ -187,7 +187,7 @@ namespace LekkerLokaal
                    template: "{controller=Checkout}/{action=BonnenBruikbaarMaken}/{Id}");
 
             });
-            datainit.InitializeData().Wait();
+            //datainit.InitializeData().Wait();
         }
     }
 }
