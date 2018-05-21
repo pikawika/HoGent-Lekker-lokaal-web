@@ -591,7 +591,7 @@ namespace LekkerLokaal.Controllers
             }
             return View();
         }
-
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> BonAanmaken(int Id)
@@ -690,7 +690,6 @@ namespace LekkerLokaal.Controllers
 
             if (ModelState.IsValid)
             {
-
                 var bestellijn = _bestellijnRepository.GetById(Id);
                 var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
                 var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
@@ -739,10 +738,7 @@ namespace LekkerLokaal.Controllers
                 naamHandelaar.Alignment = Element.ALIGN_LEFT;
                 geschonkenDoor.Alignment = Element.ALIGN_LEFT;
                 geldig.Alignment = Element.ALIGN_LEFT;
-
-
-
-
+                
                 PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf", FileMode.Create));
                 pdf.Open();
                 pdf.Add(logoLL);

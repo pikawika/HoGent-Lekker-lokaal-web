@@ -2,6 +2,9 @@
     ViewData["Title"] = "Details van bestelling";
 
 }
+<div class="button-back">
+    <a asp-controller="Manage" asp-action="PersoonlijkeBestellingen" class="btn btn-sm btn-block mb-10"><i class="fas fa-arrow-left"></i> Terug naar bestellingen</a>
+</div>
 
 <div class="center">
     <embed src="@(ViewData["path"])" width="800" height="500" type='application/pdf'>

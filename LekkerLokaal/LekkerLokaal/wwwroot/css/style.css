@@ -13,6 +13,48 @@
     left: 15%;
 }
 
+.foto {
+    max-height: 213px;
+    max-width: 320px;
+    display: inline-block !important;
+    overflow: hidden;
+}
+
+.detail-groot {
+    max-height:502px;
+    min-height:502px;
+    max-width: 753px;
+    min-width:753px;
+    display: inline-block !important;
+    overflow: hidden;
+}
+
+.detail-klein {
+    max-height: 101px;
+    min-height: 101px;
+    max-width: 150px;
+    min-width: 150px;
+    display: inline-block !important;
+    overflow: hidden;
+}
+
+.bedankt {
+    max-width: 1000px; /* you have to have a size or this method doesn't work */
+    
+    position: relative; /* positions out of the flow, but according to the nearest parent */
+    top: 0;
+    right: 0; /* confuse it i guess */
+    bottom: 0;
+    left: 0;
+    margin: auto; /* make em equal */
+    text-align:center;
+}
+
+.loading-image {
+    display: block;
+    margin: 0 auto;
+}
+
 .button-back{
     height:auto !important;
     width: 250px !important;
@@ -20,10 +62,6 @@
 
 .width-100{
     width: 100% !important;
-}
-
-.width-625{
-    width: 625px !important;
 }
 
 .bg-light-blue {

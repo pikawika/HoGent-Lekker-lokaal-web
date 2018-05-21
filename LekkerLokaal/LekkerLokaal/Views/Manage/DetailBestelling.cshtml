@@ -27,6 +27,7 @@
                         <th>Nr.</th>
                         <th>Naam cadeaubon</th>
                         <th>Bedrag</th>
+                        <th>Geldigheid</th>
                     </tr>
                     @foreach (BestelLijn b in (IEnumerable<BestelLijn>)ViewData["bestellijnen"])
                     {
@@ -34,6 +35,7 @@
                         <td>@(teller++)</td>
                         <td>@b.Bon.Naam</td>
                         <td>€ @b.Prijs</td>
+                        <td>@b.Geldigheid</td>
                         <td>
                             <form asp-controller="Manage" asp-action="Bon" asp-route-id="@b.BestelLijnId" method="post">
                                 <button type="submit" class="btn btn-sm btn-block">Bekijk cadeaubon</button>

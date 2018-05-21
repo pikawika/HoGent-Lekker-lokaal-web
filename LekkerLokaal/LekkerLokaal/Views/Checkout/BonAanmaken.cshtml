@@ -74,13 +74,12 @@
                                     <input type="text" class="form-control" placeholder="E-mailadres ontvanger" asp-for="EmailOntvanger">
                                     <span asp-validation-for="EmailOntvanger" class="text-danger"></span>
                                 </div>
-                            </div>
-
-                            <div class="form-group">
-                                <label asp-for="Boodschap">Persoonlijke boodschap (optioneel)<span class="color-mid"></span></label>
-                                <textarea rows="4" type="text" class="form-control" placeholder="Uw persoonlijke boodschap" asp-for="Boodschap"></textarea>
-                                <span asp-validation-for="Boodschap" class="text-danger"></span>
-                            </div>
+                                <div class="form-group">
+                                    <label asp-for="Boodschap">Persoonlijke boodschap<span class="color-mid"></span></label>
+                                    <textarea rows="4" type="text" class="form-control" placeholder="Uw persoonlijke boodschap" asp-for="Boodschap"></textarea>
+                                    <span asp-validation-for="Boodschap" class="text-danger"></span>
+                                </div>
+                            </div>  
 
                             @if (index == 0)
                             {
@@ -133,12 +132,6 @@
         </div>
     </div>
 </main>
-
-<script>
-    $('#factuurChck').change(function () {
-        $('#factuur').collapse("toggle");
-    });
-</script>
 
 <script>
     $('#ontvangerToevoegen').change(function () {
