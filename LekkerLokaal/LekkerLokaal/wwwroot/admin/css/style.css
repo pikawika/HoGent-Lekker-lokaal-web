@@ -1,8 +1,13 @@
 /*CUSTOM*/
-.table {
-    display: block !important;
-    overflow-x: auto !important;
-    white-space: nowrap !important;
+
+
+@media only screen and (max-width: 576px) {
+    .table {
+        display: block !important;
+        min-width: 100%;
+        overflow-x: auto !important;
+        white-space: nowrap !important;
+    }
 }
 
 li.disabled > span {

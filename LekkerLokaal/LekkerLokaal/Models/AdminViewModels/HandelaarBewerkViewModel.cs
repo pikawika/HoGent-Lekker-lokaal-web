@@ -45,6 +45,7 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         [Required]
         [DataType(DataType.Text)]
+        [RegularExpression("(BE|be)[0-9]{10}", ErrorMessage = "Gelieve een btw nummer alsvolgt in te geven: BE012345689")]
         [Display(Name = "Btw nummer")]
         public string BTW_Nummer { get; set; }
 
