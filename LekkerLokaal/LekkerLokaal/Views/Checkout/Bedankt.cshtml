@@ -15,13 +15,16 @@
         <h5>
             Indien u hiervoor gekozen heeft, <br> zal de ontvanger zijn bon ook via e-mail ontvangen hebben.
         </h5>
-        @if (((IList<BestelLijn>)ViewData["bestellijnen"]).Count == 1)
+        @if (((IList<BestelLijn>)ViewData["bestellijnen"]) != null)
         {
-            <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/c_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubon</a></p>
-        }
-        else
-        {
-            <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/merged_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubonnen</a></p>
+            @if (((IList<BestelLijn>)ViewData["bestellijnen"]).Count == 1)
+            {
+                <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/c_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubon</a></p>
+            }
+            else
+            {
+                <p class="mt-20"><a class="btn btn-sm btn-small" target="_blank" href="~/pdf/merged_@(((IList<BestelLijn>)ViewData["bestellijnen"])[0].QRCode).pdf">Download gekochte cadeaubonnen</a></p>
+            }
         }
         <p><a asp-controller="Home" asp-action="Index"><img src="~/images/icons/home/home.png"></a></p>
         <p><a asp-controller="Home" asp-action="Index">keer terug naar de home pagina.</a></p>
