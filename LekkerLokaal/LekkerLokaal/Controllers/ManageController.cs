@@ -581,94 +581,23 @@ namespace LekkerLokaal.Controllers
                 if (gebruiker == gebruiker2)
                 {
                     ICollection<BestelLijn> bestellijnen = new HashSet<BestelLijn>();
+
+                    //maak vervallen bonnen vervallen (visueel)
+                    foreach (BestelLijn bon in bestelling.BestelLijnen.Where(bl => bl.Geldigheid == Geldigheid.Geldig && DateTime.Today > bl.AanmaakDatum.AddYears(1)))
+                    {
+                        bon.Geldigheid = Geldigheid.Verlopen;
+                    }
+                    _bestellijnRepository.SaveChanges();
+
+                    //toon bonnen in bestelling en maak bijhorende pdf's
                     foreach (BestelLijn bl in bestelling.BestelLijnen)
                     {
+                        GeneratePDF(bl.BestelLijnId);
                         bestellijnen.Add(_bestellijnRepository.GetById(bl.BestelLijnId));
                     }
                     ViewData["bestellijnen"] = bestellijnen;
                     ViewData["bestelid"] = bestelling.BestellingId;
                 }
-            }
-            return View();
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> BonAanmaken(int Id)
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            if (ModelState.IsValid)
-            {
-                var bonPath = @"wwwroot/pdf";
-
-                var bestellijn = _bestellijnRepository.GetById(Id);
-                var bon = _bonRepository.GetByBonId(bestellijn.Bon.BonId);
-                var handelaar = _handelaarRepository.GetByHandelaarId(bon.Handelaar.HandelaarId);
-
-                string waarde = String.Format("Bedrag: € " + bestellijn.Prijs);
-                string verval = bestellijn.AanmaakDatum.AddYears(1).ToString("dd/MM/yyyy");
-                string geldigheid = String.Format("Geldig tot: " + verval);
-                var doc1 = new Document(PageSize.A5);
-                Paragraph p1 = new Paragraph(waarde);
-                Paragraph p2 = new Paragraph(geldigheid);
-                GenerateQR(bestellijn.QRCode);
-                var imageURL = @"wwwroot/images/temp/" + bestellijn.QRCode + ".png";
-                iTextSharp.text.Image jpg = iTextSharp.text.Image.GetInstance(imageURL);
-                jpg.ScaleToFit(140f, 140f);
-                var logoURL = @"wwwroot/images/logo.png";
-                var logoURLHandelaar = @"wwwroot" + handelaar.GetLogoPath();
-                iTextSharp.text.Image logoLL = iTextSharp.text.Image.GetInstance(logoURL);
-                iTextSharp.text.Image logoHandelaar = iTextSharp.text.Image.GetInstance(logoURLHandelaar);
-                Paragraph naamBon = new Paragraph("Bon: " + bon.Naam);
-
-                logoLL.SetAbsolutePosition(30, 515);
-                logoLL.ScalePercent(50f);
-                logoHandelaar.ScalePercent(10f);
-
-                jpg.Alignment = Element.ALIGN_CENTER;
-                naamBon.Alignment = Element.ALIGN_CENTER;
-                p1.Alignment = Element.ALIGN_CENTER;
-                p2.Alignment = Element.ALIGN_CENTER;
-                logoHandelaar.Alignment = Element.ALIGN_RIGHT;
-
-
-                PdfWriter.GetInstance(doc1, new FileStream(bonPath + "/Doc1.pdf", FileMode.Create));
-
-                doc1.Open();
-                doc1.Add(logoLL);
-                doc1.Add(logoHandelaar);
-                doc1.Add(naamBon);
-                doc1.Add(p1);
-                doc1.Add(p2);
-                doc1.Add(jpg);
-                doc1.Close();
-
-                System.IO.File.Delete(imageURL);
-
-                var user = _userManager.GetUserAsync(User);
-                var gebruiker = _gebruikerRepository.GetBy(user.Result.Email);
-
-                string to = String.Format("lekkerlokaalst@gmail.com");
-                MailMessage message = new MailMessage();
-                message.From = new MailAddress("lekkerlokaalst@gmail.com");
-                message.To.Add(to);
-                message.Subject = "Uw cadeaubon van Lekker Lokaal.";
-
-                message.Body = String.Format("Beste " + gebruiker.Voornaam + " " + gebruiker.Familienaam + System.Environment.NewLine + System.Environment.NewLine + "U hebt uw cadeaubon opnieuw opgevraagd." + System.Environment.NewLine + "U vindt deze in bijlage." + System.Environment.NewLine + System.Environment.NewLine + "Met vriendelijke groeten," + System.Environment.NewLine + "Het Lekker Lokaal team");
-
-
-                var attachment = new Attachment(@"wwwroot/pdf/doc1.pdf");
-                attachment.Name = "cadeaubon.pdf";
-                message.Attachments.Add(attachment);
-                var SmtpServer = new SmtpClient("smtp.gmail.com");
-                SmtpServer.Port = 587;
-                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
-                SmtpServer.EnableSsl = true;
-                SmtpServer.Send(message);
-                attachment.Dispose();
-                //System.IO.File.Delete(@"wwwroot/pdf/doc1.pdf");
-
-                return RedirectToAction(nameof(HomeController.Index), "Home");
             }
             return View();
         }
@@ -715,11 +644,12 @@ namespace LekkerLokaal.Controllers
             logoLL.ScaleToFit(188f, 100f);
             logoHandelaar.ScaleToFit(188f, 100f);
             logoHandelaar.SetAbsolutePosition(410, 15);
-            jpg.SetAbsolutePosition(225, 10);
+            jpg.SetAbsolutePosition(225, 0);
             kado.SetAbsolutePosition(65, 161);
 
             iTextSharp.text.Font arial = FontFactory.GetFont("Arial", 23);
             iTextSharp.text.Font arial18 = FontFactory.GetFont("Arial", 14);
+            iTextSharp.text.Font arialSmall = FontFactory.GetFont("Arial", 7);
 
             Paragraph bedrag = new Paragraph(waarde, arial);
             bedrag.SpacingAfter = 50;
@@ -734,8 +664,14 @@ namespace LekkerLokaal.Controllers
             geschonkenDoor.Alignment = Element.ALIGN_LEFT;
             geldig.Alignment = Element.ALIGN_LEFT;
 
+            Phrase qrCodeString = new Phrase(bestellijn.QRCode, arialSmall);
+
             PdfWriter writer = PdfWriter.GetInstance(pdf, new FileStream(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf", FileMode.Create));
             pdf.Open();
+
+            ColumnText.ShowTextAligned(writer.DirectContent,
+            Element.ALIGN_MIDDLE, qrCodeString, 195, 4, 0);
+
             pdf.Add(logoLL);
             pdf.Add(logoHandelaar);
             pdf.Add(naamHandelaar);
@@ -748,21 +684,6 @@ namespace LekkerLokaal.Controllers
 
             System.IO.File.Delete(imageURL);
         }
-
-        [HttpPost]
-        public async Task<IActionResult> Bon(int Id)
-        {
-            ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-
-            if (ModelState.IsValid)
-            {
-                GeneratePDF(Id);
-            }
-
-            return View();
-        }
-
-
         #region Helpers
 
         private void AddErrors(IdentityResult result)

@@ -1399,7 +1399,7 @@
 .main-footer {
     text-align: center;
     background: #1e2b35;
-    height: 60px;
+    min-height: 60px;
 }
 
     .main-footer p {

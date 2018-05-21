@@ -53,6 +53,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<BestelLijn> getVerkochteBonnen()
         {
+            MaakVervallenBonnenVerlopen();
             return _bestellijnen.Where(b => b.Geldigheid != Geldigheid.Ongeldig).Include(b => b.Bon);
         }
 
@@ -63,6 +64,15 @@ namespace LekkerLokaal.Data.Repositories
             return _bestellijnen.Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig)).Include(b => b.Bon);
         }
 
+        public void MaakVervallenBonnenVerlopen()
+        {
+            foreach (BestelLijn bon in _bestellijnen.Where(bl => bl.Geldigheid == Geldigheid.Geldig && DateTime.Today > bl.AanmaakDatum.AddYears(1)))
+            {
+                bon.Geldigheid = Geldigheid.Verlopen;
+            }
+            SaveChanges();
+        }
+        
         public void SaveChanges()
         {
             _dbContext.SaveChanges();
