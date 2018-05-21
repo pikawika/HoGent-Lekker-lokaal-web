@@ -78,7 +78,8 @@ namespace LekkerLokaal.Controllers
                         handelaar.HandelaarId,
                         handelaar.Emailadres,
                         bestellijn.Geldigheid,
-                        bon.BonId
+                        bon.BonId,
+                        afbeelding = bon.GetThumbPath()
                     };
                 }
             }
