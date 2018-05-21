@@ -95,7 +95,7 @@ function updateWinkelMandCount() {
         type: "GET",
         url: '/Home/UpdateWinkelwagenCount'
     }).done(function (result) {
-        $("#layout-winkelwagen-count").html(result);
+        $(".layout-winkelwagen-count").html(result);
     });
 }
 
