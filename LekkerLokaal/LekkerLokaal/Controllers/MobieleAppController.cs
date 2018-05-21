@@ -95,7 +95,7 @@ namespace LekkerLokaal.Controllers
                 {
                     bestellijn.Handelaar = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
                     bestellijn.Geldigheid = model.bepaalGeldigheid();
-                    if (bestellijn.GebruikDatum == null)
+                    if (bestellijn.Geldigheid == Geldigheid.Gebruikt)
                         bestellijn.GebruikDatum = DateTime.Today;
                     _bestellijnRepository.SaveChanges();
                 }

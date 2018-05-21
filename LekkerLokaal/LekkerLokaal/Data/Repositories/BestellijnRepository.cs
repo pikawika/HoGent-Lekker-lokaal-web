@@ -36,7 +36,31 @@ namespace LekkerLokaal.Data.Repositories
 
         public BestelLijn GetById(int bestellijnid)
         {
-            return _bestellijnen.Include(b => b.Bon).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
+            return _bestellijnen.Include(b => b.Bon).Include(b => b.Handelaar).SingleOrDefault(g => g.BestelLijnId == bestellijnid);
+        }
+
+        public IEnumerable<BestelLijn> getGebruikteBonnen()
+        {
+            return _bestellijnen.Where(b => b.Geldigheid == Geldigheid.Gebruikt).Include(b => b.Bon);
+        }
+
+        public IEnumerable<BestelLijn> getGebruiktDezeMaand()
+        {
+            DateTime date = DateTime.Now.Date;
+            date = date.AddMonths(-1);
+            return _bestellijnen.Where(b => (b.GebruikDatum >= date) && (b.Geldigheid == Geldigheid.Gebruikt));
+        }
+
+        public IEnumerable<BestelLijn> getVerkochteBonnen()
+        {
+            return _bestellijnen.Where(b => b.Geldigheid != Geldigheid.Ongeldig).Include(b => b.Bon);
+        }
+
+        public IEnumerable<BestelLijn> getVerkochtDezeMaand()
+        {
+            DateTime date = DateTime.Now.Date;
+            date = date.AddMonths(-1);
+            return _bestellijnen.Where(b => (b.AanmaakDatum >= date) && (b.Geldigheid != Geldigheid.Ongeldig)).Include(b => b.Bon);
         }
 
         public void SaveChanges()

@@ -1,13 +1,13 @@
-﻿@model LekkerLokaal.Models.AdminViewModels.OverzichtVerkochteBonnenViewModel
+﻿@model LekkerLokaal.Models.AdminViewModels.OverzichtGebruikteBonnenViewModel
 @{
-    ViewData["Title"] = "Verkochte cadeaubonnen";
+    ViewData["Title"] = "Uitbetaalde cadeaubonnen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    @if (Model.VerkochteBonnenLijst == null || !Model.VerkochteBonnenLijst.Any())
+    @if (Model.GebruikteBonnenLijst == null || !Model.GebruikteBonnenLijst.Any())
     {
-        <h1 class="text-center mtb-40 color-white">Er zijn momenteel geen verkochte bonnen!</h1>
+        <h1 class="text-center mtb-40 color-white">Er zijn momenteel geen gebruikte bonnen!</h1>
     }
     else
     {
@@ -18,7 +18,7 @@
         <div class="table-agile-info">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    Verkochte Cadeaubonnen
+                    Gebruikte Cadeaubonnen
                 </div>
                 <div>
                     <table class="table" id="tabelOmInTeZoeken">
@@ -32,7 +32,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var bon in Model.VerkochteBonnenLijst)
+                            @foreach (var bon in Model.GebruikteBonnenLijst)
                             {
                                 <tr>
                                     <th scope="row">@bon.Datum</th>

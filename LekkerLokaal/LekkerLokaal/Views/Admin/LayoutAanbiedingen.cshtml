@@ -1,9 +1,87 @@
-﻿
+﻿@model LekkerLokaal.Models.AdminViewModels.CadeaubonOverzichtViewModel
+
 @{
-    ViewData["Title"] = "LayoutAanbiedingen";
+    ViewData["Title"] = "Cadeaubonnen in aanbiedingen";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
 <section class="wrapper">
-    <h1>TEMP</h1>
+    @if (Model.AlleCadeaubonnenGesorteerdOpId == null || !Model.AlleCadeaubonnenGesorteerdOpId.Any())
+    {
+        <h1 class="force-whiteColor text-center mtb-40">Er zijn momenteel geen cadeaubonnen als aanbieding ingesteld!</h1>
+        <br>
+        <a asp-controller="Admin" asp-action="ZoekCadeaubon"><h3 class="force-whiteColor text-center">Als u een bon wilt toevoegen aan de aanbiedingen tab kan u deze hier zoeken en het aanbieding type op "standaard" of "slider" zetten. Indien u voor slider kiest zal deze zowel in de slider op de homepagina staan als op de aanbieding tab.</h3></a>
+    }
+    else
+    {
+        <a asp-controller="Admin" asp-action="ZoekCadeaubon"><h3 class="force-whiteColor text-center">Als u een bon wilt toevoegen aan de aanbiedingen tab kan u deze hier zoeken en het aanbieding type op "standaard" of "slider" zetten. Indien u voor slider kiest zal deze zowel in de slider op de homepagina staan als op de aanbieding tab.</h3></a>
+        <br>
+        <h3 class="force-whiteColor text-center">Als u een bon wilt weghalen uit de aanbieding tab zet u zijn aanbieding type op "geen" via de detail pagina.</h3>
+        <div class="table-agile-info">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    Aanbiedingen op LekkerLokaal.be
+                </div>
+                <div>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Naam handelaar</th>
+                                <th>Naam cadeaubon</th>
+                                <th>Gemeente</th>
+                                <th>Aantal verkocht</th>
+                                <th>Detail</th>
+                            </tr>
+                        </thead>
+                        @foreach (var bon in Model.AlleCadeaubonnenGesorteerdOpId)
+                        {
+                            <tbody>
+                                <tr>
+                                    <td>@bon.Handelaarnaam</td>
+                                    <td>@bon.BonNaam</td>
+                                    <td>@bon.Gemeente</td>
+                                    <td>@bon.AantalBonnenInSysteem</td>
+                                    <td><a asp-controller="Admin" asp-action="CadeaubonBewerken" asp-route-id="@bon.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
+                                </tr>
+                            </tbody>
+                        }
+                    </table>
+                </div>
+                <div class="pagination-section prl-30 ptb-30"></div>
+            </div>
+        </div>
+    }
 </section>
+
+<script>
+    jQuery(function ($) {
+        // alle items bepalen door tr's te tellen
+        var items = $("table tbody tr");
+
+        var aantItems = items.length;
+        var perPagina = 10;
+
+        // alleen de eerste x (perPagina) tonen
+        items.slice(perPagina).hide();
+
+        // paginatie in div plakken
+        $(".pagination-section").pagination({
+            items: aantItems,
+            itemsOnPage: perPagina,
+            //default theme da ok met bootstrap samenwerkt
+            cssStyle: "light-theme",
+
+            // pageklik
+            onPageClick: function (pageNumber) {
+                // bepalen van waar tot waar
+                var showFrom = perPagina * (pageNumber - 1);
+                var showTo = showFrom + perPagina;
+
+                // alles hiden
+                items.hide()
+                    // degene die je wel moet tonen terug showen
+                    .slice(showFrom, showTo).show();
+            }
+        });
+    });
+</script>

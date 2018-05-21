@@ -1,7 +1,7 @@
 ﻿@model LekkerLokaal.Models.AdminViewModels.HandelaarsVerzoekenViewModel
 
 @{
-    ViewData["Title"] = "HandelaarsVerzoeken";
+    ViewData["Title"] = "Handelaars verzoeken";
     Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
 }
 
@@ -22,8 +22,8 @@
                     <table class="table">
                         <thead>
                             <tr>
-                                <th>Id</th>
                                 <th>Naam handelaar</th>
+                                <th>Postcode</th>
                                 <th>Gemeente</th>
                                 <th>Detail</th>
                             </tr>
@@ -32,8 +32,8 @@
                         {
                             <tbody>
                                 <tr>
-                                    <td>@handelaar.Id</td>
                                     <td>@handelaar.Naam</td>
+                                    <td>@handelaar.Postcode</td>
                                     <td>@handelaar.Gemeente</td>
                                     <td><a asp-controller="Admin" asp-action="HandelaarVerzoekEvaluatie" asp-route-id="@handelaar.Id"><i class="fas fas fa-ellipsis-h"></i></a></td>
                                 </tr>
@@ -41,7 +41,40 @@
                         }
                     </table>
                 </div>
+                <div class="pagination-section prl-30 ptb-20"></div>
             </div>
         </div>
     }
 </section>
+<script>
+    jQuery(function ($) {
+        // alle items bepalen door tr's te tellen
+        var items = $("table tbody tr");
+
+        var aantItems = items.length;
+        var perPagina = 10;
+
+        // alleen de eerste x (perPagina) tonen
+        items.slice(perPagina).hide();
+
+        // paginatie in div plakken
+        $(".pagination-section").pagination({
+            items: aantItems,
+            itemsOnPage: perPagina,
+            //default theme da ok met bootstrap samenwerkt
+            cssStyle: "light-theme",
+
+            // pageklik
+            onPageClick: function (pageNumber) {
+                // bepalen van waar tot waar
+                var showFrom = perPagina * (pageNumber - 1);
+                var showTo = showFrom + perPagina;
+
+                // alles hiden
+                items.hide()
+                    // degene die je wel moet tonen terug showen
+                    .slice(showFrom, showTo).show();
+            }
+        });
+    });
+</script>

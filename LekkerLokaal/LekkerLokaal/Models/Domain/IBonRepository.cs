@@ -4,6 +4,8 @@ namespace LekkerLokaal.Models.Domain
 {
     public interface IBonRepository
     {
+        IEnumerable<Bon> GetAllGoedgekeurd();
+        int getAantalBonverzoeken();
         IEnumerable<Bon> GetAll();
         IEnumerable<Bon> GetTop30(IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetBonnenAanbiedingSlider(IEnumerable<Bon> inputlijst);
@@ -14,7 +16,11 @@ namespace LekkerLokaal.Models.Domain
         IEnumerable<Bon> GetByNaam(string zoekKey, IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetByCategorie(string zoekKey, IEnumerable<Bon> inputlijst);
         IEnumerable<Bon> GetByPrijs(int zoekKey, IEnumerable<Bon> inputlijst);
+        IEnumerable<Bon> GetBonNogNietGoedgekeurd(IEnumerable<Bon> inputlijst);
+        IEnumerable<Bon> GetBonGoedgekeurd(IEnumerable<Bon> inputlijst);
         Bon GetByBonId(int bonId);
+        void Remove(int bonId);
+        Bon GetByBonIdNotAccepted(int bonId);
         void Add(Bon bon);
         void SaveChanges();
     }

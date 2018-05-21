@@ -17,9 +17,14 @@ namespace LekkerLokaal.Data.Repositories
             _context = context;
             _bonnen = context.Bonnen;
         }
-        public IEnumerable<Bon> GetAll()
+        public IEnumerable<Bon> GetAllGoedgekeurd()
         {
-            return _bonnen.Include(b => b.Categorie).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
+            return GetBonGoedgekeurd(_bonnen.Include(b => b.Categorie).Include(b => b.Handelaar).Where(b => b.Goedgekeurd).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList());
+        }
+
+        public int getAantalBonverzoeken()
+        {
+            return _bonnen.Count(b => !b.Goedgekeurd);
         }
 
         public IEnumerable<Bon> GetAlles(string zoekKey, IEnumerable<Bon> inputlijst)
@@ -93,7 +98,7 @@ namespace LekkerLokaal.Data.Repositories
             }
             else
             {
-                return GetAll().ToList();
+                return GetAllGoedgekeurd().ToList();
             }
             
         }
@@ -145,7 +150,12 @@ namespace LekkerLokaal.Data.Repositories
 
         public Bon GetByBonId(int bonId)
         {
-            return _bonnen.Include(b => b.Categorie).Include(b=>b.Handelaar).SingleOrDefault(b => b.BonId == bonId);
+            return _bonnen.Include(b => b.Categorie).Include(b=>b.Handelaar).SingleOrDefault(b => b.BonId == bonId && b.Goedgekeurd);
+        }
+
+        public Bon GetByBonIdNotAccepted(int bonId)
+        {
+            return _bonnen.Include(b => b.Categorie).Include(b => b.Handelaar).SingleOrDefault(b => b.BonId == bonId && !b.Goedgekeurd);
         }
 
         public IEnumerable<Bon> GetTop30(IEnumerable<Bon> inputlijst)
@@ -175,6 +185,30 @@ namespace LekkerLokaal.Data.Repositories
         public void Add(Bon bon)
         {
             _bonnen.Add(bon);
+        }
+
+        public IEnumerable<Bon> GetBonNogNietGoedgekeurd(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.OrderBy(h => h.BonId).Where(b => !b.Goedgekeurd).ToList();
+        }
+
+        public IEnumerable<Bon> GetBonGoedgekeurd(IEnumerable<Bon> inputlijst)
+        {
+            return inputlijst.OrderBy(h => h.BonId).Where(b => b.Goedgekeurd).ToList();
+        }
+
+        public void Remove(int bonId)
+        {
+            Bon tempBon = GetByBonIdNotAccepted(bonId);
+            if (tempBon == null)
+            {
+                tempBon = GetByBonId(bonId);
+            }
+            _bonnen.Remove(tempBon);
+        }
+        public IEnumerable<Bon> GetAll()
+        {
+            return _bonnen.Include(b => b.Categorie).Include(b => b.Handelaar).OrderByDescending(b => b.AantalBesteld).AsNoTracking().ToList();
         }
     }
 }

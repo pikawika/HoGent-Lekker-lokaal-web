@@ -12,7 +12,7 @@ namespace LekkerLokaal.Models.AdminViewModels
 
         public HandelaarsOverzichtViewModel(IEnumerable<Handelaar> alleHandelaars)
         {
-            AlleHandelaarsGesorteerdOpId = alleHandelaars.Select(h => new HandelaarsLijstViewModel(h)).ToList();
+            AlleHandelaarsGesorteerdOpId = alleHandelaars.Reverse().Select(h => new HandelaarsLijstViewModel(h)).ToList();
         }
 
     }

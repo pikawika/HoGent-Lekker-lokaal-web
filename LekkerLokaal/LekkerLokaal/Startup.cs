@@ -147,8 +147,20 @@ namespace LekkerLokaal
                     template: "{controller=Admin}/{action=HandelaarVerzoekEvaluatie}/{Id?}");
 
                 routes.MapRoute(
+                    name: "cadeaubonVerzoekEvaluatie",
+                    template: "{controller=Admin}/{action=CadeaubonVerzoekEvaluatie}/{Id?}");
+
+                routes.MapRoute(
                     name: "handelaarsBewerken",
                     template: "{controller=Admin}/{action=HandelaarBewerken}/{Id?}");
+
+                routes.MapRoute(
+                    name: "cadeaubonBewerken",
+                    template: "{controller=Admin}/{action=CadeaubonBewerken}/{Id?}");
+
+                routes.MapRoute(
+                    name: "verkochteCadeaubonBekijken",
+                    template: "{controller=Admin}/{action=VerkochteCadeaubonBekijken}/{Id?}");
 
                 routes.MapRoute(
                     name: "winkelwagen",

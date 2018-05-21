@@ -39,7 +39,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public Handelaar GetByHandelaarId(int handelaarId)
         {
-            return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId);
+            return _handelaars.SingleOrDefault(h => h.HandelaarId == handelaarId && h.Goedgekeurd);
         }
 
         public Handelaar GetByHandelaarIdNotAccepted(int handelaarId)
@@ -57,14 +57,14 @@ namespace LekkerLokaal.Data.Repositories
             return inputlijst.OrderBy(h => h.HandelaarId).Where(h => !h.Goedgekeurd).ToList();
         }
 
-        public void KeurAanvraagGoed(int handelaarId)
-        {
-            GetByHandelaarId(handelaarId).Goedgekeurd = true;
-        }
-
         public void Remove(int handelaarId)
         {
-            _handelaars.Remove(GetByHandelaarId(handelaarId));
+            Handelaar tempHandelaar = GetByHandelaarIdNotAccepted(handelaarId);
+            if (tempHandelaar == null)
+            {
+                tempHandelaar = GetByHandelaarId(handelaarId);
+            }
+            _handelaars.Remove(tempHandelaar);
         }
 
         public void SaveChanges()

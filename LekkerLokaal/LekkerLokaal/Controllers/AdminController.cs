@@ -26,6 +26,7 @@ namespace LekkerLokaal.Controllers
         private readonly IHandelaarRepository _handelaarRepository;
         private readonly IBonRepository _bonRepository;
         private readonly ICategorieRepository _categorieRepository;
+        private readonly IBestellijnRepository _bestellijnRepository;
         private readonly ILogger _logger;
 
         public AdminController(
@@ -34,6 +35,7 @@ namespace LekkerLokaal.Controllers
             SignInManager<ApplicationUser> signInManager,
             IHandelaarRepository handelaarRepository,
             IBonRepository bonRepository,
+            IBestellijnRepository bestellijnRepository,
             ICategorieRepository categorieRepository)
         {
             _userManager = userManager;
@@ -41,6 +43,7 @@ namespace LekkerLokaal.Controllers
             _signInManager = signInManager;
             _handelaarRepository = handelaarRepository;
             _bonRepository = bonRepository;
+            _bestellijnRepository = bestellijnRepository;
             _categorieRepository = categorieRepository;
         }
 
@@ -105,37 +108,7 @@ namespace LekkerLokaal.Controllers
 
         public IActionResult Dashboard()
         {
-            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken()));
-        }
-
-        [HttpGet]
-        public IActionResult VerkochteCadeaubonnen()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult UitbetaaldeCadeaubonnen()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult ZoekHandelaar()
-        {
-            return RedirectToAction("HandelaarsOverzicht");
-        }
-
-        [HttpGet]
-        public IActionResult ZoekCadeaubon()
-        {
-            return View();
-        }
-
-        [HttpGet]
-        public IActionResult ZoekVerkochteCadeaubon()
-        {
-            return View();
+            return View(new DashboardViewModel(_handelaarRepository.getAantalHandelaarsverzoeken(), _bonRepository.getAantalBonverzoeken(), _bestellijnRepository.getVerkochtDezeMaand(), _bestellijnRepository.getGebruiktDezeMaand()));
         }
 
         [HttpGet]
@@ -150,7 +123,7 @@ namespace LekkerLokaal.Controllers
             Handelaar geselecteerdeHandelaarEvaluatie = _handelaarRepository.GetByHandelaarIdNotAccepted(Id);
             if (geselecteerdeHandelaarEvaluatie == null)
             {
-                return RedirectToAction("HandelaarVerzoekEvaluatie");
+                return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(new HandelaarBewerkViewModel(geselecteerdeHandelaarEvaluatie));
         }
@@ -161,6 +134,15 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
+                var user = await _userManager.FindByEmailAsync(model.Emailadres);
+                await _userManager.DeleteAsync(user);
+
+                _handelaarRepository.Remove(model.HandelaarId);
+                _handelaarRepository.SaveChanges();
+
+                var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId;
+                Directory.Delete(filePath, true);
+
                 var message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(model.Emailadres);
@@ -190,16 +172,6 @@ namespace LekkerLokaal.Controllers
                 SmtpServer.EnableSsl = true;
                 SmtpServer.Send(message);
 
-                var user = await _userManager.FindByEmailAsync(model.Emailadres);
-                await _userManager.DeleteAsync(user);
-
-                _handelaarRepository.Remove(model.HandelaarId);
-                _handelaarRepository.SaveChanges();
-
-                var filePath = @"wwwroot/images/handelaar/" + model.HandelaarId;
-                Directory.Delete(filePath, true);
-
-
                 return RedirectToAction("HandelaarsVerzoeken");
             }
             return View(nameof(HandelaarVerzoekEvaluatie), model);
@@ -211,7 +183,7 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                Handelaar handelaarInDB = _handelaarRepository.GetByHandelaarId(model.HandelaarId);
+                Handelaar handelaarInDB = _handelaarRepository.GetByHandelaarIdNotAccepted(model.HandelaarId);
 
                 if (handelaarInDB.Naam != model.Naam)
                 {
@@ -259,7 +231,8 @@ namespace LekkerLokaal.Controllers
                 var token = await _userManager.GeneratePasswordResetTokenAsync(user);
                 await _userManager.ResetPasswordAsync(user, token, wachtwoord);
 
-                _handelaarRepository.KeurAanvraagGoed(model.HandelaarId);
+
+                handelaarInDB.Goedgekeurd = true;
                 _handelaarRepository.SaveChanges();
 
                 if (model.Afbeelding != null)
@@ -270,7 +243,7 @@ namespace LekkerLokaal.Controllers
                     await model.Afbeelding.CopyToAsync(fileStream);
                     fileStream.Close();
                 }
-                
+
                 var message = new MailMessage();
                 message.From = new MailAddress("lekkerlokaalst@gmail.com");
                 message.To.Add(model.Emailadres);
@@ -312,9 +285,16 @@ namespace LekkerLokaal.Controllers
         }
 
         [HttpGet]
-        public IActionResult CadeaubonVerzoekEvaluatie()
+        public IActionResult CadeaubonVerzoekEvaluatie(int Id)
         {
-            return View();
+            Bon geselecteerdebonEvaluatie = _bonRepository.GetByBonIdNotAccepted(Id);
+            if (geselecteerdebonEvaluatie == null)
+            {
+                return RedirectToAction("CadeaubonVerzoeken");
+            }
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            ViewData["aanbiedingen"] = Aanbiedingen();
+            return View(new CadeaubonBerwerkViewModel(geselecteerdebonEvaluatie));
         }
 
         [HttpGet]
@@ -355,7 +335,7 @@ namespace LekkerLokaal.Controllers
                     if (model.Opmerking != null)
                     {
                         message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
-                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       "U werd toegevoegd als handelaar op LekkerLokaal.be! \n\n" +
                        model.Opmerking + "\n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
@@ -367,7 +347,7 @@ namespace LekkerLokaal.Controllers
                     else
                     {
                         message.Body = String.Format("Beste medewerker van " + model.Naam + ", \n" +
-                       "Uw recent verzoek om handelaar te worden bij LekkerLokaal.be is geaccepteerd! \n\n" +
+                       "U werd toegevoegd als handelaar op LekkerLokaal.be! \n\n" +
                        "Uw gegevens om aan te melden zijn: \n" +
                        "E-mailadres: " + model.Email + "\n" +
                        "Wachtwoord: " + wachtwoord + "\n\n" +
@@ -452,7 +432,7 @@ namespace LekkerLokaal.Controllers
                 {
                     handelaarInDB.Gemeente = model.Gemeente;
                 }
-                
+
                 _handelaarRepository.SaveChanges();
 
                 if (model.Afbeelding != null)
@@ -466,13 +446,14 @@ namespace LekkerLokaal.Controllers
 
                 return RedirectToAction("HandelaarsOverzicht");
             }
-            return View(nameof(HandelaarVerzoekEvaluatie), model);
+            return View(nameof(HandelaarBewerken), model);
         }
 
         [HttpGet]
         public IActionResult CadeaubonVerzoeken()
         {
-            return View();
+            //implement
+            return View(new CadeaubonVerzoekenViewModel(_bonRepository.GetBonNogNietGoedgekeurd(_bonRepository.GetAll())));
         }
 
         [HttpGet]
@@ -499,7 +480,7 @@ namespace LekkerLokaal.Controllers
         {
             if (ModelState.IsValid)
             {
-                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(model.HandelaarID), model.Aanbieding);
+                Bon nieuweBon = new Bon(model.Naam, model.MinimumPrijs, model.Maximumprijs, model.Beschrijving, 0, @"temp", _categorieRepository.GetByNaam(model.Categorie), model.Straatnaam, model.Huisnummer, model.Postcode, model.Gemeente, _handelaarRepository.GetByHandelaarId(model.HandelaarID), model.Aanbieding, true);
                 _bonRepository.Add(nieuweBon);
                 _bonRepository.SaveChanges();
 
@@ -514,13 +495,13 @@ namespace LekkerLokaal.Controllers
 
                 for (int i = 0; i < model.Afbeeldingen.Count; i++)
                 {
-                    filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/Afbeeldingen/" + (i+1) + ".jpg";
+                    filePath = @"wwwroot/images/bon/" + nieuweBon.BonId + "/Afbeeldingen/" + (i + 1) + ".jpg";
                     Directory.CreateDirectory(Path.GetDirectoryName(filePath));
                     fileStream = new FileStream(filePath, FileMode.Create);
                     await model.Afbeeldingen[i].CopyToAsync(fileStream);
                     fileStream.Close();
                 }
-                
+
 
                 return RedirectToAction("CadeaubonOverzicht");
 
@@ -530,28 +511,322 @@ namespace LekkerLokaal.Controllers
             return View(nameof(CadeaubonToevoegen), model);
         }
 
+
         [HttpGet]
         public IActionResult CadeaubonOverzicht()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetAllGoedgekeurd()));
         }
 
         [HttpGet]
-        public IActionResult CadeaubonBewerken()
+        public IActionResult CadeaubonBewerken(int Id)
         {
-            return View();
+            Bon geselecteerdeBon = _bonRepository.GetByBonId(Id);
+            if (geselecteerdeBon == null)
+            {
+                return RedirectToAction("CadeaubonOverzicht");
+            }
+            ViewData["categorieen"] = new SelectList(_categorieRepository.GetAll().Select(c => c.Naam));
+            ViewData["aanbiedingen"] = Aanbiedingen();
+            return View(new CadeaubonBerwerkViewModel(geselecteerdeBon));
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CadeaubonBewerken(CadeaubonBerwerkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Bon bonInDb = _bonRepository.GetByBonId(model.BonId);
+
+                if (bonInDb.Naam != model.Naam)
+                {
+                    bonInDb.Naam = model.Naam;
+                }
+
+                if (bonInDb.Beschrijving != model.Beschrijving)
+                {
+                    bonInDb.Beschrijving = model.Beschrijving;
+                }
+
+                if (bonInDb.MinPrijs != model.MinimumPrijs)
+                {
+                    bonInDb.MinPrijs = model.MinimumPrijs;
+                }
+
+                if (bonInDb.MaxPrijs != model.Maximumprijs)
+                {
+                    bonInDb.MaxPrijs = model.Maximumprijs;
+                }
+
+                if (bonInDb.Categorie.Naam != model.Categorie)
+                {
+                    bonInDb.Categorie = _categorieRepository.GetByNaam(model.Categorie);
+                }
+
+                if (bonInDb.Straat != model.Straatnaam)
+                {
+                    bonInDb.Straat = model.Straatnaam;
+                }
+
+                if (bonInDb.Huisnummer != model.Huisnummer)
+                {
+                    bonInDb.Huisnummer = model.Huisnummer;
+                }
+
+                if (bonInDb.Postcode != model.Postcode)
+                {
+                    bonInDb.Postcode = model.Postcode;
+                }
+
+                if (bonInDb.Gemeente != model.Gemeente)
+                {
+                    bonInDb.Gemeente = model.Gemeente;
+                }
+
+                if (bonInDb.Aanbieding != model.Aanbieding)
+                {
+                    bonInDb.Aanbieding = model.Aanbieding;
+                }
+
+                _bonRepository.SaveChanges();
+
+                if (model.Thumbnail != null)
+                {
+                    var filePath = @"wwwroot/" + bonInDb.Afbeelding + "thumb.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Thumbnail.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+
+                if (model.Afbeeldingen != null)
+                {
+                    System.IO.DirectoryInfo di = new DirectoryInfo(@"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/");
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    for (int i = 0; i < model.Afbeeldingen.Count; i++)
+                    {
+                        var filePath = @"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/" + (i + 1) + ".jpg";
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                        var fileStream = new FileStream(filePath, FileMode.Create);
+                        await model.Afbeeldingen[i].CopyToAsync(fileStream);
+                        fileStream.Close();
+                    }
+                }
+
+                return RedirectToAction("CadeaubonOverzicht");
+            }
+            return View(nameof(CadeaubonBewerken), model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult VerwijderCadeaubonVerzoek(CadeaubonBerwerkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Bon bonInDb = _bonRepository.GetByBonIdNotAccepted(model.BonId);
+                _bonRepository.Remove(model.BonId);
+                _bonRepository.SaveChanges();
+
+                var filePath = @"wwwroot/" + bonInDb.Afbeelding;
+                Directory.Delete(filePath, true);
+
+
+                var emailadres = bonInDb.Handelaar.Emailadres;
+
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(emailadres);
+                message.Subject = "Uw verzoek om een nieuwe bon toe te voegen op LekkerLokaal.be is geweigerd.";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste medewerker van " + model.naamHandelaar + ", \n\n" +
+                   "Uw recent verzoek om een bon toe te voegen bij LekkerLokaal.be is geweigerd. \n\n" +
+                   model.Opmerking + "\n\n" +
+                   "Als u denkt dat u alsnog recht heeft om deze bon toe te voegen bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
+                   "Met vriendelijke groeten, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste medewerker van " + model.naamHandelaar + ", \n\n" +
+                    "Uw recent verzoek om een bon toe te voegen bij LekkerLokaal.be is geweigerd. \n\n" +
+                    "Als u denkt dat u alsnog recht heeft om deze bon toe te voegen bij LekkerLokaal.be raden wij u aan een nieuw verzoek te versturen. \n\n" +
+                    "Met vriendelijke groeten, \n" +
+                   "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                return RedirectToAction("CadeaubonVerzoeken");
+            }
+            return View(nameof(HandelaarVerzoekEvaluatie), model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> AccepteerCadeaubonVerzoek(CadeaubonBerwerkViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Bon bonInDb = _bonRepository.GetByBonIdNotAccepted(model.BonId);
+
+                if (bonInDb.Naam != model.Naam)
+                {
+                    bonInDb.Naam = model.Naam;
+                }
+
+                if (bonInDb.Beschrijving != model.Beschrijving)
+                {
+                    bonInDb.Beschrijving = model.Beschrijving;
+                }
+
+                if (bonInDb.MinPrijs != model.MinimumPrijs)
+                {
+                    bonInDb.MinPrijs = model.MinimumPrijs;
+                }
+
+                if (bonInDb.MaxPrijs != model.Maximumprijs)
+                {
+                    bonInDb.MaxPrijs = model.Maximumprijs;
+                }
+
+                if (bonInDb.Categorie.Naam != model.Categorie)
+                {
+                    bonInDb.Categorie = _categorieRepository.GetByNaam(model.Categorie);
+                }
+
+                if (bonInDb.Straat != model.Straatnaam)
+                {
+                    bonInDb.Straat = model.Straatnaam;
+                }
+
+                if (bonInDb.Huisnummer != model.Huisnummer)
+                {
+                    bonInDb.Huisnummer = model.Huisnummer;
+                }
+
+                if (bonInDb.Postcode != model.Postcode)
+                {
+                    bonInDb.Postcode = model.Postcode;
+                }
+
+                if (bonInDb.Gemeente != model.Gemeente)
+                {
+                    bonInDb.Gemeente = model.Gemeente;
+                }
+
+                if (bonInDb.Aanbieding != model.Aanbieding)
+                {
+                    bonInDb.Aanbieding = model.Aanbieding;
+                }
+
+                bonInDb.Goedgekeurd = true;
+
+                _bonRepository.SaveChanges();
+
+                if (model.Thumbnail != null)
+                {
+                    var filePath = @"wwwroot/" + bonInDb.Afbeelding + "thumb.jpg";
+                    Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                    var fileStream = new FileStream(filePath, FileMode.Create);
+                    await model.Thumbnail.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }
+
+                if (model.Afbeeldingen != null)
+                {
+                    System.IO.DirectoryInfo di = new DirectoryInfo(@"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/");
+
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    for (int i = 0; i < model.Afbeeldingen.Count; i++)
+                    {
+                        var filePath = @"wwwroot/" + bonInDb.Afbeelding + "Afbeeldingen/" + (i + 1) + ".jpg";
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                        var fileStream = new FileStream(filePath, FileMode.Create);
+                        await model.Afbeeldingen[i].CopyToAsync(fileStream);
+                        fileStream.Close();
+                    }
+                }
+
+
+                var emailadres = bonInDb.Handelaar.Emailadres;
+
+                var message = new MailMessage();
+                message.From = new MailAddress("lekkerlokaalst@gmail.com");
+                message.To.Add(emailadres);
+                message.Subject = "Uw verzoek om een nieuwe bon toe te voegen op LekkerLokaal.be is geaccepteerd!";
+
+                if (model.Opmerking != null)
+                {
+                    message.Body = String.Format("Beste medewerker van " + model.naamHandelaar + ", \n\n" +
+                   "Uw recent verzoek om een bon toe te voegen bij LekkerLokaal.be is geaccepteerd. \n\n" +
+                   model.Opmerking + "\n\n" +
+                   "Met vriendelijke groeten, \n" +
+                  "Het Lekker Lokaal team");
+                }
+                else
+                {
+                    message.Body = String.Format("Beste medewerker van " + model.naamHandelaar + ", \n\n" +
+                    "Uw recent verzoek om een bon toe te voegen bij LekkerLokaal.be is geaccepteerd. \n\n" +
+                    "Met vriendelijke groeten, \n" +
+                   "Het Lekker Lokaal team");
+                }
+
+                var SmtpServer = new SmtpClient("smtp.gmail.com");
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("lekkerlokaalst@gmail.com", "LokaalLekker123");
+                SmtpServer.EnableSsl = true;
+                SmtpServer.Send(message);
+
+                return RedirectToAction("CadeaubonOverzicht");
+            }
+            return View(nameof(CadeaubonVerzoekEvaluatie), model);
         }
 
         [HttpGet]
         public IActionResult LayoutSliderIndex()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonnenAanbiedingSlider(_bonRepository.GetAllGoedgekeurd())));
         }
 
         [HttpGet]
         public IActionResult LayoutAanbiedingen()
         {
-            return View();
+            return View(new CadeaubonOverzichtViewModel(_bonRepository.GetBonnenAanbiedingStandaardEnSlider(_bonRepository.GetAllGoedgekeurd())));
+        }
+
+        [HttpGet]
+        public IActionResult VerkochteCadeaubonBekijken(int Id)
+        {
+            return View(new VerkochteCadeaubonBekijkenViewModel(_bestellijnRepository.GetById(Id)));
+        }
+
+        [HttpGet]
+        public IActionResult VerkochteCadeaubonnen()
+        {
+            return View(new OverzichtVerkochteBonnenViewModel(_bestellijnRepository.getVerkochteBonnen()));
+        }
+
+        [HttpGet]
+        public IActionResult GebruikteCadeaubonnen()
+        {
+            return View(new OverzichtGebruikteBonnenViewModel(_bestellijnRepository.getGebruikteBonnen()));
         }
 
     }

@@ -10,6 +10,7 @@ namespace LekkerLokaal.Models.AdminViewModels
     {
         public int Id { get; }
         public string Gemeente { get; }
+        public string Postcode { get; }
         public string Naam { get; }
 
         public HandelaarsVerzoekenLijstViewModel(Handelaar handelaar)
@@ -17,6 +18,7 @@ namespace LekkerLokaal.Models.AdminViewModels
             Id = handelaar.HandelaarId;
             Gemeente = handelaar.Gemeente;
             Naam = handelaar.Naam;
+            Postcode = handelaar.Postcode;
         }
 
     }
