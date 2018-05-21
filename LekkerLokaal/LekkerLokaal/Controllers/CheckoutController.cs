@@ -1,4 +1,4 @@
-﻿using iTextSharp.text;
+﻿ using iTextSharp.text;
 using iTextSharp.text.pdf;
 using LekkerLokaal.Filters;
 using LekkerLokaal.Models;
@@ -183,12 +183,50 @@ namespace LekkerLokaal.Controllers
 
             Bestelling bestelling = _bestellingRepository.GetBy(Id);
 
-
             ICollection<BestelLijn> bestellijnen = HaalBestellijnenOp(bestelling);
-            IList<BestelLijn> bestellijn = bestellijnen.ToList();
-            ViewData["bestellijnen"] = bestellijn;
-            
+            IList<BestelLijn> bestellijnlijst = bestellijnen.ToList();
+            ViewData["bestellijnen"] = bestellijnlijst;
+
             VerstuurMails(bestelling);
+
+
+
+            // step 1: creation of a document-object
+            Document document = new Document();
+
+            // step 2: we create a writer that listens to the document
+            PdfCopy writer = new PdfCopy(document, new FileStream(@"wwwroot/pdf/merged_" + bestellijnlijst[0].QRCode + ".pdf", FileMode.Create));
+            if (writer != null)
+            {
+                // step 3: we open the document
+                document.Open();
+
+                foreach (var bestellijn in bestellijnen)
+                {
+                    // we create a reader for a certain document
+                    PdfReader reader = new PdfReader(@"wwwroot/pdf/c_" + bestellijn.QRCode + ".pdf");
+                    reader.ConsolidateNamedDestinations();
+
+                    // step 4: we add content
+                    for (int i = 1; i <= reader.NumberOfPages; i++)
+                    {
+                        PdfImportedPage page = writer.GetImportedPage(reader, i);
+                        writer.AddPage(page);
+                    }
+
+                    //PRAcroForm form = reader.AcroForm;
+                    //if (form != null)
+                    //{
+                    //    writer.CopyAcroForm(reader);
+                    //}
+
+                    reader.Close();
+                }
+
+                // step 5: we close the document and writer
+                writer.Close();
+                document.Close();
+            }
 
             return View();
         }
@@ -315,11 +353,6 @@ namespace LekkerLokaal.Controllers
                     
                 }
             }
-
-            //for (int i = 0; i < bestellijnen.Count; i++)
-            //{
-            //    System.IO.File.Delete(@"wwwroot/pdf/c_" + bestellijn[i].QRCode + ".pdf");
-            //}
         }
 
     }

@@ -55,6 +55,7 @@ namespace LekkerLokaal.Data.Repositories
                             {
                                 matchFound = true;
                                 _aantalMatchenWoord++;
+                                break;
                             }
                         }
                         if (matchFound == false)
@@ -68,6 +69,7 @@ namespace LekkerLokaal.Data.Repositories
                                 {
                                     matchFound = true;
                                     _aantalMatchenWoord++;
+                                    break;
                                 }
                             }
                         }
@@ -82,6 +84,7 @@ namespace LekkerLokaal.Data.Repositories
                                 {
                                     matchFound = true;
                                     _aantalMatchenWoord++;
+                                    break;
                                 }
                             }
                         }
