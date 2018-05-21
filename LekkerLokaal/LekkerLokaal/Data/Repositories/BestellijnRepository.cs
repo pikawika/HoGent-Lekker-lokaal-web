@@ -70,7 +70,7 @@ namespace LekkerLokaal.Data.Repositories
 
         public IEnumerable<BestelLijn> getGebruikteBonnenVanHandelaarId(int id)
         {
-            return _bestellijnen.Where(b => b.Geldigheid == Geldigheid.Gebruikt).Include(b => b.Bon);
+            return _bestellijnen.Include(b => b.Handelaar).Where(b => b.Geldigheid == Geldigheid.Gebruikt && b.Handelaar.HandelaarId == id).Include(b => b.Bon).OrderByDescending(b => b.GebruikDatum);
         }
     }
 }

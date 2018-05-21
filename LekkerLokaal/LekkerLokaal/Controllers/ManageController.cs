@@ -131,12 +131,18 @@ namespace LekkerLokaal.Controllers
 
             return View(model);
         }
+
         [HttpGet]
-        public IActionResult GebruikteCadeaubonnenOverzicht()
+        public async Task<IActionResult> GebruikteCadeaubonnenOverzicht(int Id)
         {
             ViewData["AlleCategorien"] = _categorieRepository.GetAll().ToList();
-            //nog methode voorzien voor het ophalen van de bonnen gelinkt aan die handelaar
-            return View(new GebruikteCadeaubonnenOverzichtViewModel(_bestellijnRepository.getGebruikteBonnen()));
+
+            var user = await _userManager.GetUserAsync(User);
+            var handelaar = _handelaarRepository.GetByEmail(user.Email);
+
+            var lijstVanGebruikteBonnen = _bestellijnRepository.getGebruikteBonnenVanHandelaarId(handelaar.HandelaarId);
+
+            return View(new GebruikteCadeaubonnenOverzichtViewModel(lijstVanGebruikteBonnen));
         }
 
 
