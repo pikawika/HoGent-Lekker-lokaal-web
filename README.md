@@ -33,9 +33,9 @@ Dit is de GitHub repository voor het project Lekker Lokaal van groep 1. U kan hi
 > - [Release Sprint 5](https://github.com/BramDC3/Project-LekkerLokaal/releases/tag/Sprint5)
 > - [Release Sprint 6 - coming soon]()
 
-## GitHub Lekker Lokaal mobile app
-Er is een app gemaakt die de handelaar in staat steld bonnen in te scannen en te valideren. De GitHub voor deze app is:
-> [GitHub repository van de app](https://github.com/BramDC3/Lekker-Lokaal-App)
+## GitHub Lekker Lokaal mobiele applicatie voor Android & iOS
+Er is een app gemaakt die de handelaar in staat stelt om cadeaubonnen in te scannen, te verifiëren en te valideren. De GitHub repository voor deze app is:
+> [GitHub repository van de app](https://github.com/BramDC3/lekker_lokaal_app_flutter)
 
 
 
